@@ -1,5 +1,6 @@
 package com.belak.scheduletimetable.service.student;
 
+import com.belak.scheduletimetable.dto.CreateStudentDto;
 import com.belak.scheduletimetable.dto.ProfessorDto;
 import com.belak.scheduletimetable.dto.StudentDto;
 import com.belak.scheduletimetable.enumeration.Filiere;
@@ -89,5 +90,11 @@ public class StudentService {
                 student.getNom(),
                 student.getEmail()
                 );
+    }
+
+    public void saveStudent(CreateStudentDto studentDto)
+    {
+        Student student = new Student(studentDto);
+        studentRepository.save(student);
     }
 }

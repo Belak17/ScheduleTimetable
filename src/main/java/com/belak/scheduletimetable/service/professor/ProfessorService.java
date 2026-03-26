@@ -1,9 +1,12 @@
 package com.belak.scheduletimetable.service.professor;
 
+import com.belak.scheduletimetable.dto.CreateProfessorDto;
+import com.belak.scheduletimetable.dto.CreateStudentDto;
 import com.belak.scheduletimetable.dto.ProfessorDto;
 import com.belak.scheduletimetable.dto.ProfessorTimetableDto;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.Professor;
+import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.repository.ProfessorRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -82,5 +85,11 @@ public class ProfessorService {
     {
         Pageable pageable = PageRequest.of(page, size);
         return professorRepository.findAll(pageable).map(this::convertToDto);
+    }
+
+    public void saveProfessor(CreateProfessorDto professorDto)
+    {
+        Professor professor = new Professor(professorDto);
+        professorRepository.save(professor);
     }
 }
