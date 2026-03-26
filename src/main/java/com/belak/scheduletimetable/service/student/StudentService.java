@@ -77,6 +77,7 @@ public class StudentService {
         return studentRepository.findByFiliereAndNiveauAndGroup(Filiere.valueOf(field), year,group,pageable).map(this::convertToDto);
     }
 
+
     public StudentDto convertToDto(Student student)
     {
         return new StudentDto(student.getUserId(),
