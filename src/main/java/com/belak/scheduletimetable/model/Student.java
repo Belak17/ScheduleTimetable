@@ -30,10 +30,10 @@ public class Student  extends User {
 
     private String numeroInscription;
 
-    //private String groupeC;
-    //private String groupeTD;
-    //private String groupeM;
-    //private String groupeArchive;
+    private String groupeC;
+    private String groupeTD;
+    private String groupeM;
+    private String groupeArchive;
 
     @Column(name = "student_group")
     private String group ;
@@ -69,6 +69,11 @@ public class Student  extends User {
         this.setTypeDiplome(dto.getTypeDiplome());
         this.setNumeroInscription(dto.getNumeroInscription());
         this.setGroup(dto.getGroup());
+        this.setGroupeC(dto.getGroupeC());
+        this.setGroupeTD(dto.getGroupeTD());
+        this.setGroupeArchive(dto.getGroupeArchive());
+        this.setGroupeM(dto.getGroupeM());
+        this.setPassword(dto.getPassword());
     }
 
 

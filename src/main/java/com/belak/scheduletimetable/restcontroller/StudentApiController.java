@@ -54,8 +54,12 @@ public class StudentApiController {
     @PostMapping("/import")
     public String uploadStudents(@RequestParam("excelFile") MultipartFile file ,
                                  Model model ,
-                                 RedirectAttributes redirectAttributes)
-    {
-        return "admin/upload-students.html";
+                                 RedirectAttributes redirectAttributes)  {
+        try {
+            studentService.processSheet(file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return "admin/upload-users.html";
     }
 }

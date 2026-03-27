@@ -29,12 +29,13 @@ public class CreateStudentDto extends  CreateUserDto{
     private TypeDiplome typeDiplome;
     private String numeroInscription;
 
-    //private String groupeC;
-    //private String groupeTD;
-    //private String groupeM;
-    //private String groupeArchive;
+    private String groupeC;
+    private String groupeTD;
+    private String groupeM;
+    private String groupeArchive;
 
     private String group ;
+
 
 
 

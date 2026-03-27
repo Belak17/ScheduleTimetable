@@ -36,4 +36,9 @@ public class AdminController {
     public String showAdminUploadTimetable( Model model ) {
         return "admin/admin-upload-timetable.html";
     }
+
+    @GetMapping("/import")
+    public String showAdminImportUsers( Model model ) {
+        return "admin/upload-users.html";
+    }
 }

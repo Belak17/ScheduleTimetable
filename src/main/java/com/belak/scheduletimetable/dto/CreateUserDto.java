@@ -34,4 +34,5 @@ public class CreateUserDto {
     private Departement department ;
     private String codeDepartement;
     private User.Role role = User.Role.USER;
+    private String password ;
 }

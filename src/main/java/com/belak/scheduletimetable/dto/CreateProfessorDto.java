@@ -31,5 +31,7 @@ public class CreateProfessorDto extends CreateUserDto {
     private String etablissement_origine ;
     private String rib ;
     private String application_tiers ;
+    private  String identifiantUnique ;
+    private String nomDepartement ;
 
 }

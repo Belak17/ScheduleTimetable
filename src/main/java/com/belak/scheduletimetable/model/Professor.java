@@ -33,6 +33,8 @@ public class Professor extends User {
     private String rib ;
     private String application_tiers ;
 
+    private String nomDepartement ;
+
     public Professor(CreateProfessorDto dto) {
         this.setUserId(dto.getUserId());
         this.setCin(dto.getCin());
@@ -63,6 +65,9 @@ public class Professor extends User {
         this.setEtablissement_origine(dto.getEtablissement_origine());
         this.setRib(dto.getRib());
         this.setApplication_tiers(dto.getApplication_tiers());
+        this.setPassword(dto.getPassword());
+
+        this.setNomDepartement(dto.getNomDepartement());
 
     }
 

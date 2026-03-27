@@ -1,5 +1,8 @@
 package com.belak.scheduletimetable.enumeration;
 
+import lombok.Getter;
+
+@Getter
 public enum Nationalite {
 
     AF("AF", "Afghanistan", "Afghane"),
@@ -87,15 +90,16 @@ public enum Nationalite {
         this.nationalite = nationalite;
     }
 
-    public String getCode() {
-        return code;
-    }
 
-    public String getPays() {
-        return pays;
-    }
+    public static Nationalite fromNationalite(String nationalite) {
+        if (nationalite == null) return null;
 
-    public String getNationalite() {
-        return nationalite;
+        for (Nationalite n : Nationalite.values()) {
+            if (n.getNationalite().equalsIgnoreCase(nationalite.trim())) {
+                return n;
+            }
+        }
+
+        throw new IllegalArgumentException("Nationalité invalide : " + nationalite);
     }
 }
