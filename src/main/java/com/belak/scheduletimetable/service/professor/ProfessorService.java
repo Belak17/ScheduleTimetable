@@ -7,6 +7,7 @@ import com.belak.scheduletimetable.exception.EmptyFileException;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.Professor;
 import com.belak.scheduletimetable.repository.ProfessorRepository;
+import com.belak.scheduletimetable.request.UpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -252,5 +253,10 @@ public class ProfessorService {
 //                .toList();
 //    }
 
-
+      public void updateProfessorPassword(UpdateRequest request)
+      {
+          Professor professor = professorRepository.findByUserId(request.getUserId());
+          professor.setPassword(passwordEncoder.encode(request.getPassword()));
+          professorRepository.save(professor);
+      }
 }

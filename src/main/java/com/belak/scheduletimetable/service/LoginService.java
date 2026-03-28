@@ -1,11 +1,9 @@
 package com.belak.scheduletimetable.service;
 
 
-import com.belak.scheduletimetable.exception.ResourceNotFoundException;
-import com.belak.scheduletimetable.model.User;
+
 import com.belak.scheduletimetable.repository.UserRepository;
-import com.belak.scheduletimetable.request.LoginRequest;
-import com.belak.scheduletimetable.response.LoginResponse;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

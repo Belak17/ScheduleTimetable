@@ -1,6 +1,7 @@
 package com.belak.scheduletimetable.restcontroller;
 
 import com.belak.scheduletimetable.dto.ProfessorDto;
+import com.belak.scheduletimetable.request.UpdateRequest;
 import com.belak.scheduletimetable.service.professor.ProfessorService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.dialect.function.PostgreSQLTruncRoundFunction;
@@ -55,5 +56,12 @@ public class ProfessorApiController {
             throw new RuntimeException(e);
         }
         return "admin/upload-users.html";
+    }
+
+    @PutMapping("/update")
+    public  String updateProfessorPassword(@ModelAttribute UpdateRequest request)
+    {
+        professorService.updateProfessorPassword(request);
+        return "";
     }
 }

@@ -24,4 +24,6 @@ LEFT JOIN FETCH p.timetable
 WHERE p.userId = :userId
 """)
     Optional<Professor> findByUserIdWithTimetable(@Param("userId")String userId);
+
+    Professor findByUserId(String userId);
 }
