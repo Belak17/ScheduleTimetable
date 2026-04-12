@@ -29,9 +29,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/reset-password/**") // désactive CSRF juste pour reset-password
+                )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login","/forgot", "/css/**",
-                                "/js/**" , "/images/**" , "/icons/**").permitAll()
+                        .requestMatchers("/login","/forgot","/firstlogin","/forgot-password",
+                                "/reset-password","/reset-password/**","/css/**",
+                                "/js/**" , "/images/**" , "/icons/**","/").permitAll()
                         .requestMatchers("/admin/**","/admin").hasRole("ADMIN")
                         .requestMatchers("/professor/**").hasRole("PROFESSOR")
                         .requestMatchers("/student/**").hasAnyRole("STUDENT","ADMIN")

@@ -265,6 +265,11 @@ public class StudentService {
         }
     }
 
+   public void deleteStudent(String userId)
+   {
+       studentRepository.deleteByUserId(userId) ;
+   }
+
 
 
 

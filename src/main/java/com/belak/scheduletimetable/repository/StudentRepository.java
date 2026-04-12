@@ -29,4 +29,6 @@ LEFT JOIN FETCH s.groupTimetable
 WHERE s.userId = :userId
 """)
     Optional<Student> findByUserIdWithTimetable(@Param("userId")String userId);
+
+    void deleteByUserId(String userId);
 }

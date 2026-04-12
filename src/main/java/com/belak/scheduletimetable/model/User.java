@@ -67,6 +67,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
 
+    //private Date passwordChangedAt = null ;
+    //private boolean mustChangePassword = true ;
+
 
     public enum Role {
         USER, ADMIN , PROFESSOR , ADMINISTRATOR , STUDENT
@@ -94,7 +97,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() { return true; }
 
-    private Date passwordChangedAt = null ;
-    private boolean mustChangePassword = true ;
+
 
 }

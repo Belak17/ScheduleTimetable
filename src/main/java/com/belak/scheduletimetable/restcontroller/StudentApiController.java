@@ -62,4 +62,12 @@ public class StudentApiController {
         }
         return "admin/upload-users.html";
     }
+    @DeleteMapping("/delete/{userId}/student")
+    public String deleteStudent(@PathVariable String userId)
+    {
+        studentService.deleteStudent(userId);
+        return "";
+    }
+
+
 }

@@ -10,11 +10,11 @@
 
 </head>
 <body>
-<form class="login-box" method="post" th:action="@{/login}">
+<form class="login-box" method="post" th:action="@{/forgot-password}">
 
     <section class="left-block">
         <div class="presentation">
-            <h2>Se connecter</h2>
+            <h2>Premiere Connexion </h2>
             <h3> Étudiant/Ancien Étudiant/Enseignant/Administration/<br>
                 Entreprise</h3>
 
@@ -23,22 +23,24 @@
             <div class="input">
                 <img th:src="@{/images/user.png}">
                 <input type="text" autocomplete="off" name="userId"
-                       placeholder="Nom d'utilisateur" required/>
+                       placeholder="Identifiant" required/>
             </div>
             <div class="input">
                 <img th:src="@{/images/lock.png}">
-                <input type="password" autocomplete="off" name="password"
-                       placeholder="Mot de passe" required />
+                <input type="email" autocomplete="off" name="email"
+                       placeholder="Entrer votre email" required />
 
             </div>
         </div>
-        <div th:if="${failure}" class="alert">
-            <span th:text="${failure}"></span>
+        <div th:if="${error}" class="alert">
+            <span th:text="${error}"></span>
+        </div>
+        <div th:if="${message}" class="alert">
+            <span th:text="${message}"></span>
         </div>
 
         <div class="others">
-            <div class="forgot-link"><a th:href="@{/forgot}">Mot de passe oublié ? </a></div>
-            <button  type="submit" class="connect">Se connecter</button>
+            <button  type="submit" class="connect">Envoyer</button>
         </div>
     </section>
 
@@ -57,7 +59,6 @@
     height: 520px;
     width: 451px;
 }
-
 </style>
 </body>
 </html>
