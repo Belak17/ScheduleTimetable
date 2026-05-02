@@ -71,15 +71,15 @@ This project uses environment variables for sensitive configuration.
 
 ### Example (PowerShell)
 
-$env:DB_URL="jdbc:postgresql://localhost:5432/schedule_db"
-$env:DB_USERNAME="postgres"
+$env:DB_URL="jdbc:postgresql://localhost:5432/schedule_db"<br>
+$env:DB_USERNAME="postgres"<br>
 $env:DB_PASSWORD="your_password"
 
 ### Application Properties
 
-spring.datasource.url=${DB_URL}
-spring.datasource.username=${DB_USERNAME}
-spring.datasource.password=${DB_PASSWORD}
+spring.datasource.url="${DB_URL}"<br>
+spring.datasource.username="${DB_USERNAME}"<br>
+spring.datasource.password="${DB_PASSWORD}"
 
 ### Requirements
 
