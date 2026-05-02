@@ -27,7 +27,9 @@ public class GroupTimetable {
             allocationSize = 1
     )
     private Long id ;
+    @Enumerated(EnumType.STRING)
     private Departement departement;
+    @Enumerated(EnumType.STRING)
     private Filiere filiere;
     private Integer niveau;
     @Column(name = "group_name")
@@ -47,5 +49,16 @@ public class GroupTimetable {
         }
         students.add(student);
         student.setGroupTimetable(this);
+    }
+
+    @OneToMany(mappedBy = "groupTimetable" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<CoursTP> coursTPList = new ArrayList<>();
+
+    public void addCoursTP(CoursTP coursTP){
+        if (coursTPList == null) {
+            coursTPList = new ArrayList<>();
+        }
+        coursTPList.add(coursTP);
+        coursTP.setGroupTimetable(this);
     }
 }

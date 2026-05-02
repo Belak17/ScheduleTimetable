@@ -1,11 +1,12 @@
 package com.belak.scheduletimetable.enumeration;
 
 
+
 public enum Departement {
 
     PHY("PHY", "Physique"),
     CHI("CHI", "Chimie"),
-    MAT("MAT", "Mathématiques"),
+    MAT("MAT", "Mathematique"),
     INF("INF", "Informatique"),
     SV("SV", "Biologie"),
     ST("ST", "Geologie"),
@@ -29,11 +30,16 @@ public enum Departement {
 
     // Méthode utilitaire pour récupérer une constante à partir du libellé
     public static Departement fromLibelle(String libelle) {
+        if (libelle == null) {
+            throw new IllegalArgumentException("Libellé null");
+        }
+
         for (Departement d : Departement.values()) {
-            if (d.getLibelle().equalsIgnoreCase(libelle)) {
+            if (d.getLibelle().equalsIgnoreCase(libelle.trim())) {
                 return d;
             }
         }
-        return null; // ou lancer une exception si tu veux
+
+        throw new IllegalArgumentException("Département inconnu: " + libelle);
     }
 }

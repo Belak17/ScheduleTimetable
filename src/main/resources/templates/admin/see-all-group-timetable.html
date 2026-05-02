@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group Timetable </title>
     <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
 </head>
@@ -41,7 +42,7 @@
             <td th:text="${grouptimetable.department}"></td>
             <td th:text="${grouptimetable.field + grouptimetable.year}"></td>
             <td>
-                <a th:href="@{/students/student/{field}/{year}/{group}/details(
+                <a th:href="@{/students/{group}/{year}/{field}/details(
         field=${grouptimetable.field},
         year=${grouptimetable.year},
         group=${grouptimetable.group})}"

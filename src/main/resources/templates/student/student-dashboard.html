@@ -2,10 +2,12 @@
 <html lang="fr"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style-student/style-student-dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
     <link rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+    <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
 <input type="checkbox" id="toggle-sidebar" />
@@ -15,10 +17,7 @@
 
         <label for="toggle-sidebar">
             <div  id="menu">
-
                 <img th:src="@{/images/menu-burger.png}">
-
-
             </div>
         </label>
         <h2 th:text="'Bienvenue cher Etudiant ' + ${fullname}"></h2>
@@ -72,5 +71,114 @@
         </div>
     </div>
 </section>
+<main class="center-wrapper">
+    <h2 class="separator">Menu Etudiant</h2>
+    <section class="grid">
+
+        <div class="option" style="background-color: rgba(78, 37, 144, 0.534);">
+            <a th:href="@{/student/timetable}">
+                <p> Emploi du temps</p>
+                <img th:src="@{/images/academic-years.png}">
+            </a>
+        </div>
+        <div class="option" id="scan-button">
+
+            <p>Scanner Code</p>
+            <img th:src="@{/images/qr-code.png}" alt="QR CODE">
+
+        </div>
+        <div class="option" style="background-color: rgba(69, 96, 122, 0.53);">
+            <a th:href="@{/student/absences}">
+                <p>Vos absences</p>
+                <img th:src="@{/images/absent.png}" alt="Absences">
+            </a>
+        </div>
+        <div class="option" style="background-color: rgb(113, 113, 230);">
+            <a th:href="@{/student/profile}">
+                <p>Profil </p>
+                <img th:src="@{/images/user-profile.png}" alt="Profil">
+            </a>
+        </div>
+        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
+            <a th:href="@{/logout}">
+                <p>Deconnexion </p>
+                <img th:src="@{/images/power-off.png}" alt="Deconnexion">
+            </a>
+        </div>
+    </section>
+    <div id="scanner-container">
+
+        <div id="reader"></div>
+
+        <p id="result"></p>
+
+    </div>
+
+</main>
+<script>
+    const scanButton =
+document.getElementById("scan-button");
+
+const scannerContainer =
+document.getElementById("scanner-container");
+
+const result =
+document.getElementById("result");
+
+const html5QrCode =
+new Html5Qrcode("reader");
+
+let started = false;
+
+scanButton.addEventListener("click", () => {
+
+if (started) return;
+
+started = true;
+
+scannerContainer.style.display = "flex";
+
+Html5Qrcode.getCameras()
+    .then(devices => {
+
+        const cameraId = devices[0].id;
+
+        html5QrCode.start(
+            cameraId,
+            {
+                fps: 10,
+                qrbox: 250
+            },
+
+            (decodedText) => {
+
+                result.innerText =
+                    "QR détecté : " + decodedText;
+
+                html5QrCode.stop();
+
+                fetch("/api/qr/scan", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        code: decodedText
+                    })
+
+                });
+
+                started = false;
+            }
+        );
+    });
+});
+</script>
 </body>
+
+
 </html>

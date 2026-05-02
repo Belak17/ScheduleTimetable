@@ -60,6 +60,7 @@ public class DataInitializer implements CommandLineRunner
             Student student = new Student();
             student.setUserId("BJ440005");
             student.setPassword(passwordEncoder.encode("BJ440005"));
+            student.setRole(User.Role.valueOf("STUDENT"));
             student.setCin("2394595");
             student.setNom("AKAKP");
             student.setPrenom("Renaud");

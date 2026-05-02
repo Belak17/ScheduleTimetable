@@ -5,7 +5,7 @@ import com.belak.scheduletimetable.service.student.StudentService;
 import com.belak.scheduletimetable.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.io.IOException;
 
@@ -31,7 +31,7 @@ public class StudentController {
 
         model.addAttribute("fullname",
                 theResponse.getNom()+" " + theResponse.getPrenom());
-        return "student/student-dashboard";
+        return "student/student-dashboard.html";
     }
     @GetMapping("/profile")
     public String showStudentProfile(Model model
@@ -56,6 +56,7 @@ public class StudentController {
                 .contentType(MediaType.IMAGE_PNG)
                 .body(image);
     }
+
 
 
 

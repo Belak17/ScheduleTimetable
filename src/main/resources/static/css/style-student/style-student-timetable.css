@@ -7,9 +7,9 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #f4f6f8;
-    color: #333;
     background: linear-gradient(135deg, #f5f7fa, #e4e8ec);
+    color: #333;
+    overflow-x: hidden;
 }
 
 /* ===== Header ===== */
@@ -17,13 +17,18 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
+
     padding: 10px 20px;
+
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
+
     position: fixed;
     top: 0;
     left: 0;
+
     width: 100%;
+
     z-index: 100;
 }
 
@@ -31,10 +36,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
     width: 60px;
     height: 60px;
+
     cursor: pointer;
+
     border-radius: 8px;
+
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
@@ -59,16 +68,23 @@ body {
 /* ===== Sidebar ===== */
 .icons {
     position: fixed;
-    top: 50px;
+
+    top: 70px;
     left: -260px;
+
     width: 260px;
-    height: 100vh;
+    height: calc(100vh - 70px);
+
     background-color: #ffffff;
+
     box-shadow: 2px 0 14px rgba(0,0,0,0.1);
+
     display: flex;
     flex-direction: column;
     align-items: center;
+
     transition: left 0.3s ease;
+
     z-index: 90;
 }
 
@@ -78,9 +94,13 @@ body {
 
 .icons .text-menu {
     width: 100%;
+
     padding: 20px;
+
     border-bottom: 1px solid #e0e0e0;
+
     text-align: center;
+
     background-color: #f8f9fa;
 }
 
@@ -102,12 +122,17 @@ body {
 .icon-container label {
     display: flex;
     align-items: center;
+
     gap: 15px;
+
     width: 100%;
+
     padding: 12px 20px;
+
     color: #333;
     text-decoration: none;
-    transition: background-color 0.3s ease, border-radius 0.3s ease;
+
+    transition: background-color 0.3s ease;
 }
 
 .icon-container a:hover,
@@ -123,34 +148,56 @@ body {
 
 /* ===== Main Content ===== */
 .center-wrapper {
-    margin: 90px auto 20px auto; /* sous le header */
-    padding: 20px;
+    margin: 110px auto 30px auto;
+
+    width: calc(100% - 40px);
     max-width: 1200px;
+
+    min-height: 540px;
+
     background-color: #ffffff;
-    border-radius: 8px;
+
+    border-radius: 12px;
+
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    overflow : hidden ;
+
+    padding: 20px;
+
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* ===== Table ===== */
 table {
     width: 100%;
+
     border-collapse: collapse;
+
     border-radius: 8px;
+
     overflow: hidden;
+
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 th {
     background-color: #007BFF;
+
     color: white;
+
     font-weight: 600;
+
     padding: 14px 12px;
+
     text-align: left;
 }
 
 td {
     padding: 12px;
+
     border-bottom: 1px solid #e5e7eb;
 }
 
@@ -162,47 +209,73 @@ tr:hover {
     background-color: #f1f5f9;
 }
 
-/* ===== Responsive ===== */
+/* ===== Image ===== */
+.zoom-image {
+    width: 100%;
+    max-width: 100%;
+
+    height: auto;
+
+    object-fit: contain;
+
+    transform: scale(1.01) translate(40px, 120px);
+
+    transform-origin: center;
+
+    display: block;
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+
     .head-box {
         gap: 10px;
         padding: 10px;
     }
 
     .text-title {
-        font-size: 20px;
-    }
-
-    .center-wrapper {
-        margin: 80px 10px 20px 10px;
-        padding: 15px;
+        font-size: 18px;
     }
 
     .icons {
         width: 220px;
+        left: -220px;
+    }
+
+    .center-wrapper {
+        margin: 90px 10px 20px 10px;
+
+        width: auto;
+
+        min-height: auto;
+
+        padding: 15px;
+    }
+
+    .zoom-image {
+        transform: scale(1) translate(0, 0);
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th,
+    td {
+        font-size: 14px;
+        padding: 10px;
     }
 }
 
-/* ===== Main Content ===== */
-.center-wrapper {
-    margin: 90px auto 20px auto; /* sous le header */
-    padding: 20px;
-    max-width: 1200px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    margin-left: 115px;
-    margin-top: 110px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    width: 90%;
-    height: 540px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+/* ===== Disable Hover On Touch Devices ===== */
+@media (hover: none) {
 
-.zoom-image{
-    width:100%;
-    transform: scale(1.01) translate(40px, 120px);
-    transform-origin: center;
-    display:block;
+    tr:hover,
+    .icon-container a:hover,
+    .icon-container label:hover,
+    .head-box #menu:hover {
+        background-color: inherit;
+    }
 }

@@ -6,10 +6,11 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f4f6f8;
+    font-family: Cairo, system-ui, -apple-system, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Helvetica Neue, Arial, Noto Sans, sans-serif;
+    background-color: #c4cfda63;
     color: #333;
-    background: linear-gradient(135deg, #f5f7fa, #e4e8ec);
+    overflow-x: hidden;
 }
 
 /* ===== Header ===== */
@@ -86,16 +87,11 @@ body {
 
 .icons .text-menu h2 {
     font-size: 20px;
-    color: #333;
 }
 
 .icons-option {
     width: 100%;
     margin-top: 10px;
-}
-
-.icon-container {
-    width: 100%;
 }
 
 .icon-container a,
@@ -107,7 +103,7 @@ body {
     padding: 12px 20px;
     color: #333;
     text-decoration: none;
-    transition: background-color 0.3s ease, border-radius 0.3s ease;
+    transition: 0.3s ease;
 }
 
 .icon-container a:hover,
@@ -116,22 +112,66 @@ body {
     border-radius: 8px;
 }
 
-.tooltip {
-    font-size: 14px;
-    margin-left: 5px;
-}
-
 /* ===== Main Content ===== */
 .center-wrapper {
-    margin: 90px auto 20px auto; /* sous le header */
+    margin: 90px auto 20px;
     padding: 20px;
     max-width: 1200px;
-    background-color: #ffffff;
+
+    background: linear-gradient(135deg, #dee0e7, #f3f3f3);
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    backdrop-filter: blur(10px);
 }
 
-/* ===== Table ===== */
+/* ===== GRID ===== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 20px;
+}
+
+/* ===== OPTION CARD ===== */
+.option {
+    background: linear-gradient(135deg, #667eea, #4b59a249);
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+    padding: 15px;
+
+    transition: 0.3s;
+    text-align: center;
+}
+
+.option:hover {
+    transform: scale(1.05);
+}
+
+.option img {
+    width: 70px;
+    height: auto;
+}
+
+.option p {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.option a {
+    text-decoration: none;
+}
+
+/* ===== TABLE ===== */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -143,8 +183,7 @@ table {
 th {
     background-color: #007BFF;
     color: white;
-    font-weight: 600;
-    padding: 14px 12px;
+    padding: 14px;
     text-align: left;
 }
 
@@ -161,23 +200,63 @@ tr:hover {
     background-color: #f1f5f9;
 }
 
-/* ===== Responsive ===== */
+/* ===== SEPARATOR ===== */
+.separator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.separator::before,
+.separator::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background-color: black;
+}
+
+/* ===== HOVER ONLY DESKTOP ===== */
+@media (hover: hover) {
+    .option:hover {
+        transform: scale(1.05);
+    }
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+
     .head-box {
         gap: 10px;
         padding: 10px;
     }
 
     .text-title {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .center-wrapper {
-        margin: 80px 10px 20px 10px;
+        margin: 80px 10px 20px;
         padding: 15px;
     }
 
     .icons {
-        width: 220px;
+        width: 200px;
+    }
+
+    .option img {
+        width: 60px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+@media (hover: none) {
+    .option:hover {
+        transform: none;
     }
 }

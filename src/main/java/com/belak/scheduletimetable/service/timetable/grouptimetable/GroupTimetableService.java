@@ -13,6 +13,7 @@ import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.record.GroupInfo;
 import com.belak.scheduletimetable.repository.GroupTimetableRepository;
 import com.belak.scheduletimetable.repository.StudentRepository;
+import com.belak.scheduletimetable.service.courstp.CoursTPService;
 import com.spire.xls.ExcelVersion;
 import com.spire.xls.Worksheet;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.Normalizer;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,6 +46,7 @@ import java.util.regex.Pattern;
 public class GroupTimetableService {
     private final GroupTimetableRepository groupTimetableRepository ;
     private final StudentRepository studentRepository ;
+    private  final CoursTPService tpService ;
     public void sendManyGroupTimetable(MultipartFile file) throws IOException, InterruptedException {
         validateFile(file);
 
@@ -85,17 +88,35 @@ public class GroupTimetableService {
             GroupInfo info = extractGroupInfo(dataSheet);
             adjustSheetLayout(dataSheet);
 
+
             File tempExcel = saveTempExcel(singleWorkbook, position);
             Path pdfPath = convertExcelToPdf(tempExcel, position);
             byte[] pdfBytes = Files.readAllBytes(pdfPath);
 
-            saveGroupTimetable(info, pdfBytes, position);
+            GroupTimetable timetable = saveGroupTimetable(info, pdfBytes, position);
+
+            tpService.extractAllCoursTPforOneGroup(dataSheet,timetable);
 
             cleanupFiles(tempExcel.toPath(), pdfPath);
 
         } finally {
             singleWorkbook.dispose();
         }
+    }
+
+    public String removeAccents(String text) {
+        if (text == null) return null;
+
+        return Normalizer
+                .normalize(text, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "");
+    }
+
+    public String capitalizeFirstLetter(String text) {
+        if (text == null || text.isEmpty()) return text;
+
+        return text.substring(0, 1).toUpperCase() +
+                text.substring(1).toLowerCase();
     }
 
     private GroupInfo extractGroupInfo(Worksheet sheet) {
@@ -109,6 +130,8 @@ public class GroupTimetableService {
             throw new InvalidExcelFormatException("Format department incorrect");
         }
         String depname = parts[1].trim();
+        depname =removeAccents(depname);
+        depname = capitalizeFirstLetter(depname);
 
         String fullfield = sheet.getCellRange(6, 7).getValue();
         if (fullfield == null) {
@@ -181,7 +204,7 @@ public class GroupTimetableService {
         return pdfPath;
     }
 
-    private void saveGroupTimetable(GroupInfo info, byte[] pdfBytes, int position) {
+    private GroupTimetable saveGroupTimetable(GroupInfo info, byte[] pdfBytes, int position) {
         GroupTimetable entity = GroupTimetable.builder()
                 .departement(Departement.fromLibelle(info.getDepname()))
                 .position(position)
@@ -204,7 +227,7 @@ public class GroupTimetableService {
             entity.addStudent(student);
         }
 
-        groupTimetableRepository.save(entity);
+       return groupTimetableRepository.save(entity);
     }
 
     private void cleanupFiles(Path excelPath, Path pdfPath) throws IOException {
@@ -264,6 +287,28 @@ public class GroupTimetableService {
 
         return convertFirstPageToImage(pdfBytes);
 
+    }
+
+    public List<Filiere> getLicenceFilieresByDepartement(Departement departement) {
+        return groupTimetableRepository
+                .findDistinctFilieresByDepartement(departement)
+                .stream()
+                .filter(f -> f.name().startsWith("L"))
+                .toList();
+    }
+
+    public List<Filiere> getMasterFilieresByDepartement(Departement departement) {
+        return groupTimetableRepository
+                .findDistinctFilieresByDepartement(departement)
+                .stream()
+                .filter(f -> f.name().startsWith("M"))
+                .toList();
+    }
+
+    public List<Filiere> getFilieresByDepartement(Departement departement) {
+        return groupTimetableRepository
+                .findDistinctFilieresByDepartement(departement)
+              ;
     }
 
 }

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absences par Departement</title>
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-filiere-absence.css}">
+    <link rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+</head>
+<body>
+<input type="checkbox" id="toggle-sidebar" />
+<header>
+    <div class="head-box">
+        <!-- Checkbox caché -->
+
+        <label for="toggle-sidebar">
+            <div  id="menu">
+
+                <img th:src="@{/images/menu-burger.png}">
+
+
+            </div>
+        </label>
+        <h2>Consultation des Absences  </h2>
+    </div>
+</header>
+
+<section th:replace="admin/admin-dashboard :: sidebar">
+
+</section>
+<main class="center-wrapper">
+    <h2 class="separator" th:text="${departement}">Licences du departement </h2>
+    <section class="grid">
+
+        <div class="option"
+             th:each="licence : ${licences}"
+             style="background-color: rgba(78, 37, 144, 0.534);">
+
+            <p th:text="${licence.code}">Nom filière</p>
+
+            <p th:text="${licence.libelle}">Libelle</p>
+
+            <img th:src="@{/images/bachelor.png}" alt="icone">
+
+            <div class="Content">
+                <h2>Niveau 1</h2>
+                <h2>Niveau 2</h2>
+                <h2>Niveau 3</h2>
+            </div>
+
+        </div>
+
+    </section>
+    <h2 class="separator" th:text="${departement}">Master du departement </h2>
+    <section class="grid">
+
+        <div class="option"
+             th:each="master : ${masters}"
+             style="background-color: rgba(78, 37, 144, 0.534);">
+
+            <p th:text="${master.code}">Nom filière</p>
+            <p th:text="${master.libelle}">Libelle</p>
+
+            <img th:src="@{/images/degree.png}" alt="icone">
+
+            <div class="Content">
+                <h2>Niveau 1</h2>
+                <h2>Niveau 2</h2>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+<script>
+
+</script>
+
+</body>
+</html>

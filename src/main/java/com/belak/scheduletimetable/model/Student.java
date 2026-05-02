@@ -6,6 +6,9 @@ import com.belak.scheduletimetable.enumeration.TypeDiplome;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "student")
 @Builder
@@ -41,7 +44,18 @@ public class Student  extends User {
     @JoinColumn(name = "grouptimetable_id")
     private GroupTimetable groupTimetable;
 
+    @OneToMany(mappedBy = "student" , cascade = CascadeType.ALL , orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Presence> presences = new ArrayList<>();
 
+    public void addPresence(Presence presence){
+        if (presences == null) {
+            presences = new ArrayList<>();
+        }
+        presence.setStudent(this);
+        presences.add(presence);
+
+
+    }
     public Student(CreateStudentDto dto) {
         this.setUserId(dto.getUserId());
         this.setCin(dto.getCin());

@@ -2,6 +2,7 @@
 <html lang="fr"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
     <link rel="stylesheet"
@@ -25,6 +26,64 @@
     </div>
 </header>
 
+
+<main class="center-wrapper">
+    <h2 class="separator">Gestion Academique</h2>
+    <section class="grid">
+
+        <div class="option" style="background-color: rgba(78, 37, 144, 0.534);">
+            <a th:href="@{/admin/timetable}">
+            <p>Televerser Emploi du temps</p>
+            <img th:src="@{/images/academic-years.png}">
+            </a>
+        </div>
+        <div class="option" >
+            <a th:href="@{/timetables/group/timetable}">
+                <p> Emploi du temps des Etudiants</p>
+                <img th:src="@{/images/graduated (1).png}">
+            </a>
+        </div>
+        <div class="option" style="background-color: rgba(69, 96, 122, 0.53);">
+            <a th:href="@{/professors/professor/timetable}">
+                <p>Emploi du temps des Professeurs</p>
+                <img th:src="@{/images/teacher (1).png}">
+            </a>
+        </div>
+        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
+            <a th:href="@{/admin/import}">
+            <p>Televerser Utilisateurs Info</p>
+            <img th:src="@{/images/study-plans.png}">
+            </a>
+        </div>
+    </section>
+    <h2 class="separator">Gestion Administrative </h2>
+    <section class="grid">
+
+        <div class="option" style="background-color: rgb(113, 113, 230);">
+            <a th:href="@{/admin/profile}">
+            <p>Profil </p>
+            <img th:src="@{/images/user-profile.png}">
+            </a>
+        </div>
+        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
+            <a th:href="@{/admin/absences/department}">
+            <p>Voir la liste des absences </p>
+            <img th:src="@{/images/absences.png}">
+            </a>
+        </div>
+        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
+            <p>Gestion des administateurs </p>
+            <img th:src="@{/images/administrator.png}">
+        </div>
+        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
+            <a th:href="@{/logout}">
+            <p>Deconnexion </p>
+            <img th:src="@{/images/power-off.png}">
+            </a>
+        </div>
+    </section>
+
+</main>
 <section class="icons" th:fragment="sidebar" >
     <div class="text-menu">
         <h2>
@@ -50,12 +109,11 @@
             <a th:href="@{/admin/timetable}">
                 <img th:src="@{/images/folder-upload.png}" width="20">
 
-
                 <span class="tooltip">Emploi du temps </span>
             </a>
         </div>
         <div class="icon-container">
-            <a th:href="@{/admin/timetable}">
+            <a th:href="@{/admin/import}">
                 <img th:src="@{/images/user (1).png}" width="20">
 
 

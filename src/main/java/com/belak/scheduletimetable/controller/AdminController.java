@@ -41,4 +41,9 @@ public class AdminController {
     public String showAdminImportUsers( Model model ) {
         return "admin/upload-users.html";
     }
+
+    @GetMapping("/absences/department")
+    public String showAdminAbsenceByDepartment( Model model ) {
+        return "admin/show-department-absence.html";
+    }
 }

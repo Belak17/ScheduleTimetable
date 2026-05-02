@@ -2,6 +2,7 @@
 <html lang="fr"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Upload Timetable</title>
     <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-upload-timetable.css}">
     <link rel="stylesheet"
@@ -49,7 +50,7 @@
         </form>
 
         <form method="post" th:action="@{/students/import}" enctype="multipart/form-data" class="form-upload" id="group-upload">
-            <h3>Emploi du Temps des Etudiants</h3>
+            <h3>Informations des Etudiants</h3>
             <label class="custom-file">
                 <input type="file" name="excelFile" accept=".xls,.xlsx" class="excelFileInput">
                 <span class="file-btn">Choisir un fichier</span>

@@ -1,134 +1,160 @@
-.login-box
-{
+.login-box {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     background-color: white;
     box-shadow: 0 0 14px 5px #0003;
-    width: 900px;
-    height: 520px;
-    margin-top: 30px;
-    margin-bottom: 29px;
+
+    width: 90%;
+    max-width: 900px;
+    min-height: 520px;
+
+    margin: 30px auto;
     position: relative;
 
-
-
 }
 
-body
-{
-    background-color: ghostwhite;
-    display: flex;
-    flex-direction: column;
-    justify-content:center ;
-    align-items: center;
-    height: 100vh;            /* prend toute la hauteur écran */
-    margin: 0;
-    font-family: Cairo;
-}
-
-
-
-.left-block
-{
+/* LEFT SIDE */
+.left-block {
+    flex: 1;
     margin-top: 70px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-left: 20px;
-
-
 }
 
-input
-{
-    border: none;
-
+/* RIGHT SIDE */
+.right-block {
+    flex: 1;
+    background: url("/images/login_box_bg.png");
+    background-size: cover;
+    background-position: center;
 }
 
-input:focus
-{
-    outline:none;
-}
-
-.input
-{
-    display: flex;
-    flex-direction: row;
-    border: 1px solid lightblue;
-    padding: 10px;
-    gap: 6px;
-    position: relative;
-    width:43%;
-    bottom:20px;
-}
-
-.inputs
-{
+/* INPUT WRAPPER */
+.inputs {
     margin-top: 40px;
     display: flex;
     flex-direction: column;
-    gap:10px;
+    gap: 10px;
 }
 
-.input img
-{
-     color: #999;
-     width: 15px;
-     height: 15px;
-}
-
-
-.others
-{
+/* INPUT CONTAINER */
+.input {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    border: 1px solid lightblue;
+    padding: 10px;
+    gap: 6px;
+
+    width: 100%;
+    max-width: 320px;
 }
 
-.connect
-{
-    display: flex;           /* aligne icône + texte horizontalement */
-    align-items: center;     /* centre verticalement icône et texte */
-    justify-content: flex-start;
-    gap: 10px;               /* petit espace horizontal entre icône et texte */
+input {
+    border: none;
+    width: 100%;
+}
+
+input:focus {
+    outline: none;
+}
+
+.input img {
+    width: 15px;
+    height: 15px;
+}
+
+/* OTHER LINKS / BUTTON AREA */
+.others {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
+
+/* BUTTON */
+.connect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
     padding: 10px 15px;
+
     font-size: 1rem;
     background-color: #21ba45;
     color: white;
+
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    position: relative;
-    left:200px;
-    top: 30px;
 
+    width: 100%;
+    max-width: 320px;
+
+    margin-top: 20px;
 }
 
-h3
-{
-    font-family: Cairo, system-ui,
-    -apple-system, Segoe UI, Roboto
-    , Oxygen, Ubuntu, Cantarell, Helvetica Neue,
-     Arial, Noto Sans, Liberation Sans,
-      sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    Segoe UI Symbol, "Noto Color Emoji";
+/* TITLES */
+h3 {
+    font-family: Cairo, system-ui, -apple-system, Segoe UI, Roboto,
+        Oxygen, Ubuntu, Cantarell, Helvetica Neue, Arial,
+        Noto Sans, sans-serif;
+
     color: #073772;
     margin: 0;
     font-weight: 400;
     font-size: 1rem;
 }
 
+/* ALERT BOX */
 .alert {
-
     padding: 12px 15px;
     border-radius: 6px;
     font-size: 14px;
     border: 2px solid red;
     background-color: lightcoral;
-    width:50%;
+    width: 100%;
+    max-width: 320px;
 }
-.alert span
-{
-   margin-left:40px;
-   font-weight: bold;
-   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+.alert span {
+    margin-left: 10px;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+    .login-box {
+        flex-direction: column;
+        width: 95%;
+        min-height: auto;
+    }
+
+    .right-block {
+        display: none;
+    }
+
+    .left-block {
+        margin: 20px;
+        align-items: center;
+    }
+
+    .input {
+        max-width: 100%;
+    }
+
+    .connect {
+        max-width: 100%;
+    }
+
+    .others {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
 }

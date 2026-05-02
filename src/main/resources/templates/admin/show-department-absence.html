@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absences par Departement</title>
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+    <link rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+</head>
+<body>
+<input type="checkbox" id="toggle-sidebar" />
+<header>
+    <div class="head-box">
+        <!-- Checkbox caché -->
+
+        <label for="toggle-sidebar">
+            <div  id="menu">
+
+                <img th:src="@{/images/menu-burger.png}">
+
+
+            </div>
+        </label>
+        <h2>Consultation des Absences  </h2>
+    </div>
+</header>
+
+<section th:replace="admin/admin-dashboard :: sidebar">
+
+</section>
+<main class="center-wrapper">
+    <h2 class="separator" >Absences par Departement </h2>
+    <section class="grid">
+
+        <div class="option" style="background-color: rgba(78, 37, 144, 0.534);">
+            <a th:href="@{/filieres/departements/Mathematiques}">
+            <p>Mathématiques</p>
+            <img th:src="@{/images/trigonometry.png}">
+            </a>
+        </div>
+        <div class="option" >
+            <a th:href="@{/filieres/departements/INF}">
+            <p> Informatique</p>
+            <img th:src="@{/images/self-employed.png}">
+            </a>
+        </div>
+        <div class="option" style="background-color: rgba(69, 96, 122, 0.53);">
+            <a th:href="@{/filieres/departements/Biologie}">
+            <p>Biologie </p>
+            <img th:src="@{/images/dna-structure.png}">
+            </a>
+        </div>
+        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
+            <a th:href="@{/filieres/departements/Chimie}">
+            <p>Chimie</p>
+            <img th:src="@{/images/flask.png}">
+            </a>
+        </div>
+        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
+            <a th:href="@{/filieres/departements/Physique}">
+            <p>Physique</p>
+            <img th:src="@{/images/physics.png}">
+            </a>
+        </div>
+        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
+            <a th:href="@{/filieres/departements/Geologie}">
+            <p>Geologie </p>
+            <img th:src="@{/images/geology.png}">
+            </a>
+        </div>
+    </section>
+</main>
+<script>
+
+</script>
+
+</body>
+</html>

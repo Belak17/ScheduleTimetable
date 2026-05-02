@@ -7,9 +7,9 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #f4f6f8;
-    color: #333;
     background: linear-gradient(135deg, #f5f7fa, #e4e8ec);
+    color: #333;
+    overflow-x: hidden;
 }
 
 /* ===== Header ===== */
@@ -17,13 +17,18 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
+
     padding: 10px 20px;
+
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
+
     position: fixed;
     top: 0;
     left: 0;
+
     width: 100%;
+
     z-index: 100;
 }
 
@@ -31,10 +36,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
     width: 60px;
     height: 60px;
+
     cursor: pointer;
+
     border-radius: 8px;
+
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
@@ -59,17 +68,26 @@ body {
 /* ===== Sidebar ===== */
 .icons {
     position: fixed;
-    top: 10px;
+
+    top: 0;
     left: -260px;
+
     width: 260px;
     height: 100vh;
+
     background-color: #ffffff;
+
     box-shadow: 2px 0 14px rgba(0,0,0,0.1);
+
     display: flex;
     flex-direction: column;
     align-items: center;
+
     transition: left 0.3s ease;
+
     z-index: 90;
+
+    padding-top: 80px;
 }
 
 #toggle-sidebar:checked ~ .icons {
@@ -78,9 +96,13 @@ body {
 
 .icons .text-menu {
     width: 100%;
+
     padding: 20px;
+
     border-bottom: 1px solid #e0e0e0;
+
     text-align: center;
+
     background-color: #f8f9fa;
 }
 
@@ -102,12 +124,17 @@ body {
 .icon-container label {
     display: flex;
     align-items: center;
+
     gap: 15px;
+
     width: 100%;
+
     padding: 12px 20px;
+
     color: #333;
     text-decoration: none;
-    transition: background-color 0.3s ease, border-radius 0.3s ease;
+
+    transition: background-color 0.3s ease;
 }
 
 .icon-container a:hover,
@@ -123,49 +150,57 @@ body {
 
 /* ===== Main Content ===== */
 .center-wrapper {
-    margin: 90px auto 20px auto; /* sous le header */
-    padding: 20px;
-    max-width: 1200px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
+    margin: 100px auto 30px auto;
 
-/*.tooltip {
-    font-size: 14px;
-    margin-left: 5px;
-}*/
-
-/* ===== Main Content ===== */
-.center-wrapper {
-    margin: 90px auto 20px auto; /* sous le header */
     padding: 20px;
+
+    width: calc(100% - 40px);
     max-width: 1200px;
+
     background-color: #ffffff;
-    border-radius: 8px;
+
+    border-radius: 12px;
+
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+    overflow-x: auto;
 }
 
 /* ===== Table ===== */
 table {
     width: 100%;
+
     border-collapse: collapse;
+
     border-radius: 8px;
+
     overflow: hidden;
+
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+    min-width: 700px;
 }
 
 th {
-    background-color: #007BFF;
+    background: linear-gradient(135deg, #667eea, #4b59a249);
+
     color: white;
+
     font-weight: 600;
+
     padding: 14px 12px;
+
     text-align: left;
+
+    white-space: nowrap;
 }
 
 td {
     padding: 12px;
+
     border-bottom: 1px solid #e5e7eb;
+
+    white-space: nowrap;
 }
 
 tr:nth-child(even) {
@@ -176,21 +211,51 @@ tr:hover {
     background-color: #f1f5f9;
 }
 
-/* ===== Responsive ===== */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+
     .head-box {
         gap: 10px;
         padding: 10px;
     }
 
     .text-title {
-        font-size: 20px;
+        font-size: 18px;
+    }
+
+    .icons {
+        width: 220px;
+        left: -220px;
     }
 
     .center-wrapper {
-        margin: 80px 10px 20px 10px;
+        margin: 85px 10px 20px 10px;
+
+        width: auto;
+
         padding: 15px;
+
+        border-radius: 10px;
     }
 
+    table {
+        min-width: 600px;
+    }
 
+    th,
+    td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+/* ===== Disable Hover Effects On Touch Devices ===== */
+@media (hover: none) {
+
+    tr:hover,
+    .icon-container a:hover,
+    .icon-container label:hover,
+    .head-box #menu:hover {
+        background-color: inherit;
+    }
 }
