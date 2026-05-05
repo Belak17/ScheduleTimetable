@@ -1,5 +1,7 @@
 package com.belak.scheduletimetable.service.presence;
 
+import com.belak.scheduletimetable.component.PresenceMapper;
+import com.belak.scheduletimetable.dto.PresenceDto;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.CoursTP;
 import com.belak.scheduletimetable.model.Presence;
@@ -10,6 +12,9 @@ import com.belak.scheduletimetable.repository.PresenceRepository;
 import com.belak.scheduletimetable.repository.SeanceRepository;
 import com.belak.scheduletimetable.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,6 +31,7 @@ public class PresenceService {
     private  final StudentRepository studentRepository ;
     private  final CoursTPRepository tpRepository ;
     private  final SeanceRepository seanceRepository ;
+    private  final PresenceMapper presenceMapper ;
 
     public void  createPresence(String userId , String code)
     {
@@ -67,6 +73,19 @@ public class PresenceService {
         theSeance.addPresence(thePresence);
 
         seanceRepository.save(theSeance);
+
+    }
+
+    public Page<PresenceDto> getAllAbsenceByUserId(String userId , int page , int size )
+    {
+        Pageable pageable = PageRequest.of(page, size);
+        Student student = studentRepository
+                .findByUserId(userId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Etudiant non trouvé pour userId : " + userId)
+                );
+        return  presenceRepository.findByStudentAndPresentFalse(student,pageable).map(presenceMapper::convertPresencetoDto);
+
 
     }
 

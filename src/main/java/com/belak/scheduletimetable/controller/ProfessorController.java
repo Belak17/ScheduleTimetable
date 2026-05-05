@@ -5,6 +5,7 @@ import com.belak.scheduletimetable.dto.ProfessorTimetableDto;
 import com.belak.scheduletimetable.dto.UserDto;
 import com.belak.scheduletimetable.response.LoginResponse;
 import com.belak.scheduletimetable.service.professor.ProfessorService;
+import com.belak.scheduletimetable.service.timetable.professortimetable.ProfessorPreviewService;
 import com.belak.scheduletimetable.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ import java.io.IOException;
 @RequestMapping("/professor")
 @RequiredArgsConstructor
 public class ProfessorController {
-    private final ProfessorService professorService ;
+    private final ProfessorPreviewService professorService ;
     private  final UserService userService ;
     @GetMapping("/dashboard")
     public String showProfessorDashboard( Model model

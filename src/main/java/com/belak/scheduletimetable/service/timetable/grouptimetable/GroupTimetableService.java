@@ -3,24 +3,21 @@ package com.belak.scheduletimetable.service.timetable.grouptimetable;
 import com.belak.scheduletimetable.dto.GroupTimetableDto;
 import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.enumeration.Filiere;
-import com.belak.scheduletimetable.exception.EmptyFileException;
+
 import com.belak.scheduletimetable.exception.InvalidExcelFormatException;
-import com.belak.scheduletimetable.exception.LibreOfficeConversionException;
+
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.GroupTimetable;
-import com.belak.scheduletimetable.model.Professor;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.record.GroupInfo;
 import com.belak.scheduletimetable.repository.GroupTimetableRepository;
 import com.belak.scheduletimetable.repository.StudentRepository;
+import com.belak.scheduletimetable.service.UtilsService;
 import com.belak.scheduletimetable.service.courstp.CoursTPService;
+import com.belak.scheduletimetable.service.timetable.TimetableService;
 import com.spire.xls.ExcelVersion;
 import com.spire.xls.Worksheet;
 import lombok.RequiredArgsConstructor;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,14 +25,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.spire.xls.Workbook;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.text.Normalizer;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -43,15 +37,15 @@ import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
-public class GroupTimetableService {
+public class GroupTimetableService extends TimetableService {
     private final GroupTimetableRepository groupTimetableRepository ;
     private final StudentRepository studentRepository ;
     private  final CoursTPService tpService ;
+    private final UtilsService utilsService ;
     public void sendManyGroupTimetable(MultipartFile file) throws IOException, InterruptedException {
-        validateFile(file);
+        utilsService.validateFile(file);
 
-        Workbook originalWorkbook = loadWorkbook(file);
-
+        Workbook originalWorkbook = utilsService.loadWorkbook(file);
         try {
             int sheetNumbers = originalWorkbook.getWorksheets().getCount();
 
@@ -63,17 +57,7 @@ public class GroupTimetableService {
         }
     }
 
-    private void validateFile(MultipartFile file) {
-        if (file.isEmpty()) {
-            throw new EmptyFileException("Le fichier Excel est vide");
-        }
-    }
 
-    private Workbook loadWorkbook(MultipartFile file) throws IOException {
-        Workbook workbook = new Workbook();
-        workbook.loadFromStream(file.getInputStream());
-        return workbook;
-    }
 
     private void processSheet(Workbook originalWorkbook, int position) throws IOException, InterruptedException {
         Workbook singleWorkbook = new Workbook();
@@ -171,38 +155,7 @@ public class GroupTimetableService {
         return tempExcel;
     }
 
-    private Path convertExcelToPdf(File tempExcel, int position) throws IOException, InterruptedException {
-        String outputDir = System.getProperty("user.dir") + "/output";
-        Files.createDirectories(Paths.get(outputDir));
 
-        String libreOfficePath = "C:\\Program Files\\LibreOffice\\program\\soffice.exe";
-
-        ProcessBuilder pb = new ProcessBuilder(
-                libreOfficePath,
-                "--headless",
-                "--convert-to",
-                "pdf",
-                "--outdir",
-                outputDir,
-                tempExcel.getAbsolutePath()
-        );
-        pb.redirectErrorStream(true);
-
-        Process process = pb.start();
-        int exitCode = process.waitFor();
-
-        if (exitCode != 0) {
-            throw new LibreOfficeConversionException("Erreur conversion PDF sheet " + position);
-        }
-
-        Path pdfPath = Paths.get(outputDir, tempExcel.getName().replace(".xlsx", ".pdf"));
-
-        if (!Files.exists(pdfPath)) {
-            throw new LibreOfficeConversionException("PDF non généré sheet " + position);
-        }
-
-        return pdfPath;
-    }
 
     private GroupTimetable saveGroupTimetable(GroupInfo info, byte[] pdfBytes, int position) {
         GroupTimetable entity = GroupTimetable.builder()
@@ -230,32 +183,8 @@ public class GroupTimetableService {
        return groupTimetableRepository.save(entity);
     }
 
-    private void cleanupFiles(Path excelPath, Path pdfPath) throws IOException {
-        Files.deleteIfExists(excelPath);
-        Files.deleteIfExists(pdfPath);
-    }
 
-    public byte[] convertFirstPageToImage(byte[] pdfBytes) throws IOException {
 
-        try (PDDocument document = PDDocument.load(pdfBytes)) {
-
-            PDFRenderer pdfRenderer = new PDFRenderer(document);
-            PDPage page = document.getPage(0);
-            PDRectangle mediaBox = page.getMediaBox();
-
-            float pdfHeight = mediaBox.getHeight();
-            float targetHeight = 1000f; // plus grand que nécessaire
-            float scale = targetHeight / pdfHeight;
-            //BufferedImage image = pdfRenderer.renderImage(0, scale);
-            BufferedImage image = pdfRenderer.renderImageWithDPI(0, 150);
-            // 0 = première page
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(image, "png", baos);
-
-            return baos.toByteArray();
-        }
-    }
     public Page<GroupTimetableDto> getGroupTimetables(int page , int size)
     {
         Pageable pageable = PageRequest.of(page, size);

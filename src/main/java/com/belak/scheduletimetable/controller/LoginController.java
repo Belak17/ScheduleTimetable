@@ -18,28 +18,5 @@ public class LoginController {
     {
         return "login/login" ;
     }
-//    @PostMapping
-//    public String login(@ModelAttribute LoginRequest loginRequest ,
-//                        RedirectAttributes redirectAttributes) {
-//        System.out.println(loginRequest.getUserId() + " " + loginRequest.getPassword());
-//
-//        try {
-//            LoginResponse theResponse  = loginService.findRole(loginRequest);
-//
-//            if (theResponse.getRole().equals("ADMIN")) {
-//                redirectAttributes.addAttribute("id", theResponse.getId());
-//                return "redirect:/admin/dashboard";}
-//            else if (theResponse.getRole().equals("STUDENT")) {
-//                redirectAttributes.addAttribute("id", theResponse.getId());
-//                return "redirect:/student/dashboard";}
-//            else if (theResponse.getRole().equals("PROFESSOR")) {
-//                redirectAttributes.addAttribute("id", theResponse.getId());
-//                return "redirect:/professor/dashboard";}
-//        } catch (ResourceNotFoundException e) {
-//            redirectAttributes.addFlashAttribute("failure", e.getMessage());
-//            return "redirect:/login";
-//        }
-//        return "";
-//    }
-//
+
 }

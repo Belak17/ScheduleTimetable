@@ -26,11 +26,6 @@ import java.util.regex.Pattern;
 public class CoursTPService {
     private final CoursTPRepository coursTPrepository;
     private  final GroupTimetableRepository timetableRepository ;
-
-    public void saveCoursTP(CoursTP coursTP) {
-        coursTPrepository.save(coursTP);
-    }
-
     public String extractGroupSalle(String text) {
 
         if (text == null) return null;
@@ -125,10 +120,6 @@ public class CoursTPService {
 
         return tp;
     }
-    public void saveOneCoursTp(CoursTP coursTP) {
-        coursTPrepository.save(coursTP);
-    }
-
     public void extractAllCoursTPforOneGroup(Worksheet sheet, GroupTimetable timetable) {
 
         for (int row = 10; row <= 15; row++) {

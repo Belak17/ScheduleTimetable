@@ -31,4 +31,7 @@ public class Presence {
     @JoinColumn(name = "seance_id")
     private Seance seance;
 
+    public boolean getPresent() {
+        return present ;
+    }
 }

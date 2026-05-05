@@ -1,5 +1,6 @@
 package com.belak.scheduletimetable.service.timetable.professortimetable;
 
+import com.belak.scheduletimetable.component.ProfessorTimetableMapper;
 import com.belak.scheduletimetable.dto.ProfessorDto;
 import com.belak.scheduletimetable.dto.ProfessorTimetableDto;
 import com.belak.scheduletimetable.enumeration.Grade;
@@ -13,10 +14,13 @@ import com.belak.scheduletimetable.record.GroupInfo;
 import com.belak.scheduletimetable.record.ProfessorData;
 import com.belak.scheduletimetable.repository.ProfessorRepository;
 import com.belak.scheduletimetable.repository.ProfessorTimetableRepository;
+import com.belak.scheduletimetable.service.UtilsService;
 import com.belak.scheduletimetable.service.professor.ProfessorService;
+import com.belak.scheduletimetable.service.timetable.TimetableService;
 import com.spire.xls.ExcelVersion;
 import com.spire.xls.Workbook;
 import com.spire.xls.Worksheet;
+import jdk.jshell.execution.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,31 +38,21 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ProfessorTimetableService {
+public class ProfessorTimetableService extends TimetableService {
     private final ProfessorTimetableRepository professorTimetableRepository ;
     private  final ProfessorRepository professorRepository ;
-    private  final ProfessorService professorService ;
+    private  final ProfessorTimetableMapper timetableMapper ;
+    private  final UtilsService utilsService ;
     public void sendManyProfessorTimetable(MultipartFile file) throws IOException, InterruptedException {
-        validateFile(file);
-        Workbook workbook = loadWorkbook(file);
+        utilsService.validateFile(file);
+        Workbook workbook = utilsService.loadWorkbook(file);
         int sheetCount = workbook.getWorksheets().getCount();
-
         for (int i = 0; i < sheetCount; i++) {
             processSheet(workbook, i);
         }
-
         workbook.dispose();
     }
-    private void validateFile(MultipartFile file) {
-        if (file.isEmpty()) {
-            throw new EmptyFileException("Le fichier Excel est vide");
-        }
-    }
-    private Workbook loadWorkbook(MultipartFile file) throws IOException {
-        Workbook workbook = new Workbook();
-        workbook.loadFromStream(file.getInputStream());
-        return workbook;
-    }
+
 
     private void processSheet(Workbook originalWorkbook, int position) throws IOException, InterruptedException {
         Workbook singleWorkbook = new Workbook();
@@ -117,43 +111,8 @@ public class ProfessorTimetableService {
         return tempExcel;
     }
 
-    private Path convertExcelToPdf(File tempExcel, int position) throws IOException, InterruptedException {
-        String outputDir = System.getProperty("user.dir") + "/output";
-        Files.createDirectories(Paths.get(outputDir));
 
-        String libreOfficePath = "C:\\Program Files\\LibreOffice\\program\\soffice.exe";
 
-        ProcessBuilder pb = new ProcessBuilder(
-                libreOfficePath,
-                "--headless",
-                "--convert-to",
-                "pdf",
-                "--outdir",
-                outputDir,
-                tempExcel.getAbsolutePath()
-        );
-        pb.redirectErrorStream(true);
-
-        Process process = pb.start();
-        int exitCode = process.waitFor();
-
-        if (exitCode != 0) {
-            throw new LibreOfficeConversionException("Erreur conversion PDF sheet " + position);
-        }
-
-        Path pdfPath = Paths.get(outputDir, tempExcel.getName().replace(".xlsx", ".pdf"));
-
-        if (!Files.exists(pdfPath)) {
-            throw new LibreOfficeConversionException("PDF non généré sheet " + position);
-        }
-
-        return pdfPath;
-    }
-
-    private void cleanupFiles(Path excelPath, Path pdfPath) throws IOException {
-        Files.deleteIfExists(excelPath);
-        Files.deleteIfExists(pdfPath);
-    }
 
     private void saveProfessorTimetable(ProfessorData professorData, byte[] pdfBytes, int position) {
         Optional<Professor> optionalProfessor = professorRepository.findByNameNormalized(professorData.getPrenom(), professorData.getNom());
@@ -178,14 +137,6 @@ public class ProfessorTimetableService {
     public Page<ProfessorTimetableDto> getProfessorTimetables(int page , int size)
     {
         Pageable pageable = PageRequest.of(page, size);
-        return professorTimetableRepository.findAll(pageable).map(this::convertToDto);
-    }
-
-    public ProfessorTimetableDto convertToDto(ProfessorTimetable timetable)
-    {
-        ProfessorDto professorDto = professorService.convertToDto(timetable.getProfessor());
-        return new ProfessorTimetableDto(timetable.getId(),
-                timetable.getSpeciality(),
-                timetable.getStatut().toString() , professorDto);
+        return professorTimetableRepository.findAll(pageable).map(timetableMapper::convertToDto);
     }
 }

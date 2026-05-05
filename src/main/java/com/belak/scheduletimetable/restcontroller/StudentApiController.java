@@ -2,7 +2,9 @@ package com.belak.scheduletimetable.restcontroller;
 
 import com.belak.scheduletimetable.dto.StudentDto;
 import com.belak.scheduletimetable.model.Student;
+import com.belak.scheduletimetable.service.student.StudentExcelService;
 import com.belak.scheduletimetable.service.student.StudentService;
+import com.belak.scheduletimetable.service.timetable.grouptimetable.TimetablePreviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -19,8 +21,9 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @RequestMapping("/students")
 public class StudentApiController {
-
+    private  final StudentExcelService studentExcelService ;
     private  final StudentService studentService ;
+    private  final TimetablePreviewService preview ;
 
     @GetMapping("/{field}/{year}/{group}/details")
     public String showGroupStudents( Model model,
@@ -42,7 +45,7 @@ public class StudentApiController {
     @GetMapping("/preview/{userId}")
     public ResponseEntity<byte[]> getPreview(@PathVariable String userId ) throws IOException {
 
-        byte[] image = studentService
+        byte[] image = preview
                 .getTimetablePreview(userId);
 
         return ResponseEntity.ok()
@@ -56,7 +59,7 @@ public class StudentApiController {
                                  Model model ,
                                  RedirectAttributes redirectAttributes)  {
         try {
-            studentService.processSheet(file);
+            studentExcelService.processSheet(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

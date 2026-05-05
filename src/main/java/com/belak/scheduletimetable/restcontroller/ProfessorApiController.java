@@ -3,6 +3,7 @@ package com.belak.scheduletimetable.restcontroller;
 import com.belak.scheduletimetable.dto.ProfessorDto;
 import com.belak.scheduletimetable.request.UpdateRequest;
 import com.belak.scheduletimetable.service.professor.ProfessorService;
+import com.belak.scheduletimetable.service.timetable.grouptimetable.TimetablePreviewService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.dialect.function.PostgreSQLTruncRoundFunction;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,8 @@ import java.io.IOException;
 @RequestMapping("/professors")
 @RequiredArgsConstructor
 public class ProfessorApiController {
-    private final ProfessorService professorService ;
+    private final TimetablePreviewService timetablePreviewService ;
+    private  final ProfessorService professorService ;
     @GetMapping("/professor/timetable")
     public String showProfessorTimetables(
             @RequestParam(defaultValue = "0") int page,
@@ -38,7 +40,7 @@ public class ProfessorApiController {
     @GetMapping("/preview/{userId}")
     public ResponseEntity<byte[]> getPreview(@PathVariable String userId ) throws IOException {
 
-        byte[] image = professorService
+        byte[] image = timetablePreviewService
                 .getTimetablePreview(userId);
 
         return ResponseEntity.ok()

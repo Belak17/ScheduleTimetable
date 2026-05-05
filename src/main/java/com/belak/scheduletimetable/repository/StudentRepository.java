@@ -2,6 +2,7 @@ package com.belak.scheduletimetable.repository;
 
 import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.enumeration.Filiere;
+import com.belak.scheduletimetable.model.Presence;
 import com.belak.scheduletimetable.model.Professor;
 import com.belak.scheduletimetable.model.Student;
 import org.springframework.data.domain.Page;
@@ -31,4 +32,6 @@ WHERE s.userId = :userId
     Optional<Student> findByUserIdWithTimetable(@Param("userId")String userId);
 
     void deleteByUserId(String userId);
+
+
 }

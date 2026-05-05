@@ -2,6 +2,7 @@ package com.belak.scheduletimetable.controller;
 
 import com.belak.scheduletimetable.response.LoginResponse;
 import com.belak.scheduletimetable.service.student.StudentService;
+import com.belak.scheduletimetable.service.timetable.grouptimetable.TimetablePreviewService;
 import com.belak.scheduletimetable.service.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import java.io.IOException;
 public class StudentController {
     private final StudentService studentService ;
     private final UserService userService ;
+    private  final TimetablePreviewService preview ;
     @GetMapping("/dashboard")
     public String showStudentDashboard(Model model ,
                                        HttpSession session , Authentication authentication )
@@ -49,7 +51,7 @@ public class StudentController {
     @GetMapping("/timetable/preview")
     public ResponseEntity<byte[]> getPreview(Authentication authentication) throws IOException {
 
-        byte[] image = studentService
+        byte[] image = preview
                 .getTimetablePreview(authentication.getName());
 
         return ResponseEntity.ok()
@@ -57,7 +59,11 @@ public class StudentController {
                 .body(image);
     }
 
-
+    @GetMapping("/absences")
+    public String getAllAbsencesByStudent(Authentication authentication)
+    {
+        return "";
+    }
 
 
 
