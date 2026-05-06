@@ -18,7 +18,7 @@ public class Seance {
     private Long id;
 
     private LocalDate date;
-
+    private  boolean absencesProcessed = false ;
     @ManyToOne
     @JoinColumn(name = "cours_tp_id")
     private CoursTP coursTP;

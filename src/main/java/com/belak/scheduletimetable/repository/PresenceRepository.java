@@ -14,4 +14,6 @@ public interface PresenceRepository extends JpaRepository<Presence,Long> {
             Student student,
             Pageable pageable
     );
+
+    boolean existsByStudentIdAndSeanceIdAndPresentTrue(Long id, Long id1);
 }

@@ -2,8 +2,10 @@ package com.belak.scheduletimetable.restcontroller;
 
 import com.belak.scheduletimetable.dto.ProfessorDto;
 import com.belak.scheduletimetable.request.UpdateRequest;
+import com.belak.scheduletimetable.service.professor.ProfessorExcelService;
 import com.belak.scheduletimetable.service.professor.ProfessorService;
 import com.belak.scheduletimetable.service.timetable.grouptimetable.TimetablePreviewService;
+import com.belak.scheduletimetable.service.timetable.professortimetable.ProfessorTimetableService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.dialect.function.PostgreSQLTruncRoundFunction;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,7 @@ import java.io.IOException;
 public class ProfessorApiController {
     private final TimetablePreviewService timetablePreviewService ;
     private  final ProfessorService professorService ;
+    private  final ProfessorExcelService professorExcelService ;
     @GetMapping("/professor/timetable")
     public String showProfessorTimetables(
             @RequestParam(defaultValue = "0") int page,
@@ -53,7 +56,7 @@ public class ProfessorApiController {
                                  Model model ,
                                  RedirectAttributes redirectAttributes)  {
         try {
-            professorService.processSheet(file);
+            professorExcelService.processSheet(file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

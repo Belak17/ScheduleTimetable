@@ -4,6 +4,7 @@ import com.belak.scheduletimetable.model.CoursTP;
 import com.belak.scheduletimetable.model.Seance;
 import com.belak.scheduletimetable.repository.CoursTPRepository;
 import com.belak.scheduletimetable.repository.SeanceRepository;
+import com.belak.scheduletimetable.service.presence.AbsenceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -22,35 +23,13 @@ import java.util.Locale;
 public class SeanceService {
     private  final SeanceRepository seanceRepository ;
     private  final CoursTPRepository tpRepository ;
+    private  final AbsenceService absenceService ;
 
-    @Scheduled(cron = "0 5 8 * * MON-SAT", zone = "Africa/Tunis")
-    public void job1() {
-        createAllSeanceTP();
+    @Scheduled(cron = "0 0 0 * * *", zone = "Africa/Tunis")
+    public void generateDailySeances() {
+        createSeancesForToday();
     }
-    @Scheduled(cron = "0 45 9 * * MON-SAT", zone = "Africa/Tunis")
-    public void job2() {
-        createAllSeanceTP();
-    }
-    @Scheduled(cron = "0 25 11 * * MON-SAT", zone = "Africa/Tunis")
-    public void job3() {
-        createAllSeanceTP();
-    }
-
-    @Scheduled(cron = "0 0 13 * * MON-SAT", zone = "Africa/Tunis")
-    public void job4() {
-        createAllSeanceTP();
-    }
-
-    @Scheduled(cron = "0 40 14 * * MON-SAT", zone = "Africa/Tunis")
-    public void job5() {
-        createAllSeanceTP();
-    }
-
-    @Scheduled(cron = "0 20 16 * * MON-SAT", zone = "Africa/Tunis")
-    public void job6() {
-        createAllSeanceTP();
-    }
-    public void createAllSeanceTP() {
+    public void createSeancesForToday() {
         LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
         LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
         LocalTime end = now.plusMinutes(15);
@@ -61,7 +40,7 @@ public class SeanceService {
                 .getDayOfWeek()
                 .getDisplayName(TextStyle.FULL, Locale.FRANCE);
         List<CoursTP> nearCoursTPlist =tpRepository
-                .findCoursTPByDayAndHoraire(now,end,todayDay);
+                .findCoursTPByDay(todayDay);
 
         for (CoursTP cours : nearCoursTPlist)
         {
@@ -80,6 +59,25 @@ public class SeanceService {
         }
 
     }
+    @Scheduled(fixedRate = 60000) // chaque minute
+    public void checkSeances() {
+        processFinishedSeances();
+    }
+    public void processFinishedSeances() {
+        LocalTime now = LocalTime.now();
+        List<Seance> seances =
+                seanceRepository.findByEndTimeBeforeAndAbsencesProcessedFalse(now);
 
+        for (Seance seance : seances) {
 
+            // 1. générer les absences
+            absenceService.generateAbsences(seance);
+
+            // 2. MARQUER comme traité
+            seance.setAbsencesProcessed(true);
+        }
+
+        // 3. sauvegarder les changements
+        seanceRepository.saveAll(seances);
+    }
 }

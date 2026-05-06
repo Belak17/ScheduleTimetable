@@ -43,6 +43,4 @@ public class StudentService {
        studentRepository.deleteByUserId(userId) ;
    }
 
-
-
 }

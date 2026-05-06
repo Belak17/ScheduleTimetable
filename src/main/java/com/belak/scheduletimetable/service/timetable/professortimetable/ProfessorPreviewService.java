@@ -3,6 +3,7 @@ package com.belak.scheduletimetable.service.timetable.professortimetable;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.Professor;
 import com.belak.scheduletimetable.repository.ProfessorRepository;
+import com.belak.scheduletimetable.service.timetable.TimetableService;
 import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -19,6 +20,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ProfessorPreviewService {
     private  final ProfessorRepository professorRepository ;
+    private  final TimetableService timetableService ;
     public byte[] getTimetablePreview(String userId) throws IOException {
     Professor professor = professorRepository
             .findByUserIdWithTimetable(userId)
@@ -36,31 +38,10 @@ public class ProfessorPreviewService {
         throw new ResourceNotFoundException("Le fichier PDF est vide");
     }
 
-    return convertFirstPageToImage(pdfBytes);
+    return timetableService.convertFirstPageToImage(pdfBytes);
 
 }
 
 
-    public byte[] convertFirstPageToImage(byte[] pdfBytes) throws IOException {
-
-        try (PDDocument document = PDDocument.load(pdfBytes)) {
-
-            PDFRenderer pdfRenderer = new PDFRenderer(document);
-            PDPage page = document.getPage(0);
-            PDRectangle mediaBox = page.getMediaBox();
-
-            float pdfHeight = mediaBox.getHeight();
-            float targetHeight = 1000f; // plus grand que nécessaire
-            float scale = targetHeight / pdfHeight;
-            //BufferedImage image = pdfRenderer.renderImage(0, scale);
-            BufferedImage image = pdfRenderer.renderImageWithDPI(0, 150);
-            // 0 = première page
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(image, "png", baos);
-
-            return baos.toByteArray();
-        }
-    }
 
 }

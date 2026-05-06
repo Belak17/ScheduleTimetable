@@ -39,5 +39,8 @@ public interface CoursTPRepository extends JpaRepository<CoursTP,Long> {
             @Param("now") LocalTime now
     );
 
-
+    @Query("SELECT cours FROM CoursTP cours " +
+            "WHERE cours.debut BETWEEN :start AND :end " +
+            "AND cours.dayOfWeek = :todayday")
+    List<CoursTP> findCoursTPByDay(@Param("todayday") String todayDay);
 }
