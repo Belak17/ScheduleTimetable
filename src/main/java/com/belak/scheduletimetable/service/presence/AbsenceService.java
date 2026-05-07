@@ -27,7 +27,6 @@ public class AbsenceService {
                             student.getId(),
                             seance.getId()
                     );
-
             if (!isPresent) {
                 createAbsence(student, seance);
             }

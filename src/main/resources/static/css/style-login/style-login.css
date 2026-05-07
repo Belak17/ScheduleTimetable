@@ -1,160 +1,329 @@
-.login-box {
+*
+{
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body
+{
+    background-color: white;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    margin: 0;
+    padding: 20px;
+    gap:30px ;
+
+}
+
+body::before
+{
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background: url("faculte-des-Sciences-de-Gabes.jpeg") center/cover no-repeat;
+
+    filter: blur(2px);
+    transform: scale(1.1);
+
+    z-index: -1;
+}
+
+.login-box
+{
+    display: flex;
     background-color: white;
     box-shadow: 0 0 14px 5px #0003;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 750px;
 
-    width: 90%;
-    max-width: 900px;
-    min-height: 520px;
+    min-height: 420px;
 
-    margin: 30px auto;
     position: relative;
+    border-radius: 12px;
 
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    backdrop-filter: blur(10px);
 }
 
-/* LEFT SIDE */
-.left-block {
+/* LEFT */
+
+.left-block
+{
     flex: 1;
-    margin-top: 70px;
+
+    padding: 60px 30px;
+
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-left: 20px;
+    gap: 20px;
+
+    z-index: 2;
 }
 
-/* RIGHT SIDE */
-.right-block {
-    flex: 1;
-    background: url("/images/login_box_bg.png");
-    background-size: cover;
-    background-position: center;
-}
+/* RIGHT */
 
-/* INPUT WRAPPER */
-.inputs {
-    margin-top: 40px;
+
+
+/* INPUTS */
+
+.inputs
+{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
 }
 
-/* INPUT CONTAINER */
-.input {
+.input
+{
     display: flex;
-    flex-direction: row;
     align-items: center;
+
     border: 1px solid lightblue;
-    padding: 10px;
-    gap: 6px;
+
+    padding: 12px;
+
+    gap: 10px;
+
+    border-radius: 10px;
 
     width: 100%;
-    max-width: 320px;
+    border-radius: 12px;
+    border: 1px solid #dbeafe;
 }
 
-input {
+input
+{
     border: none;
     width: 100%;
+    font-size: 1rem;
+
 }
 
-input:focus {
+input:focus
+{
     outline: none;
 }
 
-.input img {
+.input img
+{
     width: 15px;
     height: 15px;
 }
 
-/* OTHER LINKS / BUTTON AREA */
-.others {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 15px;
+.input:hover
+{
+    transition: 0.2s ease;
 }
 
 /* BUTTON */
-.connect {
+
+.connect
+{
     display: flex;
     align-items: center;
     justify-content: center;
 
     gap: 10px;
-    padding: 10px 15px;
+
+    padding: 12px;
 
     font-size: 1rem;
+
     background-color: #21ba45;
-    color: white;
+    color: whitesmoke;
 
     border: none;
     border-radius: 5px;
+
     cursor: pointer;
 
-    width: 100%;
-    max-width: 320px;
+    width: 150px;
 
-    margin-top: 20px;
+    margin-top: 10px;
+}
+.register
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    font-size: 1rem;
+    background: transparent;
+    color: whitesmoke;
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    width: 250px;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    white-space: nowrap;
+
+
 }
 
-/* TITLES */
-h3 {
-    font-family: Cairo, system-ui, -apple-system, Segoe UI, Roboto,
-        Oxygen, Ubuntu, Cantarell, Helvetica Neue, Arial,
-        Noto Sans, sans-serif;
+.register a
+{
+    text-decoration: none;
+    color: whitesmoke;
 
+
+}
+
+h3
+{
     color: #073772;
     margin: 0;
     font-weight: 400;
     font-size: 1rem;
 }
+.others .forgot-link a
+{
+    text-decoration: none;
+    text-align: center;
+}
+.presentation h2
+{
+    text-align: center;
+}
+.presentation h3
+{
+     text-align: center;
+}
 
-/* ALERT BOX */
-.alert {
-    padding: 12px 15px;
-    border-radius: 6px;
-    font-size: 14px;
-    border: 2px solid red;
-    background-color: lightcoral;
+footer
+{
+   position:fixed;
+    background-color: #2e2e4c;
+    display: flex;
+    justify-content: space-between;
+    height: 25px;
     width: 100%;
-    max-width: 320px;
+    align-items: center;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px 20px;
+
+
+    min-height: 60px;
+    height: auto;
+
 }
 
-.alert span {
-    margin-left: 10px;
-    font-weight: bold;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+footer p , footer a , footer h3
+{
+  color: #dbeafe;
 }
 
+header
+{
+   position: fixed;
+    background-color: #2e2e4c;
+    display: flex;
+    height: 60px;
+    width: 100%;
+    align-items: center;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding: 30px;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+header h2
+{
+    color: #dbeafe;
+}
+
+header img
+{
+height: 40px;
+width: auto;
+}
+
+footer div
+{
+    display: flex;
+    flex-direction: row;
+    gap : 30px;
+}
+/* ========================= */
 /* RESPONSIVE */
-@media (max-width: 768px) {
+/* ========================= */
 
-    .login-box {
-        flex-direction: column;
-        width: 95%;
-        min-height: auto;
+
+
+@media (max-width: 480px)
+{
+    .left-block
+    {
+        padding: 20px 15px;
     }
 
-    .right-block {
+    h1
+    {
+        font-size: 1.5rem;
+    }
+
+    .input
+    {
+        padding: 10px;
+    }
+
+    .connect , .register
+    {
+        font-size: 0.95rem;
+
+    }
+
+    header h2
+    {
         display: none;
     }
+    header button
+    {
+        transform: translateX(-0%);
+        border: none;
 
-    .left-block {
-        margin: 20px;
-        align-items: center;
     }
+    .register
+    {
+        font-size: medium;
+        font-weight: bold;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        min-height:50px;
+    }
+    header img
+    {
+        width: 60%;
+    }
+}
 
-    .input {
-        max-width: 100%;
-    }
+.input:focus-within
+{
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+}
 
-    .connect {
-        max-width: 100%;
-    }
+header,
+footer
+{
+    padding: 12px 20px;
+}
 
-    .others {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
+html, body
+{
+    overflow-x: hidden;
 }

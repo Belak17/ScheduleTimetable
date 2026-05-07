@@ -76,7 +76,7 @@ public class PresenceService {
 
     }
 
-    public Page<PresenceDto> getAllAbsenceByUserId(String userId , int page , int size )
+    public Page<PresenceDto> getAbsencesByUserId(String userId , int page , int size )
     {
         Pageable pageable = PageRequest.of(page, size);
         Student student = studentRepository
