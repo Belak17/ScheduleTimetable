@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Scanner QR</title>
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+    <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body>
+<input type="checkbox" id="toggle-sidebar" />
+<header>
+    <div class="head-box">
+        <!-- Checkbox caché -->
+
+        <label for="toggle-sidebar">
+            <div  id="menu">
+
+                <img th:src="@{/images/menu-burger.png}">
+
+
+            </div>
+        </label>
+        <h2>Scanner Code Qr</h2>
+    </div>
+</header>
+<section th:replace="student/student-dashboard :: sidebar">
+
+</section>
+<main class="center-wrapper">
+
+<div id="reader"></div>
+
+<p id="result"></p>
+</main>
+<script>
+
+    const result = document.getElementById("result");
+
+    let html5QrCode;
+
+    async function startScanner() {
+
+        try {
+
+            html5QrCode = new Html5Qrcode("reader");
+
+            const cameras = await Html5Qrcode.getCameras();
+
+            const backCamera =
+                cameras.find(camera =>
+                    camera.label.toLowerCase().includes("back")
+                ) || cameras[0];
+
+            await html5QrCode.start(
+
+                backCamera.id,
+
+                {
+                    fps: 10,
+                    qrbox: {
+                        width: 250,
+                        height: 250
+                    }
+                },
+
+                async (decodedText) => {
+
+                    result.innerText =
+                        "QR détecté : " + decodedText;
+
+                    await html5QrCode.stop();
+
+                    await fetch("/api/qr/scan", {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            code: decodedText
+                        })
+                    });
+
+                }
+            );
+
+        } catch (err) {
+
+            result.innerText =
+                "Erreur : " + err;
+        }
+    }
+
+    startScanner();
+
+</script>
+
+</body>
+</html>

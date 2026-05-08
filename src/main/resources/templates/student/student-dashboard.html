@@ -82,10 +82,10 @@
             </a>
         </div>
         <div class="option" id="scan-button">
-
+            <a th:href="@{/student/scanner}">
             <p>Scanner Code</p>
             <img th:src="@{/images/qr-code.png}" alt="QR CODE">
-
+            </a>
         </div>
         <div class="option" style="background-color: rgba(69, 96, 122, 0.53);">
             <a th:href="@{/student/absences}">
@@ -106,114 +106,8 @@
             </a>
         </div>
     </section>
-    <div id="scanner-container">
-
-        <div id="reader"></div>
-
-        <p id="result"></p>
-
-    </div>
 
 </main>
-<script>
-
-    const scanButton = document.getElementById("scan-button");
-    const scannerContainer = document.getElementById("scanner-container");
-    const result = document.getElementById("result");
-
-    let html5QrCode;
-    let started = false;
-
-    scanButton.addEventListener("click", async () => {
-
-        if (started) return;
-
-        started = true;
-
-        try {
-
-            scannerContainer.style.display = "block";
-
-            html5QrCode = new Html5Qrcode("reader");
-
-            // récupérer les caméras disponibles
-            const cameras = await Html5Qrcode.getCameras();
-
-            if (!cameras || cameras.length === 0) {
-
-                result.innerText =
-                    "Aucune caméra détectée";
-
-                started = false;
-
-                return;
-            }
-
-            // choisir caméra arrière si possible
-            const backCamera =
-                cameras.find(camera =>
-                    camera.label.toLowerCase().includes("back") ||
-                    camera.label.toLowerCase().includes("rear")
-                ) || cameras[0];
-
-            // démarrer le scanner
-            await html5QrCode.start(
-
-                backCamera.id,
-
-                {
-                    fps: 10,
-
-                    qrbox: {
-                        width: 250,
-                        height: 250
-                    }
-                },
-
-                // succès scan
-                async (decodedText) => {
-
-                    result.innerText =
-                        "QR détecté : " + decodedText;
-
-                    // arrêter caméra
-                    await html5QrCode.stop();
-
-                    // envoyer au backend
-                    await fetch("/api/qr/scan", {
-
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-
-                        body: JSON.stringify({
-                            code: decodedText
-                        })
-                    });
-
-                    started = false;
-                },
-
-                // erreurs de lecture ignorées
-                (errorMessage) => {
-
-                }
-            );
-
-        } catch (err) {
-
-            console.error(err);
-
-            result.innerText =
-                "Erreur caméra : " + err;
-
-            started = false;
-        }
-
-    });
-</script>
 </body>
 
 

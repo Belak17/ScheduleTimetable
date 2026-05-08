@@ -65,7 +65,10 @@ public class StudentController {
         return "";
     }
 
-
+    @GetMapping("/scanner")
+    public String showScanner(Authentication authentication){
+        return "student/scanner.html";
+    }
 
 
 
