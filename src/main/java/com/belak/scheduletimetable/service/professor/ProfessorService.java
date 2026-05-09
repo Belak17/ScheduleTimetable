@@ -43,8 +43,6 @@ public class ProfessorService  {
     private  final UtilsService utilsService ;
     private  final ProfessorMapper professorMapper ;
 
-
-
     public Page<ProfessorDto> getAllProfessor(int page , int size)
     {
         Pageable pageable = PageRequest.of(page, size);
@@ -57,23 +55,6 @@ public class ProfessorService  {
         professorRepository.save(professor);
     }
 
-
-
-
-
-
-//    private List<String> parseSpecialites(Cell cell) {
-//        String value = getCellValue(cell);
-//
-//        if (value == null || value.isEmpty()) {
-//            return new ArrayList<>();
-//        }
-//
-//        return Arrays.stream(value.split(","))
-//                .map(String::trim)
-//                .filter(s -> !s.isEmpty())
-//                .toList();
-//    }
 
       public void updateProfessorPassword(UpdateRequest request)
       {

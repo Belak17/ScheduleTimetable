@@ -33,23 +33,18 @@ public class SeanceService {
         LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
         LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
         LocalTime end = now.plusMinutes(15);
-
         int weekNumber = today.get(WeekFields.ISO.weekOfWeekBasedYear());
-
         String todayDay =today
                 .getDayOfWeek()
                 .getDisplayName(TextStyle.FULL, Locale.FRANCE);
         List<CoursTP> nearCoursTPlist =tpRepository
                 .findCoursTPByDay(todayDay);
-
         for (CoursTP cours : nearCoursTPlist)
         {
             if (!cours.shouldOccurThisWeek(weekNumber)) {
                 continue;
             }
-
             boolean exists = seanceRepository.existsByCoursTPAndDate(cours, today);
-
             if (!exists) {
                 Seance seance = new Seance();
                 seance.setDate(LocalDate.now());
@@ -57,7 +52,6 @@ public class SeanceService {
                 tpRepository.save(cours);
             }
         }
-
     }
     @Scheduled(fixedRate = 60000) // chaque minute
     public void checkSeances() {
@@ -67,17 +61,14 @@ public class SeanceService {
         LocalTime now = LocalTime.now();
         List<Seance> seances =
                 seanceRepository.findByEndTimeBeforeAndAbsencesProcessedFalse(now);
-
         for (Seance seance : seances) {
-
             // 1. générer les absences
             absenceService.generateAbsences(seance);
-
             // 2. MARQUER comme traité
             seance.setAbsencesProcessed(true);
         }
-
         // 3. sauvegarder les changements
         seanceRepository.saveAll(seances);
     }
+    
 }

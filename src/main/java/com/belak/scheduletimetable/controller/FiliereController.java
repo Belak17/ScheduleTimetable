@@ -18,7 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FiliereController {
     private final GroupTimetableService groupTimetableService;
-
     @GetMapping("/departements/{departement}")
     public String showAllFieldByDepartment(@PathVariable String departement ,
                                            Model model)

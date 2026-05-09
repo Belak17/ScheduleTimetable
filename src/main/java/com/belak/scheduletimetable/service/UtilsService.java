@@ -14,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -106,5 +109,18 @@ public class UtilsService {
         Workbook workbook = new Workbook();
         workbook.loadFromStream(file.getInputStream());
         return workbook;
+    }
+
+    private List<String> parseSpecialites(Cell cell) {
+        String value = getCellValue(cell);
+
+        if (value == null || value.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return Arrays.stream(value.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
     }
 }

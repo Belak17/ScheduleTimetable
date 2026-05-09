@@ -2,7 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Login form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activation de Compte</title>
     <link rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
     <link rel="stylesheet" th:href="@{/css/style-login/style-login.css}">
@@ -10,55 +11,193 @@
 
 </head>
 <body>
-<form class="login-box" method="post" th:action="@{/forgot-password}">
+<header>
+    <img th:src="@{/images/logo_header-hb5kR36g.svg}">
+    <!--<h2>Bienvenue sur votre Plateforme  </h2> -->
+    <a class="register" th:href="@{/firstlogin}">Nouveau ici ? </a>
+
+</header>
+<form class="login-box" method="post" th:action="@{/firstlogin}">
 
     <section class="left-block">
         <div class="presentation">
-            <h2>Premiere Connexion </h2>
-            <h3> Étudiant/Ancien Étudiant/Enseignant/Administration/<br>
-                Entreprise</h3>
-
+            <h2>Activation du Compte</h2>
+            <h3> Étudiant/Enseignant/Administration</h3>
         </div>
         <div class="inputs">
             <div class="input">
                 <img th:src="@{/images/user.png}">
-                <input type="text" autocomplete="off" name="userId"
-                       placeholder="Identifiant" required/>
+                <input type="text" autocomplete="off" name="id"
+                       placeholder="Identifiant" required>
+
             </div>
             <div class="input">
-                <img th:src="@{/images/lock.png}">
+                <img th:src="@{/images/email.png}">
                 <input type="email" autocomplete="off" name="email"
-                       placeholder="Entrer votre email" required />
+                       placeholder="Email" required >
 
             </div>
         </div>
-        <div th:if="${error}" class="alert">
-            <span th:text="${error}"></span>
-        </div>
-        <div th:if="${message}" class="alert">
-            <span th:text="${message}"></span>
-        </div>
+        <div class="input">
+            <img th:src="@{/images/lock.png}">
+            <input type="password" autocomplete="off" name="password"
+                   placeholder="Mot de passe" required >
 
+        </div>
+        <div th:if="${failure}" class="alert">
+            <span th:text="${failure}"></span>
+        </div>
         <div class="others">
-            <button  type="submit" class="connect">Envoyer</button>
+            <button  type="submit" class="connect">Activer mon Compte</button>
         </div>
     </section>
 
     <section class="right-block">
-
     </section>
 
 </form>
+<footer>
+    <div>
+        <img th:src="@{/images/flag-BfSDlfLV.png}">
+        <h3>République Tunisienne </h3>
+    </div>
+    <p> &copy; Faculté des Sciences de Gabès -Tous droits réservés</p>
+    <a href="mailto:fsg.rnu.tn">fsg.rnu.tn</a>
+</footer>
 <style>
     .right-block
-{
-    background: url("/images/login_box_bg.png");
-    position: absolute;
+    {
+        width: 45%;
 
-    right: 0;
-    height: 520px;
-    width: 451px;
+        background: url(/images/login_box_bg.png) center/cover no-repeat;
+    }
+body::before
+{
+    content: "";
+    position: fixed;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+
+    background-image: url(/images/faculte-des-Sciences-de-Gabes.jpeg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    filter: blur(3px);
+
+    z-index: -1;
+}
+        @media screen and (max-width: 768px)
+    {
+
+        .login-box
+        {
+            flex-direction: column;
+             min-height: auto;
+
+        }
+
+        .right-block
+        {
+            background-image: url(/images/logo_fsg.jpg);
+            width: 50%;
+            height: 120px;
+            order: -1;
+            margin-top: 20px;
+            transform: translateX(50%);
+        }
+
+        .left-block
+        {
+            padding: 30px 20px;
+            margin-top: -30px;
+        }
+        .others
+        {
+            transform: translateX(5%);
+        }
+        .connect , .register
+        {
+            width: 90%;
+        }
+        .others .forgot-link
+        {
+            text-align: center;
+        }
+        header img
+        {
+            width: 60%;
+        }
+        footer div img
+        {
+            display: none;
+        }
+        footer div h3
+    {
+        display: none;
+    }
+            footer
+        {
+            display: none;
+        }
+    }
+    @media (max-width: 480px)
+{
+    .left-block
+    {
+        padding: 20px 15px;
+    }
+
+    h1
+    {
+        font-size: 1.5rem;
+    }
+
+    .input
+    {
+        padding: 10px;
+    }
+
+    .connect , .register
+    {
+        font-size: 0.95rem;
+
+    }
+
+    header h2
+    {
+        display: none;
+    }
+    header button
+    {
+        transform: translateX(-0%);
+        border: none;
+
+    }
+    .register
+    {
+        font-size: medium;
+        font-weight: bold;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    header img
+    {
+        width: 60%;
+    }
+        .right-block
+    {
+        background-image: url(/images/logo_fsg.jpg);
+        width: 50%;
+        height: 120px;
+        order: -1;
+        margin-top: 20px;
+        transform: translateX(50%);
+    }
 }
 </style>
+
 </body>
 </html>

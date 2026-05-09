@@ -26,22 +26,18 @@ public class AdminController {
                     theResponse.getNom()+" " + theResponse.getPrenom());
         return "admin/admin-dashboard.html";
     }
-
     @GetMapping("/profile")
     public String showAdminProfile( Model model ) {
         return "admin/admin-profile.html";
     }
-
     @GetMapping("/timetable")
     public String showAdminUploadTimetable( Model model ) {
         return "admin/admin-upload-timetable.html";
     }
-
     @GetMapping("/import")
     public String showAdminImportUsers( Model model ) {
         return "admin/upload-users.html";
     }
-
     @GetMapping("/absences/department")
     public String showAdminAbsenceByDepartment( Model model ) {
         return "admin/show-department-absence.html";

@@ -70,6 +70,11 @@ public class StudentController {
         return "student/scanner.html";
     }
 
+    @GetMapping("/coursTP")
+    public String showCoursTP(Authentication authentication)
+    {
+        return  "";
+    }
 
 
 }

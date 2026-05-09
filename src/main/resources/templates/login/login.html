@@ -14,7 +14,7 @@
 <header>
     <img th:src="@{/images/logo_header-hb5kR36g.svg}">
     <!--<h2>Bienvenue sur votre Plateforme  </h2> -->
-    <button class="register">Nouveau ici ? </button>
+    <a class="register" th:href="@{/firstlogin}">Nouveau ici ? </a>
 
 </header>
 <form class="login-box" method="post" th:action="@{/login}">
@@ -22,8 +22,7 @@
     <section class="left-block">
         <div class="presentation">
             <h2>Se connecter</h2>
-            <h3> Étudiant/Ancien Étudiant/Enseignant/Administration/<br>
-                Entreprise</h3>
+            <h3> Étudiant/Enseignant/Administration</h3>
 
         </div>
         <div class="inputs">
