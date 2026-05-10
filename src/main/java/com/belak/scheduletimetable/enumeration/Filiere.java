@@ -54,5 +54,12 @@ public enum Filiere {
         }
         throw new IllegalArgumentException("Code inconnu pour Diplome : " + code);
     }
+    public static String getLabelByEnumName(String name) {
+        try {
+            return Filiere.valueOf(name).getLibelle();
+        } catch (IllegalArgumentException e) {
+            return null; // ou message d'erreur
+        }
+    }
 }
 

@@ -47,7 +47,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="course : ${Courses.content}">
+        <tr th:each="course : ${courses}">
             <td th:text="${course.title}"></td>
             <td th:text="${course.totalSeances}"></td>
             <td th:text="${course.absences}"></td>

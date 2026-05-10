@@ -2,9 +2,11 @@ package com.belak.scheduletimetable.service.student;
 
 import com.belak.scheduletimetable.component.PresenceMapper;
 import com.belak.scheduletimetable.component.StudentMapper;
+import com.belak.scheduletimetable.component.StudentProfileMapper;
 import com.belak.scheduletimetable.dto.CreateStudentDto;
 import com.belak.scheduletimetable.dto.PresenceDto;
 import com.belak.scheduletimetable.dto.StudentDto;
+import com.belak.scheduletimetable.dto.StudentProfileDto;
 import com.belak.scheduletimetable.enumeration.Filiere;
 
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
@@ -35,6 +37,7 @@ public class StudentService {
     private  final StudentRepository studentRepository ;
     private  final StudentMapper studentMapper ;
     private  final PresenceRepository presenceRepository ;
+    private  final StudentProfileMapper profileMapper ;
     public Page<StudentDto> getStudentByFieldAndYearAndGroup(String field,int year,String group,int page,int size)
     {
         Pageable pageable = PageRequest.of(page, size);
@@ -49,8 +52,10 @@ public class StudentService {
    {
        studentRepository.deleteByUserId(userId) ;
    }
-    public Student findByUserId(String userId)
+    public StudentProfileDto findByUserId(String userId)
     {
-        return studentRepository.findByUserId(userId).get();
+        return profileMapper.convertToStudentProfileDto(studentRepository
+                .findByUserId(userId).get());
     }
+
 }

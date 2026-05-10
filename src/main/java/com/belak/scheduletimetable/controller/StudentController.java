@@ -1,5 +1,6 @@
 package com.belak.scheduletimetable.controller;
 
+import com.belak.scheduletimetable.dto.StudentProfileDto;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.response.LoginResponse;
 import com.belak.scheduletimetable.service.student.StudentPresenceService;
@@ -42,8 +43,8 @@ public class StudentController {
     public String showStudentProfile(Model model , Authentication authentication
             ,HttpSession session)
     {
-        //Student student = studentService.findByUserId(authentication.getName());
-        //model.addAttribute("student",student);
+        StudentProfileDto student = studentService.findByUserId(authentication.getName());
+        model.addAttribute("student",student);
         return "student/student-profile.html";
     }
     @GetMapping("/timetable")
@@ -67,7 +68,7 @@ public class StudentController {
     @GetMapping("/absences")
     public String getAllAbsencesByStudent(Authentication authentication  , Model model)
     {
-         model.addAttribute("Courses",studentPresenceService.getAllStudentOverviewByUserId(authentication.getName()));
+         model.addAttribute("courses",studentPresenceService.getAllStudentOverviewByUserId(authentication.getName()));
         return "student/student-absence.html";
     }
 
