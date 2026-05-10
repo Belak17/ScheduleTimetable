@@ -1,6 +1,8 @@
 package com.belak.scheduletimetable.controller;
 
+import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.response.LoginResponse;
+import com.belak.scheduletimetable.service.student.StudentPresenceService;
 import com.belak.scheduletimetable.service.student.StudentService;
 import com.belak.scheduletimetable.service.timetable.grouptimetable.TimetablePreviewService;
 import com.belak.scheduletimetable.service.user.UserService;
@@ -25,6 +27,7 @@ public class StudentController {
     private final StudentService studentService ;
     private final UserService userService ;
     private  final TimetablePreviewService preview ;
+    private  final StudentPresenceService studentPresenceService ;
     @GetMapping("/dashboard")
     public String showStudentDashboard(Model model ,
                                        HttpSession session , Authentication authentication )
@@ -36,10 +39,12 @@ public class StudentController {
         return "student/student-dashboard.html";
     }
     @GetMapping("/profile")
-    public String showStudentProfile(Model model
+    public String showStudentProfile(Model model , Authentication authentication
             ,HttpSession session)
     {
-        return "student/student-profile";
+        //Student student = studentService.findByUserId(authentication.getName());
+        //model.addAttribute("student",student);
+        return "student/student-profile.html";
     }
     @GetMapping("/timetable")
     public String showStudentTimetable(  Model model,
@@ -60,9 +65,10 @@ public class StudentController {
     }
 
     @GetMapping("/absences")
-    public String getAllAbsencesByStudent(Authentication authentication)
+    public String getAllAbsencesByStudent(Authentication authentication  , Model model)
     {
-        return "";
+         model.addAttribute("Courses",studentPresenceService.getAllStudentOverviewByUserId(authentication.getName()));
+        return "student/student-absence.html";
     }
 
     @GetMapping("/scanner")

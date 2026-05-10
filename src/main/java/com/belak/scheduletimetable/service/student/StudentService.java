@@ -49,5 +49,8 @@ public class StudentService {
    {
        studentRepository.deleteByUserId(userId) ;
    }
-
+    public Student findByUserId(String userId)
+    {
+        return studentRepository.findByUserId(userId).get();
+    }
 }

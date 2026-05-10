@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style-student/style-student-absence.css}">
+    <link rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+</head>
+<body>
+<input type="checkbox" id="toggle-sidebar" />
+<header>
+    <div class="head-box">
+        <!-- Checkbox caché -->
+
+        <label for="toggle-sidebar">
+            <div  id="menu">
+
+                <img th:src="@{/images/menu-burger.png}">
+
+
+            </div>
+        </label>
+        <h2>Récapituatif des Absences </h2>
+    </div>
+</header>
+<section th:replace="student/student-dashboard :: sidebar">
+</section>
+<main class="center-wrapper">
+    <table class="styled-table" border="1" rules="all">
+        <thead>
+        <tr>
+            <th>
+                Intitulé
+            </th>
+            <th>
+                Nombres de Séances
+            </th>
+            <th>
+                Nombres Absences
+            </th>
+
+            <th>
+                Taux de Présence
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course : ${Courses.content}">
+            <td th:text="${course.title}"></td>
+            <td th:text="${course.totalSeances}"></td>
+            <td th:text="${course.absences}"></td>
+            <td th:text="${course.presenceRate}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="modal" class="modal">
+
+        <div class="modal-content">
+
+        <span class="close" onclick="closeModal()">
+            &times;
+        </span>
+
+            <h2>Administration Réseaux</h2>
+
+            <p>Liste des absences :</p>
+
+            <ul>
+                <li>12/03/2026</li>
+                <li>18/03/2026</li>
+                <li>25/03/2026</li>
+            </ul>
+
+        </div>
+
+    </div>
+</main>
+<script>
+
+    function openModal()
+    {
+        document.getElementById("modal").style.display = "flex";
+    }
+
+    function closeModal()
+    {
+        document.getElementById("modal").style.display = "none";
+    }
+
+</script>
+</body>
+
+
+</html>

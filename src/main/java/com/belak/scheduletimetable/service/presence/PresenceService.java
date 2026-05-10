@@ -85,8 +85,6 @@ public class PresenceService {
                         new ResourceNotFoundException("Etudiant non trouvé pour userId : " + userId)
                 );
         return  presenceRepository.findByStudentAndPresentFalse(student,pageable).map(presenceMapper::convertPresencetoDto);
-
-
     }
 
 }

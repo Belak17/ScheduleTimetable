@@ -30,4 +30,5 @@ public class FiliereController {
         return  "/admin/show-filiere-by-department" ;
     }
 
+
 }

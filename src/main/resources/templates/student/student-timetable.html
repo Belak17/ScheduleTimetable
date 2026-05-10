@@ -16,22 +16,17 @@
 
         <label for="toggle-sidebar">
             <div  id="menu">
-
                 <img th:src="@{/images/menu-burger.png}">
-
-
             </div>
         </label>
         <h2>Emploi du temps</h2>
     </div>
 </header>
 <section th:replace="student/student-dashboard :: sidebar">
-
 </section>
 <main class="center-wrapper">
     <!--<iframe th:src="@{'/openSchedule/' + ${timetableId}}"
      width="80%" height="80%"></iframe> -->
-
     <img th:src="@{/student/timetable/preview}"
          style="border:1px solid transparent;"  class="zoom-image"/>
 </main>
