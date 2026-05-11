@@ -17,7 +17,7 @@
     <a class="register" th:href="@{/firstlogin}">Nouveau ici ? </a>
 
 </header>
-<form class="login-box" method="post" th:action="@{/firstlogin}">
+<form class="login-box" method="post" th:action="@{/firstlogin}" th:object="${userRegister}">
 
     <section class="left-block">
         <div class="presentation">
@@ -27,20 +27,20 @@
         <div class="inputs">
             <div class="input">
                 <img th:src="@{/images/user.png}">
-                <input type="text" autocomplete="off" name="id"
+                <input type="text" autocomplete="off" th:field="*{userId}"
                        placeholder="Identifiant" required>
 
             </div>
             <div class="input">
                 <img th:src="@{/images/email.png}">
-                <input type="email" autocomplete="off" name="email"
+                <input type="email" autocomplete="off" name="email" th:field="*{email}"
                        placeholder="Email" required >
 
             </div>
         </div>
         <div class="input">
             <img th:src="@{/images/lock.png}">
-            <input type="password" autocomplete="off" name="password"
+            <input type="password" autocomplete="off" name="password" th:field="*{password}"
                    placeholder="Mot de passe" required >
 
         </div>

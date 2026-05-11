@@ -1,8 +1,11 @@
 package com.belak.scheduletimetable.service.professor;
 
 import com.belak.scheduletimetable.component.ProfessorMapper;
+import com.belak.scheduletimetable.component.ProfessorProfileMapper;
 import com.belak.scheduletimetable.dto.CreateProfessorDto;
 import com.belak.scheduletimetable.dto.ProfessorDto;
+import com.belak.scheduletimetable.dto.ProfessorProfileDto;
+import com.belak.scheduletimetable.dto.StudentProfileDto;
 import com.belak.scheduletimetable.enumeration.Nationalite;
 import com.belak.scheduletimetable.exception.EmptyFileException;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
@@ -42,6 +45,7 @@ public class ProfessorService  {
     private  final PasswordEncoder passwordEncoder ;
     private  final UtilsService utilsService ;
     private  final ProfessorMapper professorMapper ;
+    private  final ProfessorProfileMapper profileMapper ;
 
     public Page<ProfessorDto> getAllProfessor(int page , int size)
     {
@@ -58,8 +62,13 @@ public class ProfessorService  {
 
       public void updateProfessorPassword(UpdateRequest request)
       {
-          Professor professor = professorRepository.findByUserId(request.getUserId());
+          Professor professor = professorRepository.findByUserId(request.getUserId()).get();
           professor.setPassword(passwordEncoder.encode(request.getPassword()));
           professorRepository.save(professor);
       }
+    public ProfessorProfileDto findByUserId(String userId)
+    {
+        return profileMapper.convertToProfessorProfileDto(professorRepository
+                .findByUserId(userId).get());
+    }
 }

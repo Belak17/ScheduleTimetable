@@ -67,6 +67,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
 
+    @Column(nullable = false)
+    private boolean enabled = true;
     //private Date passwordChangedAt = null ;
     //private boolean mustChangePassword = true ;
 
@@ -95,7 +97,7 @@ public class User implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() { return true; }
     @Override
-    public boolean isEnabled() { return true; }
+    public boolean isEnabled() { return enabled; }
 
 
 

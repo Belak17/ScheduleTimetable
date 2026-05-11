@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -19,21 +20,21 @@ public class ForgotPasswordService {
     private  final EmailService emailService ;
     public void sendResetLink(String email)
     {
-        User user = userRepository.findByEmail(email);
+        Optional<User> user = userRepository.findByEmail(email);
 
-        if (user != null) {
+        if (user.isPresent()) {
             String token = UUID.randomUUID().toString();
 
             PasswordResetToken resetToken = new PasswordResetToken();
             resetToken.setToken(token);
-            resetToken.setUser(user);
+            resetToken.setUser(user.get());
             resetToken.setExpirationDate(LocalDateTime.now().plusMinutes(15));
 
             tokenRepository.save(resetToken);
 
             String link = "localhost:8080/reset-password?token=" + token;
 
-            emailService.sendEmail(user.getEmail(), "Reset Password", link);
+            emailService.sendEmail(user.get().getEmail(), "Reset Password", link);
         }
     }
 }

@@ -231,7 +231,7 @@ body {
     width: 100%;
     border-top: 2px solid lightgray;
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 3px;
 }
 
 #parameter:hover

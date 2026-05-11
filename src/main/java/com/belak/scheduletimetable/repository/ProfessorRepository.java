@@ -25,5 +25,6 @@ WHERE p.userId = :userId
 """)
     Optional<Professor> findByUserIdWithTimetable(@Param("userId")String userId);
 
-    Professor findByUserId(String userId);
+    Optional<Professor> findByUserId(String userId);
+
 }

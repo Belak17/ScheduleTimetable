@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Profile</title>
+    <link rel="stylesheet" th:href="@{/css/style-student/style-student-profile.css}">
+    <link rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+</head>
+<body>
+<input type="checkbox" id="toggle-sidebar" />
+<header>
+    <div class="head-box">
+        <!-- Checkbox caché -->
+        <label for="toggle-sidebar">
+            <div  id="menu">
+                <img th:src="@{/images/menu-burger.png}">
+            </div>
+        </label>
+        <h2 class="title-page">Ma fiche Professeur</h2>
+    </div>
+</header>
+<section th:replace="student/student-dashboard :: sidebar">
+</section>
+<main class="center-wrapper">
+    <section class="all-info">
+        <div class="summary">
+            <div class="photo">
+                <img th:src="@{/images/user.jpg}">
+            </div>
+            <span class="name" th:text="${professor.prenom+' '+professor.nom}">
+
+                 </span>
+            <span class="summary-container">
+               <img th:src="@{/images/power.png}">
+               <span class="activity">
+                 Professeur Actif
+               </span>
+               </span>
+            <div class="others">
+                <span class="other">
+                    <img th:src="@{/images/multiple-users-silhouette.png}">
+                    <span class="summary-infos">
+                    <span class="summary-info">Grade :</span>
+                <span id="group" th:text="${professor.grade}"></span>
+                    </span>
+                </span>
+                <span class="other">
+                     <img th:src="@{/images/hierarchical-structure.png}">
+                     <span class="summary-infos">
+                    <span class="summary-info">Specialite :</span>
+                <span th:text="${professor.specialite}"> </span> </span>
+                </span>
+                <span class="other">
+                    <img th:src="@{/images/department.png}">
+                    <span class="summary-infos">
+                    <span class="summary-info" >Departement:</span>
+                <span class="value" th:text="${professor.department}"></span> </span>
+                </span>
+            </div>
+            <span class="other summary-container" id="parameter">
+                    <img th:src="@{/images/preferences.png}">
+                    <span>
+                    Paramètres du Compte </span>
+                </span>
+        </div>
+        <div class="generals">
+            <span class="title-container">Informations Generales</span>
+            <div class="container">
+             <span class="info">
+                <img th:src="@{/images/id-card.png}">
+                <span class="content">
+                <span class="label">Nom&Prenom :</span>
+                <span class="value" th:text="${professor.prenom+' '+professor.nom}"></span>
+                </span>
+            </span>
+                <span class="info">
+                <img th:src="@{/images/gender.png}">
+                <span class="content">
+                <span class="label">Sexe :</span>
+                <span th:text="${professor.sexe}"></span>
+                </span>
+            </span>
+                <span class="info">
+                <img th:src="@{/images/building.png}">
+                <span class="content">
+                    <span class="label">CIN/Passeport :</span>
+                <span class="value" th:text="${professor.cin}"></span>
+                </span>
+            </span>
+                <span class="info">
+                 <img th:src="@{/images/united-nations.png}">
+                 <span class="content">
+                <span class="label">Nationalité :</span>
+                <span class="value" th:text="${professor.nationalite}"></span>
+                </span>
+             </span>
+                <span class="info"><img th:src="@{/images/building.png}">
+                <span class="content">
+                <span class="label">Ville Naissance :</span>
+                <span class="value" th:text="${professor.villeNaissance}"></span>
+                </span>
+            </span>
+            </div>
+            <span class="title-container">Informations de Localisation</span>
+            <div class="container">
+               <span class="info">
+                <img th:src="@{/images/building.png}">
+                <span class="content">
+                <span class="label">Ville:</span>
+                <span class="value" th:text="${professor.ville}"></span>
+                </span>
+               </span>
+                <span class="info">
+                <img th:src="@{/images/address.png}">
+                <span class="content">
+                <span class="label">Adresse Postale :</span>
+                <span class="value" th:text="${professor.adresse}"></span>
+                </span>
+                </span>
+                <span class="info">
+                <img th:src="@{/images/internet.png}">
+                <span class="content">
+                                <span class="label">Code Postale :</span>
+                <span class="value" th:text="${professor.codePostale}"></span>
+                </span>
+            </span>
+            </div>
+            <span class="title-container">Informations de Contact</span>
+            <div class="container">
+               <span class="info">
+                <img th:src="@{/images/mail.png}">
+                <span class="content">
+                 <span class="label">Email :</span>
+                <span class="value" th:text="${professor.email}"></span>
+                </span>
+            </span>
+                <span class="info">
+                <img th:src="@{/images/smartphone-call.png}">
+                <span class="content">
+                    <span class="label">Téléphone :</span>
+                <span class="value" th:text="${professor.telephone}"></span>
+                </span>
+            </span>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+
+</html>

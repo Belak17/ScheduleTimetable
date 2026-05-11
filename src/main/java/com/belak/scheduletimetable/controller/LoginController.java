@@ -4,8 +4,10 @@ package com.belak.scheduletimetable.controller;
 import com.belak.scheduletimetable.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/login")
@@ -14,9 +16,15 @@ public class LoginController {
     private final LoginService loginService ;
 
     @GetMapping
-    public String showLogin()
+    public String loginPage(@RequestParam(required = false) String error,
+                            Model model)
     {
-        return "login/login" ;
+        if(error != null)
+        {
+            model.addAttribute("failure", error);
+        }
+
+        return "login/login.html";
     }
 
 }

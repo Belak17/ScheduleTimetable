@@ -1,8 +1,6 @@
 package com.belak.scheduletimetable.controller;
 
-import com.belak.scheduletimetable.dto.ProfessorDto;
-import com.belak.scheduletimetable.dto.ProfessorTimetableDto;
-import com.belak.scheduletimetable.dto.UserDto;
+import com.belak.scheduletimetable.dto.*;
 import com.belak.scheduletimetable.response.LoginResponse;
 import com.belak.scheduletimetable.service.professor.ProfessorService;
 import com.belak.scheduletimetable.service.timetable.professortimetable.ProfessorPreviewService;
@@ -24,8 +22,9 @@ import java.io.IOException;
 @RequestMapping("/professor")
 @RequiredArgsConstructor
 public class ProfessorController {
-    private final ProfessorPreviewService professorService ;
+    private final ProfessorPreviewService professorPreviewService;
     private  final UserService userService ;
+    private  final ProfessorService professorService ;
     @GetMapping("/dashboard")
     public String showProfessorDashboard( Model model
             , HttpSession session ,Authentication authentication)
@@ -37,9 +36,11 @@ public class ProfessorController {
         return "professor/professor-app";
     }
     @GetMapping("/profile")
-    public String showProfessorProfile( Model model
+    public String showProfessorProfile( Model model , Authentication authentication
             ,HttpSession session )
     {
+        ProfessorProfileDto professor = professorService.findByUserId(authentication.getName());
+        model.addAttribute("professor",professor);
         return "professor/professor-profile";
     }
     @GetMapping("/timetable")
@@ -52,7 +53,7 @@ public class ProfessorController {
     @GetMapping("/preview")
     public ResponseEntity<byte[]> getPreview(Authentication authentication) throws IOException {
 
-        byte[] image = professorService
+        byte[] image = professorPreviewService
               .getTimetablePreview(authentication.getName());
 
         return ResponseEntity.ok()
