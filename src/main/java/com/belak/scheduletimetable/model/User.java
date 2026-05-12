@@ -68,7 +68,7 @@ public class User implements UserDetails {
     private Role role = Role.USER;
 
     @Column(nullable = false)
-    private boolean enabled = true;
+    private boolean enabled = false;
     //private Date passwordChangedAt = null ;
     //private boolean mustChangePassword = true ;
 

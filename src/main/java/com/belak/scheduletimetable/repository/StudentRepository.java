@@ -33,5 +33,8 @@ WHERE s.userId = :userId
 
     void deleteByUserId(String userId);
 
+    @Query("SELECT s FROM Student s WHERE s.groupTimetable.id = :groupId")
+    List<Student> findByGroupId(Long groupId);
+
 
 }

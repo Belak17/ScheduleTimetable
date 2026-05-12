@@ -27,7 +27,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         else if (exception instanceof BadCredentialsException) {
             error = "bad_credentials";
         } else if (exception instanceof DisabledException) {
-            error ="Compte Désactivé.Veuiller activer votre compte ";
+            error ="account_disabled";
 
         }
         response.sendRedirect("/login?error=" + error);

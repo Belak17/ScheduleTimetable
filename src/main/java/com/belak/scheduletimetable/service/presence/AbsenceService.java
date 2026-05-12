@@ -4,6 +4,7 @@ import com.belak.scheduletimetable.model.Presence;
 import com.belak.scheduletimetable.model.Seance;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.repository.PresenceRepository;
+import com.belak.scheduletimetable.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -14,11 +15,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AbsenceService {
     private  final PresenceRepository presenceRepository ;
+    private  final StudentRepository studentRepository ;
     public void generateAbsences(Seance seance) {
 
-        List<Student> students = seance.getCoursTP()
+         /*List<Student> students = seance.getCoursTP()
                 .getGroupTimetable()
-                .getStudents();
+                .getStudents();*/
+        List<Student> students = studentRepository.findByGroupId(seance.getCoursTP().getGroupTimetable().getId());
 
         for (Student student : students) {
 

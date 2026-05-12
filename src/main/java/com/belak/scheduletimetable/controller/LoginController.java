@@ -13,18 +13,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/login")
 @RequiredArgsConstructor
 public class LoginController {
-    private final LoginService loginService ;
+
+    private final LoginService loginService;
 
     @GetMapping
-    public String loginPage(@RequestParam(required = false) String error,
-                            Model model)
-    {
-        if(error != null)
-        {
-            model.addAttribute("failure", error);
+    public String loginPage(
+            @RequestParam(required = false) String error,
+            Model model
+    ) {
+
+        if (error != null) {
+            model.addAttribute("error", error);
         }
 
-        return "login/login.html";
+        return "login/login";
     }
-
 }

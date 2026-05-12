@@ -143,6 +143,14 @@ body {
 .tooltip {
     font-size: 14px;
     margin-left: 5px;
+    transition: transform 0.5s ease;
+      display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip:hover
+{
+    transform: translateX(9px);
 }
 
 /* ===== Main Wrapper ===== */

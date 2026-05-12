@@ -27,7 +27,7 @@ public class StudentPresenceService {
         }
         return  List.of();
     }
-    public boolean existsByStudentAndSeanceAndPresentTrue(Student student, Seance seance) {
+    public boolean isPresent(Student student, Seance seance) {
         return presenceRepository.existsByStudentIdAndSeanceIdAndPresentTrue(student.getId(), seance.getId());
     }
     public int getTotalSeancesByCoursTP(CoursTP coursTP)
@@ -38,7 +38,7 @@ public class StudentPresenceService {
     {
         return (int) coursTP.getSeances().stream()
                 .filter(seance ->
-                        !existsByStudentAndSeanceAndPresentTrue(
+                        !isPresent(
                                 student,
                                 seance
                         )

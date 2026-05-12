@@ -40,7 +40,18 @@ public interface CoursTPRepository extends JpaRepository<CoursTP,Long> {
     );
 
     @Query("SELECT cours FROM CoursTP cours " +
-            "WHERE cours.debut BETWEEN :start AND :end " +
-            "AND cours.dayOfWeek = :todayday")
+            "WHERE cours.dayOfWeek = :todayday")
     List<CoursTP> findCoursTPByDay(@Param("todayday") String todayDay);
+    @Query("""
+    SELECT COUNT(c) > 0
+    FROM CoursTP c
+    WHERE c.debut = :start
+      AND c.fin = :end
+      AND c.dayOfWeek = :todayday
+""")
+    boolean existsCoursTPByDayAndHoraire(
+            @Param("todayday") String dayRaw,
+            @Param("start") LocalTime start,
+            @Param("end") LocalTime end
+    );
 }

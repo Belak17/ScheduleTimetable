@@ -38,8 +38,18 @@
 
             </div>
         </div>
-        <div th:if="${failure}" class="alert">
-            <span th:text="${failure}"></span>
+        <div th:if="${error == 'account_disabled'}" class="alert">
+            Compte désactivé. Veuillez activer votre compte.
+        </div>
+
+        <div th:if="${error == 'bad_credentials'}" class="alert">
+            Identifiants incorrects.
+        </div>
+
+        <div th:if="${error == 'user_not_found'}" class="alert">
+            Utilisateur introuvable.
+        </div>
+        <div th:if="${message}" th:text="${message}" class="alert">
         </div>
 
         <div class="others">

@@ -36,13 +36,25 @@ public class CoursTPService extends CoursTPUtilsService {
         tp.setCodeQr(generateQrCode(tp));
         tp.setQrData(extractGroupSalle(value));
 
+        boolean exists = coursTPrepository.existsCoursTPByDayAndHoraire(
+                dayRaw,
+                LocalTime.parse(start),
+                LocalTime.parse(end)
+        );
+
         String frequency = extractTPFrequency(value);
-        if (frequency == null) {
-            tp.setFrequence(1); // défaut
+
+        if (exists) {
+            tp.setFrequence(2);
+        } else if (frequency == null) {
+            tp.setFrequence(1);
+        } else if (frequency.contains("15")) {
+            tp.setFrequence(2);
+        } else if (frequency.contains("3s")) {
+            tp.setFrequence(3);
+        } else {
+            tp.setFrequence(1);
         }
-        else if (frequency.contains("15")) tp.setFrequence(2);
-        else if (frequency.contains("3s")) tp.setFrequence(3);
-        else tp.setFrequence(1);
 
         return tp;
     }

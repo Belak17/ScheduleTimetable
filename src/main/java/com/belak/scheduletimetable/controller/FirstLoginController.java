@@ -17,7 +17,7 @@ public class FirstLoginController {
     @GetMapping("/firstlogin")
     public String showLogin( Model model)
     {
-        model.addAttribute("user", new UserRegister());
+        model.addAttribute("userRegister", new UserRegister());
         return "login/firstlogin" ;
     }
 
@@ -33,6 +33,7 @@ public class FirstLoginController {
     public  String register( Model model , @ModelAttribute UserRegister userRegister)
     {
         userRegisterService.registerUserByUserIdAndEmail(userRegister);
+        model.addAttribute("message", "Votre compte a été activé ");
         return  "login/login" ;
     }
 }
