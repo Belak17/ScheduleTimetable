@@ -45,8 +45,7 @@ have access to the system
 
 ## Screenshots 
 ### Dashboard
-![Screenshot](images/vuedashboard.png)
-
+![Screenshot](images/dashboard.png)
 ### Timetable List
 ![Screenshot](images/listemploidutemps.png)
 
@@ -54,7 +53,7 @@ have access to the system
 ![Screenshot](images/envoiemploidutemps.png)
 
 ### Field
-![Screenshot](images/filieres.png)
+![Screenshot](images/field.png)
 
 ### See absences
 ![Screenshot](images/vueabsence.png)
