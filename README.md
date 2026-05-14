@@ -44,6 +44,9 @@ have access to the system
 - Passwords are encrypted using BCrypt
 
 ## Screenshots 
+### Login Page
+![Screenshot](images/loginpage.png)
+
 ### Dashboard
 ![Screenshot](images/dashboard.png)
 ### Timetable List
