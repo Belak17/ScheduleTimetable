@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absences par Departement</title>
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
     <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-filiere-absence.css}">
     <link rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
@@ -29,53 +30,200 @@
 <section th:replace="admin/admin-dashboard :: sidebar">
 
 </section>
-<main class="center-wrapper">
-    <h2 class="separator" th:text="${departement}">Licences du departement </h2>
-    <section class="grid">
+<main class="center-container">
 
-        <div class="option"
-             th:each="licence : ${licences}"
-             style="background-color: rgba(78, 37, 144, 0.534);">
-
-            <p th:text="${licence.code}">Nom filière</p>
-
-            <p th:text="${licence.libelle}">Libelle</p>
-
-            <img th:src="@{/images/bachelor.png}" alt="icone">
-
-            <div class="Content">
-                <h2>Niveau 1</h2>
-                <h2>Niveau 2</h2>
-                <h2>Niveau 3</h2>
-            </div>
-
+    <section class="list-department">
+        <div class="departement-title">
+            <h3>DEPARTEMENTS</h3>
         </div>
+        <div class="departments">
+            <div class="departement">
+                <a th:href="@{/filieres/departements/MAT}">
+                <div class="dep-header">
 
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Mathématiques</h3>
+
+                </div>
+                </a>
+
+            </div>
+            <div class="departement">
+                <a th:href="@{/filieres/departements/INF}">
+                <div class="dep-header">
+
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Informatique</h3>
+
+                </div>
+                </a>
+            </div>
+            <div class="departement">
+                <a th:href="@{/filieres/departements/SV}">
+                <div class="dep-header">
+
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Sciences de la vie</h3>
+
+                </div>
+                </a>
+            </div>
+            <div class="departement">
+                <a th:href="@{/filieres/departements/CHI}">
+                <div class="dep-header">
+
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Chimie</h3>
+
+                </div>
+                </a>
+            </div>
+            <div class="departement">
+                <a th:href="@{/filieres/departements/PHY}">
+                <div class="dep-header">
+
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Physique</h3>
+
+                </div>
+                </a>
+            </div>
+            <div class="departement">
+                <a th:href="@{/filieres/departements/ST}">
+                <div class="dep-header">
+
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Sciences de la terre</h3>
+                </div>
+                </a>
+            </div>
+        </div>
     </section>
-    <h2 class="separator" th:text="${departement}">Master du departement </h2>
-    <section class="grid">
+    <section class="list-field">
+        <h3 class="departement-title">
+            DEPARTEMENT INFORMATIQUE
+        </h3>
+        <div class="field-title">Licence </div>
+        <div class="field-bachelor">
 
-        <div class="option"
-             th:each="master : ${masters}"
-             style="background-color: rgba(78, 37, 144, 0.534);">
+            <div class="field-container" th:each="licence : ${licences}">
 
-            <p th:text="${master.code}">Nom filière</p>
-            <p th:text="${master.libelle}">Libelle</p>
+                <div class="field">
+                    <h3 th:text="${licence.code}"></h3>
+                    <h4 th:text="${licence.libelle}"></h4>
+                    <img th:src="@{/images/bachelor (1).png}">
+                </div>
 
-            <img th:src="@{/images/degree.png}" alt="icone">
+                <div class="level-panel">
+                    <h3>Niveau</h3>
 
-            <div class="Content">
-                <h2>Niveau 1</h2>
-                <h2>Niveau 2</h2>
+                    <div class="level-wrapper">
+                        <div class="level-card">Licence 1</div>
+                        <div class="group-panel">
+                            <div class="group-item">Groupe A</div>
+                            <div class="group-item">Groupe B</div>
+                        </div>
+                    </div>
+
+                    <div class="level-wrapper">
+                        <div class="level-card">Licence 2</div>
+                        <div class="group-panel">
+                            <div class="group-item">Groupe A</div>
+                            <div class="group-item">Groupe B</div>
+                        </div>
+                    </div>
+
+                    <div class="level-wrapper">
+                        <div class="level-card">Licence 3</div>
+                        <div class="group-panel">
+                            <div class="group-item">Groupe A</div>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
+        <div class="field-title">Master</div>
+        <div class="field-master">
+
+            <div class="field-container" th:each="master : ${masters}">
+
+                <div class="field">
+                    <h3 th:text="${master.code}"></h3>
+                    <h4 th:text="${master.libelle}"></h4>
+                    <img th:src="@{/images/degree (1).png}">
+                </div>
+
+                <div class="level-panel">
+                    <h3>Niveau</h3>
+
+                    <div class="level-wrapper">
+                        <div class="level-card">Master 1</div>
+                        <div class="group-panel">
+                            <div class="group-item">Groupe A</div>
+                        </div>
+                    </div>
+
+                    <div class="level-wrapper">
+                        <div class="level-card">Master 2</div>
+                        <div class="group-panel">
+                            <div class="group-item">Groupe B</div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
 
     </section>
 
 </main>
 <script>
+    document.querySelectorAll(".field-container").forEach(container => {
 
+     const field = container.querySelector(".field");
+     const panel = container.querySelector(".level-panel");
+
+     field.addEventListener("click", (e) => {
+         e.stopPropagation();
+
+         // fermer les autres
+         document.querySelectorAll(".level-panel").forEach(p => {
+             if (p !== panel) p.classList.remove("active");
+         });
+
+         panel.classList.toggle("active");
+     });
+ });
+
+ // fermer si clic dehors
+ document.addEventListener("click", () => {
+     document.querySelectorAll(".level-panel").forEach(p => {
+         p.classList.remove("active");
+     });
+ });
+
+ // groupes
+ document.querySelectorAll(".level-wrapper").forEach(wrapper => {
+
+     const card = wrapper.querySelector(".level-card");
+     const panel = wrapper.querySelector(".group-panel");
+
+     card.addEventListener("click", (e) => {
+         e.stopPropagation();
+
+         document.querySelectorAll(".group-panel").forEach(p => {
+             if (p !== panel) p.classList.remove("active");
+         });
+
+         panel.classList.toggle("active");
+     });
+ });
 </script>
 
 </body>

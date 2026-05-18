@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Absences par Departement</title>
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-departement-absence.css}">
     <link rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
 </head>
@@ -30,45 +30,48 @@
 
 </section>
 <main class="center-wrapper">
-    <h2 class="separator" >Absences par Departement </h2>
+    <h2 class="separator">Absences par Departement</h2>
     <section class="grid">
 
-        <div class="option" style="background-color: rgba(78, 37, 144, 0.534);">
-            <a th:href="@{/filieres/departements/Mathematiques}">
+        <div class="option">
+            <a th:href="@{/filieres/departements/MAT}">
             <p>Mathématiques</p>
-            <img th:src="@{/images/trigonometry.png}">
+            <img th:src="@{/images/mathématiques.jpg}">
             </a>
         </div>
         <div class="option" >
             <a th:href="@{/filieres/departements/INF}">
             <p> Informatique</p>
-            <img th:src="@{/images/self-employed.png}">
+            <img th:src="@{/images/informatique.jpg}">
             </a>
         </div>
-        <div class="option" style="background-color: rgba(69, 96, 122, 0.53);">
-            <a th:href="@{/filieres/departements/Biologie}">
+        <div class="option" >
+            <a th:href="@{/filieres/departements/SV}">
             <p>Biologie </p>
-            <img th:src="@{/images/dna-structure.png}">
+            <img th:src="@{/images/sciencedelavie.jpg}">
             </a>
         </div>
-        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
-            <a th:href="@{/filieres/departements/Chimie}">
+        <div class="option">
+            <a th:href="@{/filieres/departements/CHI}">
             <p>Chimie</p>
-            <img th:src="@{/images/flask.png}">
+            <img th:src="@{/images/chimie.jpg}">
             </a>
         </div>
-        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
-            <a th:href="@{/filieres/departements/Physique}">
+        <div class="option">
+            <a th:href="@{/filieres/departements/PHY}">
             <p>Physique</p>
-            <img th:src="@{/images/physics.png}">
+            <img th:src="@{/images/physique.jpg}">
             </a>
         </div>
-        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
-            <a th:href="@{/filieres/departements/Geologie}">
+        <div class="option">
+            <a th:href="@{/filieres/departements/ST}">
             <p>Geologie </p>
-            <img th:src="@{/images/geology.png}">
+            <img th:src="@{/images/sciencedelaterre.jpg}">
             </a>
         </div>
+    </section>
+    <h2 class="separator">Absences par Departement </h2>
+    <section class="grid">
     </section>
 </main>
 <script>
