@@ -159,7 +159,7 @@ body {
     padding: 20px;
     max-width: 1200px;
 
-    background: linear-gradient(135deg, #dee0e7, #f3f3f3);
+    background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 
@@ -179,7 +179,6 @@ body {
 
 /* ===== OPTION CARD ===== */
 .option {
-    background: linear-gradient(135deg, #667eea, #4b59a249);
     border-radius: 12px;
 
     display: flex;

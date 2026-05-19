@@ -6,6 +6,7 @@ import com.belak.scheduletimetable.dto.CreateProfessorDto;
 import com.belak.scheduletimetable.dto.ProfessorDto;
 import com.belak.scheduletimetable.dto.ProfessorProfileDto;
 import com.belak.scheduletimetable.dto.StudentProfileDto;
+import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.enumeration.Nationalite;
 import com.belak.scheduletimetable.exception.EmptyFileException;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
@@ -51,6 +52,12 @@ public class ProfessorService  {
     {
         Pageable pageable = PageRequest.of(page, size);
         return professorRepository.findAll(pageable).map(professorMapper::convertToDto);
+    }
+
+    public Page<ProfessorDto> getAllProfessorByDepartment(int page , int size , Departement departement)
+    {
+        Pageable pageable = PageRequest.of(page, size);
+        return professorRepository.findByDepartment(pageable, departement).map(professorMapper::convertToDto);
     }
 
     public void saveProfessor(CreateProfessorDto professorDto)

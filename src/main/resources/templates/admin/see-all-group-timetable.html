@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group Timetable </title>
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+
     <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
 </head>
 <body>
@@ -23,57 +25,127 @@
         <h2 class="text-title">Emploi Du Temps Des Etudiants  </h2>
     </div>
 </header>
-<main class="center-wrapper">
+<main class="center-container">
+    <section class="list-department">
+        <div class="departement-title">
+            <h3>DEPARTEMENTS</h3>
+        </div>
+        <div class="departments">
+            <div class="departement">
+                <a th:href="@{/timetables/group/timetable/MAT}">
+                <div class="dep-header">
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Mathématiques</h3>
+                </div>
+                </a>
 
-    <table Bgcolor="lightgray" Border="1" rules="all">
-        <thead>
-        <tr>
-            <th>Identifiant</th>
-            <th>Departement</th>
-            <th>Filiere</th>
-            <th>Groupe</th>
-        </tr>
-        </thead>
+            </div>
+            <div class="departement">
+                <a th:href="@{/timetables/group/timetable/INF}">
+                <div class="dep-header">
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Informatique</h3>
+                </div>
+                </a>
+            </div>
+            <div class="departement">
+                <a th:href="@{/timetables/group/timetable/SV}">
+                <div class="dep-header">
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Sciences de la vie</h3>
+                </div>
+                </a>
+            </div>
+            <div class="departement">
+                <a th:href="@{/timetables/group/timetable/CHI}">
+                <div class="dep-header">
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Chimie</h3>
+                </div>
+                </a>
+            </div>
+            <div class="departement">
+                <a th:href="@{/timetables/group/timetable/PHY}">
+                <div class="dep-header">
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Physique</h3>
+                </div>
+                </a>
+            </div>
+            <div class="departement">
+                <a th:href="@{/timetables/group/timetable/ST}">
+                <div class="dep-header">
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Sciences de la terre</h3>
+                </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    <div class="table-content">
+        <!-- Message si aucun professeur -->
+        <div class="empty-message"
+             th:if="${GroupTimetableList== null or GroupTimetableList.content.isEmpty()}">
+            Veuillez sélectionner un département
+        </div>
+        <!-- Tableau -->
+        <table th:if="${GroupTimetableList != null and !GroupTimetableList.content.isEmpty()}"
+               bgcolor="lightgray"
+               border="1"
+               rules="all">
+            <thead>
+            <tr>
+                <th>Departement</th>
+                <th>Groupe</th>
+                <th>Niveau</th>
+                <th>Filière</th>
+            </tr>
+            </thead>
 
-        <tbody>
-        <tr th:each="grouptimetable : ${GroupTimetableList.content}">
-            <td th:text="${grouptimetable.id}" class="clickable-row"
-                th:data-image="@{/timetables/preview/{id}(id=${grouptimetable.id})}"></td>
-            <td th:text="${grouptimetable.department}"></td>
-            <td th:text="${grouptimetable.field + grouptimetable.year}"></td>
-            <td>
-                <a th:href="@{/students/{group}/{year}/{field}/details(
+            <tbody>
+            <tr th:each="grouptimetable : ${GroupTimetableList.content}">
+                <td th:text="${grouptimetable.department}" class="clickable-row"
+                    th:data-image="@{/timetables/preview/{id}(id=${grouptimetable.id})}"></td>
+                <td th:text="${grouptimetable.field}" ></td>
+                <td th:text="${grouptimetable.year}"></td>
+                <td>
+                    <a th:href="@{/students/{group}/{year}/{field}/details(
         field=${grouptimetable.field},
         year=${grouptimetable.year},
         group=${grouptimetable.group})}"
-                   th:text="${grouptimetable.group}" class="no-style-link">
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div style="margin-top:20px">
+                       th:text="${grouptimetable.group}" class="no-style-link">
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-        <!-- Previous -->
-        <a th:if="${GroupTimetableList.hasPrevious()}"
-           th:href="@{/timetables/group/timetable(page=${GroupTimetableList.number - 1}, size=${GroupTimetableList.size})}">
-            ⬅ Previous
-        </a>
+        <div style="margin-top:20px" th:if="${GroupTimetableList != null}">
 
-        <!-- Page -->
-        <span th:if="${GroupTimetableList.totalPages > 0}">
+            <a th:if="${GroupTimetableList.hasPrevious()}"
+               th:href="@{/timetables/group/timetable/{departement}(
+        departement=${selectedDepartment},
+        page=${GroupTimetableList.number - 1},
+        size=${GroupTimetableList.size})}">
+                ⬅ Previous
+            </a>
+
+            <span th:if="${GroupTimetableList.totalPages > 0}">
         Page
         <span th:text="${GroupTimetableList.number + 1}"></span>
         /
         <span th:text="${GroupTimetableList.totalPages}"></span>
     </span>
 
-        <!-- Next -->
-        <a th:if="${GroupTimetableList.hasNext()}"
-           th:href="@{/timetables/group/timetable(page=${GroupTimetableList.number + 1}, size=${GroupTimetableList.size})}">
-            Next ➡
-        </a>
+            <a th:if="${GroupTimetableList.hasNext()}"
+               th:href="@{/timetables/group/timetable/{departement}(
+        departement=${selectedDepartment},
+        page=${GroupTimetableList.number + 1},
+        size=${GroupTimetableList.size})}">
+                Next ➡
+            </a>
 
+        </div>
     </div>
 </main>
 <section th:replace="admin/admin-dashboard :: sidebar">
@@ -141,6 +213,32 @@ align-items:center;
 .no-style-link:hover {
     color: inherit;         /* évite la couleur différente au survol */
     text-decoration: none;  /* pas de soulignement au hover */
+}
+    @media (max-width: 768px) {
+    .head-box {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .text-title {
+        font-size: 20px;
+    }
+
+    .center-container {
+        margin: 80px 10px 20px 10px;
+        padding: 15px;
+    }
+
+    .icons {
+        width: 220px;
+    }
+
+    .center-container
+    {
+        display: flex;
+        flex-direction: column-reverse;
+        width: fit-content;
+    }
 }
 </style>
 </body>

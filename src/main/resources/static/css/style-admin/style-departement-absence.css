@@ -173,7 +173,7 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
-    border-radius: 8px;
+    border-radius: 4px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }

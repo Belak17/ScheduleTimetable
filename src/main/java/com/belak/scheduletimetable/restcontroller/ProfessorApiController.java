@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-
+import com.belak.scheduletimetable.enumeration.Departement;
 @Controller
 @RequestMapping("/professors")
 @RequiredArgsConstructor
@@ -27,16 +27,33 @@ public class ProfessorApiController {
     private final TimetablePreviewService timetablePreviewService ;
     private  final ProfessorService professorService ;
     private  final ProfessorExcelService professorExcelService ;
-    @GetMapping("/professor/timetable")
+    @GetMapping("/professor/timetable/{departement}")
     public String showProfessorTimetables(
+            @PathVariable String departement ,
+
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Model model
     ) {
         Page<ProfessorDto> professors =
-                professorService.getAllProfessor(page, size);
+                professorService.getAllProfessorByDepartment(page, size, Departement.valueOf(departement));
 
         model.addAttribute("Professors", professors);
+        model.addAttribute("selectedDepartment", departement);
+        return "/admin/see-all-professor-timetable";
+    }
+
+    @GetMapping("/professor/timetable")
+    public String showProfessorTimetables(
+
+
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model
+    ) {
+
+
+        model.addAttribute("Professors", null);
         return "/admin/see-all-professor-timetable";
     }
 

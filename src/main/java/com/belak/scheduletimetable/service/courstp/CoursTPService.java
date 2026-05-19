@@ -1,5 +1,8 @@
 package com.belak.scheduletimetable.service.courstp;
 
+import com.belak.scheduletimetable.dto.CoursTPDto;
+import com.belak.scheduletimetable.enumeration.Departement;
+import com.belak.scheduletimetable.enumeration.Filiere;
 import com.belak.scheduletimetable.model.CoursTP;
 import com.belak.scheduletimetable.model.GroupTimetable;
 import com.belak.scheduletimetable.repository.CoursTPRepository;
@@ -9,6 +12,9 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.spire.xls.Worksheet;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -108,4 +114,27 @@ public class CoursTPService extends CoursTPUtilsService {
 
         timetableRepository.save(timetable);
     }
+    public Page<CoursTPDto> getAllCoursTPByGroupTimetable(int page , int size ,String departement , String group ,
+                                                          int niveau , String filiere )
+    {
+        Pageable pageable = PageRequest.of(page, size);
+        return  coursTPrepository
+                .findByGroupTimetableId(pageable , timetableRepository
+                        .findByDepartementAndFiliereAndGroupAndNiveau( Departement
+                                .valueOf(departement), Filiere
+                                .valueOf(filiere),group,niveau)
+                        .getId()).map(this::toDto);
+    }
+
+    public CoursTPDto toDto(CoursTP tp) {
+        CoursTPDto dto = new CoursTPDto();
+        dto.setId(tp.getId());
+        dto.setIntitule(tp.getIntitule());
+        dto.setDayOfWeek(tp.getDayOfWeek());
+        dto.setDebut(tp.getDebut());
+        dto.setFin(tp.getFin());
+        return dto;
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.belak.scheduletimetable.controller;
 
 import com.belak.scheduletimetable.dto.GroupTimetableDto;
+import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.exception.EmptyFileException;
 import com.belak.scheduletimetable.exception.InvalidExcelFormatException;
 import com.belak.scheduletimetable.exception.LibreOfficeConversionException;
@@ -42,15 +43,34 @@ public class GroupTimetableController {
         return "redirect:/admin/timetable";
     }
 
+    @GetMapping("/group/timetable/{departement}")
+    public String showGroupTimetables(
+            @PathVariable String departement ,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model
+    ) {
+
+        Page<GroupTimetableDto> timetables =
+                timetableService.getGroupTimetablesByDepartment(
+                        page,
+                        size,
+                        Departement.valueOf(departement)
+                );
+
+        model.addAttribute("GroupTimetableList", timetables);
+        model.addAttribute("selectedDepartment", departement);
+
+        return "/admin/see-all-group-timetable";
+    }
+
     @GetMapping("/group/timetable")
     public String showGroupTimetables(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Model model
     ) {
-        Page<GroupTimetableDto> timetables =
-                timetableService.getGroupTimetables(page, size);
-        model.addAttribute("GroupTimetableList", timetables);
+        model.addAttribute("GroupTimetableList", null);
         return "/admin/see-all-group-timetable";
     }
 

@@ -1,6 +1,9 @@
 package com.belak.scheduletimetable.repository;
 
+import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.model.Professor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,4 +30,5 @@ WHERE p.userId = :userId
 
     Optional<Professor> findByUserId(String userId);
 
+    Page<Professor> findByDepartment(Pageable pageable, Departement departement);
 }

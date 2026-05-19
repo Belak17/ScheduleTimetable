@@ -194,7 +194,7 @@ public class GroupTimetableService extends TimetableService {
     public GroupTimetableDto convertToDto(GroupTimetable groupTimetable) {
         return new GroupTimetableDto(
                 groupTimetable.getId(),
-                groupTimetable.getDepartement() != null ? groupTimetable.getDepartement().toString() : "NON DÉFINI",
+                groupTimetable.getDepartement().getLibelle() != null ? groupTimetable.getDepartement().getLibelle() : "NON DÉFINI",
                 groupTimetable.getGroup(),
                 groupTimetable.getFiliere() != null ? groupTimetable.getFiliere().toString() : "NON DÉFINI",
                 groupTimetable.getNiveau()
@@ -239,5 +239,19 @@ public class GroupTimetableService extends TimetableService {
                 .findDistinctFilieresByDepartement(departement)
               ;
     }
+
+    public Page<GroupTimetableDto> getGroupTimetablesByDepartment(int page , int size , Departement departement)
+    {
+        Pageable pageable = PageRequest.of(page, size);
+        return groupTimetableRepository.findByDepartement(pageable,departement).map(this::convertToDto);
+
+    }
+
+    public List<String> getAllGroupByDepartmentAndFieldAndLevel(String departement , String field , int niveau)
+    {
+        return groupTimetableRepository.findDistinctGroupByDepartementAndFiliereAndNiveau(Departement.valueOf(departement),Filiere.valueOf(field),niveau) ;
+
+    }
+
 
 }

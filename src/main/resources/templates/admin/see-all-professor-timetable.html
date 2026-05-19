@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professor Timetable</title>
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+
     <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
 </head>
 <body>
@@ -23,58 +25,119 @@
         <h2 class="text-title">Emploi Du Temps Des Professeurs  </h2>
     </div>
 </header>
-<main class="center-wrapper">
+<main class="center-container">
+    <section class="list-department">
+        <div class="departement-title">
+            <h3>DEPARTEMENTS</h3>
+        </div>
+        <div class="departments">
+            <div class="departement">
+                <div class="dep-header">
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Mathématiques</h3>
+                </div>
 
-    <table Bgcolor="lightgray" Border="1" rules="all">
-        <thead>
-        <tr>
-            <th>Identifiant</th>
-            <th>Spécialité</th>
-            <th>Grade</th>
-            <th>Statut</th>
-            <th>Nom</th>
-        </tr>
-        </thead>
+            </div>
+            <div class="departement">
+                <div class="dep-header">
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Informatique</h3>
+                </div>
+            </div>
+            <div class="departement">
+                <div class="dep-header">
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Sciences de la vie</h3>
+                </div>
+            </div>
+            <div class="departement">
+                <div class="dep-header">
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Chimie</h3>
+                </div>
+            </div>
+            <div class="departement">
+                <div class="dep-header">
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Physique</h3>
+                </div>
+            </div>
+            <div class="departement">
+                <div class="dep-header">
+                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                    <h3>Sciences de la terre</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="table-content">
+        <!-- Message si aucun professeur -->
+        <div class="empty-message"
+             th:if="${Professors == null or Professors.content.isEmpty()}">
+            Veuillez sélectionner un département
+        </div>
+        <!-- Tableau -->
+        <table th:if="${Professors != null and !Professors.content.isEmpty()}"
+               bgcolor="lightgray"
+               border="1"
+               rules="all">
+            <thead>
+            <tr>
+                <th>Identifiant</th>
+                <th>Spécialité</th>
+                <th>Grade</th>
+                <th>Statut</th>
+                <th>Nom</th>
+            </tr>
+            </thead>
 
-        <tbody>
-        <tr th:each="professor : ${Professors.content}"
-            class="clickable-row"
-            th:data-image="@{/professors/preview/{userId}(userId=${professor.userId})}">
-            <td th:text="${professor.userId}"></td>
-            <td th:text="${professor.speciality}"></td>
-            <td th:text="${professor.grade}"></td>
-            <td th:text="${professor.statut}"></td>
-            <td th:text="${professor.nom != null
+            <tbody>
+            <tr th:each="professor : ${Professors.content}"
+                class="clickable-row"
+                th:data-image="@{/professors/preview/{userId}(userId=${professor.userId})}">
+                <td th:text="${professor.userId}"></td>
+                <td th:text="${professor.speciality}"></td>
+                <td th:text="${professor.grade}"></td>
+                <td th:text="${professor.statut}"></td>
+                <td th:text="${professor.nom != null
         ? professor.nom + ' ' + professor.prenom
         : 'Non assigné'}">
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div style="margin-top:20px">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="margin-top:20px" th:if="${Professors != null}">
 
-        <!-- Previous -->
-        <a th:if="${Professors.hasPrevious()}"
-           th:href="@{/professors/professor/timetables(page=${Professors.number - 1}, size=${Professors.size})}">
-            ⬅ Previous
-        </a>
+            <!-- Previous -->
+            <a th:if="${Professors.hasPrevious()}"
+               th:href="@{/professors/professor/timetable/{departement}(
+        departement=${selectedDepartment},
+        page=${Professors.number - 1},
+        size=${Professors.size})}">
+                ⬅ Previous
+            </a>
 
-        <!-- Numéro de page -->
-        <span  th:if="${Professors.totalPages > 0}">
+            <!-- Numéro de page -->
+            <span  th:if="${Professors.totalPages > 0}">
         Page
         <span th:text="${Professors.number + 1}"></span>
         /
         <span th:text="${Professors.totalPages}"></span>
     </span>
 
-        <!-- Next -->
-        <a th:if="${Professors.hasNext()}"
-           th:href="@{/professors/professor/timetables(page=${Professors.number + 1}, size=${Professors.size})}">
-            Next ➡
-        </a>
+            <!-- Next -->
+            <a th:if="${Professors.hasNext()}"
+               th:href="@{/professors/professor/timetable/{departement}(
+        departement=${selectedDepartment},
+        page=${GroupTimetableList.number + 1},
+        size=${GroupTimetableList.size})}">
+                Next ➡
+            </a>
 
+        </div>
     </div>
 </main>
+
 <section th:replace="admin/admin-dashboard :: sidebar">
 
 </section>
@@ -107,6 +170,33 @@
         }
     });
 </script>
+<style>
+    @media (max-width: 768px) {
+    .head-box {
+        gap: 10px;
+        padding: 10px;
+    }
 
+    .text-title {
+        font-size: 20px;
+    }
+
+    .center-container {
+        margin: 80px 10px 20px 10px;
+        padding: 15px;
+    }
+
+    .icons {
+        width: 220px;
+    }
+
+    .center-container
+    {
+        display: flex;
+        flex-direction: column-reverse;
+        width: fit-content;
+    }
+}
+</style>
 </body>
 </html>

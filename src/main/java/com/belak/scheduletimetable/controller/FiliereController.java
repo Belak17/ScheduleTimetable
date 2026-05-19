@@ -30,5 +30,13 @@ public class FiliereController {
         return  "/admin/show-filiere-by-department" ;
     }
 
+    @GetMapping("/departements/{departement}/{filiere}/{niveau}")
+    public String showAllGroupsByDepartmentAndfieldAndlevel(@PathVariable String departement
+    , @PathVariable String filiere , @PathVariable int niveau , Model model)
+    {
+        model.addAttribute("groups",groupTimetableService.getAllGroupByDepartmentAndFieldAndLevel(departement,filiere,niveau));
+        return "admin/show-group-by-filiere-by-department";
+    }
+
 
 }

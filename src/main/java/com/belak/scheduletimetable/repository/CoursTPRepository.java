@@ -1,6 +1,9 @@
 package com.belak.scheduletimetable.repository;
 
 import com.belak.scheduletimetable.model.CoursTP;
+import com.belak.scheduletimetable.model.GroupTimetable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -54,4 +57,11 @@ public interface CoursTPRepository extends JpaRepository<CoursTP,Long> {
             @Param("start") LocalTime start,
             @Param("end") LocalTime end
     );
+
+    @Query("""
+    SELECT c
+    FROM CoursTP c
+    WHERE  c.groupTimetable.id = :id
+""")
+    Page<CoursTP> findByGroupTimetableId(Pageable pageable ,  @Param("id") Long id);
 }
