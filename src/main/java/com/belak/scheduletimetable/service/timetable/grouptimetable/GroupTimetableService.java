@@ -196,7 +196,7 @@ public class GroupTimetableService extends TimetableService {
                 groupTimetable.getId(),
                 groupTimetable.getDepartement().getLibelle() != null ? groupTimetable.getDepartement().getLibelle() : "NON DÉFINI",
                 groupTimetable.getGroup(),
-                groupTimetable.getFiliere() != null ? groupTimetable.getFiliere().toString() : "NON DÉFINI",
+                groupTimetable.getFiliere().getCode() != null ? groupTimetable.getFiliere().getCode() : "NON DÉFINI",
                 groupTimetable.getNiveau()
         );
     }

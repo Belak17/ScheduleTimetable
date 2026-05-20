@@ -84,6 +84,20 @@ public class GroupTimetableController {
                 .body(image);
     }
 
+    @GetMapping("/group/timetable/{departement}/{filiere}/{niveau}")
+    public String showGroup(
+            @PathVariable String departement ,
+            @PathVariable String filiere ,
+            @PathVariable int niveau ,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model
+    ) {
+
+        model.addAttribute("group",timetableService.getAllGroupByDepartmentAndFieldAndLevel(departement,filiere,niveau));
+        return "/admin/see-absence-final";
+    }
+
 
 
 

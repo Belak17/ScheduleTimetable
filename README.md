@@ -50,7 +50,9 @@ have access to the system
 ### Dashboard
 ![Screenshot](images/dashboard.png)
 ### Timetable List
-![Screenshot](images/listemploidutemps.png)
+
+![Screenshot](images/emploidutempssansdepartmentselection.png)
+![Screenshot](images/emploidutempspardepartement.png)
 
 ### Timetable Send
 ![Screenshot](images/envoiemploidutemps.png)
