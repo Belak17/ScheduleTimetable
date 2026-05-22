@@ -249,7 +249,7 @@ public class GroupTimetableService extends TimetableService {
 
     public List<String> getAllGroupByDepartmentAndFieldAndLevel(String departement , String field , int niveau)
     {
-        return groupTimetableRepository.findDistinctGroupByDepartementAndFiliereAndNiveau(Departement.valueOf(departement),Filiere.valueOf(field),niveau) ;
+        return groupTimetableRepository.findDistinctGroupByDepartementAndFiliereAndNiveau(Departement.valueOf(departement),Filiere.fromCode(field),niveau) ;
 
     }
 

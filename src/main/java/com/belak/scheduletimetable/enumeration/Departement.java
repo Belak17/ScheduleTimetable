@@ -9,8 +9,8 @@ public enum Departement {
     MAT("MAT", "Mathematique"),
     INF("INF", "Informatique"),
     SV("SV", "Biologie"),
-    ST("ST", "Geologie"),
-    UT("UT", "Unité Transversale");
+    ST("ST", "Geologie");
+//    UT("UT", "Unité Transversale");
 
     private final String code;
     private final String libelle;

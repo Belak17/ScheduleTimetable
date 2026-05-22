@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Profile</title>
+  <link rel="stylesheet" th:href="@{/css/style-admin/admin-see-cours.css}">
+  <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+  <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
+</head>
+<body>
+<input type="checkbox" id="toggle-sidebar" />
+<header>
+  <div class="head-box">
+    <!-- Checkbox caché -->
+    <label for="toggle-sidebar">
+      <div  id="menu">
+        <img th:src="@{/images/menu-burger.png}">
+      </div>
+    </label>
+    <h2 class="text-title">Liste Cours TP   </h2>
+  </div>
+</header>
+<main class="center-container">
+  <section class="list-department">
+    <div class="departement-title">
+      <h3>INFORMATIQUE</h3>
+      <h4>Licence 1</h4>
+    </div>
+    <div class="departments">
+      <div class="departement">
+        <div class="dep-header">
+          <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+          <h3>Groupes</h3>
+        </div>
+        <div class="content">
+          <ul class="groups">
+            <li th:each="group : ${groups}">
+              <a th:text="${group}"
+                 th:href="@{/absence/{departement}/{filiere}/{niveau}/{group}(
+                departement=${selectedDepartment},
+                filiere=${selectedField},
+                niveau=${selectedNiveau},
+                group=${group})}">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <div class="table-content">
+    <!-- Message si aucun professeur -->
+    <div class="empty-message"
+         th:if="${courses== null or courses.content.isEmpty()}">
+      Veuillez sélectionner un groupe
+    </div>
+    <!-- Tableau -->
+    <table th:if="${courses != null and !courses.content.isEmpty()}"
+           bgcolor="lightgray"
+           border="1"
+           rules="all">
+      <thead>
+      <tr>
+        <th>Intitule</th>
+        <th>Jour</th>
+        <th>Début</th>
+        <th>Fin</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="course : ${courses.content}">
+        <td th:text="${course.intitule}"></td>
+        <td th:text="${course.dayOfWeek}"></td>
+        <td th:text="${course.debut}"></td>
+        <td th:text="${course.fin}"></td>
+
+      </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:20px" th:if="${courses != null}">
+
+      <a th:if="${courses.hasPrevious()}"
+         th:href="@{/absence/{departement}/{filiere}/{niveau}/{group}(
+            departement=${selectedDepartment},
+            filiere=${selectedField},
+            niveau=${selectedNiveau},
+            group=${selectedGroup},
+            page=${courses.number - 1},
+            size=${courses.size})}">
+        ⬅ Previous
+      </a>
+
+      <span th:if="${courses.totalPages > 0}">
+        Page
+        <span th:text="${courses.number + 1}"></span>
+        /
+        <span th:text="${courses.totalPages}"></span>
+    </span>
+
+      <a th:if="${courses.hasNext()}"
+         th:href="@{/absence/{departement}/{filiere}/{niveau}/{group}(
+            departement=${selectedDepartment},
+            filiere=${selectedField},
+            niveau=${selectedNiveau},
+            group=${selectedGroup},
+            page=${courses.number + 1},
+            size=${courses.size})}">
+        Next ➡
+      </a>
+
+    </div>
+  </div>
+</main>
+<section th:replace="admin/admin-dashboard :: sidebar"></section>
+<script>
+
+</script>
+
+</body>
+</html>

@@ -26,7 +26,6 @@ public class GroupTimetableController {
     private  final GroupTimetableService timetableService ;
     @PostMapping("/upload/grouptimetable")
     public String upload( @RequestParam("excelFile") MultipartFile file , Model model , RedirectAttributes redirectAttributes)  {
-
         try {
             timetableService.sendManyGroupTimetable(file);
             redirectAttributes.addFlashAttribute("success", "Upload terminé avec succès");
@@ -50,14 +49,12 @@ public class GroupTimetableController {
             @RequestParam(defaultValue = "10") int size,
             Model model
     ) {
-
         Page<GroupTimetableDto> timetables =
                 timetableService.getGroupTimetablesByDepartment(
                         page,
                         size,
                         Departement.valueOf(departement)
                 );
-
         model.addAttribute("GroupTimetableList", timetables);
         model.addAttribute("selectedDepartment", departement);
 
@@ -70,6 +67,7 @@ public class GroupTimetableController {
             @RequestParam(defaultValue = "10") int size,
             Model model
     ) {
+
         model.addAttribute("GroupTimetableList", null);
         return "/admin/see-all-group-timetable";
     }
@@ -84,19 +82,6 @@ public class GroupTimetableController {
                 .body(image);
     }
 
-    @GetMapping("/group/timetable/{departement}/{filiere}/{niveau}")
-    public String showGroup(
-            @PathVariable String departement ,
-            @PathVariable String filiere ,
-            @PathVariable int niveau ,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            Model model
-    ) {
-
-        model.addAttribute("group",timetableService.getAllGroupByDepartmentAndFieldAndLevel(departement,filiere,niveau));
-        return "/admin/see-absence-final";
-    }
 
 
 

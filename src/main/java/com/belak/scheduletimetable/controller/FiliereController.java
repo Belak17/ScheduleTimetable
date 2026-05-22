@@ -2,6 +2,7 @@ package com.belak.scheduletimetable.controller;
 
 import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.enumeration.Filiere;
+import com.belak.scheduletimetable.service.courstp.CoursTPService;
 import com.belak.scheduletimetable.service.timetable.grouptimetable.GroupTimetableService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,14 +19,28 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FiliereController {
     private final GroupTimetableService groupTimetableService;
+    private  final CoursTPService tpService ;
     @GetMapping("/departements/{departement}")
     public String showAllFieldByDepartment(@PathVariable String departement ,
                                            Model model)
     {
         model.addAttribute("departement", departement);
-        List<Filiere> licences = groupTimetableService.getLicenceFilieresByDepartement(Departement.valueOf(departement.trim().toUpperCase()));
+        List<Filiere> licences = groupTimetableService
+                .getLicenceFilieresByDepartement(Departement
+                        .valueOf(departement
+                                .trim()
+                                .toUpperCase()));
         model.addAttribute("licences", licences);
-        List<Filiere> masters = groupTimetableService.getMasterFilieresByDepartement(Departement.valueOf(departement.trim().toUpperCase()));
+        List<Filiere> masters = groupTimetableService
+                .getMasterFilieresByDepartement(Departement
+                        .valueOf(departement
+                        .trim()
+                        .toUpperCase()));
+        List<Departement> Departments = List.of(Departement.values());
+
+        model.addAttribute("departments",Departments);
+
+        model.addAttribute("department", Departement.valueOf(departement));
         model.addAttribute("masters", masters);
         return  "/admin/show-filiere-by-department" ;
     }
@@ -34,9 +49,14 @@ public class FiliereController {
     public String showAllGroupsByDepartmentAndfieldAndlevel(@PathVariable String departement
     , @PathVariable String filiere , @PathVariable int niveau , Model model)
     {
-        model.addAttribute("groups",groupTimetableService.getAllGroupByDepartmentAndFieldAndLevel(departement,filiere,niveau));
+        List<Departement> Departments = List.of(Departement.values());
+        model.addAttribute("departments",Departments);
+        model.addAttribute("groups",groupTimetableService
+                .getAllGroupByDepartmentAndFieldAndLevel(departement,filiere,niveau));
         return "admin/show-group-by-filiere-by-department";
     }
+
+
 
 
 }

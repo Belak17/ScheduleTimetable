@@ -121,8 +121,7 @@ public class CoursTPService extends CoursTPUtilsService {
         return  coursTPrepository
                 .findByGroupTimetableId(pageable , timetableRepository
                         .findByDepartementAndFiliereAndGroupAndNiveau( Departement
-                                .valueOf(departement), Filiere
-                                .valueOf(filiere),group,niveau)
+                                .valueOf(departement), Filiere.fromCode(filiere),group,niveau)
                         .getId()).map(this::toDto);
     }
 

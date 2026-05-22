@@ -1,0 +1,28 @@
+.content {
+    padding-left: 1.5rem;
+}
+
+.groups {
+    list-style: none;
+    padding-left: 1rem;
+    margin: 0;
+}
+
+.groups li {
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+}
+
+
+.groups a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.groups li:hover {
+    background-color: #e6f0ff;
+}
