@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Profile</title>
+  <title>Liste Cours TP</title>
   <link rel="stylesheet" th:href="@{/css/style-admin/admin-see-cours.css}">
   <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
   <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
@@ -17,7 +17,7 @@
         <img th:src="@{/images/menu-burger.png}">
       </div>
     </label>
-    <h2 class="text-title">Liste Cours TP   </h2>
+    <h2 class="text-title">Liste Cours TP</h2>
   </div>
 </header>
 <main class="center-container">
@@ -26,27 +26,18 @@
       <h3>INFORMATIQUE</h3>
       <h4>Licence 1</h4>
     </div>
-    <div class="departments">
-      <div class="departement">
+    <div class="departments" th:each="group : ${groups}">
+      <a class="departement "
+         th:href="@{/absence/{departement}/{filiere}/{niveau}/{group}(
+            departement=${selectedDepartment},
+            filiere=${selectedField},
+            niveau=${selectedNiveau},
+            group=${group})}">
         <div class="dep-header">
           <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-          <h3>Groupes</h3>
+          <span th:text="'Groupe ' + ${group}"></span>
         </div>
-        <div class="content">
-          <ul class="groups">
-            <li th:each="group : ${groups}">
-              <a th:text="${group}"
-                 th:href="@{/absence/{departement}/{filiere}/{niveau}/{group}(
-                departement=${selectedDepartment},
-                filiere=${selectedField},
-                niveau=${selectedNiveau},
-                group=${group})}">
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
+      </a>
     </div>
   </section>
   <div class="table-content">

@@ -1,12 +1,16 @@
 package com.belak.scheduletimetable.service.courstp;
 
 import com.belak.scheduletimetable.dto.CoursTPDto;
+import com.belak.scheduletimetable.dto.AttendanceDto;
+import com.belak.scheduletimetable.dto.StudentAttendanceDto;
 import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.enumeration.Filiere;
-import com.belak.scheduletimetable.model.CoursTP;
-import com.belak.scheduletimetable.model.GroupTimetable;
+import com.belak.scheduletimetable.exception.ResourceNotFoundException;
+import com.belak.scheduletimetable.model.*;
 import com.belak.scheduletimetable.repository.CoursTPRepository;
 import com.belak.scheduletimetable.repository.GroupTimetableRepository;
+import com.belak.scheduletimetable.repository.PresenceRepository;
+import com.belak.scheduletimetable.repository.StudentRepository;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
@@ -23,15 +27,17 @@ import java.io.ByteArrayOutputStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 @Service
 @RequiredArgsConstructor
 public class CoursTPService extends CoursTPUtilsService {
     private final CoursTPRepository coursTPrepository;
     private  final GroupTimetableRepository timetableRepository ;
+    private  final StudentRepository studentRepository;
+    private  final PresenceRepository presenceRepository ;
 
     private CoursTP buildTP(String value, String dayRaw, String start, String end) {
         CoursTP tp = new CoursTP();
@@ -134,6 +140,70 @@ public class CoursTPService extends CoursTPUtilsService {
         dto.setFin(tp.getFin());
         return dto;
     }
+    public AttendanceDto getAllDatesAndAttendanceByCoursTP(Long id) {
 
+        CoursTP tp = coursTPrepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("coursTP not found"));
 
+        AttendanceDto attendanceDto = new AttendanceDto();
+
+        List<Seance> sortedSeances = tp.getSeances()
+                .stream()
+                .sorted(Comparator.comparing(Seance::getDate))
+                .toList();
+
+        attendanceDto.setDates(
+                sortedSeances
+                        .stream()
+                        .map(Seance::getDate)
+                        .toList()
+        );
+
+        List<Student> students =
+                tp.getGroupTimetable().getStudents();
+
+        List<StudentAttendanceDto> rows = new ArrayList<>();
+
+        for (Student student : students) {
+
+            StudentAttendanceDto studentAttendanceDto =
+                    new StudentAttendanceDto();
+
+            studentAttendanceDto.setStudentName(
+                    student.getNom() + " " + student.getPrenom()
+            );
+
+            for (Seance seance : sortedSeances) {
+
+                java.util.Optional<Presence> optionalPresence =
+                        presenceRepository.findBySeanceIdAndStudentId(
+                                seance.getId(),
+                                student.getId()
+                        );
+
+                if (optionalPresence.isPresent()) {
+
+                    Presence presence = optionalPresence.get();
+
+                    if (presence.getPresent()) {
+                        studentAttendanceDto.addStatuses("Present");
+                    } else {
+                        studentAttendanceDto.addStatuses("Absent");
+                    }
+
+                } else {
+
+                    studentAttendanceDto.addStatuses("-");
+
+                }
+            }
+
+            rows.add(studentAttendanceDto);
+        }
+
+        attendanceDto.setRows(rows);
+
+        return attendanceDto;
+    }
 }

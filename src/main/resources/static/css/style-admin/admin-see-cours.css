@@ -23,6 +23,11 @@
     display: block;
 }
 
-.groups li:hover {
+.departement:hover {
     background-color: #e6f0ff;
+}
+
+.departement {
+    text-decoration: none;
+    color: inherit;
 }
