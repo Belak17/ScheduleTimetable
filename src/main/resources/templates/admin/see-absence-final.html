@@ -61,7 +61,11 @@
       </thead>
       <tbody>
       <tr th:each="course : ${courses.content}">
-        <td th:text="${course.intitule}"></td>
+        <td>
+          <a th:href="@{/absence/courses/{id}(id=${course.id})}"
+             th:text="${course.intitule}">
+          </a>
+        </td>
         <td th:text="${course.dayOfWeek}"></td>
         <td th:text="${course.debut}"></td>
         <td th:text="${course.fin}"></td>

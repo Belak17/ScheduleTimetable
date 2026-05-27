@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste Cours TP</title>
+    <link rel="stylesheet" th:href="@{/css/style-admin/admin-see-cours.css}">
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
+</head>
+<body>
+<input type="checkbox" id="toggle-sidebar" />
+<header>
+    <div class="head-box">
+        <!-- Checkbox caché -->
+        <label for="toggle-sidebar">
+            <div  id="menu">
+                <img th:src="@{/images/menu-burger.png}">
+            </div>
+        </label>
+        <h2 class="text-title">Liste Cours TP</h2>
+    </div>
+</header>
+<main class="center-container">
+    <div class="table-content">
+        <!-- Tableau -->
+        <table bgcolor="lightgray" border="1" rules="all">
+
+            <thead>
+            <tr>
+                <th>Nom & Prénom</th>
+                <th th:each="date:${attendanceTable.dates}"
+                    th:text="${date}">
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="row:${attendanceTable.rows}">
+                <td th:text="${row.studentName}"></td>
+                <td th:each="status:${row.statuses}"
+                    th:text="${status}">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="margin-top:20px">
+            <a th:if="${currentPage > 0}"
+               th:href="@{/absence/courses/{id}(id=${id}, page=${currentPage - 1})}">
+                Previous
+            </a>
+            <a th:href="@{/absence/courses/{id}(id=${id}, page=${currentPage + 1})}">
+                Next
+            </a>
+        </div>
+    </div>
+</main>
+<section th:replace="admin/admin-dashboard :: sidebar"></section>
+<script>
+
+</script>
+
+</body>
+</html>

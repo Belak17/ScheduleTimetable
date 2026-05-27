@@ -107,7 +107,6 @@ public class CoursTPService extends CoursTPUtilsService {
                             coursTPrepository.save(tp);
                             timetable.addCoursTP(tp);
                         }
-
                     }
                     else {
                         CoursTP tp = buildTP(value, dayRaw, start, end);
@@ -117,7 +116,6 @@ public class CoursTPService extends CoursTPUtilsService {
                 }
             }
         }
-
         timetableRepository.save(timetable);
     }
     public Page<CoursTPDto> getAllCoursTPByGroupTimetable(int page , int size ,String departement , String group ,
@@ -140,32 +138,30 @@ public class CoursTPService extends CoursTPUtilsService {
         dto.setFin(tp.getFin());
         return dto;
     }
-    public AttendanceDto getAllDatesAndAttendanceByCoursTP(Long id) {
+    public AttendanceDto getAllDatesAndAttendanceByCoursTP(Long id  , int page , int size ) {
 
         CoursTP tp = coursTPrepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("coursTP not found"));
-
         AttendanceDto attendanceDto = new AttendanceDto();
-
         List<Seance> sortedSeances = tp.getSeances()
                 .stream()
                 .sorted(Comparator.comparing(Seance::getDate))
                 .toList();
-
         attendanceDto.setDates(
                 sortedSeances
                         .stream()
                         .map(Seance::getDate)
                         .toList()
         );
-
         List<Student> students =
                 tp.getGroupTimetable().getStudents();
-
+        int start = page * size;
+        int end = Math.min(start + size, students.size());
+        List<Student> paginatedStudents =
+                students.subList(start, end);
         List<StudentAttendanceDto> rows = new ArrayList<>();
-
-        for (Student student : students) {
+        for (Student student : paginatedStudents) {
 
             StudentAttendanceDto studentAttendanceDto =
                     new StudentAttendanceDto();
