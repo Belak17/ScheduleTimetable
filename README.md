@@ -1,142 +1,363 @@
-# Timetable Management System
-## Description
-A web application built with Spring Boot, Thymeleaf, 
-HTML, and CSS for managing and displaying student 
-timetables in a structured and user-friendly 
-interface
+#  Timetable Management System
 
-## Purpose of The Application
-Design and Develop a web-based system that helps 
-students and administrators efficiently create, 
-manage, and view academic timetables in 
-a structured and accessible way.
+[![Java](https://img.shields.io/badge/Java-17+-ED8B00?style=flat&logo=openjdk&logoColor=white)](https://www.java.com/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-Framework-6DB33F?style=flat&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![Thymeleaf](https://img.shields.io/badge/Thymeleaf-Template%20Engine-005F0F?style=flat&logo=thymeleaf&logoColor=white)](https://www.thymeleaf.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Spring Security](https://img.shields.io/badge/Spring%20Security-Authentication-6DB33F?style=flat&logo=springsecurity&logoColor=white)](https://spring.io/projects/spring-security)
 
-## Class Diagram
+> A web application built with Spring Boot and Thymeleaf for managing academic timetables with secure authentication, timetable importation, and role-based access control.
+
+---
+
+#  Table of Contents
+
+- [About](#-about)
+- [Purpose](#-purpose)
+- [Features](#-features)
+- [Security](#-security)
+- [Technologies](#-technologies)
+- [Architecture](#-architecture)
+- [Class Diagram](#-class-diagram)
+- [Screenshots](#-screenshots)
+- [Configuration](#-configuration)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Project Structure](#-project-structure)
+- [Future Improvements](#-future-improvements)
+- [Author](#-author)
+
+---
+
+#  About
+
+Timetable Management System is a web-based platform designed to simplify the management and visualization of academic timetables.
+
+The application allows administrators, teachers, and students to interact with schedules through a secure and intuitive interface.
+
+It was developed using **Spring Boot**, **Thymeleaf**, and **PostgreSQL**, following a clean layered architecture.
+
+---
+
+#  Purpose
+
+The main goal of this application is to provide an efficient solution for:
+
+-  Creating academic timetables
+-  Managing schedules dynamically
+-  Handling teachers and students access
+-  Importing timetable data
+-  Viewing timetables in a structured way
+
+The system improves accessibility and organization for both students and administrators.
+
+---
+
+#  Features
+
+##  Authentication & Security
+- Secure login system with Spring Security
+- Role-based access control (**ADMIN / USER**)
+- Password encryption using BCrypt
+
+##  Timetable Management
+- Full CRUD operations for timetable management
+- Dynamic timetable rendering using Thymeleaf
+- Department-based timetable visualization
+- Timetable sending and importation
+
+##  User Management
+- Import students and teachers data
+- Manage user access to the system
+- Personalized timetable view for students and teachers
+
+##  User Interface
+- Responsive UI using HTML & CSS
+- Structured and clean interface
+- Dashboard for administrators and users
+
+##  Excel Importation
+- Excel file handling using Apache POI
+- Import timetable data efficiently
+
+---
+
+#  Security
+
+The application integrates **Spring Security** for authentication and authorization.
+
+### Security Features
+
+- Authentication system using Spring Security
+- BCrypt password hashing
+- Role-based access control (**ADMIN / USER**)
+- Protected routes and restricted operations
+
+---
+
+#  Technologies
+
+## Backend
+- **Java 17**
+- **Spring Boot**
+- **Spring Security**
+- **Spring Data JPA**
+- **Hibernate**
+
+## Frontend
+- **Thymeleaf**
+- **HTML**
+- **CSS**
+
+## Database
+- **PostgreSQL**
+
+## File Handling
+- **Apache POI** (Excel import/export)
+
+## Development Tools
+- **Maven**
+- **Git & GitHub**
+- **IntelliJ IDEA / Eclipse**
+
+---
+
+#  Architecture
+
+The project follows a layered architecture.
+
+```text
+┌────────────────────┐
+│   Presentation     │ → Thymeleaf + HTML/CSS
+└─────────┬──────────┘
+          │
+          ▼
+┌────────────────────┐
+│    Controller      │ → Request handling
+└─────────┬──────────┘
+          │
+          ▼
+┌────────────────────┐
+│     Service        │ → Business logic
+└─────────┬──────────┘
+          │
+          ▼
+┌────────────────────┐
+│   Repository       │ → Database access
+└─────────┬──────────┘
+          │
+          ▼
+┌────────────────────┐
+│    PostgreSQL      │
+└────────────────────┘
+```
+
+---
+
+#  Class Diagram
+
 ![Screenshot](images/classdiagram.png)
 
-## Technologies
-- Spring Boot
-- Thymeleaf
-- HTML
-- CSS
-- PostgreSQL
-- Hibernate
-- Spring Data JPA 
-- Spring Security 
-- Apache POI ( Excel Handling)
+---
 
-## Features
+#  Screenshots
 
-- Secure authentication system using Spring Security
-- Role-based access control (Admin / User)
-- Full CRUD operations for timetable management
-- Dynamic timetable display with Thymeleaf templates
-- Clean and responsive UI using HTML and CSS
-- Import Students and Teachers Data to get them 
-have access to the system
-- Import and Manage all Timetables as an Admin
-- See your timetable and profile as a teacher or a student
-
-## Security
-
-- Authentication implemented using Spring Security
-- Role-based access (ADMIN / USER)
-- Passwords are encrypted using BCrypt
-
-## Screenshots 
-### Login Page
+##  Login Page
 ![Screenshot](images/loginpage.png)
 
-### Dashboard
-![Screenshot](images/dashboard.png)
-### Timetable List
+---
 
+##  Dashboard
+![Screenshot](images/dashboard.png)
+
+---
+
+##  Timetable List
+
+### Timetable Without Department Selection
 ![Screenshot](images/emploidutempssansdepartmentselection.png)
+
+### Timetable By Department
 ![Screenshot](images/emploidutempspardepartement.png)
 
-### Timetable Send
+---
+
+##  Timetable Send
 ![Screenshot](images/envoiemploidutemps.png)
 
-### Field
+---
+
+##  Field Management
 ![Screenshot](images/field.png)
 
-### See absences
+---
+
+##  See Absences
 ![Screenshot](images/vueabsence.png)
 
-## Configuration
+---
+
+#  Configuration
 
 This project uses environment variables for sensitive configuration.
 
-### Environment Variables
+## Environment Variables
 
-- DB_URL: JDBC URL of PostgreSQL database
-- DB_USERNAME: Database username
-- DB_PASSWORD: Database password
+| Variable | Description |
+|----------|-------------|
+| `DB_URL` | PostgreSQL JDBC URL |
+| `DB_USERNAME` | Database username |
+| `DB_PASSWORD` | Database password |
 
-### Example (PowerShell)
+---
 
-$env:DB_URL="jdbc:postgresql://localhost:5432/schedule_db"<br>
-$env:DB_USERNAME="postgres"<br>
+## Example (PowerShell)
+
+```powershell
+$env:DB_URL="jdbc:postgresql://localhost:5432/schedule_db"
+$env:DB_USERNAME="postgres"
 $env:DB_PASSWORD="your_password"
+```
 
-### Application Properties
+---
 
-spring.datasource.url="${DB_URL}"<br>
-spring.datasource.username="${DB_USERNAME}"<br>
-spring.datasource.password="${DB_PASSWORD}"
+## application.properties
 
-### Requirements
+```properties
+spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
+```
+
+---
+
+#  Installation
+
+## Prerequisites
+
+Make sure you have installed:
 
 - Java 17+
 - Maven
-- PostgreSQL database running locally
+- PostgreSQL
+- Git
 
-## Setup
-1. Cloner le projet
-- git clone https://github.com/ton-user/ton-projet.git
+---
 
-2. Aller dans le dossier
-- cd scheduleTimetable
+## Clone the Repository
 
-3. Lancer avec Maven
-- ./mvnw spring-boot:run
+```bash
+git clone https://github.com/Belak17/scheduleTimetable.git
+cd scheduleTimetable
+```
 
-## How to Run
+---
+
+## Configure the Database
+
+Create a PostgreSQL database and configure environment variables.
+
+Example:
+
+```text
+Database Name: schedule_db
+```
+
+---
+
+## Run the Application
+
+```bash
+./mvnw spring-boot:run
+```
+
+The application will start on:
+
+```text
+http://localhost:8080
+```
+
+---
+
+#  Usage
+
 1. Start PostgreSQL
-2. Set environment variables
-3. Run the application:
-- ./mvnw spring-boot:run
-## Usage
-- Go to: http://localhost:8080
-- Login as admin or user
-- Import or view your timetable
+2. Configure environment variables
+3. Launch the application
+4. Open:
 
-## Project Structure 
+```text
+http://localhost:8080
+```
 
-### src/main/java/com/belak/scheduletimetable
+5. Login as:
+- Admin
+- Teacher
+- Student
 
-- configuration → Application configuration (beans, CORS, etc.)
-- controller → MVC controllers (Thymeleaf pages)
-- restcontroller → REST API endpoints
-- service → Business logic layer
-- repository → Database access layer (JPA repositories)
-- model → JPA entities (database tables mapping)
-- dto → Data Transfer Objects
-- request → Request payload classes
-- response → Response payload classes
-- enumeration → Enum definitions used across the application
-- exception → Custom exceptions + global exception handling
-- security → Spring Security configuration and filters
-- data → Data initialization / seeders
-- record → Java records (immutable data structures)
+6. Import or view timetables
 
-### src/main/resources
+---
 
-- templates → Thymeleaf HTML views (frontend)
-- static → Static assets (CSS, images)
-- application.properties → Main configuration file
-## Author
-- Kaleb AKAKPO
-- GitHub: https://github.com/Belak17
+#  Project Structure
 
+## src/main/java/com/belak/scheduletimetable
 
+```text
+configuration  → Application configuration
+controller     → MVC controllers
+restcontroller → REST API endpoints
+service        → Business logic layer
+repository     → JPA repositories
+model          → Database entities
+dto            → Data Transfer Objects
+request        → Request payloads
+response       → Response payloads
+enumeration    → Enum definitions
+exception      → Custom exceptions
+security       → Spring Security configuration
+data           → Data initialization
+record         → Java records
+```
+
+---
+
+## src/main/resources
+
+```text
+templates              → Thymeleaf views
+static                 → CSS, images, static assets
+application.properties → Main configuration file
+```
+
+---
+
+#  Future Improvements
+
+- PDF timetable export
+- Email notifications
+- Mobile responsive optimization
+- Real-time timetable updates
+- Attendance statistics dashboard
+- Docker support
+- Multi-language support
+
+---
+
+#  Author
+
+## Kaleb AKAKPO
+
+- Backend Developer
+- Java & Spring Boot Enthusiast
+
+###  GitHub
+[GitHub Profile](https://github.com/Belak17)
+
+---
+
+<div align="center">
+
+###  If you like this project, consider giving it a star on GitHub!
+
+</div>
