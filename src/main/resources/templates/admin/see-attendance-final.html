@@ -23,7 +23,7 @@
 <main class="center-container">
     <div class="table-content">
         <!-- Tableau -->
-        <table bgcolor="lightgray" border="1" rules="all">
+        <table bgcolor="lightgray" border="1" rules="all" class="styled-table">
 
             <thead>
             <tr>
@@ -45,10 +45,10 @@
         <div style="margin-top:20px">
             <a th:if="${currentPage > 0}"
                th:href="@{/absence/courses/{id}(id=${id}, page=${currentPage - 1})}">
-                Previous
+                Précédent
             </a>
             <a th:href="@{/absence/courses/{id}(id=${id}, page=${currentPage + 1})}">
-                Next
+                Suivant
             </a>
         </div>
     </div>

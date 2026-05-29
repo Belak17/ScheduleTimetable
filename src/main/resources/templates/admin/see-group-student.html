@@ -25,8 +25,8 @@
     </div>
 </header>
 <main class="center-wrapper">
-    <table Bgcolor="lightgray" Border="1" rules="all">
-
+    <table bgcolor="lightgray" border="1" rules="all" class="styled-table">
+        <thead>
         <tr>
             <th>Departement</th>
             <th>Filiere</th>
@@ -37,7 +37,7 @@
             <th>Email</th>
             <th>Identfiant</th>
         </tr>
-
+        </thead>
         <tr th:each="student : ${students.content}">
             <td th:text="${student.department}"></td>
             <td th:text="${student.field}"></td>
@@ -54,7 +54,7 @@
 
         <a th:if="${students.hasPrevious()}"
            th:href="@{/students/student/{field}/{year}/{group}/details(field=${field}, year=${year}, group=${group}, page=${GroupStudentList.number - 1}, size=${GroupStudentList.size})}">
-            ⬅ Previous
+            ⬅ Précédent
         </a>
 
         <!-- Page -->
@@ -67,11 +67,14 @@
 
         <a th:if="${students.hasNext()}"
            th:href="@{/students/{field}/{year}/{group}/details(field=${field}, year=${year}, group=${group}, page=${GroupStudentList.number + 1}, size=${GroupStudentList.size})}">
-            Next ➡
+            Suivant ➡
         </a>
 
     </div>
 </main>
+<section th:replace="admin/admin-dashboard :: sidebar">
+
+</section>
 <style>
 </style>
 </body>

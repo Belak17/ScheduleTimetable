@@ -10,11 +10,11 @@ public class StudentMapper {
     {
         return new StudentDto(student.getUserId(),
                 student.getDepartment().getLibelle()
-                ,student.getFiliere().toString(),
+                ,student.getFiliere().getCode(),
                 student.getGroup() ,
                 student.getNiveau(),
                 student.getNom(),
-                student.getNom(),
+                student.getPrenom(),
                 student.getEmail()
         );
     }

@@ -211,35 +211,6 @@ body {
     text-decoration: none;
 }
 
-/* ===== TABLE ===== */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-th {
-    background-color: #007BFF;
-    color: white;
-    padding: 14px;
-    text-align: left;
-}
-
-td {
-    padding: 12px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-tr:hover {
-    background-color: #f1f5f9;
-}
-
 /* ===== SEPARATOR ===== */
 .separator {
     display: flex;

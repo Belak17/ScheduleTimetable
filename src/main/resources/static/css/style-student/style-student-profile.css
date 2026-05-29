@@ -3,13 +3,19 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #f5f7fa, #e4e8ec);
+    background-color: #c4cfda63;
     color: #333;
-    overflow-x: hidden;
+    font-family: Cairo,system-ui,
+    -apple-system,Segoe UI,Roboto,Oxygen
+    ,Ubuntu,Cantarell,Helvetica Neue,Arial,
+    Noto Sans,Liberation Sans,sans-serif,
+    "Apple Color Emoji","Segoe UI Emoji"
+    ,Segoe UI Symbol,"Noto Color Emoji";
 }
 
 /* ===== Header ===== */
@@ -17,18 +23,13 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
-
     padding: 10px 20px;
-
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
-
     position: fixed;
     top: 0;
     left: 0;
-
     width: 100%;
-
     z-index: 100;
 }
 
@@ -36,13 +37,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 60px;
     height: 60px;
-
     cursor: pointer;
     border-radius: 8px;
-
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
@@ -67,26 +65,17 @@ body {
 /* ===== Sidebar ===== */
 .icons {
     position: fixed;
-
-    top: 0;
+    top: 10px;
     left: -260px;
-
     width: 260px;
     height: 100vh;
-
     background-color: #ffffff;
-
     box-shadow: 2px 0 14px rgba(0,0,0,0.1);
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
     transition: left 0.3s ease;
-
     z-index: 90;
-
-    padding-top: 80px;
 }
 
 #toggle-sidebar:checked ~ .icons {
@@ -95,13 +84,9 @@ body {
 
 .icons .text-menu {
     width: 100%;
-
     padding: 20px;
-
     border-bottom: 1px solid #e0e0e0;
-
     text-align: center;
-
     background-color: #f8f9fa;
 }
 
@@ -124,33 +109,22 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
-
     width: 100%;
-
     padding: 12px 20px;
-
     color: #333;
     text-decoration: none;
-
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, border-radius 0.3s ease;
 }
 
 .icon-container a:hover,
 .icon-container label:hover {
     background-color: #e6f0ff;
+    border-radius: 8px;
 }
 
 .tooltip {
     font-size: 14px;
     margin-left: 5px;
-    transition: transform 0.5s ease;
-      display: inline-block;
-    cursor: pointer;
-}
-
-.tooltip:hover
-{
-    transform: translateX(9px);
 }
 
 /* ===== Main Content ===== */
@@ -186,8 +160,8 @@ body {
 {
     width: 100%;
     height: 100%;
-   
-    
+
+
 }
 
 .photo img
@@ -219,12 +193,12 @@ body {
 .summary {
     text-align: center;
 }
-.summary  , .generals 
+.summary  , .generals
 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+
     background-color: white;
     border: 1px solid lightgray;
     box-shadow: 2px 0 14px rgba(0,0,0,0.1);
@@ -233,8 +207,8 @@ body {
     padding: 20px;
     height: auto;
     min-height: 500px;
-    
-    
+
+
 }
 
 .summary
@@ -242,7 +216,7 @@ body {
   width: 30%;
   gap : 30px;
   height: fit-content;
-  
+
 }
 
 .others
@@ -257,7 +231,7 @@ body {
     width: 100%;
     border-top: 2px solid lightgray;
     padding-top: 10px;
-    padding-bottom: 3px;
+    padding-bottom: 10px;
 }
 
 #parameter:hover

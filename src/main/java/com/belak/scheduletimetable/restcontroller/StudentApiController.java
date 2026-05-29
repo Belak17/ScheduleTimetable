@@ -1,6 +1,7 @@
 package com.belak.scheduletimetable.restcontroller;
 
 import com.belak.scheduletimetable.dto.StudentDto;
+import com.belak.scheduletimetable.enumeration.Filiere;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.service.student.StudentExcelService;
 import com.belak.scheduletimetable.service.student.StudentService;
@@ -34,7 +35,7 @@ public class StudentApiController {
                                     @PathVariable int year
     )
     {
-        Page<StudentDto> students = studentService.getStudentByFieldAndYearAndGroup(field,year,group,page,size);
+        Page<StudentDto> students = studentService.getStudentByFieldAndYearAndGroup(Filiere.fromCode(field).toString(),year,group,page,size);
         model.addAttribute("students", students);
         model.addAttribute("field", field);
         model.addAttribute("group", group);
