@@ -189,6 +189,11 @@ tbody tr:hover::after {
     pointer-events: none;
 }
 
+td a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .modal {
     display: none;
 

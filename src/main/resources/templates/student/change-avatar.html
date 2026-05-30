@@ -1,0 +1,16 @@
+<section class="option-clicked" th:fragment="option-clicked">
+    <div class="title-bloc">
+        <img th:src="@{/images/profile-picture.png}">
+        <span>Changer la photo de profil</span>
+    </div>
+    <form th:action="@{/student/profile/update}" method="post" enctype="multipart/form-data">
+        <div class="info-input">
+            <input id="profileImage" type="file" name="image" accept="image/*">
+        </div>
+        <div class="generals-info">
+
+            <img th:src="@{/images/self.jpg}" id="img-user">
+
+        </div>
+    </form>
+</section>

@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Profile</title>
+    <title>Admin Profile</title>
     <link rel="stylesheet" th:href="@{/css/style-student/style-student-profile.css}">
-    <link rel="stylesheet" th:href="@{/css/style-student/style-student-dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+
     <link rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
 </head>
@@ -19,10 +20,10 @@
                 <img th:src="@{/images/menu-burger.png}">
             </div>
         </label>
-        <h2 class="title-page">Ma fiche Etudiante</h2>
+        <h2 class="title-page">Ma fiche Admin</h2>
     </div>
 </header>
-<section th:replace="student/student-dashboard :: sidebar">
+<section th:replace="admin/admin-dashboard :: sidebar">
 </section>
 <main class="center-wrapper">
     <section class="all-info">
@@ -30,48 +31,27 @@
             <div class="photo">
                 <img th:src="@{/images/self.jpg}">
             </div>
-            <span class="name" th:text="${student.prenom+' '+student.nom}">
+            <span class="name" th:text="${admin.prenom+' '+admin.nom}">
 
                  </span>
             <span class="summary-container">
                <img th:src="@{/images/power.png}">
                <span class="activity">
-                 Etudiant Actif
+                 Admin Actif
                </span>
                </span>
             <div class="others">
                 <span class="other">
-                    <img th:src="@{/images/multiple-users-silhouette.png}">
-                    <span class="summary-infos">
-                    <span class="summary-info">Groupe :</span>
-                <span id="group" th:text="${student.group}"></span>
-                    </span>
-                </span>
-                <span class="other">
-                     <img th:src="@{/images/hierarchical-structure.png}">
-                     <span class="summary-infos">
-                    <span class="summary-info">Niveau :</span>
-                <span th:text="${student.niveau}"> </span> </span>
-                </span>
-                <span class="other">
-                    <img th:src="@{/images/graduation-hat.png}">
-                    <span class="summary-infos">
-                    <span class="summary-info" >Filiere:</span>
-                <span class="value field" th:text="${student.field}"></span> </span>
-                </span>
-                <span class="other">
                     <img th:src="@{/images/department.png}">
                     <span class="summary-infos">
                     <span class="summary-info" >Departement:</span>
-                <span class="value" th:text="${student.department}"></span> </span>
+                <span class="value">Informatique</span> </span>
                 </span>
             </div>
             <span class="other summary-container" id="parameter">
-                <a th:href="@{/student/edit-my-profile}">
                     <img th:src="@{/images/preferences.png}">
                     <span>
                     Paramètres du Compte </span>
-                </a>
                 </span>
         </div>
         <div class="generals">
@@ -81,34 +61,34 @@
                 <img th:src="@{/images/id-card.png}">
                 <span class="content">
                 <span class="label">Nom&Prenom :</span>
-                <span class="value" th:text="${student.prenom+' '+student.nom}"></span>
+                <span class="value" th:text="${admin.nom+' '+admin.prenom}"></span>
                 </span>
             </span>
                 <span class="info">
                 <img th:src="@{/images/gender.png}">
                 <span class="content">
                 <span class="label">Sexe :</span>
-                <span th:text="${student.sexe}"></span>
+                <span th:text="${admin.sexe}"></span>
                 </span>
             </span>
                 <span class="info">
                 <img th:src="@{/images/building.png}">
                 <span class="content">
                     <span class="label">CIN/Passeport :</span>
-                <span class="value" th:text="${student.cin}"></span>
+                <span class="value" th:text="${admin.cin}"></span>
                 </span>
             </span>
                 <span class="info">
                  <img th:src="@{/images/united-nations.png}">
                  <span class="content">
                 <span class="label">Nationalité :</span>
-                <span class="value" th:text="${student.nationalite}"></span>
+                <span class="value" th:text="${admin.nationalite}"></span>
                 </span>
              </span>
                 <span class="info"><img th:src="@{/images/building.png}">
                 <span class="content">
                 <span class="label">Ville Naissance :</span>
-                <span class="value" th:text="${student.villeNaissance}"></span>
+                <span class="value" th:text="${admin.villeNaissance}"></span>
                 </span>
             </span>
             </div>
@@ -118,21 +98,21 @@
                 <img th:src="@{/images/building.png}">
                 <span class="content">
                 <span class="label">Ville:</span>
-                <span class="value" th:text="${student.ville}"></span>
+                <span class="value" th:text="${admin.ville}"></span>
                 </span>
                </span>
                 <span class="info">
                 <img th:src="@{/images/address.png}">
                 <span class="content">
                 <span class="label">Adresse Postale :</span>
-                <span class="value" th:text="${student.adresse}"></span>
+                <span class="value" th:text="${admin.adresse}"></span>
                 </span>
                 </span>
                 <span class="info">
                 <img th:src="@{/images/internet.png}">
                 <span class="content">
                                 <span class="label">Code Postale :</span>
-                <span class="value" th:text="${student.codePostale}"></span>
+                <span class="value" th:text="${admin.codePostale}"></span>
                 </span>
             </span>
             </div>
@@ -142,14 +122,14 @@
                 <img th:src="@{/images/mail.png}">
                 <span class="content">
                  <span class="label">Email :</span>
-                <span class="value" th:text="${student.email}"></span>
+                <span class="value" th:text="${admin.email}"></span>
                 </span>
             </span>
                 <span class="info">
                 <img th:src="@{/images/smartphone-call.png}">
                 <span class="content">
                     <span class="label">Téléphone :</span>
-                <span class="value" th:text="${student.telephone}"></span>
+                <span class="value" th:text="${admin.telephone}"></span>
                 </span>
             </span>
             </div>

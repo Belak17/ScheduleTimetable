@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.io.IOException;
@@ -83,5 +84,22 @@ public class StudentController {
         return  "";
     }
 
+    @GetMapping("/edit-my-profile")
+    public String profile(
+            @RequestParam(defaultValue = "info") String tab,
+            Model model , Authentication authentication) {
 
+        String fragmentName = switch (tab) {
+            case "photo" -> "student/change-avatar";
+            case "email" -> "student/change-email";
+            case "password" -> "student/change-password";
+            default -> "student/change-info";
+        };
+        StudentProfileDto student = studentService.findByUserId(authentication.getName());
+
+        model.addAttribute("student",student);
+        model.addAttribute("fragmentName", fragmentName);
+
+        return "student/edit-my-profile";
+    }
 }

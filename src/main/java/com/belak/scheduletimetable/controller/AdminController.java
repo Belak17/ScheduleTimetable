@@ -1,5 +1,6 @@
 package com.belak.scheduletimetable.controller;
 
+import com.belak.scheduletimetable.dto.StudentProfileDto;
 import com.belak.scheduletimetable.response.LoginResponse;
 import com.belak.scheduletimetable.service.admin.AdminService;
 import com.belak.scheduletimetable.service.user.UserService;
@@ -27,7 +28,10 @@ public class AdminController {
         return "admin/admin-dashboard.html";
     }
     @GetMapping("/profile")
-    public String showAdminProfile( Model model ) {
+    public String showAdminProfile(Authentication authentication ,  Model model ) {
+
+        model.addAttribute("admin",adminService
+                .findByUserId(authentication.getName()));
         return "admin/admin-profile.html";
     }
     @GetMapping("/timetable")
@@ -41,5 +45,22 @@ public class AdminController {
     @GetMapping("/absences/department")
     public String showAdminAbsenceByDepartment( Model model ) {
         return "admin/show-department-absence.html";
+    }
+
+    @GetMapping("/edit-my-profile")
+    public String profile(
+            @RequestParam(defaultValue = "info") String tab,
+            Model model , Authentication authentication) {
+
+        String fragmentName = switch (tab) {
+            case "photo" -> "admin/change-avatar";
+            case "email" -> "admin/change-email";
+            case "password" -> "admin/change-password";
+            default -> "admin/change-info";
+        };
+        model.addAttribute("admin",adminService.findByUserId(authentication.getName()));
+        model.addAttribute("fragmentName", fragmentName);
+
+        return "admin/edit-my-profile";
     }
 }

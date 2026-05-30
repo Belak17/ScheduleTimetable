@@ -1,0 +1,303 @@
+/* ===== Main Content ===== */
+.center-wrapper {
+    margin: 90px auto 20px auto; /* sous le header */
+    max-width: 1200px;
+       height: auto;      /* ou juste supprimer height */
+    min-height: fit-content;
+    background-color:rgba(166, 175, 220, 0.068);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: block;
+    gap:30px;
+    justify-content: center;
+     /*background: linear-gradient(135deg, #dee0e7, #f3f3f3);*/
+     background-color: white;
+    backdrop-filter: blur(10px);
+}
+
+.title-bloc
+{
+    background-color: #333;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap:10px;
+    padding-left: 10px;
+    padding: 7px;
+}
+.title-bloc img
+{
+    max-width: 30px;
+
+}
+
+.param-option
+{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    border-top: 1px solid lightgray;
+    padding-left: 5px ;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.param-option img
+{
+    max-width: 20px;
+
+}
+
+.param-options
+{
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    width: 35%;
+
+}
+
+.option-clicked .title-bloc
+{
+    padding: 10px;
+}
+
+.option-clicked
+{
+    width: 90%;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+}
+
+.option-clicked img
+{
+    filter: invert(1);
+}
+
+
+.all-info {
+    display: flex;
+    width: 100%;
+    padding: 30px;
+    gap: 20px;
+    align-items: flex-start;
+
+}
+input:focus {
+    border-color: lightskyblue;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(135, 206, 250, 0.3);
+}
+.title-container {
+    position: relative;
+    display: block;
+    font-weight: bold;
+    font-size: large;
+    margin: 10px 0;
+    padding: 5px 15px;
+}
+
+.title-container::after {
+    content: "";
+    position: absolute;
+    left: 15px;
+    right: 15px;
+    bottom: 0;
+    height: 1px;
+    background-color: #333;
+}
+.info-input
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.generals-info , .academical-info
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.generals-info label , .label-ext
+{
+    padding-left: 10px;
+
+}
+
+.label-ext
+{
+    padding-top: 5px;
+}
+
+.generals-info
+{
+    padding-bottom: 10px;
+}
+
+input
+{
+    padding: 5px;
+    margin: 9px;
+
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    transition: 0.2s;
+}
+
+.academical-info
+{
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+label
+{
+    flex: 0 0 17px;
+    font-weight: bold;
+}
+
+
+#group
+{
+    background-color:darkgray;
+    padding: 5px 5px 5px 5px;
+    font-size: 14px;
+    font-weight: bold;
+    width: fit-content;
+
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+button {
+    min-width: 100px;
+    min-height: 35px;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    font-weight: 500;
+}
+
+.reset {
+    background-color: darkgray;
+    color: black;
+    border-color: lightgray;
+}
+
+.submit {
+    background-color: rgb(91, 201, 91);
+    color: white;
+    border-color: rgb(91, 201, 91);
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.reset , .submit
+{
+    padding: 5px;
+}
+
+input[type="file"]::file-selector-button {
+    background-color: lightslategray;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #2f8cff;
+}
+
+#img-user
+{
+    filter: invert(0);
+    max-width: 300px;
+}
+
+a
+{
+text-decoration:none;
+color:inherit ;
+}
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .head-box {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .text-title {
+        font-size: 20px;
+    }
+
+    .center-wrapper {
+        margin: 80px 10px 20px 10px;
+        padding: 15px;
+
+
+
+    }
+    .content-container
+    {
+        display: flex;
+        flex-direction: column;
+        gap:10px ;
+    }
+    .all-info
+    {
+
+        height: min-content;
+    }
+    .param-options , .option-clicked
+    {
+        width: 100%;
+    }
+
+    .icons {
+        width: 220px;
+    }
+    .option img {
+        max-width: 40px; /* plus petit sur mobile */
+    }
+    .option
+    {
+        width: fit-content;
+    }
+
+    .all-info
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    .summary , .generals
+    {
+        width: 100%;
+        height: auto;
+    }
+
+    .generals-info , .academical-info
+    {
+        display: flex;
+        flex-direction: column;
+    }
+}
+@media (hover: hover) {
+    .option:hover {
+        transform: scale(1.05);
+    }
+}

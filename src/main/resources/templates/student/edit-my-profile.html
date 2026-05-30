@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <link rel="stylesheet" th:href="@{/css/style-student/style-edit-profile.css}">
+    <link rel="stylesheet" th:href="@{/css/style-student/style-student-dashboard.css}">
+    <link rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+</head>
+<body>
+<input type="checkbox" id="toggle-sidebar" />
+<header>
+    <div class="head-box">
+        <!-- Checkbox caché -->
+        <label for="toggle-sidebar">
+            <div  id="menu">
+                <img th:src="@{/images/menu-burger.png}">
+            </div>
+        </label>
+        <h2 class="title-page">Ma fiche Etudiante</h2>
+    </div>
+</header>
+<section th:replace="student/student-dashboard :: sidebar">
+
+</section>
+<main class="center-wrapper">
+    <section class="all-info">
+        <section class="param-options">
+            <div class="title-bloc">
+                <img th:src="@{/images/user (5).png}">
+                <span>Mon Profil</span>
+            </div>
+            <div class="params-option">
+                <a th:href="@{/student/edit-my-profile(tab='info')}">
+                <div class="param-option">
+                    <span>Modifier les informations du profil</span>
+                    <img th:src="@{/images/information-button.png}">
+                </div>
+                </a>
+                <a th:href="@{/student/edit-my-profile(tab='photo')}">
+                <div class="param-option">
+                    <span>Changer la photo de profil</span>
+                    <img th:src="@{/images/profile-picture.png}">
+                </div>
+                </a>
+                <a th:href="@{/student/edit-my-profile(tab='email')}">
+                <div class="param-option">
+                    <span>Changer l'email</span>
+                    <img th:src="@{/images/arroba.png}">
+                </div>
+                </a>
+                <a th:href="@{/student/edit-my-profile(tab='password')}">
+                <div class="param-option">
+                    <span>Changer le mot de passe</span>
+                    <img th:src="@{/images/password-manager.png}">
+                </div>
+                </a>
+            </div>
+        </section>
+        <section th:replace="${fragmentName} :: option-clicked">
+    </section>
+    </section>
+
+</main>
+</body>
+
+</html>
