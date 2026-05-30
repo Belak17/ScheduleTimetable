@@ -178,8 +178,7 @@ The project follows a layered architecture.
 ![Screenshot](images/emploidutempssansdepartmentselection.png)
 
 ### Timetable By Department
-![Screenshot](<img width="890" height="508" alt="image" src="https://github.com/user-attachments/assets/586dc8db-9199-4fa9-bd97-911ad6b9bf98" />
-)
+![Screenshot](images/emploidutempspardepartment.png)
 
 ---
 
