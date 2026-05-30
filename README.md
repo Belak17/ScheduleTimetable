@@ -12,20 +12,20 @@
 
 #  Table of Contents
 
-- [About](#-about)
-- [Purpose](#-purpose)
-- [Features](#-features)
-- [Security](#-security)
-- [Technologies](#-technologies)
-- [Architecture](#-architecture)
-- [Class Diagram](#-class-diagram)
-- [Screenshots](#-screenshots)
-- [Configuration](#-configuration)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [Project Structure](#-project-structure)
-- [Future Improvements](#-future-improvements)
-- [Author](#-author)
+- [About](#about)
+- [Purpose](#purpose)
+- [Features](#features)
+- [Security](#security)
+- [Technologies](#technologies)
+- [Architecture](#architecture)
+- [Class Diagram](#class-diagram)
+- [Screenshots](#screenshots)
+- [Configuration](#configuration)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Future Improvements](#future-improvements)
+- [Author](#author)
 
 ---
 
