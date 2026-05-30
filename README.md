@@ -207,6 +207,21 @@ The project follows a layered architecture.
 
 ---
 
+##  Modify info for Student
+![Screenshot](images/modify-info.png)
+
+---
+
+## Modify email 
+![Screenshot](images/modify-email.png)
+
+---
+
+## Modify Password
+![Screenshot](images/modify-password.png)
+
+---
+
 #  Configuration
 
 This project uses environment variables for sensitive configuration.
