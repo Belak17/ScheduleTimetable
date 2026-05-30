@@ -197,6 +197,16 @@ The project follows a layered architecture.
 
 ---
 
+##  See All Courses Without Group Selection
+![Screenshot](images/see-all-courses.png)
+
+---
+
+##  See All Courses With Group Selection
+![Screenshot](images/see-all-courses-with-group-selection.png)
+
+---
+
 #  Configuration
 
 This project uses environment variables for sensitive configuration.
