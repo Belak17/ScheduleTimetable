@@ -178,7 +178,7 @@ The project follows a layered architecture.
 ![Screenshot](images/emploidutempssansdepartmentselection.png)
 
 ### Timetable By Department
-![Screenshot](images/emploidutempspardepartment.png)
+![Screenshot](images/emploidutempspardepartement.png)
 
 ---
 
