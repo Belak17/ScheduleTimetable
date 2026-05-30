@@ -12,20 +12,20 @@
 
 #  Table of Contents
 
-- [About](#-about)
-- [Purpose](#-purpose)
-- [Features](#-features)
-- [Security](#-security)
-- [Technologies](#-technologies)
-- [Architecture](#-architecture)
-- [Class Diagram](#-class-diagram)
-- [Screenshots](#-screenshots)
-- [Configuration](#-configuration)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [Project Structure](#-project-structure)
-- [Future Improvements](#-future-improvements)
-- [Author](#-author)
+- [About](#about)
+- [Purpose](#purpose)
+- [Features](#features)
+- [Security](#security)
+- [Technologies](#technologies)
+- [Architecture](#architecture)
+- [Class Diagram](#class-diagram)
+- [Screenshots](#screenshots)
+- [Configuration](#configuration)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Future Improvements](#future-improvements)
+- [Author](#author)
 
 ---
 
@@ -178,7 +178,8 @@ The project follows a layered architecture.
 ![Screenshot](images/emploidutempssansdepartmentselection.png)
 
 ### Timetable By Department
-![Screenshot](images/emploidutempspardepartement.png)
+![Screenshot](<img width="890" height="508" alt="image" src="https://github.com/user-attachments/assets/586dc8db-9199-4fa9-bd97-911ad6b9bf98" />
+)
 
 ---
 
