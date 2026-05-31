@@ -152,63 +152,126 @@ body {
 {
     transform: translateX(9px);
 }
+
 /* ===== Main Content ===== */
 .center-wrapper {
-    margin: 90px auto 20px auto; /* sous le header */
+    margin: 90px auto 20px;
     padding: 20px;
     max-width: 1200px;
+
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    backdrop-filter: blur(10px);
 }
 
-/* ===== Table ===== */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+/* ===== GRID ===== */
+.grid
+{
+ display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: start;
+
 }
 
-th {
-    background-color: #007BFF;
-    color: white;
-    font-weight: 600;
-    padding: 14px 12px;
-    text-align: left;
+/* ===== OPTION CARD ===== */
+.option {
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+    padding: 15px;
+
+    transition: 0.3s;
+    text-align: center;
 }
 
-td {
-    padding: 12px;
-    border-bottom: 1px solid #e5e7eb;
+.option:hover {
+    transform: scale(1.05);
 }
 
-tr:nth-child(even) {
-    background-color: #f9f9f9;
+.option img {
+    width: 70px;
+    height: auto;
 }
 
-tr:hover {
-    background-color: #f1f5f9;
+.option p {
+    font-weight: bold;
+    color: #ffffff;
 }
 
-/* ===== Responsive ===== */
+.option a {
+    text-decoration: none;
+}
+
+/* ===== SEPARATOR ===== */
+.separator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.separator::before,
+.separator::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background-color: black;
+}
+
+/* ===== HOVER ONLY DESKTOP ===== */
+@media (hover: hover) {
+    .option:hover {
+        transform: scale(1.05);
+    }
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+
     .head-box {
         gap: 10px;
         padding: 10px;
     }
 
     .text-title {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .center-wrapper {
-        margin: 80px 10px 20px 10px;
+        margin: 80px 10px 20px;
         padding: 15px;
     }
 
     .icons {
-        width: 220px;
+        width: 200px;
+    }
+
+    .option img {
+        width: 60px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+@media (hover: none) {
+    .option:hover {
+        transform: none;
     }
 }

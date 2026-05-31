@@ -25,12 +25,12 @@ public interface CoursTPRepository extends JpaRepository<CoursTP,Long> {
 
 
 
-    Optional<CoursTP> findByQrDataAndGroupTimetableIdAndDayOfWeek(String code, Long id, String todayDay);
+    //Optional<CoursTP> findByQrDataAndGroupTimetableIdAndDayOfWeek(String code, Long id, String todayDay);
 
     @Query("""
     SELECT c
     FROM CoursTP c
-    WHERE c.qrData = :code
+    WHERE c.salle.code = :code
     AND c.groupTimetable.id = :id
     AND c.dayOfWeek = :todayDay
     AND :now BETWEEN c.debut AND c.fin

@@ -7,10 +7,7 @@ import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.enumeration.Filiere;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.*;
-import com.belak.scheduletimetable.repository.CoursTPRepository;
-import com.belak.scheduletimetable.repository.GroupTimetableRepository;
-import com.belak.scheduletimetable.repository.PresenceRepository;
-import com.belak.scheduletimetable.repository.StudentRepository;
+import com.belak.scheduletimetable.repository.*;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
@@ -38,6 +35,26 @@ public class CoursTPService extends CoursTPUtilsService {
     private  final GroupTimetableRepository timetableRepository ;
     private  final StudentRepository studentRepository;
     private  final PresenceRepository presenceRepository ;
+    private final SalleRepository salleRepository;
+
+    public Salle extractGroupSalle(String text) {
+
+        if (text == null) return null;
+
+        List<Salle> salles = salleRepository.findAll();
+
+        for (Salle salle : salles) {
+
+            String code = salle.getCode();
+
+            // séparation pour éviter S1 == S10
+            if (text.matches(".*\\b" + Pattern.quote(code) + "\\b.*")) {
+                return salle;
+            }
+        }
+
+        return null;
+    }
 
     private CoursTP buildTP(String value, String dayRaw, String start, String end) {
         CoursTP tp = new CoursTP();
@@ -45,9 +62,7 @@ public class CoursTPService extends CoursTPUtilsService {
         tp.setDayOfWeek(dayRaw);
         tp.setDebut(LocalTime.parse(start));
         tp.setFin(LocalTime.parse(end));
-        tp.setCodeQr(generateQrCode(tp));
-        tp.setQrData(extractGroupSalle(value));
-
+        tp.setSalle(extractGroupSalle(value));
         boolean exists = coursTPrepository.existsCoursTPByDayAndHoraire(
                 dayRaw,
                 LocalTime.parse(start),

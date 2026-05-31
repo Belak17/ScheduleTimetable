@@ -32,7 +32,6 @@ public class CoursTP {
     private Long id ;
 
     private  String intitule ;
-    private byte[] codeQr;
     private  String qrData ;
     private String  dayOfWeek ;
     private  LocalTime debut ;
@@ -40,6 +39,10 @@ public class CoursTP {
     @ManyToOne
     @JoinColumn(name = "grouptimetable_id")
     private GroupTimetable groupTimetable;
+
+    @ManyToOne
+    @JoinColumn(name = "salle_id")
+    private Salle salle;
 
     private int frequence ;
     private  int rotationOffset ;

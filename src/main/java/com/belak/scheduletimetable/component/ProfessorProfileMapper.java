@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class ProfessorProfileMapper {
     public ProfessorProfileDto convertToProfessorProfileDto(Professor professor)
     {
-        return new ProfessorProfileDto(professor.getCin(), professor.getNom(), professor.getPrenom(),
+        return new ProfessorProfileDto(professor.getUserId(), professor.getCin(), professor.getNom(), professor.getPrenom(),
                 professor.getEmail(), professor.getTelephone(),
                 professor.getSexe(), professor.getVilleNaissance(), professor.getAdresse() , professor.getCodePostal(),
                 professor.getVille(),  professor.getNationalite() , professor.getDepartment().getLibelle() , professor.getSpecialite()

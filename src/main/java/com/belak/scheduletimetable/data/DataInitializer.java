@@ -2,15 +2,22 @@ package com.belak.scheduletimetable.data;
 
 import com.belak.scheduletimetable.enumeration.*;
 import com.belak.scheduletimetable.model.Professor;
+import com.belak.scheduletimetable.model.Salle;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.model.User;
 import com.belak.scheduletimetable.repository.ProfessorRepository;
+import com.belak.scheduletimetable.repository.SalleRepository;
 import com.belak.scheduletimetable.repository.StudentRepository;
 import com.belak.scheduletimetable.repository.UserRepository;
+import com.belak.scheduletimetable.service.courstp.SalleService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -20,6 +27,8 @@ public class DataInitializer implements CommandLineRunner
     private  final ProfessorRepository professorRepository ;
     private  final PasswordEncoder passwordEncoder ;
     private final StudentRepository studentRepository ;
+    private  final SalleRepository salleRepository ;
+    private  final SalleService salleService ;
     @Override
     public void run(String... args) throws Exception {
         // Vérifie si un utilisateur avec userId "admin" existe
@@ -74,5 +83,41 @@ public class DataInitializer implements CommandLineRunner
 
         }
 
+    }
+
+    @PostConstruct
+    public void initSalles() {
+
+
+        if (salleRepository.count() > 0) {
+            return; // déjà initialisé → on sort
+        }
+
+        List<Salle> salles = new ArrayList<>();
+
+        for (int i = 1; i <= 40; i++) {
+            salles.add(createSalle("S" + i));
+        }
+        salles.add(createSalle("GI1"));
+        generateRange("A", salles);
+        generateRange("B", salles);
+        generateRange("C", salles);
+        generateRange("D", salles);
+        salleRepository.saveAll(salles);
+    }
+
+    private void generateRange(String prefix, List<Salle> salles) {
+        for (int i = 0; i <= 1; i++) {
+            for (int j = 1; j <= 30; j++) {
+                salles.add(createSalle(prefix + i + "." + j));
+            }
+        }
+    }
+
+    private Salle createSalle(String code) {
+        Salle s = new Salle();
+        s.setCode(code);
+        s.setCodeQr(salleService.generateQrCode(s));
+        return s;
     }
 }

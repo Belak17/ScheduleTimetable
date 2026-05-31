@@ -11,6 +11,7 @@ import com.belak.scheduletimetable.enumeration.Nationalite;
 import com.belak.scheduletimetable.exception.EmptyFileException;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.Professor;
+import com.belak.scheduletimetable.model.User;
 import com.belak.scheduletimetable.repository.ProfessorRepository;
 import com.belak.scheduletimetable.request.UpdateRequest;
 import com.belak.scheduletimetable.service.UtilsService;
@@ -77,5 +78,47 @@ public class ProfessorService  {
     {
         return profileMapper.convertToProfessorProfileDto(professorRepository
                 .findByUserId(userId).get());
+    }
+
+    public void updateEmail(String nouvEmail, String confEmail, String userId) {
+        if (!nouvEmail.equals(confEmail)) {
+            throw new IllegalArgumentException("Les emails ne correspondent pas");
+        }
+
+        Professor professor = professorRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Professeur introuvable"));
+
+        professor.setEmail(nouvEmail);
+        professorRepository.save(professor);
+    }
+
+    public void updateInfo(String userId, String address, String telephone, String code) {
+        Professor professor = professorRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Professeur introuvable"));
+        professor.setUserId(userId);
+        professor.setAdresse(address);
+        professor.setTelephone(telephone);
+        professor.setCodePostal(code);
+        professorRepository.save(professor);
+    }
+
+    public void updatePassword(String oldPassword,
+                               String newPassword,
+                               String confPassword,
+                               String userId) {
+
+        Professor professor = professorRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Professeur introuvable"));
+
+        if (!passwordEncoder.matches(oldPassword, professor.getPassword())) {
+            throw new IllegalArgumentException("Ancien mot de passe incorrect");
+        }
+
+        if (!newPassword.equals(confPassword)) {
+            throw new IllegalArgumentException("Les mots de passe ne correspondent pas");
+        }
+
+        professor.setPassword(passwordEncoder.encode(newPassword));
+        professorRepository.save(professor);
     }
 }

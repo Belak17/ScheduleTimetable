@@ -62,4 +62,64 @@ public class ProfessorController {
     }
 
 
+    @GetMapping("/edit-my-profile")
+    public String profile(
+            @RequestParam(defaultValue = "info") String tab,
+            Model model , Authentication authentication) {
+
+        String fragmentName = switch (tab) {
+            case "photo" -> "professor/change-avatar";
+            case "email" -> "professor/change-email";
+            case "password" -> "professor/change-password";
+            default -> "professor/change-info";
+        };
+        ProfessorProfileDto professor = professorService.findByUserId(authentication.getName());
+
+        model.addAttribute("professor",professor);
+        model.addAttribute("fragmentName", fragmentName);
+
+        return "professor/edit-my-profile";
+    }
+
+    @PostMapping("/edit-my-profile/update/email")
+    public String updateEmail( @RequestParam String nouvEmail, @RequestParam String confEmail ,
+                               @RequestParam(defaultValue = "professor/change-email") String tab,
+                               Model model , Authentication authentication) {
+        professorService.updateEmail(nouvEmail,confEmail, authentication.getName()) ;
+        ProfessorProfileDto professor = professorService.findByUserId(authentication.getName());
+        model.addAttribute("professor",professor);
+        model.addAttribute("fragmentName", tab);
+        return "professor/edit-my-profile";
+    }
+
+    @PostMapping("/edit-my-profile/update/info")
+    public String updateInfo( @RequestParam String userId,
+                              @RequestParam String address , @RequestParam String telephone ,
+                              @RequestParam String code ,
+                              @RequestParam(defaultValue = "professor/change-info") String tab,
+                              Model model , Authentication authentication) {
+        professorService.updateInfo(userId,address,telephone,code);
+        ProfessorProfileDto professor = professorService.findByUserId(authentication.getName());
+        model.addAttribute("professor",professor);
+        model.addAttribute("fragmentName", tab);
+
+        return "professor/edit-my-profile";
+    }
+
+
+    @PostMapping("/edit-my-profile/update/password")
+    public String updatePassword( @RequestParam String oldPassword,
+                                  @RequestParam String newPassword,
+                                  @RequestParam String confPassword ,
+                                  @RequestParam(defaultValue = "professor/change-password") String tab,
+                                  Model model , Authentication authentication) {
+        professorService.updatePassword(oldPassword,newPassword,confPassword , authentication.getName()) ;
+        ProfessorProfileDto professor = professorService.findByUserId(authentication.getName());
+        model.addAttribute("professor",professor);
+        model.addAttribute("fragmentName", tab);
+
+        return "professor/edit-my-profile";
+    }
+
+
 }

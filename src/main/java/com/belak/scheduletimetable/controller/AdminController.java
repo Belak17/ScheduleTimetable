@@ -1,5 +1,6 @@
 package com.belak.scheduletimetable.controller;
 
+import com.belak.scheduletimetable.dto.AdminProfileDto;
 import com.belak.scheduletimetable.dto.StudentProfileDto;
 import com.belak.scheduletimetable.response.LoginResponse;
 import com.belak.scheduletimetable.service.admin.AdminService;
@@ -9,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -58,8 +60,51 @@ public class AdminController {
             case "password" -> "admin/change-password";
             default -> "admin/change-info";
         };
-        model.addAttribute("admin",adminService.findByUserId(authentication.getName()));
+        AdminProfileDto admin = adminService.findByUserId(authentication.getName());
+
+        model.addAttribute("admin",admin);
         model.addAttribute("fragmentName", fragmentName);
+
+        return "admin/edit-my-profile";
+    }
+
+    @PostMapping("/edit-my-profile/update/email")
+    public String updateEmail( @RequestParam String nouvEmail, @RequestParam String confEmail ,
+                               @RequestParam(defaultValue = "admin/change-email") String tab,
+                               Model model , Authentication authentication) {
+        adminService.updateEmail(nouvEmail,confEmail, authentication.getName()) ;
+        AdminProfileDto admin = adminService.findByUserId(authentication.getName());
+        model.addAttribute("admin",admin);
+        model.addAttribute("fragmentName", tab);
+
+        return "admin/edit-my-profile";
+    }
+
+    @PostMapping("/edit-my-profile/update/info")
+    public String updateInfo( @RequestParam String userId,
+                              @RequestParam String address , @RequestParam String telephone ,
+                              @RequestParam String code ,
+                              @RequestParam(defaultValue = "admin/change-info") String tab,
+                              Model model , Authentication authentication) {
+        adminService.updateInfo(userId,address,telephone,code);
+        AdminProfileDto admin = adminService.findByUserId(authentication.getName());
+        model.addAttribute("admin",admin);
+        model.addAttribute("fragmentName", tab);
+
+        return "admin/edit-my-profile";
+    }
+
+
+    @PostMapping("/edit-my-profile/update/password")
+    public String updatePassword( @RequestParam String oldPassword,
+                                  @RequestParam String newPassword,
+                                  @RequestParam String confPassword ,
+                                  @RequestParam(defaultValue = "admin/change-password") String tab,
+                                  Model model , Authentication authentication) {
+        adminService.updatePassword(oldPassword,newPassword,confPassword , authentication.getName()) ;
+        AdminProfileDto admin = adminService.findByUserId(authentication.getName());
+        model.addAttribute("admin",admin);
+        model.addAttribute("fragmentName", tab);
 
         return "admin/edit-my-profile";
     }

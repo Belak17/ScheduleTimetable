@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professor Profile</title>
     <link rel="stylesheet" th:href="@{/css/style-student/style-student-profile.css}">
+    <link rel="stylesheet" th:href="@{/css/style-student/style-student-dashboard.css}">
     <link rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
 </head>
@@ -27,7 +28,7 @@
     <section class="all-info">
         <div class="summary">
             <div class="photo">
-                <img th:src="@{/images/user.jpg}">
+                <img th:src="@{/images/self.jpg}">
             </div>
             <span class="name" th:text="${professor.prenom+' '+professor.nom}">
 
@@ -60,9 +61,11 @@
                 </span>
             </div>
             <span class="other summary-container" id="parameter">
+                <a th:href="@{/professor/edit-my-profile}">
                     <img th:src="@{/images/preferences.png}">
                     <span>
                     Paramètres du Compte </span>
+                </a>
                 </span>
         </div>
         <div class="generals">

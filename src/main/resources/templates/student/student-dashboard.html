@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/style-student/style-student-dashboard.css}">
     <link rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
     <script src="https://unpkg.com/html5-qrcode"></script>
@@ -75,19 +75,19 @@
     <h2 class="separator">Menu Etudiant</h2>
     <section class="grid">
 
-        <div class="option" style="background-color: rgba(78, 37, 144, 0.534);">
+        <div class="option" style="background: linear-gradient(135deg, #4f8cff, #6ea8fe);">
             <a th:href="@{/student/timetable}">
                 <p> Emploi du temps</p>
                 <img th:src="@{/images/academic-years.png}">
             </a>
         </div>
-        <div class="option" id="scan-button">
+        <div class="option" id="scan-button" style="background: linear-gradient(135deg, #7b61ff, #9b8cff);">
             <a th:href="@{/student/scanner}">
             <p>Scanner Code</p>
             <img th:src="@{/images/qr-code.png}" alt="QR CODE">
             </a>
         </div>
-        <div class="option" style="background-color: rgba(69, 96, 122, 0.53);">
+        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
             <a th:href="@{/student/absences}">
                 <p>Vos absences</p>
                 <img th:src="@{/images/absent.png}" alt="Absences">
@@ -99,7 +99,7 @@
                 <img th:src="@{/images/user-profile.png}" alt="Profil">
             </a>
         </div>
-        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
+        <div class="option" style="background: linear-gradient(135deg, #4f8cff, #6ea8fe);">
             <a th:href="@{/logout}">
                 <p>Deconnexion </p>
                 <img th:src="@{/images/power-off.png}" alt="Deconnexion">

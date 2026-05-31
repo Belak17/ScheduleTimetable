@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -99,6 +100,47 @@ public class StudentController {
 
         model.addAttribute("student",student);
         model.addAttribute("fragmentName", fragmentName);
+
+        return "student/edit-my-profile";
+    }
+
+    @PostMapping("/edit-my-profile/update/email")
+    public String updateEmail( @RequestParam String nouvEmail, @RequestParam String confEmail ,
+            @RequestParam(defaultValue = "student/change-email") String tab,
+            Model model , Authentication authentication) {
+        studentService.updateEmail(nouvEmail,confEmail, authentication.getName()) ;
+        StudentProfileDto student = studentService.findByUserId(authentication.getName());
+        model.addAttribute("student",student);
+        model.addAttribute("fragmentName", tab);
+
+        return "student/edit-my-profile";
+    }
+
+    @PostMapping("/edit-my-profile/update/info")
+    public String updateInfo( @RequestParam String userId,
+                              @RequestParam String address , @RequestParam String telephone ,
+                              @RequestParam String code ,
+                               @RequestParam(defaultValue = "student/change-info") String tab,
+                               Model model , Authentication authentication) {
+        studentService.updateInfo(userId,address,telephone,code);
+        StudentProfileDto student = studentService.findByUserId(authentication.getName());
+        model.addAttribute("student",student);
+        model.addAttribute("fragmentName", tab);
+
+        return "student/edit-my-profile";
+    }
+
+
+    @PostMapping("/edit-my-profile/update/password")
+    public String updatePassword( @RequestParam String oldPassword,
+                                  @RequestParam String newPassword,
+                              @RequestParam String confPassword ,
+                              @RequestParam(defaultValue = "student/change-password") String tab,
+                              Model model , Authentication authentication) {
+        studentService.updatePassword(oldPassword,newPassword,confPassword , authentication.getName()) ;
+        StudentProfileDto student = studentService.findByUserId(authentication.getName());
+        model.addAttribute("student",student);
+        model.addAttribute("fragmentName", tab);
 
         return "student/edit-my-profile";
     }

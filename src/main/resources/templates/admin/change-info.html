@@ -1,0 +1,39 @@
+<section class="option-clicked" th:fragment="option-clicked">
+  <div class="title-bloc">
+    <img th:src="@{/images/information-button.png}">
+    <span>Modifier les Informations du profil</span>
+  </div>
+  <form th:action="@{/admin/edit-my-profile/update/info}" method="post">
+    <span class="title-container">Informations Generales</span>
+    <div class="generals-info">
+      <div class="info-input">
+        <label for="login">Login</label>
+        <input id="login" class="input" name="userId" type="text" th:value="${admin.userId}" required>
+      </div>
+      <div class="info-input">
+        <label for="lastname">Nom</label>
+        <input id="lastname" class="input" disabled th:value="${admin.nom}">
+      </div>
+      <div class="info-input">
+        <label for="firstname">Prenom</label>
+        <input id="firstname" class="input" disabled th:value="${admin.prenom}">
+      </div>
+      <div class="info-input">
+        <label for="telephone">Téléphone</label>
+        <input id="telephone" class="input" name="telephone" type="text" th:value="${admin.telephone}" required>
+      </div>
+      <div class="info-input">
+        <label for="address">Adresse Postale</label>
+        <input id="address" class="input" name="address" type="text" th:value="${admin.adresse}" required>
+      </div>
+      <div class="info-input">
+        <label for="code">Code Postale</label>
+        <input id="code" class="input" name="code"  type="text" th:value="${admin.codePostale}" required>
+      </div>
+    </div>
+    <section class="buttons">
+      <button class="reset" type="reset">Reinitialiser</button>
+      <button class="submit" type="submit">Envoyer</button>
+    </section>
+  </form>
+</section>

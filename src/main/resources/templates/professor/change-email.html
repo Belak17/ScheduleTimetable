@@ -1,0 +1,34 @@
+<section class="option-clicked" th:fragment="option-clicked">
+    <div class="title-bloc">
+        <img th:src="@{/images/arroba.png}">
+        <span>Changer l'e-mail</span>
+    </div>
+    <form th:action="@{/professor/edit-my-profile/update/email}" method="post">
+
+        <div class="info-input">
+            <label for="old-email" class="label-ext">E-mail</label>
+            <input id="old-email" class="input" disabled th:value="${professor.email}">
+        </div>
+        <div class="generals-info">
+
+            <div class="info-input">
+                <label for="nouv-email">Nouvel e-mail</label>
+                <input id="nouv-email" type="email" class="input" required name="nouvEmail">
+            </div>
+            <div class="info-input">
+                <label for="conf-email">Confirmation du nouveau e-mail</label>
+                <input id="conf-email"  type="email" class="input" required name="confEmail">
+            </div>
+
+        </div>
+        <div class="info-input">
+            <label for="password" class="label-ext">Mot de passe actuel</label>
+            <input id="password" class="input" type="password" name="password" required>
+        </div>
+
+        <section class="buttons">
+            <button class="reset" type="reset">Reinitialiser</button>
+            <button class="submit" type="submit">Envoyer</button>
+        </section>
+    </form>
+</section>

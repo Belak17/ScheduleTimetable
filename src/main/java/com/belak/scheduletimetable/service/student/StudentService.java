@@ -38,6 +38,7 @@ public class StudentService {
     private  final StudentMapper studentMapper ;
     private  final PresenceRepository presenceRepository ;
     private  final StudentProfileMapper profileMapper ;
+    private  final PasswordEncoder passwordEncoder ;
     public Page<StudentDto> getStudentByFieldAndYearAndGroup(String field,int year,String group,int page,int size)
     {
         Pageable pageable = PageRequest.of(page, size);
@@ -58,4 +59,45 @@ public class StudentService {
                 .findByUserId(userId).get());
     }
 
+    public void updateEmail(String nouvEmail, String confEmail, String userId) {
+        if (!nouvEmail.equals(confEmail)) {
+            throw new IllegalArgumentException("Les emails ne correspondent pas");
+        }
+
+        Student student = studentRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Étudiant introuvable"));
+
+        student.setEmail(nouvEmail);
+        studentRepository.save(student);
+    }
+
+    public void updateInfo(String userId, String address, String telephone, String code) {
+        Student student = studentRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Étudiant introuvable"));
+        student.setUserId(userId);
+        student.setAdresse(address);
+        student.setTelephone(telephone);
+        student.setCodePostal(code);
+        studentRepository.save(student);
+    }
+
+    public void updatePassword(String oldPassword,
+                               String newPassword,
+                               String confPassword,
+                               String userId) {
+
+        Student student = studentRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Étudiant introuvable"));
+
+        if (!passwordEncoder.matches(oldPassword, student.getPassword())) {
+            throw new IllegalArgumentException("Ancien mot de passe incorrect");
+        }
+
+        if (!newPassword.equals(confPassword)) {
+            throw new IllegalArgumentException("Les mots de passe ne correspondent pas");
+        }
+
+        student.setPassword(passwordEncoder.encode(newPassword));
+        studentRepository.save(student);
+    }
 }
