@@ -12,29 +12,21 @@
 <header>
     <div class="head-box">
         <!-- Checkbox caché -->
-
         <label for="toggle-sidebar">
             <div  id="menu">
-
                 <img th:src="@{/images/menu-burger.png}">
-
-
             </div>
         </label>
         <h2>Scanner Code Qr</h2>
     </div>
 </header>
 <section th:replace="student/student-dashboard :: sidebar">
-
 </section>
 <main class="center-wrapper">
-
 <div id="reader"></div>
-
 <p id="result"></p>
 </main>
 <script>
-
     const result = document.getElementById("result");
 
     let html5QrCode;

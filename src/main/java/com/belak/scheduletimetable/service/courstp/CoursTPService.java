@@ -56,17 +56,17 @@ public class CoursTPService extends CoursTPUtilsService {
         return null;
     }
 
-    private CoursTP buildTP(String value, String dayRaw, String start, String end) {
+    private CoursTP buildTP(String value, String dayRaw, String start, String end ,GroupTimetable groupTimetable) {
         CoursTP tp = new CoursTP();
         tp.setIntitule(value);
         tp.setDayOfWeek(dayRaw);
         tp.setDebut(LocalTime.parse(start));
         tp.setFin(LocalTime.parse(end));
         tp.setSalle(extractGroupSalle(value));
-        boolean exists = coursTPrepository.existsCoursTPByDayAndHoraire(
+        boolean exists = coursTPrepository.existsCoursTPByDayAndHoraireAndGroupTimetable(
                 dayRaw,
                 LocalTime.parse(start),
-                LocalTime.parse(end)
+                LocalTime.parse(end),groupTimetable
         );
 
         String frequency = extractTPFrequency(value);
@@ -116,7 +116,7 @@ public class CoursTPService extends CoursTPUtilsService {
 
                         for (int j = 0; j < courses.size(); j++) {
 
-                            CoursTP tp = buildTP(courses.get(j), dayRaw, start, end);
+                            CoursTP tp = buildTP(courses.get(j), dayRaw, start, end , timetable);
                             tp.setRotationOffset(j); // 0,1 (plus logique que j+1)
 
                             coursTPrepository.save(tp);
@@ -124,7 +124,7 @@ public class CoursTPService extends CoursTPUtilsService {
                         }
                     }
                     else {
-                        CoursTP tp = buildTP(value, dayRaw, start, end);
+                        CoursTP tp = buildTP(value, dayRaw, start, end, timetable);
                         coursTPrepository.save(tp);
                         timetable.addCoursTP(tp);
                     }

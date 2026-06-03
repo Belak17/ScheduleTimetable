@@ -52,6 +52,15 @@ The main goal of this application is to provide an efficient solution for:
 The system improves accessibility and organization for both students and administrators.
 
 ---
+### Deployment
+
+This application is intended to be deployed within an academic environment.
+
+It can run on a local server connected to the faculty's internal network, allowing students, teachers, and administrators to access timetable management services securely.
+
+The project is currently not publicly hosted on the Internet.
+
+---
 
 #  Features
 
@@ -122,6 +131,19 @@ The application integrates **Spring Security** for authentication and authorizat
 
 ---
 
+# Technical Highlights
+
+- Layered Architecture (Controller → Service → Repository)
+- Spring Security Authentication & Authorization
+- BCrypt Password Encryption
+- JPA/Hibernate ORM
+- DTO Pattern
+- Excel Processing with Apache POI
+- Environment Variables Configuration
+- Role-Based Access Control (RBAC)
+
+---
+
 #  Architecture
 
 The project follows a layered architecture.
@@ -153,6 +175,8 @@ The project follows a layered architecture.
 ```
 
 ---
+
+
 
 #  Class Diagram
 

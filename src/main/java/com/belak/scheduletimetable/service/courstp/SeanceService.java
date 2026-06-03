@@ -27,7 +27,7 @@ public class SeanceService {
     private  final AbsenceService absenceService ;
 
     @Transactional
-    @Scheduled(cron = "0 55 7 * * *", zone = "Africa/Tunis")
+    @Scheduled(cron = "0 20 7 * * *", zone = "Africa/Tunis")
     public void generateDailySeances() {
         createSeancesForToday();
     }

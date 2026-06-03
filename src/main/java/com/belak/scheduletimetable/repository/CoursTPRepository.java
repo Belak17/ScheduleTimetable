@@ -24,7 +24,6 @@ public interface CoursTPRepository extends JpaRepository<CoursTP,Long> {
                                              @Param("todayday") String day);
 
 
-
     //Optional<CoursTP> findByQrDataAndGroupTimetableIdAndDayOfWeek(String code, Long id, String todayDay);
 
     @Query("""
@@ -45,17 +44,19 @@ public interface CoursTPRepository extends JpaRepository<CoursTP,Long> {
     @Query("SELECT cours FROM CoursTP cours " +
             "WHERE cours.dayOfWeek = :todayday")
     List<CoursTP> findCoursTPByDay(@Param("todayday") String todayDay);
+
     @Query("""
     SELECT COUNT(c) > 0
     FROM CoursTP c
     WHERE c.debut = :start
       AND c.fin = :end
       AND c.dayOfWeek = :todayday
+      AND c.groupTimetable= :groupTimetable
 """)
-    boolean existsCoursTPByDayAndHoraire(
+    boolean existsCoursTPByDayAndHoraireAndGroupTimetable(
             @Param("todayday") String dayRaw,
             @Param("start") LocalTime start,
-            @Param("end") LocalTime end
+            @Param("end") LocalTime end, @Param("timetable") GroupTimetable groupTimetable
     );
 
     @Query("""
@@ -63,5 +64,6 @@ public interface CoursTPRepository extends JpaRepository<CoursTP,Long> {
     FROM CoursTP c
     WHERE  c.groupTimetable.id = :id
 """)
-    Page<CoursTP> findByGroupTimetableId(Pageable pageable ,  @Param("id") Long id);
+    Page<CoursTP> findByGroupTimetableId(Pageable pageable, @Param("id") Long id);
+
 }
