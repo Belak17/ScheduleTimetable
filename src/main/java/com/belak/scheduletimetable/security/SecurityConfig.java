@@ -32,7 +32,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/reset-password/**") // désactive CSRF juste pour reset-password
+                        .ignoringRequestMatchers("/reset-password/**","/api/**") // désactive CSRF juste pour reset-password
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login","/forgot","/firstlogin","/forgot-password",
@@ -40,8 +40,8 @@ public class SecurityConfig {
                                 "/js/**" , "/images/**" , "/icons/**").permitAll()
                         .requestMatchers("/admin/**","/admin","/filiere/**","/filiere").hasRole("ADMIN")
                         .requestMatchers("/professor/**").hasRole("PROFESSOR")
-                        .requestMatchers("/student/**").hasAnyRole("STUDENT","ADMIN")
-                        .requestMatchers("/admin/student/**").hasAnyRole("STUDENT", "ADMIN")
+                        .requestMatchers("/student/**","/api/**").hasAnyRole("STUDENT","ADMIN")
+                        .requestMatchers("/admin/student/**","/api/**").hasAnyRole("STUDENT", "ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

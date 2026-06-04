@@ -56,7 +56,7 @@ public interface CoursTPRepository extends JpaRepository<CoursTP,Long> {
     boolean existsCoursTPByDayAndHoraireAndGroupTimetable(
             @Param("todayday") String dayRaw,
             @Param("start") LocalTime start,
-            @Param("end") LocalTime end, @Param("timetable") GroupTimetable groupTimetable
+            @Param("end") LocalTime end, @Param("groupTimetable") GroupTimetable groupTimetable
     );
 
     @Query("""
@@ -66,4 +66,17 @@ public interface CoursTPRepository extends JpaRepository<CoursTP,Long> {
 """)
     Page<CoursTP> findByGroupTimetableId(Pageable pageable, @Param("id") Long id);
 
+    @Query("""
+SELECT c
+FROM CoursTP c
+WHERE c.groupTimetable.id = :groupId
+AND c.dayOfWeek = :day
+AND c.debut <= :now
+AND c.fin >= :now
+""")
+    Optional<CoursTP> findCurrentCours(
+            @Param("groupId") Long groupId,
+            @Param("day") String day,
+            @Param("now") LocalTime now
+    );
 }

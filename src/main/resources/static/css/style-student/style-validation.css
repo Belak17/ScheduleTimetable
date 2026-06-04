@@ -1,0 +1,219 @@
+
+
+/* ===== Main Content ===== */
+.center-wrapper {
+    margin: 90px auto 20px auto; /* sous le header */
+    padding: 20px;
+    max-width: 1200px;
+       height: auto;      /* ou juste supprimer height */
+    min-height: 500px;
+   background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: block;
+    gap:30px;
+    justify-content: center;
+
+
+}
+
+/* ===== Reset & Base ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #c4cfda63;
+    color: #333;
+    font-family: Cairo, system-ui,
+        -apple-system, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Helvetica Neue, Arial,
+        Noto Sans, Liberation Sans, sans-serif;
+}
+
+/* ===== Main Content ===== */
+.center-wrapper {
+    margin: 90px auto 20px auto;
+    padding: 20px;
+    max-width: 1200px;
+}
+
+.center-wrapper h2 {
+    text-align: center;
+    padding-bottom: 15px;
+    padding-top: 10px;
+}
+
+/* ===== Separator ===== */
+.separator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.separator::before,
+.separator::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background-color: black;
+}
+
+/* ===== Result Card ===== */
+.result-scanner {
+    padding: 40px 20px;
+    min-height: 500px;
+    min-width: fit-content;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 30px;
+}
+
+/* ===== Success Icon ===== */
+.check-circle {
+    width: 150px;
+    height: 150px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 80px;
+    font-weight: bold;
+
+    animation:
+        popIn 0.6s ease-out,
+        pulse 2s infinite 0.6s;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.6);
+    }
+
+    70% {
+        box-shadow: 0 0 0 20px rgba(40, 167, 69, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+}
+
+/* ===== Text ===== */
+.success-title {
+    color: #28a745;
+    font-size: 24px;
+    text-align: center;
+}
+
+.validation-details {
+    width: 100%;
+    max-width: 500px;
+
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.validation-details p {
+    font-size: 16px;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+    .center-wrapper {
+        margin: 20px 10px;
+        padding: 10px;
+    }
+
+    .check-circle {
+        width: 120px;
+        height: 120px;
+        font-size: 60px;
+    }
+
+    .success-title {
+        font-size: 20px;
+    }
+}
+
+
+/* ===== ERROR THEME ===== */
+
+.error.check-circle {
+    background-color: #dc3545;
+    animation:
+        popIn 0.6s ease-out,
+        pulseError 2s infinite 0.6s;
+}
+
+.error-title {
+    color: #dc3545;
+    font-size: 24px;
+}
+
+.separator.error::before,
+.separator.error::after {
+    background-color: #dc3545;
+}
+
+/* bouton */
+.error-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.error-btn:hover {
+    background-color: #b52a37;
+}
+
+/* animation rouge */
+@keyframes pulseError {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.6);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(220, 53, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
+}

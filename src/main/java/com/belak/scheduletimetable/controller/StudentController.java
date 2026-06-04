@@ -1,5 +1,6 @@
 package com.belak.scheduletimetable.controller;
 
+import com.belak.scheduletimetable.dto.PresenceValidationDto;
 import com.belak.scheduletimetable.dto.StudentProfileDto;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.response.LoginResponse;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Controller
 @RequestMapping("/student")
@@ -143,5 +146,29 @@ public class StudentController {
         model.addAttribute("fragmentName", tab);
 
         return "student/edit-my-profile";
+    }
+
+    @GetMapping("/validation")
+    public String validation(
+            @RequestParam String intitule,
+            @RequestParam String group,
+            @RequestParam String code,
+            @RequestParam LocalDate date,
+            @RequestParam LocalTime time,
+            @RequestParam String day,
+            Model model
+    ) {
+
+        PresenceValidationDto validationDto = new PresenceValidationDto(intitule,group,code
+        ,date,time,day);
+
+        model.addAttribute("validation", validationDto);
+
+        return "student/validation";
+    }
+
+    @GetMapping("/error")
+    public String errorPage() {
+        return "student/errorPage";
     }
 }

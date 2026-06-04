@@ -26,68 +26,36 @@
 <div id="reader"></div>
 <p id="result"></p>
 </main>
+
 <script>
-    const result = document.getElementById("result");
+    const html5QrCode = new Html5Qrcode("reader");
 
-    let html5QrCode;
+    let isScanning = true;
 
-    async function startScanner() {
+    function onScanSuccess(decodedText) {
 
-        try {
+        if (!isScanning) return;
+        isScanning = false;
 
-            html5QrCode = new Html5Qrcode("reader");
+        html5QrCode.stop().then(() => {
 
-            const cameras = await Html5Qrcode.getCameras();
-
-            const backCamera =
-                cameras.find(camera =>
-                    camera.label.toLowerCase().includes("back")
-                ) || cameras[0];
-
-            await html5QrCode.start(
-
-                backCamera.id,
-
-                {
-                    fps: 10,
-                    qrbox: {
-                        width: 250,
-                        height: 250
-                    }
-                },
-
-                async (decodedText) => {
-
-                    result.innerText =
-                        "Texte QR " + decodedText;
-
-                    await html5QrCode.stop();
-
-                    await fetch("/api/qr/scan", {
-
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-
-                        body: JSON.stringify({
-                            code: decodedText
-                        })
-                    });
-
-                }
-            );
-
-        } catch (err) {
-
-            result.innerText =
-                "Erreur : " + err;
-        }
+            window.location.href =
+                "/api/qr/scan?code=" + encodeURIComponent(decodedText);
+        });
     }
 
-    startScanner();
+    Html5Qrcode.getCameras().then(devices => {
+        if (!devices || devices.length === 0) {
+            console.error("Aucune caméra détectée");
+            return;
+        }
 
+        html5QrCode.start(
+            { facingMode: "environment" },
+            { fps: 10, qrbox: 250 },
+            onScanSuccess
+        );
+    });
 </script>
 
 </body>

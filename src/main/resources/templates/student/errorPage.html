@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Page</title>
+    <link rel="stylesheet" th:href="@{/css/style-student/style-validation.css}">
+    <link rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+</head>
+
+<body>
+
+<main class="center-wrapper">
+
+    <h2 class="separator error">Validation échouée</h2>
+
+    <section class="result-scanner error">
+
+        <div class="check-circle error">
+            ✕
+        </div>
+
+        <h3 class="error-title">
+            Présence non enregistrée
+        </h3>
+
+        <div class="validation-details">
+            <p><strong>Cause :</strong>
+                <span th:text="${errorMessage}"></span>
+            </p>
+            <p><strong>Action :</strong> Réessayez ou contactez l’enseignant</p>
+        </div>
+
+    </section>
+</main>
+
+</body>
+</html>

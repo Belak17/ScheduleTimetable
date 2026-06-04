@@ -71,15 +71,24 @@ public class CoursTPService extends CoursTPUtilsService {
 
         String frequency = extractTPFrequency(value);
 
+        System.out.println("Cours : " + value);
+        System.out.println("Frequency extraite : " + frequency);
+        System.out.println("Exists : " + exists);
+
         if (exists) {
+            System.out.println("=> fréquence 2 à cause de exists");
             tp.setFrequence(2);
         } else if (frequency == null) {
+            System.out.println("=> fréquence 1");
             tp.setFrequence(1);
         } else if (frequency.contains("15")) {
+            System.out.println("=> fréquence 2 à cause du texte");
             tp.setFrequence(2);
         } else if (frequency.contains("3s")) {
+            System.out.println("=> fréquence 3");
             tp.setFrequence(3);
         } else {
+            System.out.println("=> fréquence 1");
             tp.setFrequence(1);
         }
 

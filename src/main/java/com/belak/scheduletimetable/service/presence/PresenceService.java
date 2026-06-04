@@ -2,6 +2,8 @@ package com.belak.scheduletimetable.service.presence;
 
 import com.belak.scheduletimetable.component.PresenceMapper;
 import com.belak.scheduletimetable.dto.PresenceDto;
+import com.belak.scheduletimetable.dto.PresenceValidationDto;
+import com.belak.scheduletimetable.exception.ElementNotFoundException;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.CoursTP;
 import com.belak.scheduletimetable.model.Presence;
@@ -33,31 +35,33 @@ public class PresenceService {
     private  final SeanceRepository seanceRepository ;
     private  final PresenceMapper presenceMapper ;
 
-    public void  createPresence(String userId , String code)
+    public PresenceValidationDto createPresence(String userId , String code)
     {
         LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
         LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
         Optional<Student> student = studentRepository.findByUserId(userId);
-        String todayDay =today
+        String todayDay = today
                 .getDayOfWeek()
                 .getDisplayName(TextStyle.FULL, Locale.FRANCE);
+
+        todayDay = todayDay.substring(0, 1).toUpperCase() + todayDay.substring(1);
         if (student.isEmpty())
         {
             throw  new ResourceNotFoundException("Cet etudiant n'est pas enregistre dans la faculte");
         }
         Student theStudent = student.get();
         Optional<CoursTP> optionalCoursTP= tpRepository
-                .findValidCours(code,theStudent.getGroupTimetable().getId(),todayDay,now);
+                .findCurrentCours(theStudent.getGroupTimetable().getId(),todayDay,now);
         if (optionalCoursTP.isEmpty())
         {
-            throw new ResourceNotFoundException("Cours Non disponible ");
+            throw new ElementNotFoundException("Cours Non disponible ");
         }
         CoursTP theCoursTP = optionalCoursTP.get();
 
         Optional<Seance> optionalSeance = seanceRepository.findByCoursTPIdAndDate(theCoursTP.getId(), today);
         if (optionalSeance.isEmpty())
         {
-            throw new ResourceNotFoundException("Cours Non disponible ");
+            throw new ElementNotFoundException("Seance Non disponible ");
         }
         Seance theSeance = optionalSeance.get();
         boolean exists = presenceRepository.existsBySeanceIdAndStudentId(
@@ -67,6 +71,14 @@ public class PresenceService {
         if (exists) {
             throw new IllegalStateException("Présence déjà enregistrée");
         }
+        PresenceValidationDto presenceValidationDto = new PresenceValidationDto();
+        presenceValidationDto.setCode(code);
+        presenceValidationDto.setDate(LocalDate.now());
+        presenceValidationDto.setGroup(theStudent.getGroup());
+        presenceValidationDto.setIntitule(theCoursTP.getIntitule());
+        presenceValidationDto.setDay(todayDay);
+        presenceValidationDto.setTime(LocalTime.now());
+
         Presence thePresence = new Presence();
         thePresence.setStudent(theStudent);
         thePresence.setPresent(true);
@@ -74,8 +86,9 @@ public class PresenceService {
 
         seanceRepository.save(theSeance);
 
-    }
+        return presenceValidationDto ;
 
+    }
     public Page<PresenceDto> getAbsencesByUserId(String userId , int page , int size )
     {
         Pageable pageable = PageRequest.of(page, size);
@@ -86,7 +99,4 @@ public class PresenceService {
                 );
         return  presenceRepository.findByStudentAndPresentFalse(student,pageable).map(presenceMapper::convertPresencetoDto);
     }
-
-
-
 }

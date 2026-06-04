@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Page</title>
+    <link rel="stylesheet" th:href="@{/css/style-student/style-validation.css}">
+    <link rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+</head>
+<body>
+<main class="center-wrapper">
+
+    <h2 class="separator">Présence Enregistrée</h2>
+
+    <section class="result-scanner">
+
+        <div class="check-circle">✓</div>
+
+        <h3 class="success-title">
+            Présence validée avec succès
+        </h3>
+
+        <div class="validation-details">
+
+            <p>
+                <strong>Cours :</strong>
+                <span th:text="${validation.intitule}"></span>
+            </p>
+
+            <p>
+                <strong>Groupe :</strong>
+                <span th:text="${validation.group}"></span>
+            </p>
+
+            <p>
+                <strong>Code :</strong>
+                <span th:text="${validation.code}"></span>
+            </p>
+
+            <p>
+                <strong>Date :</strong>
+                <span th:text="${validation.date}"></span>
+            </p>
+
+            <p>
+                <strong>Heure :</strong>
+                <span th:text="${validation.time}"></span>
+            </p>
+
+            <p>
+                <strong>Jour :</strong>
+                <span th:text="${validation.day}"></span>
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>
