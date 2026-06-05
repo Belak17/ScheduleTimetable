@@ -32,10 +32,11 @@ public class CoursTP {
     private Long id ;
 
     private  String intitule ;
-    private  String qrData ;
     private String  dayOfWeek ;
     private  LocalTime debut ;
     private LocalTime fin ;
+    private boolean inverseOfAnother = false;
+    private Long dependsOnCoursId = null;
     @ManyToOne
     @JoinColumn(name = "grouptimetable_id")
     private GroupTimetable groupTimetable;
@@ -46,8 +47,6 @@ public class CoursTP {
 
     private int frequence ;
     private  int rotationOffset ;
-    // pour donner la date de debut des cours
-    private LocalDate startDate;
 
     @OneToMany(mappedBy = "coursTP", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seance> seances = new ArrayList<>();
@@ -63,16 +62,15 @@ public class CoursTP {
 
     public boolean shouldOccurThisWeek(int weekNumber) {
 
+        if (inverseOfAnother) {
+            throw new IllegalStateException("Use service-level logic for dependent TP");
+        }
         if (frequence <= 0) {
             throw new IllegalArgumentException("frequency must be > 0");
         }
-
         if (rotationOffset < 0 || rotationOffset >= frequence) {
             throw new IllegalArgumentException("offsetRotation invalide");
         }
-        // si date de debut donne , utiliser
-        //   long weeksSinceStart = ChronoUnit.WEEKS.between(startDate, today);
-
         return weekNumber % frequence == rotationOffset;
     }
 

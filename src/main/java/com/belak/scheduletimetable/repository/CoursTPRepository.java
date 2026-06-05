@@ -29,7 +29,7 @@ public interface CoursTPRepository extends JpaRepository<CoursTP,Long> {
     @Query("""
     SELECT c
     FROM CoursTP c
-    WHERE c.salle.code = :code
+    WHERE LOWER(c.salle.code) = LOWER(:code)
     AND c.groupTimetable.id = :id
     AND c.dayOfWeek = :todayDay
     AND :now BETWEEN c.debut AND c.fin

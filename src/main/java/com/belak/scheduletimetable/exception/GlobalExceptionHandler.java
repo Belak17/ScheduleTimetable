@@ -17,4 +17,25 @@ public class GlobalExceptionHandler {
     }
 
 
+    @ExceptionHandler(PresenceAlreadyExistsException.class)
+    public String handlePresence(PresenceAlreadyExistsException ex, RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
+        redirectAttributes.addFlashAttribute("intitule", ex.getIntitule());
+        redirectAttributes.addFlashAttribute("salle", ex.getSalle());
+        redirectAttributes.addFlashAttribute("date", ex.getDate());
+        redirectAttributes.addFlashAttribute("dayOfWeek", ex.getDayOfWeek());
+
+        return "redirect:/student/alreadyRegistered";
+    }
+
+    @ExceptionHandler(CourseAndCodeNotFoundException.class)
+    public String handleCode(CourseAndCodeNotFoundException ex, RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
+        redirectAttributes.addFlashAttribute("code", ex.getCode());
+        return "redirect:/student/codeNotFound";
+    }
+
+
 }

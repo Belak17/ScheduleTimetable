@@ -171,4 +171,14 @@ public class StudentController {
     public String errorPage() {
         return "student/errorPage";
     }
+
+    @GetMapping("/alreadyRegistered")
+    public String alreadyRegisteredPage() {
+        return "student/alreadyRegistered";
+    }
+
+    @GetMapping("/codeNotFound")
+    public String CodeErrorPage() {
+        return "student/codeError";
+    }
 }

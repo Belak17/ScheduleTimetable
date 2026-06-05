@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validation Page</title>
+  <link rel="stylesheet" th:href="@{/css/style-student/style-validation.css}">
+  <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+</head>
+
+<body>
+
+<main class="center-wrapper">
+
+  <h2 class="separator error">Aucune Séance En Cours</h2>
+
+  <section class="result-scanner error">
+
+    <div class="check-circle error">
+      ✕
+    </div>
+
+    <div class="validation-details">
+
+      <p>
+        <strong>Cause :</strong>
+        <span th:text="${errorMessage}"></span>
+      </p>
+
+      <p>
+        <strong>Explication :</strong>
+        <span>
+          Aucun cours actif ne correspond à cette salle maintenant
+        </span>
+      </p>
+
+      <p>
+        <strong>Salle :</strong>
+        <span th:text="${code}"></span>
+      </p>
+
+      <p>
+        <strong>Solution 1 :</strong>
+        <span>Veuillez vérifier votre salle de TP</span>
+      </p>
+
+      <p>
+        <strong>Solution 2 :</strong>
+        <span>Veuillez contacter le webmaster s'il s'agit de votre salle</span>
+      </p>
+
+    </div>
+
+  </section>
+</main>
+
+</body>
+</html>

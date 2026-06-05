@@ -3,7 +3,9 @@ package com.belak.scheduletimetable.service.presence;
 import com.belak.scheduletimetable.component.PresenceMapper;
 import com.belak.scheduletimetable.dto.PresenceDto;
 import com.belak.scheduletimetable.dto.PresenceValidationDto;
+import com.belak.scheduletimetable.exception.CourseAndCodeNotFoundException;
 import com.belak.scheduletimetable.exception.ElementNotFoundException;
+import com.belak.scheduletimetable.exception.PresenceAlreadyExistsException;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.CoursTP;
 import com.belak.scheduletimetable.model.Presence;
@@ -49,12 +51,13 @@ public class PresenceService {
         {
             throw  new ResourceNotFoundException("Cet etudiant n'est pas enregistre dans la faculte");
         }
+        code = code.trim();
         Student theStudent = student.get();
         Optional<CoursTP> optionalCoursTP= tpRepository
-                .findCurrentCours(theStudent.getGroupTimetable().getId(),todayDay,now);
+                .findValidCours(code,theStudent.getGroupTimetable().getId(),todayDay,now);
         if (optionalCoursTP.isEmpty())
         {
-            throw new ElementNotFoundException("Cours Non disponible ");
+            throw new CourseAndCodeNotFoundException("Cours Non disponible ",code);
         }
         CoursTP theCoursTP = optionalCoursTP.get();
 
@@ -69,7 +72,10 @@ public class PresenceService {
                 theStudent.getId()
         );
         if (exists) {
-            throw new IllegalStateException("Présence déjà enregistrée");
+            Presence presence = presenceRepository.findBySeanceIdAndStudentId(theSeance.getId(), theStudent.getId()).get();
+            throw new PresenceAlreadyExistsException("Présence déjà enregistrée",presence.getSeance()
+                    .getCoursTP().getIntitule(),
+                    presence.getSeance().getDate(),presence.getSeance().getCoursTP().getDayOfWeek() ,presence.getSeance().getCoursTP().getSalle().getCode());
         }
         PresenceValidationDto presenceValidationDto = new PresenceValidationDto();
         presenceValidationDto.setCode(code);

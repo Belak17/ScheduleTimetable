@@ -6,6 +6,7 @@ import com.belak.scheduletimetable.repository.CoursTPRepository;
 import com.belak.scheduletimetable.repository.SeanceRepository;
 import com.belak.scheduletimetable.service.presence.AbsenceService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,7 @@ import java.time.format.TextStyle;
 import java.time.temporal.WeekFields;
 import java.util.List;
 import java.util.Locale;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SeanceService {
@@ -27,7 +28,7 @@ public class SeanceService {
     private  final AbsenceService absenceService ;
 
     @Transactional
-    @Scheduled(cron = "0 40 7 * * *", zone = "Africa/Tunis")
+    @Scheduled(cron = "0 40 8 * * *", zone = "Africa/Tunis")
     public void generateDailySeances() {
         createSeancesForToday();
     }
@@ -45,12 +46,31 @@ public class SeanceService {
                 .findCoursTPByDay(todayDay);
         for (CoursTP cours : nearCoursTPlist)
         {
-            System.out.println(
+            log.info("CoursTP id={} offsetRotation={}",
+                    cours.getId(),
+                    cours.getRotationOffset());
+            /*System.out.println(
                     "ID=" + cours.getId()
                             + " frequence=" + cours.getFrequence()
                             + " rotationOffset=" + cours.getRotationOffset()
-            );
-            if (!cours.shouldOccurThisWeek(weekNumber)) {
+            );*/
+            boolean shouldCreate;
+
+            if (cours.getDependsOnCoursId() != null) {
+
+                CoursTP parent = tpRepository.findById(cours.getDependsOnCoursId())
+                        .orElse(null);
+
+                if (parent == null) continue;
+
+                shouldCreate = !parent.shouldOccurThisWeek(weekNumber);
+
+            } else {
+
+                shouldCreate = cours.shouldOccurThisWeek(weekNumber);
+            }
+
+            if (!shouldCreate) {
                 continue;
             }
             boolean exists = seanceRepository.existsByCoursTPAndDate(cours, today);

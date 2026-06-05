@@ -126,8 +126,14 @@ public class CoursTPService extends CoursTPUtilsService {
                         for (int j = 0; j < courses.size(); j++) {
 
                             CoursTP tp = buildTP(courses.get(j), dayRaw, start, end , timetable);
-                            tp.setRotationOffset(j); // 0,1 (plus logique que j+1)
+                           // tp.setRotationOffset(j);  0,1 (plus logique que j+1)
+                            int freq = tp.getFrequence();
 
+                            if (freq <= 0) {
+                                throw new IllegalArgumentException("frequence invalide");
+                            }
+
+                            tp.setRotationOffset(j % freq);
                             coursTPrepository.save(tp);
                             timetable.addCoursTP(tp);
                         }
