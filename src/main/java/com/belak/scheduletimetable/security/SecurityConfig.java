@@ -38,7 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("/login","/forgot","/firstlogin","/forgot-password",
                                 "/reset-password","/error","/reset-password/**","/css/**",
                                 "/js/**" , "/images/**" , "/icons/**").permitAll()
-                        .requestMatchers("/admin/**","/admin","/filiere/**","/filiere").hasRole("ADMIN")
+                        .requestMatchers("/admin/**","/admin","/filiere/**","/filiere","/error").hasRole("ADMIN")
                         .requestMatchers("/professor/**").hasRole("PROFESSOR")
                         .requestMatchers("/student/**","/api/**").hasAnyRole("STUDENT","ADMIN")
                         .requestMatchers("/admin/student/**","/api/**").hasAnyRole("STUDENT", "ADMIN")

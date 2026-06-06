@@ -37,5 +37,16 @@ public class GlobalExceptionHandler {
         return "redirect:/student/codeNotFound";
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleIllegalArgument(
+            IllegalArgumentException ex,
+            Model model) {
+
+        model.addAttribute("errorMessage", ex.getMessage());
+
+        return "student/exceptionError";
+    }
+
+
 
 }
