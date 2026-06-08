@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
@@ -30,6 +31,8 @@ public class Presence {
     @ManyToOne
     @JoinColumn(name = "seance_id")
     private Seance seance;
+
+    private LocalTime localTime;
 
     public boolean getPresent() {
         return present ;

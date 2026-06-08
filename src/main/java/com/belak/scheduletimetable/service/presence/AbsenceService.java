@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -42,6 +44,7 @@ public class AbsenceService {
         absence.setStudent(student);
         absence.setSeance(seance);
         absence.setPresent(false);
+        absence.setLocalTime(LocalTime.now(ZoneId.of("Africa/Tunis")));
         presenceRepository.save(absence);
     }
 }

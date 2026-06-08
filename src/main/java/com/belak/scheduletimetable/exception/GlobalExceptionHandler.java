@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.format.DateTimeFormatter;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -23,9 +25,9 @@ public class GlobalExceptionHandler {
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
         redirectAttributes.addFlashAttribute("intitule", ex.getIntitule());
         redirectAttributes.addFlashAttribute("salle", ex.getSalle());
-        redirectAttributes.addFlashAttribute("date", ex.getDate());
+        redirectAttributes.addFlashAttribute("date", ex.getDate().format(DateTimeFormatter.ISO_DATE));
         redirectAttributes.addFlashAttribute("dayOfWeek", ex.getDayOfWeek());
-
+        redirectAttributes.addFlashAttribute("registrationTime", ex.getTime().format(DateTimeFormatter.ISO_DATE));
         return "redirect:/student/alreadyRegistered";
     }
 

@@ -75,7 +75,11 @@ public class PresenceService {
             Presence presence = presenceRepository.findBySeanceIdAndStudentId(theSeance.getId(), theStudent.getId()).get();
             throw new PresenceAlreadyExistsException("Présence déjà enregistrée",presence.getSeance()
                     .getCoursTP().getIntitule(),
-                    presence.getSeance().getDate(),presence.getSeance().getCoursTP().getDayOfWeek() ,presence.getSeance().getCoursTP().getSalle().getCode());
+                    presence.getSeance().getDate(),
+                    presence.getSeance().getCoursTP().getDayOfWeek() ,
+                    presence.getLocalTime() ,
+                    presence.getSeance().getCoursTP().getSalle().getCode()
+            );
         }
         PresenceValidationDto presenceValidationDto = new PresenceValidationDto();
         presenceValidationDto.setCode(code);
@@ -83,11 +87,14 @@ public class PresenceService {
         presenceValidationDto.setGroup(theStudent.getGroup());
         presenceValidationDto.setIntitule(theCoursTP.getIntitule());
         presenceValidationDto.setDay(todayDay);
-        presenceValidationDto.setTime(LocalTime.now());
+        presenceValidationDto.setTime(LocalTime.now(ZoneId.of("Africa/Tunis")));
 
         Presence thePresence = new Presence();
         thePresence.setStudent(theStudent);
         thePresence.setPresent(true);
+        thePresence.setLocalTime(
+                LocalTime.now(ZoneId.of("Africa/Tunis"))
+        );
         theSeance.addPresence(thePresence);
 
         seanceRepository.save(theSeance);
