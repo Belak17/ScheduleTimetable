@@ -88,7 +88,6 @@ public class PresenceService {
         presenceValidationDto.setIntitule(theCoursTP.getIntitule());
         presenceValidationDto.setDay(todayDay);
         presenceValidationDto.setTime(LocalTime.now(ZoneId.of("Africa/Tunis")));
-
         Presence thePresence = new Presence();
         thePresence.setStudent(theStudent);
         thePresence.setPresent(true);
@@ -100,7 +99,6 @@ public class PresenceService {
         seanceRepository.save(theSeance);
 
         return presenceValidationDto ;
-
     }
     public Page<PresenceDto> getAbsencesByUserId(String userId , int page , int size )
     {

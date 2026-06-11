@@ -33,41 +33,53 @@
         </div>
         <div class="departments">
             <div class="departement">
-                <div class="dep-header">
-                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                    <h3>Mathématiques</h3>
-                </div>
+                <a th:href="@{/professors/professor/timetable/MAT}">
+                    <div class="dep-header">
+                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                        <h3>Mathématiques</h3>
+                    </div>
+                </a>
 
             </div>
             <div class="departement">
-                <div class="dep-header">
-                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                    <h3>Informatique</h3>
-                </div>
+                <a th:href="@{/professors/professor/timetable/INF}">
+                    <div class="dep-header">
+                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                        <h3>Informatique</h3>
+                    </div>
+                </a>
             </div>
             <div class="departement">
-                <div class="dep-header">
-                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                    <h3>Sciences de la vie</h3>
-                </div>
+                <a th:href="@{/professors/professor/timetable/SV}">
+                    <div class="dep-header">
+                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                        <h3>Sciences de la vie</h3>
+                    </div>
+                </a>
             </div>
             <div class="departement">
-                <div class="dep-header">
-                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                    <h3>Chimie</h3>
-                </div>
+                <a th:href="@{/professors/professor/timetable/CHI}">
+                    <div class="dep-header">
+                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                        <h3>Chimie</h3>
+                    </div>
+                </a>
             </div>
             <div class="departement">
-                <div class="dep-header">
-                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                    <h3>Physique</h3>
-                </div>
+                <a th:href="@{/professors/professor/timetable/PHY}">
+                    <div class="dep-header">
+                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                        <h3>Physique</h3>
+                    </div>
+                </a>
             </div>
             <div class="departement">
-                <div class="dep-header">
-                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                    <h3>Sciences de la terre</h3>
-                </div>
+                <a th:href="@{/professors/professor/timetable/ST}">
+                    <div class="dep-header">
+                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                        <h3>Sciences de la terre</h3>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
@@ -81,7 +93,7 @@
         <table th:if="${Professors != null and !Professors.content.isEmpty()}"
                bgcolor="lightgray"
                border="1"
-               rules="all">
+               rules="all" class="styled-table">
             <thead>
             <tr>
                 <th>Identifiant</th>

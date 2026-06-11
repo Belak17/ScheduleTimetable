@@ -48,34 +48,16 @@
         </thead>
         <tbody>
         <tr th:each="course : ${courses}">
-            <td th:text="${course.title}"></td>
+            <td>
+                <a th:href="@{/student/absences/{id}(id=${course.id})}"
+                   th:text="${course.title}"></a>
+            </td>
             <td th:text="${course.totalSeances}"></td>
             <td th:text="${course.absences}"></td>
             <td th:text="${course.presenceRate}"></td>
         </tr>
         </tbody>
     </table>
-    <div id="modal" class="modal">
-
-        <div class="modal-content">
-
-        <span class="close" onclick="closeModal()">
-            &times;
-        </span>
-
-            <h2>Administration Réseaux</h2>
-
-            <p>Liste des absences :</p>
-
-            <ul>
-                <li>12/03/2026</li>
-                <li>18/03/2026</li>
-                <li>25/03/2026</li>
-            </ul>
-
-        </div>
-
-    </div>
 </main>
 <script>
 

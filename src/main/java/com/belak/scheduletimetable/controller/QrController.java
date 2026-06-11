@@ -34,7 +34,7 @@ public class QrController {
                 + "&group=" + dto.getGroup()
                 + "&code=" + dto.getCode()
                 + "&date=" + dto.getDate().format(DateTimeFormatter.ISO_DATE)
-                + "&time=" + dto.getTime().format(DateTimeFormatter.ISO_TIME)
+                + "&time=" + dto.getTime().format(DateTimeFormatter.ofPattern("HH:mm"))
                 + "&day=" + dto.getDay();
     }
 }

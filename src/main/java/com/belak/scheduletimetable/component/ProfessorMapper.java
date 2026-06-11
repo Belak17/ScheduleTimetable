@@ -11,8 +11,8 @@ public class ProfessorMapper {
         return new ProfessorDto(professor.getUserId(),
                 professor.getNom()
                 ,professor.getPrenom(),
-                professor.getGrade().toString()
-                ,professor.getSchoolStatus().toString(),
+                professor.getGrade().getLibelle()
+                ,professor.getSchoolStatus().getLibelle(),
                 professor.getSpecialite());
     }
 }

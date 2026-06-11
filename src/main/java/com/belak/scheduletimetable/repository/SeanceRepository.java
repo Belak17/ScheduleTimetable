@@ -1,6 +1,7 @@
 package com.belak.scheduletimetable.repository;
 
 import com.belak.scheduletimetable.model.CoursTP;
+import com.belak.scheduletimetable.model.Presence;
 import com.belak.scheduletimetable.model.Seance;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +23,6 @@ public interface SeanceRepository extends JpaRepository<Seance,Long> {
     " WHERE seance.coursTP.fin < :now AND seance.absencesProcessed =  FALSE"
     )
     List<Seance> findByEndTimeBeforeAndAbsencesProcessedFalse(LocalTime now);
+
+    List<Seance> findByCoursTP(CoursTP coursTP);
 }

@@ -10,12 +10,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class OverviewCoursTPDto {
+    private  Long id;
     private  String title ;
     private  int absences ;
     private  int totalSeances ;
     private  float presenceRate ;
 
-    public OverviewCoursTPDto(String intitule, int totalAbsences, int totalSeances) {
+    public OverviewCoursTPDto(Long id , String intitule, int totalAbsences, int totalSeances) {
+        this.id = id;
         this.title=intitule;
         this.totalSeances= totalSeances;
         this.absences= totalAbsences;

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Absences</title>
+  <link rel="stylesheet" th:href="@{/css/style-student/style-student-absence.css}">
+  <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+</head>
+<body>
+<input type="checkbox" id="toggle-sidebar" />
+<header>
+  <div class="head-box">
+    <!-- Checkbox caché -->
+
+    <label for="toggle-sidebar">
+      <div  id="menu">
+
+        <img th:src="@{/images/menu-burger.png}">
+      </div>
+    </label>
+    <h2>Récapituatif des Absences </h2>
+  </div>
+</header>
+<section th:replace="student/student-dashboard :: sidebar">
+</section>
+<main class="center-wrapper">
+  <table class="styled-table" border="1" rules="all">
+    <thead>
+    <tr>
+      <th>
+        Date
+      </th>
+      <th>
+        Présence
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="absence : ${absencesList}">
+      <td th:text="${absence.presentDate}"></td>
+      <td th:text="${absence.presence}"></td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+<script>
+
+  function openModal()
+  {
+      document.getElementById("modal").style.display = "flex";
+  }
+
+  function closeModal()
+  {
+      document.getElementById("modal").style.display = "none";
+  }
+
+</script>
+</body>
+
+
+</html>

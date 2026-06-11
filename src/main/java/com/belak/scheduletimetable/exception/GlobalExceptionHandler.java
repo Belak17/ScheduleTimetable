@@ -25,7 +25,10 @@ public class GlobalExceptionHandler {
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
         redirectAttributes.addFlashAttribute("intitule", ex.getIntitule());
         redirectAttributes.addFlashAttribute("salle", ex.getSalle());
-        redirectAttributes.addFlashAttribute("date", ex.getDate().format(DateTimeFormatter.ISO_DATE));
+        redirectAttributes.addFlashAttribute(
+                "registrationTime",
+                ex.getTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+        );
         redirectAttributes.addFlashAttribute("dayOfWeek", ex.getDayOfWeek());
         redirectAttributes.addFlashAttribute("registrationTime", ex.getTime().format(DateTimeFormatter.ISO_DATE));
         return "redirect:/student/alreadyRegistered";

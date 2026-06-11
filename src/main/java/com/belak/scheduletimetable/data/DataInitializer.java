@@ -76,7 +76,7 @@ public class DataInitializer implements CommandLineRunner
             student.setEmail("akakpo@gmail.com");
             student.setNiveau(2);
             student.setFiliere(Filiere.LSI);
-            student.setGroup("A");
+            student.setGroup("TD1 TP1");
             student.setTypeDiplome(TypeDiplome.LICENCE);
             student.setDepartment(Departement.INF);
             studentRepository.save(student);
