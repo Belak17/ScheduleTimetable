@@ -1,5 +1,6 @@
 package com.belak.scheduletimetable.service.timetable.grouptimetable;
 
+import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.repository.StudentRepository;
@@ -14,23 +15,23 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 @Service
 @RequiredArgsConstructor
 public class TimetablePreviewService {
     private  final StudentRepository studentRepository ;
-    public byte[] getTimetablePreview(String userId) throws IOException {
+    public byte[] getTimetablePreview(String userId , Semester semester) throws IOException {
         Student student = studentRepository
                 .findByUserIdWithTimetable(userId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Etudiant non trouvé pour userId : " + userId)
                 );
-
-        if (student.getGroupTimetable() == null  ) {
-            throw new ResourceNotFoundException("Aucun emploi du temps associé au professeur");
-        }
-
-        byte[] pdfBytes = student.getGroupTimetable().getFileData();
-
+        byte[] pdfBytes =         student.getTimetables().stream()
+                .filter(t -> t.getSemester() == semester)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No timetable found for this semester ")).getFileData();
         if (pdfBytes == null || pdfBytes.length == 0) {
             throw new ResourceNotFoundException("Le fichier PDF est vide");
         }

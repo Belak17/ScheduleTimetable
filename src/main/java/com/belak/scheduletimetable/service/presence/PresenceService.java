@@ -3,6 +3,7 @@ package com.belak.scheduletimetable.service.presence;
 import com.belak.scheduletimetable.component.PresenceMapper;
 import com.belak.scheduletimetable.dto.PresenceDto;
 import com.belak.scheduletimetable.dto.PresenceValidationDto;
+import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.exception.CourseAndCodeNotFoundException;
 import com.belak.scheduletimetable.exception.ElementNotFoundException;
 import com.belak.scheduletimetable.exception.PresenceAlreadyExistsException;
@@ -54,7 +55,12 @@ public class PresenceService {
         code = code.trim();
         Student theStudent = student.get();
         Optional<CoursTP> optionalCoursTP= tpRepository
-                .findValidCours(code,theStudent.getGroupTimetable().getId(),todayDay,now);
+                .findValidCours(code,theStudent.getTimetables()
+                        .stream()
+                        .filter(t -> t.getSemester() == Semester.fromDate(LocalDate.now(ZoneId.of("Africa/Tunis"))))
+                        .findFirst()
+                        .orElseThrow(() -> new RuntimeException("No timetable found for this semester "))
+                        .getId(),todayDay,now);
         if (optionalCoursTP.isEmpty())
         {
             throw new CourseAndCodeNotFoundException("Cours Non disponible ",code);

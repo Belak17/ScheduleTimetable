@@ -2,6 +2,7 @@ package com.belak.scheduletimetable.service.student;
 
 import com.belak.scheduletimetable.dto.AbsenceOverviewDto;
 import com.belak.scheduletimetable.dto.OverviewCoursTPDto;
+import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.CoursTP;
 import com.belak.scheduletimetable.model.Seance;
@@ -14,6 +15,8 @@ import com.belak.scheduletimetable.service.presence.PresenceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +32,12 @@ public class StudentPresenceService {
     {
         Student student = studentRepository.findByUserId(userId)
                 .orElseThrow(() ->new ResourceNotFoundException("Etudiant Non trouvé"));
-        if (student.getGroupTimetable()!=null)
-        {
-            return student.getGroupTimetable().getCoursTPList();
-        }
-        return  List.of();
+
+        return  student.getTimetables().stream()
+                .filter(t -> t.getSemester() == Semester.fromDate(LocalDate.now(ZoneId.of("Africa/Tunis"))))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No  timetable found for thi semester ")).getCoursTPList();
+        //return student.getGroupTimetable().getCoursTPList();
     }
     public boolean isPresent(Student student, Seance seance) {
         return presenceRepository.existsByStudentIdAndSeanceIdAndPresentTrue(student.getId(), seance.getId());
@@ -62,14 +66,15 @@ public class StudentPresenceService {
                 .toList();
     }
 
-    public List<OverviewCoursTPDto> getAllStudentOverviewByUserId(String userId)
+    public List<OverviewCoursTPDto> getAllStudentOverviewByUserId(String userId , Semester semester)
     {
         Student student = studentRepository.findByUserId(userId)
                 .orElseThrow(() ->new ResourceNotFoundException("Etudiant Non trouvé"));
         return getCoursTPByUserId(student.getUserId())
-                .stream()
-                .map(coursTP -> getOverviewByUserIdAndCoursTP(coursTP,student))
-                .toList();
+            .stream()
+            .filter(c -> c.getGroupTimetable().getSemester() == semester)
+            .map(c -> getOverviewByUserIdAndCoursTP(c, student))
+            .toList();
     }
 
     public OverviewCoursTPDto getOverviewByUserIdAndCoursTP(CoursTP coursTP , Student student)

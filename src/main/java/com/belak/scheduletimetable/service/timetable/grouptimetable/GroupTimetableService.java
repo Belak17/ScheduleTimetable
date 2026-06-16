@@ -4,6 +4,7 @@ import com.belak.scheduletimetable.dto.GroupTimetableDto;
 import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.enumeration.Filiere;
 
+import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.exception.InvalidExcelFormatException;
 
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
@@ -31,6 +32,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.text.Normalizer;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -168,22 +171,23 @@ public class GroupTimetableService extends TimetableService {
                 .filiere(Filiere.fromCode(info.getField()))
                 .group(info.getGroup())
                 .build();
-
+        entity.setSemester(Semester.fromDate(LocalDate.now(ZoneId.of("Africa/Tunis"))));
         List<Student> students = studentRepository.findByDepartmentAndFiliereAndNiveauAndGroup(
                 Departement.fromLibelle(info.getDepname()),
                 Filiere.fromCode(info.getField()),
                 info.getYear(),
                 info.getGroup()
         );
-
+        Semester semester = entity.getSemester();
         for (Student student : students) {
+
+            student.getTimetables().removeIf(t ->
+                    t.getSemester() == semester
+            );
             entity.addStudent(student);
         }
-
        return groupTimetableRepository.save(entity);
     }
-
-
 
     public Page<GroupTimetableDto> getGroupTimetables(int page , int size)
     {

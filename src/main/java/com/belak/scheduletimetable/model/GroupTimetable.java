@@ -2,11 +2,14 @@ package com.belak.scheduletimetable.model;
 
 import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.enumeration.Filiere;
+import com.belak.scheduletimetable.enumeration.Semester;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -34,21 +37,29 @@ public class GroupTimetable {
     private Integer niveau;
     @Column(name = "group_name")
     private String group;
-
+    @Column(name = "semester")
+    @Enumerated(EnumType.STRING)
+    private Semester semester ;
     @Column(name = "position_index")
     private int position;
     private String filename ;
     private String contentType ;
     @Column(name = "data")
     private byte[] fileData;
-    @OneToMany(mappedBy = "groupTimetable" , fetch = FetchType.LAZY)
-    private List<Student> students = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "student_timetable",
+            joinColumns = @JoinColumn(name = "timetable_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private Set<Student> students = new HashSet<>();
     public void addStudent(Student student){
         if (students == null) {
-            students = new ArrayList<>();
+            students = new HashSet<>();
         }
         students.add(student);
-        student.setGroupTimetable(this);
+        student.getTimetables().add(this);
     }
 
     @OneToMany(mappedBy = "groupTimetable" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)

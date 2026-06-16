@@ -5,6 +5,7 @@ import com.belak.scheduletimetable.request.UpdateRequest;
 import com.belak.scheduletimetable.service.professor.ProfessorExcelService;
 import com.belak.scheduletimetable.service.professor.ProfessorService;
 import com.belak.scheduletimetable.service.timetable.grouptimetable.TimetablePreviewService;
+import com.belak.scheduletimetable.service.timetable.professortimetable.ProfessorPreviewService;
 import com.belak.scheduletimetable.service.timetable.professortimetable.ProfessorTimetableService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.dialect.function.PostgreSQLTruncRoundFunction;
@@ -24,7 +25,7 @@ import com.belak.scheduletimetable.enumeration.Departement;
 @RequestMapping("/professors")
 @RequiredArgsConstructor
 public class ProfessorApiController {
-    private final TimetablePreviewService timetablePreviewService ;
+    private final ProfessorPreviewService timetablePreviewService ;
     private  final ProfessorService professorService ;
     private  final ProfessorExcelService professorExcelService ;
     @GetMapping("/professor/timetable/{departement}")
@@ -59,6 +60,7 @@ public class ProfessorApiController {
 
     @GetMapping("/preview/{userId}")
     public ResponseEntity<byte[]> getPreview(@PathVariable String userId ) throws IOException {
+
 
         byte[] image = timetablePreviewService
                 .getTimetablePreview(userId);

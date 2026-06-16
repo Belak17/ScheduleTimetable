@@ -185,7 +185,7 @@ public class CoursTPService extends CoursTPUtilsService {
                         .toList()
         );
         List<Student> students =
-                tp.getGroupTimetable().getStudents();
+                tp.getGroupTimetable().getStudents().stream().toList();
         int start = page * size;
         int end = Math.min(start + size, students.size());
         List<Student> paginatedStudents =

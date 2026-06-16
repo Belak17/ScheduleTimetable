@@ -2,6 +2,7 @@ package com.belak.scheduletimetable.controller;
 
 import com.belak.scheduletimetable.dto.PresenceValidationDto;
 import com.belak.scheduletimetable.dto.StudentProfileDto;
+import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.response.LoginResponse;
 import com.belak.scheduletimetable.service.student.StudentPresenceService;
@@ -57,10 +58,12 @@ public class StudentController {
     }
 
     @GetMapping("/timetable/preview")
-    public ResponseEntity<byte[]> getPreview(Authentication authentication) throws IOException {
+    public ResponseEntity<byte[]> getPreview(Authentication authentication  , @RequestParam(required = false) Semester semester ) throws IOException {
 
+        Semester effectiveSemester =
+                (semester != null) ? semester : Semester.fromDate(LocalDate.now());
         byte[] image = preview
-                .getTimetablePreview(authentication.getName());
+                .getTimetablePreview(authentication.getName(), effectiveSemester);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)
@@ -68,9 +71,12 @@ public class StudentController {
     }
 
     @GetMapping("/absences")
-    public String getAllAbsencesByStudent(Authentication authentication  , Model model)
+    public String getAllAbsencesByStudent(
+            @RequestParam(required = false) Semester semester, Authentication authentication  , Model model)
     {
-         model.addAttribute("courses",studentPresenceService.getAllStudentOverviewByUserId(authentication.getName()));
+        Semester effectiveSemester =
+                (semester != null) ? semester : Semester.fromDate(LocalDate.now());
+         model.addAttribute("courses",studentPresenceService.getAllStudentOverviewByUserId(authentication.getName(),effectiveSemester));
         return "student/student-absence.html";
     }
 

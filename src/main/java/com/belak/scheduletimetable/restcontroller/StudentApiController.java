@@ -2,6 +2,7 @@ package com.belak.scheduletimetable.restcontroller;
 
 import com.belak.scheduletimetable.dto.StudentDto;
 import com.belak.scheduletimetable.enumeration.Filiere;
+import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.service.student.StudentExcelService;
 import com.belak.scheduletimetable.service.student.StudentService;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 @Controller
 @RequiredArgsConstructor
@@ -44,10 +46,12 @@ public class StudentApiController {
     }
 
     @GetMapping("/preview/{userId}")
-    public ResponseEntity<byte[]> getPreview(@PathVariable String userId ) throws IOException {
+    public ResponseEntity<byte[]> getPreview(@PathVariable String userId , @RequestParam(required = false) Semester semester ) throws IOException {
 
+        Semester effectiveSemester =
+                (semester != null) ? semester : Semester.fromDate(LocalDate.now());
         byte[] image = preview
-                .getTimetablePreview(userId);
+                .getTimetablePreview(userId ,effectiveSemester);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)

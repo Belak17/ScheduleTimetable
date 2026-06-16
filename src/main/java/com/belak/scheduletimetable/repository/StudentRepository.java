@@ -26,15 +26,15 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
 
     @Query("""
 SELECT s FROM Student s
-LEFT JOIN FETCH s.groupTimetable
+LEFT JOIN FETCH s.timetables t
 WHERE s.userId = :userId
 """)
-    Optional<Student> findByUserIdWithTimetable(@Param("userId")String userId);
+    Optional<Student> findByUserIdWithTimetable(@Param("userId") String userId);
 
     void deleteByUserId(String userId);
 
-    @Query("SELECT s FROM Student s WHERE s.groupTimetable.id = :groupId")
-    List<Student> findByGroupId(Long groupId);
+    @Query("SELECT s FROM Student s JOIN s.timetables t WHERE t.id = :timetableId")
+    List<Student> findByGroupId(@Param("timetableId") Long groupId);
 
 
 }
