@@ -50,8 +50,14 @@
         <span>Veuillez contacter le webmaster s'il s'agit de votre salle</span>
       </p>
 
-    </div>
 
+    </div>
+    <form th:action="@{/api/qr/change/salle}" method="post">
+      <input type="hidden" name="code" th:value="${code}">
+      <button type="submit" class="btn-room-change">
+        J'ai changé de salle
+      </button>
+    </form>
   </section>
 </main>
 

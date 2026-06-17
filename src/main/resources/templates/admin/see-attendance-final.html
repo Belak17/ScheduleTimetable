@@ -35,7 +35,12 @@
             </thead>
             <tbody>
             <tr th:each="row:${attendanceTable.rows}">
-                <td th:text="${row.studentName}"></td>
+
+                <td>
+                    <a th:href="@{/absence/{id}(id=${row.id})}"
+                       th:text="${row.studentName}">
+                    </a>
+                </td>
                 <td th:each="status:${row.statuses}"
                     th:text="${status}">
                 </td>

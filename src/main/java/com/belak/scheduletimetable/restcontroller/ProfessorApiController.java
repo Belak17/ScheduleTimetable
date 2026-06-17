@@ -31,45 +31,34 @@ public class ProfessorApiController {
     @GetMapping("/professor/timetable/{departement}")
     public String showProfessorTimetables(
             @PathVariable String departement ,
-
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Model model
     ) {
         Page<ProfessorDto> professors =
                 professorService.getAllProfessorByDepartment(page, size, Departement.valueOf(departement));
-
         model.addAttribute("Professors", professors);
         model.addAttribute("selectedDepartment", departement);
         return "/admin/see-all-professor-timetable";
     }
-
     @GetMapping("/professor/timetable")
     public String showProfessorTimetables(
-
-
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Model model
-    ) {
-
-
+    )
+    {
         model.addAttribute("Professors", null);
         return "/admin/see-all-professor-timetable";
     }
-
     @GetMapping("/preview/{userId}")
     public ResponseEntity<byte[]> getPreview(@PathVariable String userId ) throws IOException {
-
-
         byte[] image = timetablePreviewService
                 .getTimetablePreview(userId);
-
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)
                 .body(image);
     }
-
     @PostMapping("/import")
     public String uploadProfessors(@RequestParam("excelFile") MultipartFile file ,
                                  Model model ,
@@ -81,7 +70,6 @@ public class ProfessorApiController {
         }
         return "admin/upload-users.html";
     }
-
     @PutMapping("/update")
     public  String updateProfessorPassword(@ModelAttribute UpdateRequest request)
     {

@@ -116,4 +116,72 @@ public class PresenceService {
                 );
         return  presenceRepository.findByStudentAndPresentFalse(student,pageable).map(presenceMapper::convertPresencetoDto);
     }
+
+    public PresenceValidationDto createPresenceWithoutCode(String userId , String code)
+    {
+        LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
+        LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
+        Optional<Student> student = studentRepository.findByUserId(userId);
+        String todayDay = today
+                .getDayOfWeek()
+                .getDisplayName(TextStyle.FULL, Locale.FRANCE);
+
+        todayDay = todayDay.substring(0, 1).toUpperCase() + todayDay.substring(1);
+        if (student.isEmpty())
+        {
+            throw  new ResourceNotFoundException("Cet etudiant n'est pas enregistre dans la faculte");
+        }
+        Student theStudent = student.get();
+        Optional<CoursTP> optionalCoursTP= tpRepository
+                .findCurrentCours(theStudent.getTimetables()
+                        .stream()
+                        .filter(t -> t.getSemester() == Semester.fromDate(LocalDate.now(ZoneId.of("Africa/Tunis"))))
+                        .findFirst()
+                        .orElseThrow(() -> new RuntimeException("No timetable found for this semester "))
+                        .getId(),todayDay,now);
+        if (optionalCoursTP.isEmpty())
+        {
+            throw new CourseAndCodeNotFoundException("Cours Non disponible ",code);
+        }
+        CoursTP theCoursTP = optionalCoursTP.get();
+
+        Optional<Seance> optionalSeance = seanceRepository.findByCoursTPIdAndDate(theCoursTP.getId(), today);
+        if (optionalSeance.isEmpty())
+        {
+            throw new ElementNotFoundException("Seance Non disponible");
+        }
+        Seance theSeance = optionalSeance.get();
+        boolean exists = presenceRepository.existsBySeanceIdAndStudentId(
+                theSeance.getId(),
+                theStudent.getId()
+        );
+        if (exists) {
+            Presence presence = presenceRepository.findBySeanceIdAndStudentId(theSeance.getId(), theStudent.getId()).get();
+            throw new PresenceAlreadyExistsException("Présence déjà enregistrée",presence.getSeance()
+                    .getCoursTP().getIntitule(),
+                    presence.getSeance().getDate(),
+                    presence.getSeance().getCoursTP().getDayOfWeek() ,
+                    presence.getLocalTime() ,
+                    presence.getSeance().getCoursTP().getSalle().getCode()
+            );
+        }
+        PresenceValidationDto presenceValidationDto = new PresenceValidationDto();
+        presenceValidationDto.setCode(code);
+        presenceValidationDto.setDate(LocalDate.now());
+        presenceValidationDto.setGroup(theStudent.getGroup());
+        presenceValidationDto.setIntitule(theCoursTP.getIntitule());
+        presenceValidationDto.setDay(todayDay);
+        presenceValidationDto.setTime(LocalTime.now(ZoneId.of("Africa/Tunis")));
+        Presence thePresence = new Presence();
+        thePresence.setStudent(theStudent);
+        thePresence.setPresent(true);
+        thePresence.setLocalTime(
+                LocalTime.now(ZoneId.of("Africa/Tunis"))
+        );
+        theSeance.addPresence(thePresence);
+
+        seanceRepository.save(theSeance);
+
+        return presenceValidationDto ;
+    }
 }

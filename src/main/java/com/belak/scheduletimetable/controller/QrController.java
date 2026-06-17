@@ -17,9 +17,7 @@ import java.util.Map;
 @RequestMapping("/api/qr")
 @RequiredArgsConstructor
 public class QrController {
-
     private final PresenceService presenceService;
-
     @GetMapping("/scan")
     public String scanQr(@RequestParam String code,
                          Authentication authentication) {
@@ -27,6 +25,20 @@ public class QrController {
         PresenceValidationDto dto = presenceService.createPresence(
                 authentication.getName(),
                 code
+        );
+        return "redirect:/student/validation"
+                + "?intitule=" + dto.getIntitule()
+                + "&group=" + dto.getGroup()
+                + "&code=" + dto.getCode()
+                + "&date=" + dto.getDate().format(DateTimeFormatter.ISO_DATE)
+                + "&time=" + dto.getTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                + "&day=" + dto.getDay();
+    }
+    @PostMapping("/change/salle")
+    public String changeSalle(Authentication authentication , @RequestParam String code)
+    {
+        PresenceValidationDto dto = presenceService.createPresenceWithoutCode(
+                authentication.getName(), code
         );
 
         return "redirect:/student/validation"

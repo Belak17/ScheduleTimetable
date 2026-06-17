@@ -199,6 +199,7 @@ public class CoursTPService extends CoursTPUtilsService {
             studentAttendanceDto.setStudentName(
                     student.getNom() + " " + student.getPrenom()
             );
+            studentAttendanceDto.setId(student.getUserId());
 
             for (Seance seance : sortedSeances) {
 

@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 public class StudentAttendanceDto {
 
+    private  String id ;
     private String studentName;
 
     private List<String> statuses;

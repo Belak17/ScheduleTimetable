@@ -5,6 +5,7 @@ import com.belak.scheduletimetable.dto.StudentProfileDto;
 import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.response.LoginResponse;
+import com.belak.scheduletimetable.service.presence.PresenceService;
 import com.belak.scheduletimetable.service.student.StudentPresenceService;
 import com.belak.scheduletimetable.service.student.StudentService;
 import com.belak.scheduletimetable.service.timetable.grouptimetable.TimetablePreviewService;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/student")
@@ -32,6 +34,7 @@ public class StudentController {
     private final UserService userService ;
     private  final TimetablePreviewService preview ;
     private  final StudentPresenceService studentPresenceService ;
+    private  final PresenceService presenceService ;
     @GetMapping("/dashboard")
     public String showStudentDashboard(Model model ,
                                        HttpSession session , Authentication authentication )
@@ -191,4 +194,7 @@ public class StudentController {
     public String CodeErrorPage() {
         return "student/codeError";
     }
+
+
+
 }

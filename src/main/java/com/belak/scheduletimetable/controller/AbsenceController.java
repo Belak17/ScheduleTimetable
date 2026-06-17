@@ -1,7 +1,10 @@
 package com.belak.scheduletimetable.controller;
 
+import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.service.courstp.CoursTPService;
+import com.belak.scheduletimetable.service.student.StudentPresenceService;
 import com.belak.scheduletimetable.service.timetable.grouptimetable.GroupTimetableService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/absence")
 public class AbsenceController {
     private  final GroupTimetableService groupTimetableService ;
     private  final CoursTPService tpService ;
+    private  final StudentPresenceService studentPresenceService ;
     @GetMapping("/{departement}/{filiere}/{niveau}")
     public String showGroup(
             @PathVariable String departement,
@@ -58,5 +64,15 @@ public class AbsenceController {
         model.addAttribute("currentPage", page);
         model.addAttribute("size", size);
         return "/admin/see-attendance-final";
+    }
+
+    @GetMapping("/{id}")
+    public String getAllAbsencesByStudent(
+            @RequestParam(required = false) Semester semester, Model model, @PathVariable String id, HttpSession session)
+    {
+        Semester effectiveSemester =
+                (semester != null) ? semester : Semester.fromDate(LocalDate.now());
+        model.addAttribute("courses",studentPresenceService.getAllStudentOverviewByUserId(id,effectiveSemester));
+        return "student/student-absence.html";
     }
 }
