@@ -16,6 +16,7 @@ import com.belak.scheduletimetable.repository.CoursTPRepository;
 import com.belak.scheduletimetable.repository.PresenceRepository;
 import com.belak.scheduletimetable.repository.SeanceRepository;
 import com.belak.scheduletimetable.repository.StudentRepository;
+import com.belak.scheduletimetable.service.student.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,23 +38,19 @@ public class PresenceService {
     private  final CoursTPRepository tpRepository ;
     private  final SeanceRepository seanceRepository ;
     private  final PresenceMapper presenceMapper ;
+    private  final StudentService studentService ;
 
     public PresenceValidationDto createPresence(String userId , String code)
     {
         LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
         LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
-        Optional<Student> student = studentRepository.findByUserId(userId);
+        Student theStudent = studentService.findStudentByUserId(userId);
         String todayDay = today
                 .getDayOfWeek()
                 .getDisplayName(TextStyle.FULL, Locale.FRANCE);
 
         todayDay = todayDay.substring(0, 1).toUpperCase() + todayDay.substring(1);
-        if (student.isEmpty())
-        {
-            throw  new ResourceNotFoundException("Cet etudiant n'est pas enregistre dans la faculte");
-        }
         code = code.trim();
-        Student theStudent = student.get();
         Optional<CoursTP> optionalCoursTP= tpRepository
                 .findValidCours(code,theStudent.getTimetables()
                         .stream()
@@ -87,13 +84,7 @@ public class PresenceService {
                     presence.getSeance().getCoursTP().getSalle().getCode()
             );
         }
-        PresenceValidationDto presenceValidationDto = new PresenceValidationDto();
-        presenceValidationDto.setCode(code);
-        presenceValidationDto.setDate(LocalDate.now());
-        presenceValidationDto.setGroup(theStudent.getGroup());
-        presenceValidationDto.setIntitule(theCoursTP.getIntitule());
-        presenceValidationDto.setDay(todayDay);
-        presenceValidationDto.setTime(LocalTime.now(ZoneId.of("Africa/Tunis")));
+
         Presence thePresence = new Presence();
         thePresence.setStudent(theStudent);
         thePresence.setPresent(true);
@@ -104,7 +95,7 @@ public class PresenceService {
 
         seanceRepository.save(theSeance);
 
-        return presenceValidationDto ;
+        return validatePresence(code, theStudent.getGroup(), theCoursTP.getIntitule(), todayDay) ;
     }
     public Page<PresenceDto> getAbsencesByUserId(String userId , int page , int size )
     {
@@ -165,13 +156,6 @@ public class PresenceService {
                     presence.getSeance().getCoursTP().getSalle().getCode()
             );
         }
-        PresenceValidationDto presenceValidationDto = new PresenceValidationDto();
-        presenceValidationDto.setCode(code);
-        presenceValidationDto.setDate(LocalDate.now());
-        presenceValidationDto.setGroup(theStudent.getGroup());
-        presenceValidationDto.setIntitule(theCoursTP.getIntitule());
-        presenceValidationDto.setDay(todayDay);
-        presenceValidationDto.setTime(LocalTime.now(ZoneId.of("Africa/Tunis")));
         Presence thePresence = new Presence();
         thePresence.setStudent(theStudent);
         thePresence.setPresent(true);
@@ -182,6 +166,21 @@ public class PresenceService {
 
         seanceRepository.save(theSeance);
 
-        return presenceValidationDto ;
+        return validatePresence(code, theStudent.getGroup(), theCoursTP.getIntitule(), todayDay) ;
     }
+
+    public PresenceValidationDto validatePresence(String code, String group ,
+                                                  String intitule, String day)
+    {
+        PresenceValidationDto presenceValidationDto = new PresenceValidationDto();
+        presenceValidationDto.setCode(code);
+        presenceValidationDto.setDate(LocalDate.now());
+        presenceValidationDto.setGroup(group);
+        presenceValidationDto.setIntitule(intitule);
+        presenceValidationDto.setDay(day);
+        presenceValidationDto.setTime(LocalTime.now(ZoneId.of("Africa/Tunis")));
+        return presenceValidationDto;
+    }
+
+
 }

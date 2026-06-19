@@ -2,6 +2,7 @@ package com.belak.scheduletimetable.controller;
 
 import com.belak.scheduletimetable.dto.*;
 import com.belak.scheduletimetable.response.LoginResponse;
+import com.belak.scheduletimetable.service.professor.ProfessorInterfaceService;
 import com.belak.scheduletimetable.service.professor.ProfessorService;
 import com.belak.scheduletimetable.service.timetable.professortimetable.ProfessorPreviewService;
 import com.belak.scheduletimetable.service.user.UserService;
@@ -24,7 +25,7 @@ import java.io.IOException;
 public class ProfessorController {
     private final ProfessorPreviewService professorPreviewService;
     private  final UserService userService ;
-    private  final ProfessorService professorService ;
+    private  final ProfessorInterfaceService professorService ;
     @GetMapping("/dashboard")
     public String showProfessorDashboard( Model model
             , HttpSession session ,Authentication authentication)

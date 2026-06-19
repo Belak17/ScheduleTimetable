@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
                 ex.getTime().format(DateTimeFormatter.ofPattern("HH:mm"))
         );
         redirectAttributes.addFlashAttribute("dayOfWeek", ex.getDayOfWeek());
-        redirectAttributes.addFlashAttribute("registrationTime", ex.getTime().format(DateTimeFormatter.ISO_DATE));
+        redirectAttributes.addFlashAttribute("date", ex.getDate().format(DateTimeFormatter.ISO_DATE));
         return "redirect:/student/alreadyRegistered";
     }
 

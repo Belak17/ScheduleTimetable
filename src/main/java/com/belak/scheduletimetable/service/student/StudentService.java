@@ -29,12 +29,13 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
 @RequiredArgsConstructor
-public class StudentService {
-    private  final StudentRepository studentRepository ;
+public class StudentService implements  StudentInterfaceService {
+    private  final StudentRepository studentRepository;
     private  final StudentMapper studentMapper ;
     private  final PresenceRepository presenceRepository ;
     private  final StudentProfileMapper profileMapper ;
@@ -65,7 +66,7 @@ public class StudentService {
         }
 
         Student student = studentRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Étudiant introuvable"));
+                .orElseThrow(() -> new ResourceNotFoundException("Étudiant introuvable"));
 
         student.setEmail(nouvEmail);
         studentRepository.save(student);
@@ -73,7 +74,7 @@ public class StudentService {
 
     public void updateInfo(String userId, String address, String telephone, String code) {
         Student student = studentRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Étudiant introuvable"));
+                .orElseThrow(() -> new ResourceNotFoundException("Étudiant introuvable"));
         student.setUserId(userId);
         student.setAdresse(address);
         student.setTelephone(telephone);
@@ -87,7 +88,7 @@ public class StudentService {
                                String userId) {
 
         Student student = studentRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Étudiant introuvable"));
+                .orElseThrow(() -> new ResourceNotFoundException("Étudiant introuvable"));
 
         if (!passwordEncoder.matches(oldPassword, student.getPassword())) {
             throw new IllegalArgumentException("Ancien mot de passe incorrect");
@@ -99,5 +100,17 @@ public class StudentService {
 
         student.setPassword(passwordEncoder.encode(newPassword));
         studentRepository.save(student);
+    }
+
+    public Student findStudentByUserId(String userId)
+    {
+        Optional<Student> student = studentRepository.findByUserId(userId);
+
+        if (student.isEmpty())
+        {
+            throw  new ResourceNotFoundException("Cet etudiant n'est pas enregistre dans la faculte");
+        }
+
+        return student.get() ;
     }
 }

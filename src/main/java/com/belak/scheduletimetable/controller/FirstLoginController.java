@@ -2,6 +2,7 @@ package com.belak.scheduletimetable.controller;
 
 import com.belak.scheduletimetable.request.UserRegister;
 import com.belak.scheduletimetable.service.reset.ForgotPasswordService;
+import com.belak.scheduletimetable.service.user.UserRegisterInterfaceService;
 import com.belak.scheduletimetable.service.user.UserRegisterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class FirstLoginController {
     private  final ForgotPasswordService forgotPasswordService ;
-    private  final UserRegisterService userRegisterService ;
+    private  final UserRegisterInterfaceService userRegisterService ;
     @GetMapping("/firstlogin")
     public String showLogin( Model model)
     {

@@ -2,6 +2,7 @@ package com.belak.scheduletimetable.controller;
 
 import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.service.courstp.CoursTPService;
+import com.belak.scheduletimetable.service.student.StudentPresenceInterfaceService;
 import com.belak.scheduletimetable.service.student.StudentPresenceService;
 import com.belak.scheduletimetable.service.timetable.grouptimetable.GroupTimetableService;
 import jakarta.servlet.http.HttpSession;
@@ -21,7 +22,7 @@ import java.time.LocalDate;
 public class AbsenceController {
     private  final GroupTimetableService groupTimetableService ;
     private  final CoursTPService tpService ;
-    private  final StudentPresenceService studentPresenceService ;
+    private  final StudentPresenceInterfaceService studentPresenceService ;
     @GetMapping("/{departement}/{filiere}/{niveau}")
     public String showGroup(
             @PathVariable String departement,
@@ -65,7 +66,6 @@ public class AbsenceController {
         model.addAttribute("size", size);
         return "/admin/see-attendance-final";
     }
-
     @GetMapping("/{id}")
     public String getAllAbsencesByStudent(
             @RequestParam(required = false) Semester semester, Model model, @PathVariable String id, HttpSession session)

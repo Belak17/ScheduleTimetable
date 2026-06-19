@@ -42,7 +42,7 @@ import java.util.List;
 
 @Service
  @RequiredArgsConstructor
-public class ProfessorService  {
+public class ProfessorService implements  ProfessorInterfaceService  {
     private  final ProfessorRepository professorRepository ;
     private  final PasswordEncoder passwordEncoder ;
     private  final UtilsService utilsService ;

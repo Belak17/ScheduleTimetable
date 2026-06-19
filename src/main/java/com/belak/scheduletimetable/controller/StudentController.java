@@ -6,6 +6,8 @@ import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.response.LoginResponse;
 import com.belak.scheduletimetable.service.presence.PresenceService;
+import com.belak.scheduletimetable.service.student.StudentInterfaceService;
+import com.belak.scheduletimetable.service.student.StudentPresenceInterfaceService;
 import com.belak.scheduletimetable.service.student.StudentPresenceService;
 import com.belak.scheduletimetable.service.student.StudentService;
 import com.belak.scheduletimetable.service.timetable.grouptimetable.TimetablePreviewService;
@@ -30,10 +32,10 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping("/student")
 @RequiredArgsConstructor
 public class StudentController {
-    private final StudentService studentService ;
+    private final StudentInterfaceService studentService ;
     private final UserService userService ;
     private  final TimetablePreviewService preview ;
-    private  final StudentPresenceService studentPresenceService ;
+    private  final StudentPresenceInterfaceService studentPresenceService ;
     private  final PresenceService presenceService ;
     @GetMapping("/dashboard")
     public String showStudentDashboard(Model model ,

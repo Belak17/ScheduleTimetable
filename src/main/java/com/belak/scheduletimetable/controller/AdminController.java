@@ -3,6 +3,7 @@ package com.belak.scheduletimetable.controller;
 import com.belak.scheduletimetable.dto.AdminProfileDto;
 import com.belak.scheduletimetable.dto.StudentProfileDto;
 import com.belak.scheduletimetable.response.LoginResponse;
+import com.belak.scheduletimetable.service.admin.AdminInterfaceService;
 import com.belak.scheduletimetable.service.admin.AdminService;
 import com.belak.scheduletimetable.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/admin")
 @RequiredArgsConstructor
 public class AdminController {
-    private final AdminService adminService;
+    private final AdminInterfaceService adminService;
     private  final UserService userService ;
     @GetMapping("/dashboard")
     public String showAdminDashboard(Authentication authentication , Model model , RedirectAttributes redirectAttributes) {

@@ -8,7 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -41,12 +44,18 @@ public class QrController {
                 authentication.getName(), code
         );
 
-        return "redirect:/student/validation"
-                + "?intitule=" + dto.getIntitule()
-                + "&group=" + dto.getGroup()
-                + "&code=" + dto.getCode()
-                + "&date=" + dto.getDate().format(DateTimeFormatter.ISO_DATE)
-                + "&time=" + dto.getTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-                + "&day=" + dto.getDay();
+        String url = UriComponentsBuilder
+                .fromPath("/student/validation")
+                .queryParam("intitule", dto.getIntitule())
+                .queryParam("group", dto.getGroup())
+                .queryParam("code", dto.getCode())
+                .queryParam("date", dto.getDate().format(DateTimeFormatter.ISO_DATE))
+                .queryParam("time", dto.getTime().format(DateTimeFormatter.ofPattern("HH:mm")))
+                .queryParam("day", dto.getDay())
+                .build()
+                .encode(StandardCharsets.UTF_8)
+                .toUriString();
+
+        return "redirect:" + url;
     }
 }
