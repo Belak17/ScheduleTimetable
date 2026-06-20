@@ -28,6 +28,7 @@ public class ProfessorPreviewService {
                     new ResourceNotFoundException("Professor non trouvé pour userId : " + userId)
             );
 
+
     if (professor.getTimetable() == null  ) {
         throw new ResourceNotFoundException("Aucun emploi du temps associé au professeur");
     }
