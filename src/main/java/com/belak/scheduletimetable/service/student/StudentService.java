@@ -3,10 +3,7 @@ package com.belak.scheduletimetable.service.student;
 import com.belak.scheduletimetable.component.PresenceMapper;
 import com.belak.scheduletimetable.component.StudentMapper;
 import com.belak.scheduletimetable.component.StudentProfileMapper;
-import com.belak.scheduletimetable.dto.CreateStudentDto;
-import com.belak.scheduletimetable.dto.PresenceDto;
-import com.belak.scheduletimetable.dto.StudentDto;
-import com.belak.scheduletimetable.dto.StudentProfileDto;
+import com.belak.scheduletimetable.dto.*;
 import com.belak.scheduletimetable.enumeration.Filiere;
 
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
@@ -45,8 +42,12 @@ public class StudentService implements  StudentInterfaceService {
         Pageable pageable = PageRequest.of(page, size);
         return studentRepository.findByFiliereAndNiveauAndGroup(Filiere.valueOf(field), year,group,pageable).map(studentMapper::convertToDto);
     }
-    public void saveStudent(CreateStudentDto studentDto)
+    public void saveStudent(StudentImportDto studentDto)
     {
+        if (studentRepository.findByUserId(studentDto.getUserId()).isPresent())
+        {
+            throw new ResourceNotFoundException("Student already exists");
+        }
         Student student = new Student(studentDto);
         studentRepository.save(student);
     }

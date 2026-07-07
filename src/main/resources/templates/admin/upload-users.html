@@ -47,6 +47,7 @@
             <span class="upload-message">Fichier chargé avec succès !</span>
             <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
             <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
         </form>
 
         <form method="post" th:action="@{/students/import}" enctype="multipart/form-data" class="form-upload" id="group-upload">

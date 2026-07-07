@@ -166,7 +166,7 @@ tbody tr {
     cursor: pointer;
 }
 
-/* Message au hover */
+/* Message au hover
 tbody tr:hover::after {
     content: "Cliquer pour plus de détails";
 
@@ -183,7 +183,7 @@ tbody tr:hover::after {
     border-radius: 6px;
 
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
+}*/
 
 tbody tr:hover::after {
     pointer-events: none;
@@ -234,6 +234,26 @@ td a {
     font-size: 24px;
 
     cursor: pointer;
+}
+
+button,
+a.button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+     background-color: #d1d5db;
+    min-width: 100px;
+    min-height: 35px;
+    padding: 8px 12px;
+
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+    cursor: pointer;
+    font-weight: 500;
+
+    text-decoration: none;
+    color: inherit;
 }
 
 /* ===== Responsive ===== */

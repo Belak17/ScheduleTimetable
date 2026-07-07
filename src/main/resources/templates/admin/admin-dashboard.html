@@ -9,6 +9,7 @@
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
 </head>
 <body>
+
 <input type="checkbox" id="toggle-sidebar" />
 <header>
     <div class="head-box">
@@ -50,9 +51,15 @@
             </a>
         </div>
         <div class="option" style="background: linear-gradient(135deg, #fb923c, #fdba74);">
-            <a th:href="@{/admin/import}">
-            <p>Televerser Utilisateurs Info</p>
+            <a th:href="@{/admin/import/professors}">
+            <p>Importer des Professeurs</p>
             <img th:src="@{/images/study-plans.png}">
+            </a>
+        </div>
+        <div class="option" style="background: linear-gradient(135deg, #fb923c, #fdba74);">
+            <a th:href="@{/admin/import/students}">
+                <p>Importer des Etudiants</p>
+                <img th:src="@{/images/study-plans.png}">
             </a>
         </div>
     </section>

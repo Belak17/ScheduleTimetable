@@ -31,18 +31,24 @@
                 <th th:each="date:${attendanceTable.dates}"
                     th:text="${date}">
                 </th>
+                <th>Option</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="row:${attendanceTable.rows}">
 
                 <td>
-                    <a th:href="@{/absence/{id}(id=${row.id})}"
+                    <a
                        th:text="${row.studentName}">
                     </a>
                 </td>
                 <td th:each="status:${row.statuses}"
                     th:text="${status}">
+                </td>
+                <td>
+                    <a class="button clickable-row" th:href="@{/absence/{id}(id=${row.id})}">
+                        Historiques des Absences
+                    </a>
                 </td>
             </tr>
             </tbody>

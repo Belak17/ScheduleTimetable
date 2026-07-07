@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style-student/style-student-absence.css}">
+    <link rel="stylesheet" th:href="@{/css/style-student/style-student-dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
     <link rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
 </head>
@@ -44,17 +45,25 @@
             <th>
                 Taux de Présence
             </th>
+            <th>
+                Option
+            </th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="course : ${courses}">
             <td>
-                <a th:href="@{/student/absences/{id}(id=${course.id})}"
+                <a
                    th:text="${course.title}"></a>
             </td>
             <td th:text="${course.totalSeances}"></td>
             <td th:text="${course.absences}"></td>
             <td th:text="${course.presenceRate}"></td>
+            <td>
+                <a th:href="@{/student/absences/{id}(id=${course.id})}" class="button clickable-row">
+                    Détails
+                </a>
+            </td>
         </tr>
         </tbody>
     </table>

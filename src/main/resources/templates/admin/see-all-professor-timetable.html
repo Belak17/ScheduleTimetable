@@ -101,13 +101,12 @@
                 <th>Grade</th>
                 <th>Statut</th>
                 <th>Nom</th>
+                <th>Option</th>
             </tr>
             </thead>
 
             <tbody>
-            <tr th:each="professor : ${Professors.content}"
-                class="clickable-row"
-                th:data-image="@{/professors/preview/{userId}(userId=${professor.userId})}">
+            <tr th:each="professor : ${Professors.content}">
                 <td th:text="${professor.userId}"></td>
                 <td th:text="${professor.speciality}"></td>
                 <td th:text="${professor.grade}"></td>
@@ -115,6 +114,12 @@
                 <td th:text="${professor.nom != null
         ? professor.nom + ' ' + professor.prenom
         : 'Non assigné'}">
+                </td>
+                <td>
+                    <a class="button clickable-row"
+                       th:data-image="@{/professors/preview/{userId}(userId=${professor.userId})}">
+                        Emploi du Temps
+                    </a>
                 </td>
             </tr>
             </tbody>

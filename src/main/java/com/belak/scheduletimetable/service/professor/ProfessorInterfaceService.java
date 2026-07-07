@@ -2,6 +2,7 @@ package com.belak.scheduletimetable.service.professor;
 
 import com.belak.scheduletimetable.dto.CreateProfessorDto;
 import com.belak.scheduletimetable.dto.ProfessorDto;
+import com.belak.scheduletimetable.dto.ProfessorImportDto;
 import com.belak.scheduletimetable.dto.ProfessorProfileDto;
 import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.request.UpdateRequest;
@@ -13,7 +14,7 @@ public interface ProfessorInterfaceService {
     public Page<ProfessorDto> getAllProfessorByDepartment(int page , int size , Departement departement) ;
 
 
-    public void saveProfessor(CreateProfessorDto professorDto) ;
+    public void saveProfessor(ProfessorImportDto professorDto) ;
 
     public void updateProfessorPassword(UpdateRequest request) ;
 

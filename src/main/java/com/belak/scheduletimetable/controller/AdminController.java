@@ -1,7 +1,10 @@
 package com.belak.scheduletimetable.controller;
 
 import com.belak.scheduletimetable.dto.AdminProfileDto;
+import com.belak.scheduletimetable.dto.ProfessorImportDto;
+import com.belak.scheduletimetable.dto.StudentImportDto;
 import com.belak.scheduletimetable.dto.StudentProfileDto;
+import com.belak.scheduletimetable.enumeration.*;
 import com.belak.scheduletimetable.response.LoginResponse;
 import com.belak.scheduletimetable.service.admin.AdminInterfaceService;
 import com.belak.scheduletimetable.service.admin.AdminService;
@@ -41,9 +44,25 @@ public class AdminController {
     public String showAdminUploadTimetable( Model model ) {
         return "admin/admin-upload-timetable.html";
     }
-    @GetMapping("/import")
-    public String showAdminImportUsers( Model model ) {
-        return "admin/upload-users.html";
+    @GetMapping("/import/professors")
+    public String showAdminImportProfessors( Model model ) {
+        model.addAttribute("professor", new ProfessorImportDto());
+        model.addAttribute("nationalites", Nationalite.values());
+        model.addAttribute("grades", Grade.values());
+        model.addAttribute("statuses", Statuts.values());
+        model.addAttribute("departments", Departement.values());
+        return "admin/upload-professors.html";
+    }
+
+    @GetMapping("/import/students")
+    public String showAdminImportStudents( Model model )
+    {
+        model.addAttribute("student", new StudentImportDto());
+        model.addAttribute("nationalites", Nationalite.values());
+        model.addAttribute("filieres", Filiere.values());
+        model.addAttribute("typeDiplome", TypeDiplome.values());
+        model.addAttribute("departments", Departement.values());
+        return "admin/upload-students.html";
     }
     @GetMapping("/absences/department")
     public String showAdminAbsenceByDepartment( Model model ) {
@@ -77,7 +96,6 @@ public class AdminController {
         AdminProfileDto admin = adminService.findByUserId(authentication.getName());
         model.addAttribute("admin",admin);
         model.addAttribute("fragmentName", tab);
-
         return "admin/edit-my-profile";
     }
 

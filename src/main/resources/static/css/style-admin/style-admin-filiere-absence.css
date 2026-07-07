@@ -62,7 +62,7 @@
  transform: translateX(10px);
 }
 
-.departement h3 , .field h4 {
+.departement h3 , .field h4 , a.button  {
     font-size: 14px;
     font-weight: 500;
     color: #111827;
@@ -163,7 +163,7 @@
 }
 
 
-.departement-title
+.departement-title , a.button
 {
     border-bottom: 1px solid #e5e7eb;
     padding-bottom: 10px;
@@ -230,4 +230,24 @@ a {
         flex-direction: column-reverse;
     }
 
+}
+
+td .button {
+    display: inline-block;
+    min-width: 100px;
+    padding: 8px 12px;
+    margin: 4px;
+
+    text-align: center;
+    text-decoration: none;
+
+    background-color: #e5e7eb;
+    color: #333;
+
+    border-radius: 6px;
+    transition: background-color .2s;
+}
+
+td .button:hover {
+    background-color: #d1d5db;
 }

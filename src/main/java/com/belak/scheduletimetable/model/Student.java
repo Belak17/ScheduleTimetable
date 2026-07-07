@@ -1,6 +1,7 @@
 package com.belak.scheduletimetable.model;
 
 import com.belak.scheduletimetable.dto.CreateStudentDto;
+import com.belak.scheduletimetable.dto.StudentImportDto;
 import com.belak.scheduletimetable.enumeration.Filiere;
 import com.belak.scheduletimetable.enumeration.TypeDiplome;
 import jakarta.persistence.*;
@@ -89,6 +90,39 @@ public class Student  extends User {
         this.setGroupeArchive(dto.getGroupeArchive());
         this.setGroupeM(dto.getGroupeM());
         this.setPassword(dto.getPassword());
+    }
+
+    public Student(StudentImportDto dto) {
+        this.setUserId(dto.getUserId());
+        this.setCin(dto.getCin());
+        this.setNom(dto.getNom());
+        this.setPrenom(dto.getPrenom());
+
+        this.setEmail(dto.getEmail());
+        this.setTelephone(dto.getTelephone());
+        this.setSexe(dto.getSexe());
+        this.setDateNaissance(dto.getDateNaissance());
+        this.setVilleNaissance(dto.getVilleNaissance());
+
+        this.setAdresse(dto.getAdresse());
+        this.setCodePostal(dto.getCodePostal());
+        this.setVille(dto.getVille());
+        this.setNationalite(dto.getNationalite());
+        this.setDepartment(dto.getDepartement());
+        this.setCodeDepartement(dto.getDepartement().getCode());
+        this.setRole(Role.STUDENT);
+        this.setFiliere(dto.getFiliere());
+        this.setNiveau(dto.getNiveau());
+        this.setCodeDiplome(dto.getTypeDiplome().getCode());
+        this.setNomDiplome(dto.getTypeDiplome().getLibelle());
+        this.setTypeDiplome(dto.getTypeDiplome());
+        this.setNumeroInscription(dto.getNumeroInscription());
+        this.setGroup(dto.getGroup());
+        this.setGroupeC(dto.getGroupeC());
+        this.setGroupeTD(dto.getGroupeTD());
+        this.setGroupeArchive(dto.getGroupeArchive());
+        this.setGroupeM(dto.getGroupeM());
+
     }
 
 

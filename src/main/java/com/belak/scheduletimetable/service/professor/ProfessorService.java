@@ -2,10 +2,7 @@ package com.belak.scheduletimetable.service.professor;
 
 import com.belak.scheduletimetable.component.ProfessorMapper;
 import com.belak.scheduletimetable.component.ProfessorProfileMapper;
-import com.belak.scheduletimetable.dto.CreateProfessorDto;
-import com.belak.scheduletimetable.dto.ProfessorDto;
-import com.belak.scheduletimetable.dto.ProfessorProfileDto;
-import com.belak.scheduletimetable.dto.StudentProfileDto;
+import com.belak.scheduletimetable.dto.*;
 import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.enumeration.Nationalite;
 import com.belak.scheduletimetable.exception.EmptyFileException;
@@ -61,8 +58,12 @@ public class ProfessorService implements  ProfessorInterfaceService  {
         return professorRepository.findByDepartment(pageable, departement).map(professorMapper::convertToDto);
     }
 
-    public void saveProfessor(CreateProfessorDto professorDto)
+    public void saveProfessor(ProfessorImportDto professorDto)
     {
+        if (professorRepository.findByUserId(professorDto.getUserId()).isPresent())
+        {
+            throw new ResourceNotFoundException("Professor already exists");
+        }
         Professor professor = new Professor(professorDto);
         professorRepository.save(professor);
     }

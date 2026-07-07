@@ -26,6 +26,12 @@ public class OverviewCoursTPDto {
 
     public void calculPresenceRate()
     {
-        this.presenceRate=  ((float) (totalSeances - absences) /totalSeances)*100 ;
+        if (totalSeances==0)
+        {
+            this.presenceRate = 0.0f;
+        }
+        else {
+            this.presenceRate = ((float) (totalSeances - absences) / totalSeances) * 100;
+        }
     }
 }

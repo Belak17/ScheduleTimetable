@@ -99,22 +99,32 @@
                 <th>Groupe</th>
                 <th>Niveau</th>
                 <th>Filière</th>
+                <th>Option</th>
             </tr>
             </thead>
 
             <tbody>
             <tr th:each="grouptimetable : ${GroupTimetableList.content}">
-                <td th:text="${grouptimetable.department}" class="clickable-row"
-                    th:data-image="@{/timetables/preview/{id}(id=${grouptimetable.id})}" onclick="event.stopPropagation()">
+                <td th:text="${grouptimetable.department}">
                 </td>
                 <td th:text="${grouptimetable.field}" ></td>
                 <td th:text="${grouptimetable.year}"></td>
                 <td>
-                    <a th:href="@{/students/{group}/{year}/{field}/details(
+                    <a
+                       th:text="${grouptimetable.group}" >
+                    </a>
+                </td>
+                <td>
+                    <a class="button clickable-row"
+                       th:data-image="@{/timetables/preview/{id}(id=${grouptimetable.id})}" onclick="event.stopPropagation()">
+                        Emploi du Temps
+                    </a>
+                    <a class="button"
+                       th:href="@{/students/{group}/{year}/{field}/details(
         field=${grouptimetable.field},
         year=${grouptimetable.year},
-        group=${grouptimetable.group})}"
-                       th:text="${grouptimetable.group}" class="no-style-link">
+        group=${grouptimetable.group})}">
+                        Voir Étudiants
                     </a>
                 </td>
             </tr>

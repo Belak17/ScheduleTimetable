@@ -1,6 +1,10 @@
 package com.belak.scheduletimetable.restcontroller;
 
 import com.belak.scheduletimetable.dto.ProfessorDto;
+import com.belak.scheduletimetable.dto.ProfessorImportDto;
+import com.belak.scheduletimetable.enumeration.Grade;
+import com.belak.scheduletimetable.enumeration.Nationalite;
+import com.belak.scheduletimetable.enumeration.Statuts;
 import com.belak.scheduletimetable.request.UpdateRequest;
 import com.belak.scheduletimetable.service.professor.ProfessorExcelService;
 import com.belak.scheduletimetable.service.professor.ProfessorService;
@@ -68,12 +72,28 @@ public class ProfessorApiController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return "admin/upload-users.html";
+        model.addAttribute("professor", new ProfessorImportDto());
+        model.addAttribute("nationalites", Nationalite.values());
+        model.addAttribute("grades", Grade.values());
+        model.addAttribute("statuses", Statuts.values());
+        model.addAttribute("departments", Departement.values());
+        return "admin/upload-professors.html";
     }
     @PutMapping("/update")
     public  String updateProfessorPassword(@ModelAttribute UpdateRequest request)
     {
         professorService.updateProfessorPassword(request);
+        return "";
+    }
+
+    @PostMapping("/professor/import")
+    public String uploadProfessor (@ModelAttribute ProfessorImportDto request , Model model
+    )
+    {
+        professorService.saveProfessor(request);
+
+        model.addAttribute("message","Professeur ajouté avec succès");
+
         return "";
     }
 }

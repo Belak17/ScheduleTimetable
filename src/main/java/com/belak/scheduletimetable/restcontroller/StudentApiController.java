@@ -1,6 +1,8 @@
 package com.belak.scheduletimetable.restcontroller;
 
+import com.belak.scheduletimetable.dto.ProfessorImportDto;
 import com.belak.scheduletimetable.dto.StudentDto;
+import com.belak.scheduletimetable.dto.StudentImportDto;
 import com.belak.scheduletimetable.enumeration.Filiere;
 import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.model.Student;
@@ -68,7 +70,7 @@ public class StudentApiController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return "admin/upload-users.html";
+        return "admin/upload-students.html";
     }
     @DeleteMapping("/delete/{userId}/student")
     public String deleteStudent(@PathVariable String userId)
@@ -76,6 +78,14 @@ public class StudentApiController {
         studentService.deleteStudent(userId);
         return "";
     }
+    @PostMapping("/student/import")
+    public String uploadStudent (@ModelAttribute StudentImportDto request , Model model)
+    {
+        studentService.saveStudent(request);
 
+        model.addAttribute("message","Etudiant ajouté avec succès ");
+
+        return "";
+    }
 
 }

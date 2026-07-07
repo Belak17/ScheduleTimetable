@@ -2,6 +2,7 @@ package com.belak.scheduletimetable.service.student;
 
 import com.belak.scheduletimetable.dto.CreateStudentDto;
 import com.belak.scheduletimetable.dto.StudentDto;
+import com.belak.scheduletimetable.dto.StudentImportDto;
 import com.belak.scheduletimetable.dto.StudentProfileDto;
 import com.belak.scheduletimetable.model.Student;
 import org.springframework.data.domain.Page;
@@ -10,7 +11,7 @@ public interface StudentInterfaceService {
 
     public Page<StudentDto> getStudentByFieldAndYearAndGroup(String field, int year, String group, int page, int size) ;
 
-    public void saveStudent(CreateStudentDto studentDto) ;
+    public void saveStudent(StudentImportDto studentDto) ;
 
     public void deleteStudent(String userId) ;
 

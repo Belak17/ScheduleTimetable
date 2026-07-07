@@ -6,6 +6,7 @@
     <title>Absences par Departement</title>
     <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
     <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-filiere-absence.css}">
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
     <link rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
 </head>
@@ -52,65 +53,76 @@
             DEPARTEMENT INFORMATIQUE
         </h3>
         <div class="field-title">Licence </div>
-        <div class="field-bachelor">
-            <div class="field-container" th:each="licence : ${licences}">
-                <div class="field">
-                    <h3 th:text="${licence.code}"></h3>
-                    <h4 th:text="${licence.libelle}"></h4>
-                    <img th:src="@{/images/bachelor (1).png}">
-                </div>
-                <div class="level-panel">
-                    <h3>Niveau</h3>
-                    <div class="level-wrapper">
-                        <div class="level-card">
-                            <a th:href="@{/absence/{code}/{filiere}/1(code=${department.code}, filiere=${licence.code})}">
-                                Licence 1
-                            </a>
-                        </div>
-                    </div>
-                    <div class="level-wrapper">
-                        <div class="level-card">
-                            <a th:href="@{/absence/{code}/{filiere}/2(code=${department.code}, filiere=${licence.code})}">
-                                Licence 2
-                            </a>
-                        </div>
-                    </div>
-                    <div class="level-wrapper">
-                        <div class="level-card">
-                            <a th:href="@{/absence/{code}/{filiere}/3(code=${department.code}, filiere=${licence.code})}">
-                                Licence 3
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="table-content">
+            <!-- Tableau -->
+            <table
+                    bgcolor="lightgray"
+                    border="1"
+                    rules="all" class="styled-table">
+                <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libelle</th>
+                    <th>Niveau</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="licence : ${licences}">
+                    <td th:text="${licence.code}">
+                    </td>
+                    <td th:text="${licence.libelle}" ></td>
+                    <td>
+                        <a class="button" th:href="@{/absence/{code}/{filiere}/1(code=${department.code}, filiere=${licence.code})}">
+                            Licence 1
+                        </a>
+                        <a class="button"
+                           th:href="@{/absence/{code}/{filiere}/2(code=${department.code},filiere=${licence.code})}">
+                            Licence 2
+                        </a>
+                        <a class="button"
+                           th:href="@{/absence/{code}/{filiere}/3(code=${department.code},filiere=${licence.code})}">
+                            Licence 3
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
+
         <div class="field-title">Master</div>
-        <div class="field-master">
-            <div class="field-container" th:each="master : ${masters}">
-                <div class="field">
-                    <h3 th:text="${master.code}"></h3>
-                    <h4 th:text="${master.libelle}"></h4>
-                    <img th:src="@{/images/degree (1).png}">
-                </div>
-                <div class="level-panel">
-                    <h3>Niveau</h3>
-                    <div class="level-wrapper">
-                        <div class="level-card">
-                            <a th:href="@{/absence/{code}/{filiere}/1(code=${department.code}, filiere=${master.code})}">
-                                Master 1
-                            </a>
-                        </div>
-                    </div>
-                    <div class="level-wrapper">
-                        <div class="level-card">
-                            <a th:href="@{/absence/{code}/{filiere}/2(code=${department.code}, filiere=${master.code})}">
-                                Master 2
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="table-content">
+            <!-- Tableau -->
+            <table
+                    bgcolor="lightgray"
+                    border="1"
+                    rules="all" class="styled-table">
+                <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Libelle</th>
+                    <th>Niveau</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="master : ${masters}">
+                    <td th:text="${master.code}">
+                    </td>
+                    <td th:text="${master.libelle}" ></td>
+                    <td>
+                        <a class="button" th:href="@{/absence/{code}/{filiere}/1(code=${department.code}, filiere=${master.code})}">
+                            Master 1
+                        </a>
+                        <a class="button"
+                           th:href="@{/absence/{code}/{filiere}/2(code=${department.code},filiere=${master.code})}">
+                            Master 2
+                        </a>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </section>
 </main>

@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Upload Timetable</title>
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-upload-timetable.css}">
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-upload-user.css}">
     <link rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
 </head>
@@ -29,40 +30,93 @@
 <section th:replace="admin/admin-dashboard :: sidebar">
 
 </section>
-<main class="center-wrapper">
+<main class="center-wrappers">
+        <!-- ===================== IMPORT XLSX ===================== -->
+        <fieldset class="import-box">
+            <legend>Importation en masse (XLSX) Professeurs </legend>
 
+            <form class="form-upload"
+                  th:action="@{/timetables/upload/professortimetable}"
+                  method="post"
+                  enctype="multipart/form-data">
 
-    <div class="upload">
+                <div class="info-input full">
+                    <label>Fichier Excel (.xlsx)</label>
 
-        <form method="post" th:action="@{/timetables/upload/professortimetable}" enctype="multipart/form-data" class="form-upload">
-            <h3>Emploi du Temps des Professeurs</h3>
-            <label class="custom-file">
-                <input type="file" name="excelFile" accept=".xls,.xlsx" class="excelFileInput">
-                <span class="file-btn">Choisir un fichier</span>
-                <span class="file-name">Aucun fichier</span>
-                <button type="button" class="clearFileBtn" style="margin-left: 10px;">Supprimer</button>
+                    <input type="file"
+                           name="excelFile"
+                           accept=".xls,.xlsx"
+                           class="excelFileInput"
+                           required>
+
+                    <!--  AJOUT IMPORTANT -->
+                    <div class="file-name" style="display: none;">Aucun fichier sélectionné</div>
+                </div>
+
+                <div class="buttons">
+                    <button type="button" class="clearFileBtn">
+                        Supprimer
+                    </button>
+
+                    <button type="submit" class="submit button-upload">
+                        Importer
+                    </button>
+
+                    <input type="hidden" name="id" th:value="${id}" />
+                </div>
+
+                <span class="upload-message alert alert-success" style="display:none;">
+            Fichier chargé avec succès !
+        </span>
+
+                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+            </form>
+        </fieldset>
+
+    <fieldset class="import-box">
+        <legend>Importation en masse (XLSX) Etudiants</legend>
+
+        <form class="form-upload"
+              th:action="@{/timetables/upload/grouptimetable}"
+              method="post"
+              enctype="multipart/form-data">
+
+            <div class="info-input full">
+                <label>Fichier Excel (.xlsx)</label>
+
+                <input type="file"
+                       name="excelFile"
+                       accept=".xls,.xlsx"
+                       class="excelFileInput"
+                       required>
+
+                <!--  AJOUT IMPORTANT -->
+                <div class="file-name" style="display: none;">Aucun fichier sélectionné</div>
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="clearFileBtn">
+                    Supprimer
+                </button>
+
+                <button type="submit" class="submit button-upload">
+                    Importer
+                </button>
+
                 <input type="hidden" name="id" th:value="${id}" />
-            </label>
-            <button type="submit" class="button-upload">Uploader</button>
-            <span class="upload-message">Fichier chargé avec succès !</span>
+            </div>
+
+            <span class="upload-message alert alert-success" style="display:none;">
+            Fichier chargé avec succès !
+        </span>
+
             <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
             <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
-        </form>
-
-        <form method="post" th:action="@{/timetables/upload/grouptimetable}" enctype="multipart/form-data" class="form-upload" id="group-upload">
-            <h3>Emploi du Temps des Etudiants</h3>
-            <label class="custom-file">
-                <input type="file" name="excelFile" accept=".xls,.xlsx" class="excelFileInput">
-                <span class="file-btn">Choisir un fichier</span>
-                <span class="file-name">Aucun fichier</span>
-                <button type="button" class="clearFileBtn" style="margin-left: 10px;">Supprimer</button>
-                <input type="hidden" name="id" th:value="${id}" />
-            </label>
-            <button type="submit" class="button-upload">Uploader</button>
-            <span class="upload-message">Fichier chargé avec succès !</span>
 
         </form>
-    </div>
+    </fieldset>
 
 </main>
 <style>
