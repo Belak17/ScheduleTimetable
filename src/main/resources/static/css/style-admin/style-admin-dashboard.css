@@ -37,8 +37,8 @@ body {
     align-items: center;
     justify-content: center;
 
-    width: 60px;
-    height: 60px;
+    width: clamp(40px, 5vw, 60px);
+    height: clamp(40px, 5vw, 60px);
 
     cursor: pointer;
     border-radius: 8px;
@@ -59,10 +59,11 @@ body {
 }
 
 .text-title {
-    font-size: 24px;
+    font-size: clamp(18px, 2vw, 26px);
     font-weight: 700;
     color: #007BFF;
 }
+
 
 /* ===== Sidebar ===== */
 .icons {
@@ -71,7 +72,7 @@ body {
     top: 0;
     left: -260px;
 
-    width: 260px;
+    width: min(260px, 80vw);
     height: 100vh;
 
     background-color: #ffffff;
@@ -144,7 +145,7 @@ body {
     font-size: 14px;
     margin-left: 5px;
     transition: transform 0.5s ease;
-      display: inline-block;
+    display: inline-block;
     cursor: pointer;
 }
 
@@ -155,57 +156,71 @@ body {
 
 /* ===== Main Content ===== */
 .center-wrapper {
-    margin: 90px auto 20px;
-    padding: 20px;
-    width: 95%;
-    max-width: 1600px;
-
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 
     display: flex;
     flex-direction: column;
     gap: 30px;
 
     backdrop-filter: blur(10px);
+
+    margin: 90px auto 20px;
+    padding: clamp(15px, 2vw, 40px);
+
+    width: 95%;
+    max-width: none;
+
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
 }
 
 /* ===== GRID ===== */
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width:100% ;
-    gap: 30px;
-    align-items:start ;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    width: 100%;
+    gap: clamp(15px, 3vw, 30px);
+    align-items: start;
 }
 
 /* ===== OPTION CARD ===== */
 .option {
-    border-radius: 12px;
-    width:100% ;
+    width: 100%;
+
+    min-height: clamp(150px, 15vw, 300px);
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    gap: 15px;
-    padding: 15px;
+    gap: 1em;
+
+    padding: clamp(15px, 3vw, 50px);
+
+    border-radius: clamp(8px, 1vw, 20px);
+
+    font-size: clamp(14px, 1.5vw, 24px);
 
     transition: transform 0.3s ease;
     text-align: center;
 }
 
+
 .option:hover {
     transform: scale(1.05);
 }
 
+
 .option img {
-    width: 70px;
+    width: 5em;
     height: auto;
 }
 
+
 .option p {
+    font-size: 1em;
     font-weight: bold;
     color: #ffffff;
 }
@@ -240,6 +255,12 @@ body {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
 
+    .icons{
+        width:200px;
+        left:-200px;
+    }
+
+
     .head-box {
         gap: 10px;
         padding: 10px;
@@ -270,9 +291,9 @@ body {
 
     .grid
     {
-    display:flex ;
-    flex-direction:column;
-    gap:20px;
+        display:flex ;
+        flex-direction:column;
+        gap:20px;
     }
 }
 
@@ -289,11 +310,47 @@ body {
     border: 1px solid transparent;
 }
 
-@media(max-width:768px){
+/* Tablette */
+@media(max-width:1024px){
 
-.icons{
-    width:200px;
-    left:-200px;
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
 }
+
+
+/* Téléphone */
+@media(max-width:600px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+
+    .head-box{
+        padding:8px;
+    }
+
+
+    .option:hover{
+        transform:none;
+    }
+
+
+}
+
+
+/* Très petit téléphone */
+@media(max-width:360px){
+
+    .text-title{
+        font-size:16px;
+    }
+
+
+    .icons{
+        width:75vw;
+    }
 
 }
