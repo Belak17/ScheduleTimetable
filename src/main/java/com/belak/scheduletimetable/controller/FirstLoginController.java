@@ -33,8 +33,14 @@ public class FirstLoginController {
     @PostMapping("/firstlogin")
     public  String register( Model model , @ModelAttribute UserRegister userRegister)
     {
-        userRegisterService.registerUserByUserIdAndEmail(userRegister);
-        model.addAttribute("message", "Votre compte a été activé ");
+        userRegisterService.register(userRegister);
+        //userRegisterService.registerUserByUserIdAndEmail(userRegister);
+        model.addAttribute("message", "Un message a été envoyé à votre email pour activer votre compte");
         return  "login/login" ;
     }
+
+
+
+
+
 }

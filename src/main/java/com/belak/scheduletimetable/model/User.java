@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -69,6 +70,7 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private boolean enabled = false;
+    private boolean locked = false;
     //private Date passwordChangedAt = null ;
     //private boolean mustChangePassword = true ;
 
@@ -85,15 +87,24 @@ public class User implements UserDetails {
                 name()));
     }
 
+    public User(String userId, String email, String password) {
+        this.userId = userId;
+        this.email = email;
+        this.password = password;
+    }
+
     @Override
     public String getUsername() {
         return userId;
     }
-
+    @Override
+    public @Nullable String getPassword() {
+        return password;
+    }
     @Override
     public boolean isAccountNonExpired() { return true; }
     @Override
-    public boolean isAccountNonLocked() { return true; }
+    public boolean isAccountNonLocked() { return !locked; }
     @Override
     public boolean isCredentialsNonExpired() { return true; }
     @Override

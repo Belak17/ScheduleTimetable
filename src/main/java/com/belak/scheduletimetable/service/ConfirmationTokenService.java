@@ -1,0 +1,24 @@
+package com.belak.scheduletimetable.service;
+
+import com.belak.scheduletimetable.model.ConfirmationToken;
+import com.belak.scheduletimetable.repository.ConfirmationTokenRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+@AllArgsConstructor
+public class ConfirmationTokenService {
+    private  final ConfirmationTokenRepository confirmationTokenRepository;
+
+    public void saveConfirmationToken(ConfirmationToken confirmationToken)
+    {
+        confirmationTokenRepository.save(confirmationToken);
+    }
+
+
+    public Optional<ConfirmationToken> getToken(String token) {
+        return confirmationTokenRepository.findByToken(token);
+    }
+}
