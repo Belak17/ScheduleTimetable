@@ -53,6 +53,7 @@ public class GroupTimetable {
             joinColumns = @JoinColumn(name = "timetable_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
+    @Builder.Default
     private Set<Student> students = new HashSet<>();
     public void addStudent(Student student){
         if (students == null) {
@@ -63,6 +64,7 @@ public class GroupTimetable {
     }
 
     @OneToMany(mappedBy = "groupTimetable" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
+    @Builder.Default
     private List<CoursTP> coursTPList = new ArrayList<>();
 
     public void addCoursTP(CoursTP coursTP){

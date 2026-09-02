@@ -60,8 +60,6 @@ public class GroupTimetableService extends TimetableService {
         }
     }
 
-
-
     private void processSheet(Workbook originalWorkbook, int position) throws IOException, InterruptedException {
         Workbook singleWorkbook = new Workbook();
 
@@ -256,6 +254,5 @@ public class GroupTimetableService extends TimetableService {
         return groupTimetableRepository.findDistinctGroupByDepartementAndFiliereAndNiveau(Departement.valueOf(departement),Filiere.fromCode(field),niveau) ;
 
     }
-
 
 }

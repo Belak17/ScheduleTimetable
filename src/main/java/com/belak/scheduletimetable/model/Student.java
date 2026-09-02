@@ -44,9 +44,11 @@ public class Student  extends User {
     @Column(name = "student_group")
     private String group ;
     @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
+    @Builder.Default
     private Set<GroupTimetable> timetables = new HashSet<>();
 
     @OneToMany(mappedBy = "student" , cascade = CascadeType.ALL , orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
     private List<Presence> presences = new ArrayList<>();
 
     public void addPresence(Presence presence){
@@ -124,9 +126,5 @@ public class Student  extends User {
         this.setGroupeM(dto.getGroupeM());
 
     }
-
-
-
-
 
 }

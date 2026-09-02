@@ -37,8 +37,8 @@ body {
     align-items: center;
     justify-content: center;
 
-    width: clamp(40px, 5vw, 60px);
-    height: clamp(40px, 5vw, 60px);
+    width: 60px;
+    height: 60px;
 
     cursor: pointer;
     border-radius: 8px;
@@ -59,11 +59,10 @@ body {
 }
 
 .text-title {
-    font-size: clamp(18px, 2vw, 26px);
+    font-size: 24px;
     font-weight: 700;
     color: #007BFF;
 }
-
 
 /* ===== Sidebar ===== */
 .icons {
@@ -72,7 +71,7 @@ body {
     top: 0;
     left: -260px;
 
-    width: min(260px, 80vw);
+    width: 260px;
     height: 100vh;
 
     background-color: #ffffff;
@@ -153,7 +152,6 @@ body {
 {
     transform: translateX(9px);
 }
-
 /* ===== Main Content ===== */
 .center-wrapper {
 
@@ -172,13 +170,12 @@ body {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-
 }
 
 /* ===== GRID ===== */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     width: 100%;
     gap: clamp(15px, 3vw, 30px);
     align-items: start;
@@ -216,13 +213,17 @@ body {
 .option img {
     width: 5em;
     height: auto;
+    object-fit : contain ;
 }
 
 
 .option p {
-    font-size: 1em;
     font-weight: bold;
-    color: #ffffff;
+        font-size: 21px;
+
+        margin-bottom: 7px;
+
+        color: white;
 }
 
 .option a {
@@ -256,10 +257,9 @@ body {
 @media (max-width: 768px) {
 
     .icons{
-        width:200px;
-        left:-200px;
+        width:220px;
+        left:-220px;
     }
-
 
     .head-box {
         gap: 10px;
@@ -270,13 +270,9 @@ body {
         font-size: 18px;
     }
 
-    .center-wrapper {
-        margin: 80px 10px 20px;
-        padding: 15px;
-    }
-
-    .icons {
-        width: 200px;
+    .center-wrapper{
+        width:95%;
+        margin:80px auto 20px;
     }
 
     .option img {
@@ -347,10 +343,4 @@ body {
     .text-title{
         font-size:16px;
     }
-
-
-    .icons{
-        width:75vw;
-    }
-
 }

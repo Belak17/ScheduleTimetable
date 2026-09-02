@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,7 +36,8 @@ public class UserService implements UserDetailsService {
                 () -> new ResourceNotFoundException("User Not Found"));
         LoginResponse response = new LoginResponse() ;
         response.setNom(user.getNom());
-        response.setPrenom(user.getPrenom());
+        List<String> prenomList = new ArrayList<>(List.of(user.getPrenom().split(" ")));
+        response.setPrenom(prenomList.get(0)+" "+prenomList.get(1));
         return response ;
     }
 

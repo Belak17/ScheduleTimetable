@@ -35,7 +35,9 @@ public class CoursTP {
     private String  dayOfWeek ;
     private  LocalTime debut ;
     private LocalTime fin ;
+    @Builder.Default
     private boolean inverseOfAnother = false;
+    @Builder.Default
     private Long dependsOnCoursId = null;
     @ManyToOne
     @JoinColumn(name = "grouptimetable_id")
@@ -47,7 +49,7 @@ public class CoursTP {
 
     private int frequence ;
     private  int rotationOffset ;
-
+    @Builder.Default
     @OneToMany(mappedBy = "coursTP", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seance> seances = new ArrayList<>();
 

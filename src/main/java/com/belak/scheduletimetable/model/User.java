@@ -110,6 +110,159 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() { return enabled; }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getCin() {
+        return cin;
+    }
+
+    public void setCin(String cin) {
+        this.cin = cin;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public String getPrenomArabe() {
+        return prenomArabe;
+    }
+
+    public void setPrenomArabe(String prenomArabe) {
+        this.prenomArabe = prenomArabe;
+    }
+
+    public String getNomArabe() {
+        return nomArabe;
+    }
+
+    public void setNomArabe(String nomArabe) {
+        this.nomArabe = nomArabe;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getSexe() {
+        return sexe;
+    }
+
+    public void setSexe(String sexe) {
+        this.sexe = sexe;
+    }
+
+    public LocalDate getDateNaissance() {
+        return dateNaissance;
+    }
+
+    public void setDateNaissance(LocalDate dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
+
+    public String getVilleNaissance() {
+        return villeNaissance;
+    }
+
+    public void setVilleNaissance(String villeNaissance) {
+        this.villeNaissance = villeNaissance;
+    }
+
+    public String getVilleNaissanceArabe() {
+        return villeNaissanceArabe;
+    }
+
+    public void setVilleNaissanceArabe(String villeNaissanceArabe) {
+        this.villeNaissanceArabe = villeNaissanceArabe;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public String getCodePostal() {
+        return codePostal;
+    }
+
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public Nationalite getNationalite() {
+        return nationalite;
+    }
+
+    public void setNationalite(Nationalite nationalite) {
+        this.nationalite = nationalite;
+    }
+
+    public Departement getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Departement department) {
+        this.department = department;
+    }
+
+    public String getCodeDepartement() {
+        return codeDepartement;
+    }
+
+    public void setCodeDepartement(String codeDepartement) {
+        this.codeDepartement = codeDepartement;
+    }
 }

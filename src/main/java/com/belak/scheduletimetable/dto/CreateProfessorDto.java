@@ -15,12 +15,108 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-
+import com.belak.scheduletimetable.dto.CreateUserDto;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
 @NoArgsConstructor
 public class CreateProfessorDto extends CreateUserDto {
+    public String getSpecialite() {
+        return specialite;
+    }
+
+    public void setSpecialite(String specialite) {
+        this.specialite = specialite;
+    }
+
+    public Grade getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Grade grade) {
+        this.grade = grade;
+    }
+
+    public String getCodeGrade() {
+        return codeGrade;
+    }
+
+    public void setCodeGrade(String codeGrade) {
+        this.codeGrade = codeGrade;
+    }
+
+    public String getLibelleGrade() {
+        return libelleGrade;
+    }
+
+    public void setLibelleGrade(String libelleGrade) {
+        this.libelleGrade = libelleGrade;
+    }
+
+    public Statuts getSchoolStatus() {
+        return schoolStatus;
+    }
+
+    public void setSchoolStatus(Statuts schoolStatus) {
+        this.schoolStatus = schoolStatus;
+    }
+
+    public String getCodeStatus() {
+        return codeStatus;
+    }
+
+    public void setCodeStatus(String codeStatus) {
+        this.codeStatus = codeStatus;
+    }
+
+    public String getLibelleStatus() {
+        return libelleStatus;
+    }
+
+    public void setLibelleStatus(String libelleStatus) {
+        this.libelleStatus = libelleStatus;
+    }
+
+    public String getEtablissement_origine() {
+        return etablissement_origine;
+    }
+
+    public void setEtablissement_origine(String etablissement_origine) {
+        this.etablissement_origine = etablissement_origine;
+    }
+
+    public String getRib() {
+        return rib;
+    }
+
+    public void setRib(String rib) {
+        this.rib = rib;
+    }
+
+    public String getApplication_tiers() {
+        return application_tiers;
+    }
+
+    public void setApplication_tiers(String application_tiers) {
+        this.application_tiers = application_tiers;
+    }
+
+    public String getIdentifiantUnique() {
+        return identifiantUnique;
+    }
+
+    public void setIdentifiantUnique(String identifiantUnique) {
+        this.identifiantUnique = identifiantUnique;
+    }
+
+    public String getNomDepartement() {
+        return nomDepartement;
+    }
+
+    public void setNomDepartement(String nomDepartement) {
+        this.nomDepartement = nomDepartement;
+    }
+
     private String specialite;
     private Grade grade ;
     private String codeGrade ;

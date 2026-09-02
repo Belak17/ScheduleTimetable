@@ -78,7 +78,6 @@ public class TimetableService {
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
-
             return baos.toByteArray();
         }
     }

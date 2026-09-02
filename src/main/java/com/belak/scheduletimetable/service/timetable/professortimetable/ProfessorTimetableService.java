@@ -61,9 +61,7 @@ public class ProfessorTimetableService extends TimetableService {
             Worksheet sourceSheet = originalWorkbook.getWorksheets().get(position);
             singleWorkbook.getWorksheets().clear();
             singleWorkbook.getWorksheets().addCopy(sourceSheet);
-
             Worksheet dataSheet = singleWorkbook.getWorksheets().get(0);
-
             ProfessorData info = extractProfessorInfo(dataSheet,position);
             adjustSheetLayout(dataSheet);
 
@@ -110,9 +108,6 @@ public class ProfessorTimetableService extends TimetableService {
         workbook.saveToFile(tempExcel.getAbsolutePath(), ExcelVersion.Version2013);
         return tempExcel;
     }
-
-
-
 
     private void saveProfessorTimetable(ProfessorData professorData, byte[] pdfBytes, int position) {
         Optional<Professor> optionalProfessor = professorRepository.findByNameNormalized(professorData.getPrenom(), professorData.getNom());
