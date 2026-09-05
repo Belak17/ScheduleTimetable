@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Professor Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style-student/style-student-dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
     <link rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
 </head>
@@ -75,21 +75,26 @@
 
         <div class="option" style="background: linear-gradient(135deg, #4f8cff, #6ea8fe);">
             <a th:href="@{/professor/timetable}">
-                <p> Emploi du temps</p>
+
                 <img th:src="@{/images/academic-years.png}">
+                <p> Emploi du temps</p>
             </a>
         </div>
-
+    </section>
+    <h2 class="separator">Menu Admnistratif</h2>
+    <section class="grid">
         <div class="option" style="background-color: rgb(113, 113, 230);">
             <a th:href="@{/professor/profile}">
-                <p>Profil </p>
+
                 <img th:src="@{/images/user-profile.png}" alt="Profil">
+                <p>Profil </p>
             </a>
         </div>
         <div class="option" style="background: linear-gradient(135deg, #4f8cff, #6ea8fe);">
             <a th:href="@{/logout}">
-                <p>Deconnexion </p>
+
                 <img th:src="@{/images/power-off.png}" alt="Deconnexion">
+                <p>Deconnexion </p>
             </a>
         </div>
     </section>

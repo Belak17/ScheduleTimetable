@@ -1,242 +1,681 @@
-/* ===== Reset & Base ===== */
+/* =========================================================
+   FORM PAGE — MODERN DESIGN
+   ========================================================= */
+
+/* ===== RESET ===== */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+
+    --success: #16a34a;
+    --success-dark: #15803d;
+
+    --danger: #dc2626;
+    --danger-light: #fef2f2;
+
+    --text: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+
+    --background: #f4f6f9;
+    --surface: #ffffff;
+
+    --border: #e5e7eb;
+    --border-light: #eef0f3;
+
+    --input-background: #ffffff;
+
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.07);
+    --shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.09);
+
+    --radius-sm: 8px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+
+    --transition: 0.2s ease;
+}
+
+
+/* ===== BODY ===== */
+
 body {
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #f5f7fa, #e4e8ec);
-    color: #333;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    min-height: 100vh;
+
     overflow-x: hidden;
 }
 
 
-/* ===== Main Wrapper ===== */
+/* =========================================================
+   MAIN WRAPPER
+   ========================================================= */
+
 .center-wrappers {
-    margin: 100px auto 40px auto;
+    width: calc(100% - 48px);
+    max-width: 1500px;
 
-    padding: 20px;
+    margin: 96px auto 32px;
 
-    width: 95%;
-    max-width: 1600px;
+    padding: 32px;
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    background-color: #ffffff;
 
-    border-radius: 12px;
+    background: var(--surface);
 
-    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
 }
 
-/* ===== FORM WRAPPER ===== */
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+form {
+    width: 100%;
+    padding:20px ;
+}
+
+
+/* =========================================================
+   FIELDSETS CONTAINER
+   ========================================================= */
+
 .fieldsets {
     width: 100%;
+
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
     gap: 24px;
 
-       /* très important */
+    align-items: start;
 }
 
-/* ===== FIELDSET STYLE (comme tes blocs option-clicked) ===== */
+
+/* =========================================================
+   FIELDSET
+   ========================================================= */
+
 fieldset {
-    border: 1px solid lightgray;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    background-color: white;
+    min-width: 0;
+
+    margin: 0 0 8px;
+
     padding: 0;
+
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
 
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-md);
+
+    overflow: hidden;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
 }
 
-/* ===== LEGEND (style title-bloc) ===== */
+fieldset:focus-within {
+    border-color: #bfdbfe;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.06),
+        var(--shadow-sm);
+}
+
+
+/* =========================================================
+   LEGEND
+   ========================================================= */
+
 legend {
-    background-color: #2c3e50;
-    color: white;
-    padding: 7px 10px;
-    font-weight: bold;
-    font-size: 14px;
+    grid-column: 1 / -1;
+
     width: 100%;
-    display: flex;
-    align-items: center;
+
+    margin: 0;
+
+    padding: 15px 18px;
+
+    background: #f8fafc;
+
+    color: var(--text);
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    line-height: 1.4;
 }
 
-legend {
-    position: relative;
-    display: block;
-    font-weight: bold;
-    font-size: large;
-    margin: 10px 0;
-    padding: 5px 15px;
-}
 
-.all-sub
-{
-    width: 100%;
-}
+/* Small blue indicator */
 
-/* ===== GROUP INPUT AREA ===== */
-fieldset > div {
-    padding: 15px;
-}
+legend::before {
+    content: "";
 
-/* ===== INPUT STYLE (identique à ton design global) ===== */
-input, select {
-    width: 100%;
-    padding: 8px;
-    margin: 9px 0;
-    border: 1px solid #ccc;
+    display: inline-block;
+
+    width: 4px;
+    height: 17px;
+
+    margin-right: 10px;
+
+    vertical-align: -3px;
+
+    background: var(--primary);
+
     border-radius: 4px;
-    transition: 0.2s;
 }
 
-/* focus comme ton système */
-input:focus, select:focus {
-    border-color: lightskyblue;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(135, 206, 250, 0.3);
+
+/* =========================================================
+   FIELD CONTENT
+   ========================================================= */
+
+fieldset > div {
+    min-width: 0;
+
+    padding: 14px 16px;
 }
 
-/* ===== LABEL STYLE ===== */
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
 label {
-    padding-left: 10px;
-    font-weight: bold;
-    font-size: 13px;
     display: block;
+
+    margin-bottom: 7px;
+
+    padding-left: 0;
+
+    color: var(--text);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
 }
 
-/* ===== GRID SYSTEM (comme generals-info / academical-info) ===== */
+
+/* =========================================================
+   INPUTS & SELECTS
+   ========================================================= */
+
+input,
+select {
+    width: 100%;
+
+    min-height: 42px;
+
+    padding: 9px 12px;
+
+    margin: 0;
+
+    background: var(--input-background);
+
+    border: 1px solid #d1d5db;
+
+    border-radius: var(--radius-sm);
+
+    color: var(--text);
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition),
+        background-color var(--transition);
+}
+
+
+/* Placeholder */
+
+input::placeholder {
+    color: var(--text-muted);
+}
+
+
+/* Focus */
+
+input:focus,
+select:focus {
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+
+    background: #ffffff;
+}
+
+
+/* Hover */
+
+input:hover,
+select:hover {
+    border-color: #9ca3af;
+}
+
+
+/* Disabled */
+
+input:disabled,
+select:disabled {
+    background: #f3f4f6;
+
+    color: var(--text-muted);
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   THREE COLUMN FORM
+   ========================================================= */
+
 .form-grid-3 {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 15px;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    padding: 16px;
 }
 
-/* fallback mobile */
-@media (max-width: 768px) {
-    form {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-    }
-    .fieldsets
-    {
-        display: flex ;
-        flex-direction: column;
-        width: 100%;
-    }
-}
 
-/* ===== BUTTONS (exact style que le tien) ===== */
-.buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 20px 0;
-}
+/* =========================================================
+   FILE INPUT
+   ========================================================= */
 
-button {
-    min-width: 100px;
-    min-height: 35px;
-    border-radius: 4px;
-    padding: 8px 12px;
+input[type="file"] {
+    min-height: 44px;
+
+    padding: 5px;
+
+    background: #f9fafb;
+
     cursor: pointer;
-    border: 1px solid transparent;
-    font-weight: 500;
 }
 
-.submit {
-    background-color: rgb(91, 201, 91);
-    color: white;
-    border-color: rgb(91, 201, 91);
-}
-
-.reset {
-    background-color: darkgray;
-    color: black;
-    border-color: lightgray;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-/* ===== FILE INPUT (comme ton style existant) ===== */
 input[type="file"]::file-selector-button {
-    background-color: lightslategray;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-}
+    margin-right: 10px;
 
+    padding: 8px 14px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #475569;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition),
+        transform var(--transition);
+}
 
 input[type="file"]::file-selector-button:hover {
-    background-color: #2f8cff;
+    background: #334155;
 }
 
+input[type="file"]::file-selector-button:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================================================
+   BUTTON AREA
+   ========================================================= */
+
+.buttons {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 28px 0 4px;
+
+    padding-top: 24px;
+
+    border-top: 1px solid var(--border-light);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+button {
+    min-width: 120px;
+
+    min-height: 42px;
+
+    padding: 9px 18px;
+
+    border: 1px solid transparent;
+
+    border-radius: var(--radius-sm);
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+
+/* Submit */
+
+.submit {
+    background: var(--success);
+
+    color: #ffffff;
+
+    border-color: var(--success);
+}
+
+.submit:hover {
+    background: var(--success-dark);
+
+    border-color: var(--success-dark);
+
+    box-shadow:
+        0 4px 10px rgba(22, 163, 74, 0.20);
+}
+
+
+/* Reset */
+
+.reset {
+    background: #ffffff;
+
+    color: var(--text-secondary);
+
+    border-color: #d1d5db;
+}
+
+.reset:hover {
+    background: #f9fafb;
+
+    color: var(--text);
+
+    border-color: #9ca3af;
+}
+
+
+/* =========================================================
+   FORM BUTTON
+   ========================================================= */
 
 .form-button {
     grid-column: 1 / -1;
+
     justify-self: center;
 }
 
-form
-{
-    width: 100%;
-}
-/* ===== Alerts ===== */
+
+/* =========================================================
+   ALERTS
+   ========================================================= */
+
 .alert {
-    padding: 10px;
-    border-radius: 6px;
+    width: 100%;
+
+    padding: 12px 14px;
+
+    margin-bottom: 18px;
+
+    border-radius: var(--radius-sm);
+
     font-size: 14px;
+
+    line-height: 1.5;
+
+    border: 1px solid transparent;
 }
+
+
+/* Error */
 
 .alert-danger {
-    background-color: #ffe5e5;
-    color: #b02a37;
+    background: var(--danger-light);
+
+    color: #b91c1c;
+
+    border-color: #fecaca;
 }
+
+
+/* Success */
 
 .alert-success {
-    background-color: #e6ffed;
-    color: #198754;
+    background: #f0fdf4;
+
+    color: #15803d;
+
+    border-color: #bbf7d0;
 }
 
-/* ===== RESPONSIVE ===== */
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .fieldsets {
+        grid-template-columns: 1fr;
+    }
+
+    fieldset {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
 @media (max-width: 768px) {
 
-    .center-wrapper {
-        margin: 90px 10px 20px 10px;
+    .center-wrappers {
+        width: calc(100% - 24px);
 
-        display: flex;
-        flex-direction: column;
+        margin: 82px auto 20px;
 
-        gap: 30px;
+        padding: 18px;
 
-
-        width: auto;
-
-        padding: 15px;
-    }
-    fieldset
-    {
-        display: flex;
-        flex-direction: column;
+        border-radius: var(--radius-md);
     }
 
 
+    .fieldsets {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 16px;
+    }
+
+
+    fieldset {
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+
+        margin-bottom: 0;
+    }
+
+
+    legend {
+        padding: 14px 16px;
+
+        font-size: 14px;
+    }
+
+
+    fieldset > div {
+        padding: 12px 14px;
+    }
+
+
+    .form-grid-3 {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+
+        padding: 14px;
+    }
+
+
+    input,
+    select {
+        min-height: 44px;
+
+        font-size: 14px;
+    }
+
+
+    .buttons {
+        flex-direction: column;
+
+        width: 100%;
+
+        margin-top: 20px;
+
+        padding-top: 20px;
+    }
+
+
+    button {
+        width: 100%;
+
+        max-width: 320px;
+    }
 }
 
-/* ===== Disable Hover Effects On Touch Devices ===== */
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .center-wrappers {
+        width: calc(100% - 14px);
+
+        padding: 12px;
+    }
+
+
+    legend {
+        font-size: 13px;
+    }
+
+
+    label {
+        font-size: 12px;
+    }
+
+
+    input,
+    select {
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
 @media (hover: none) {
-    .form-upload:hover {
-        transform: none;
+
+    button:hover {
+        box-shadow: none;
+    }
+
+    input:hover,
+    select:hover {
+        border-color: #d1d5db;
     }
 }
 
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}

@@ -37,7 +37,13 @@ public class UserService implements UserDetailsService {
         LoginResponse response = new LoginResponse() ;
         response.setNom(user.getNom());
         List<String> prenomList = new ArrayList<>(List.of(user.getPrenom().split(" ")));
-        response.setPrenom(prenomList.get(0)+" "+prenomList.get(1));
+        if (prenomList.size()<2)
+        {
+            response.setPrenom(user.getPrenom());
+        }
+        else {
+            response.setPrenom(prenomList.get(0) + " " + prenomList.get(1));
+        }
         return response ;
     }
 

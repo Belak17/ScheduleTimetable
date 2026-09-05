@@ -1,54 +1,120 @@
-/* ===== Reset & Base ===== */
+/* =========================================================
+   RESET & BASE
+   ========================================================= */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #f5f7fa, #e4e8ec);
-    color: #333;
-    overflow-x: hidden;
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+
+    --text: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+
+    --background: #f4f6f9;
+    --surface: #ffffff;
+
+    --border: #e5e7eb;
+    --border-light: #eef0f3;
+
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.06);
+    --shadow-lg: 0 12px 30px rgba(15, 23, 42, 0.10);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    --transition: 0.2s ease;
 }
 
-/* ===== Header ===== */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', 'Cairo', sans-serif;
+    background: var(--background);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
 .head-box {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-
-    padding: 10px 20px;
-
-    background-color: #ffffff;
-    border-bottom: 1px solid #e0e0e0;
-
     position: fixed;
     top: 0;
     left: 0;
 
     width: 100%;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 0 24px;
+
+    background: rgba(255, 255, 255, 0.96);
+    border-bottom: 1px solid var(--border);
+
+    box-shadow: var(--shadow-sm);
 
     z-index: 100;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
+
+/* Menu */
+
 .head-box #menu {
+    width: 44px;
+    height: 44px;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: 60px;
-    height: 60px;
-
     cursor: pointer;
-    border-radius: 8px;
 
-    transition: background 0.3s ease, transform 0.3s ease;
+    border-radius: var(--radius-sm);
+
+    transition:
+        background-color var(--transition),
+        transform var(--transition);
 }
 
 .head-box #menu:hover {
-    background-color: #e0f2ff;
+    background-color: var(--primary-light);
 }
+
+.head-box #menu:active {
+    transform: scale(0.96);
+}
+
+.head-box #menu img {
+    width: 22px;
+    height: 22px;
+
+    object-fit: contain;
+
+    transition: transform var(--transition);
+}
+
+
+/* Checkbox qui contrôle le menu */
 
 #toggle-sidebar {
     display: none;
@@ -58,13 +124,23 @@ body {
     transform: rotate(90deg);
 }
 
+
+/* Titre */
+
 .text-title {
-    font-size: 24px;
+    font-size: 21px;
     font-weight: 700;
-    color: #007BFF;
+
+    color: var(--text);
+
+    letter-spacing: -0.02em;
 }
 
-/* ===== Sidebar ===== */
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
 .icons {
     position: fixed;
 
@@ -74,41 +150,51 @@ body {
     width: 260px;
     height: 100vh;
 
-    background-color: #ffffff;
-
-    box-shadow: 2px 0 14px rgba(0,0,0,0.1);
-
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    transition: left 0.3s ease;
+    padding-top: 72px;
+
+    background: var(--surface);
+
+    border-right: 1px solid var(--border);
+
+    box-shadow: var(--shadow-lg);
+
+    transition: left 0.25s ease;
 
     z-index: 90;
-
-    padding-top: 80px;
 }
 
 #toggle-sidebar:checked ~ .icons {
     left: 0;
 }
 
+
+/* En-tête de la sidebar */
+
 .icons .text-menu {
     width: 100%;
 
     padding: 20px;
 
-    border-bottom: 1px solid #e0e0e0;
+    background: #fafbfc;
+
+    border-bottom: 1px solid var(--border);
 
     text-align: center;
-
-    background-color: #f8f9fa;
 }
 
 .icons .text-menu h2 {
-    font-size: 20px;
-    color: #333;
+    font-size: 17px;
+    font-weight: 700;
+
+    color: var(--text);
 }
+
+
+/* Liste des options */
 
 .icons-option {
     width: 100%;
@@ -121,106 +207,191 @@ body {
 
 .icon-container a,
 .icon-container label {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+    position: relative;
 
     width: 100%;
 
-    padding: 12px 20px;
+    display: flex;
+    align-items: center;
 
-    color: #333;
+    gap: 13px;
+
+    padding: 13px 20px;
+
+    color: var(--text-secondary);
+
     text-decoration: none;
 
-    transition: background-color 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition),
+        color var(--transition),
+        padding-left var(--transition);
 }
 
 .icon-container a:hover,
 .icon-container label:hover {
-    background-color: #e6f0ff;
+    background-color: var(--primary-light);
+    color: var(--primary);
+    padding-left: 24px;
 }
+
+.icon-container a img,
+.icon-container label img {
+    width: 20px;
+    height: 20px;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
+}
+
+
+/* Tooltip / texte */
 
 .tooltip {
+    display: inline-block;
+
+    margin-left: 2px;
+
     font-size: 14px;
-    margin-left: 5px;
-    transition: transform 0.5s ease;
-      display: inline-block;
+
     cursor: pointer;
+
+    transition: transform var(--transition);
 }
 
-.tooltip:hover
-{
-    transform: translateX(9px);
+.tooltip:hover {
+    transform: translateX(4px);
 }
 
-/* ===== Main Content ===== */
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
 .center-wrapper {
-    margin: 110px auto 30px auto;
-
-    width: calc(100% - 40px);
-    max-width: 1200px;
+    width: min(1200px, calc(100% - 40px));
 
     min-height: 540px;
 
-    background-color: #ffffff;
+    margin: 104px auto 40px;
 
-    border-radius: 12px;
-
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-
-    padding: 20px;
-
-    overflow: hidden;
+    padding: 28px;
 
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-md);
+
+    overflow: hidden;
 }
 
-/* ===== Table ===== */
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
 table {
     width: 100%;
 
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
 
-    border-radius: 8px;
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-md);
 
     overflow: hidden;
 
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-sm);
 }
+
+
+/* En-tête */
 
 th {
-    background-color: #007BFF;
+    padding: 14px 16px;
 
-    color: white;
+    background: #f8fafc;
 
+    color: var(--text-secondary);
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 13px;
     font-weight: 600;
 
-    padding: 14px 12px;
-
     text-align: left;
+
+    white-space: nowrap;
 }
+
+
+/* Cellules */
 
 td {
-    padding: 12px;
+    padding: 14px 16px;
 
-    border-bottom: 1px solid #e5e7eb;
+    color: var(--text);
+
+    border-bottom: 1px solid var(--border-light);
+
+    font-size: 14px;
+
+    background: var(--surface);
+
+    vertical-align: middle;
 }
 
-tr:nth-child(even) {
-    background-color: #f9f9f9;
+
+/* Suppression de la bordure de la dernière ligne */
+
+tbody tr:last-child td {
+    border-bottom: none;
 }
 
-tr:hover {
-    background-color: #f1f5f9;
+
+/* Lignes alternées très légères */
+
+tbody tr:nth-child(even) td {
+    background-color: #fafbfc;
 }
 
-/* ===== Image ===== */
+
+/* Hover */
+
+tbody tr {
+    transition: background-color var(--transition);
+}
+
+tbody tr:hover td {
+    background-color: var(--primary-light);
+}
+
+
+/* =========================================================
+   IMAGE
+   ========================================================= */
+
 .zoom-image {
+    display: block;
+
     width: 100%;
     max-width: 100%;
-
     height: auto;
 
     object-fit: contain;
@@ -229,60 +400,192 @@ tr:hover {
 
     transform-origin: center;
 
-    display: block;
+    border-radius: var(--radius-sm);
 }
 
-/* ===== RESPONSIVE ===== */
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+   ========================================================= */
+
+:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.25);
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLETTE
+   ========================================================= */
+
 @media (max-width: 768px) {
 
     .head-box {
+        height: 64px;
+
         gap: 10px;
-        padding: 10px;
+
+        padding: 0 12px;
+    }
+
+    .head-box #menu {
+        width: 40px;
+        height: 40px;
+    }
+
+    .head-box #menu img {
+        width: 20px;
+        height: 20px;
     }
 
     .text-title {
         font-size: 18px;
     }
 
+
+    /* Sidebar */
+
     .icons {
-        width: 220px;
-        left: -220px;
+        width: 240px;
+        left: -240px;
+
+        padding-top: 64px;
     }
 
-    .center-wrapper {
-        margin: 90px 10px 20px 10px;
 
-        width: auto;
+    /* Contenu */
+
+    .center-wrapper {
+        width: calc(100% - 20px);
 
         min-height: auto;
 
-        padding: 15px;
+        margin: 84px auto 20px;
+
+        padding: 18px;
+
+        border-radius: var(--radius-md);
     }
 
+
+    /* Image */
+
     .zoom-image {
-        transform: scale(1) translate(0, 0);
+        transform: none;
     }
+
+
+    /* Table scrollable */
 
     table {
         display: block;
+
+        width: 100%;
+
         overflow-x: auto;
+
         white-space: nowrap;
+
+        -webkit-overflow-scrolling: touch;
     }
 
     th,
     td {
-        font-size: 14px;
-        padding: 10px;
+        padding: 11px 12px;
+
+        font-size: 13px;
     }
 }
 
-/* ===== Disable Hover On Touch Devices ===== */
+
+/* =========================================================
+   PETITS ÉCRANS
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .head-box {
+        padding: 0 10px;
+    }
+
+    .text-title {
+        font-size: 16px;
+    }
+
+    .icons {
+        width: 225px;
+        left: -225px;
+    }
+
+    .center-wrapper {
+        width: calc(100% - 16px);
+
+        margin-top: 80px;
+
+        padding: 12px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+
+        font-size: 12px;
+    }
+
+    .icons .text-menu {
+        padding: 16px;
+    }
+
+    .icons .text-menu h2 {
+        font-size: 16px;
+    }
+
+    .icon-container a,
+    .icon-container label {
+        padding: 12px 16px;
+    }
+}
+
+
+/* =========================================================
+   APPAREILS TACTILES
+   ========================================================= */
+
 @media (hover: none) {
 
-    tr:hover,
-    .icon-container a:hover,
-    .icon-container label:hover,
-    .head-box #menu:hover {
+    tbody tr:hover td {
         background-color: inherit;
+    }
+
+    .icon-container a:hover,
+    .icon-container label:hover {
+        background-color: inherit;
+        color: var(--text-secondary);
+        padding-left: 20px;
+    }
+
+    .head-box #menu:hover {
+        background-color: transparent;
+    }
+
+    .tooltip:hover {
+        transform: none;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITÉ — RÉDUCTION DES ANIMATIONS
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
     }
 }

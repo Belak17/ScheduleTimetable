@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style-student/style-student-dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
     <link rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
     <script src="https://unpkg.com/html5-qrcode"></script>
@@ -77,35 +77,44 @@
 
         <div class="option" style="background: linear-gradient(135deg, #4f8cff, #6ea8fe);">
             <a th:href="@{/student/timetable}">
-                <p> Emploi du temps</p>
+
                 <img th:src="@{/images/academic-years.png}">
+                <p> Emploi du temps</p>
             </a>
         </div>
         <div class="option" id="scan-button" style="background: linear-gradient(135deg, #7b61ff, #9b8cff);">
             <a th:href="@{/student/scanner}">
-            <p>Scanner Code</p>
+
             <img th:src="@{/images/qr-code.png}" alt="QR CODE">
+                <p>Scanner Code</p>
             </a>
         </div>
         <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
             <a th:href="@{/student/absences}">
-                <p>Vos absences</p>
                 <img th:src="@{/images/absent.png}" alt="Absences">
+
+                <p>Vos absences</p>
             </a>
         </div>
+        </section>
+        <h2 class="separator">Menu Admnistratif </h2>
+        <section class="grid">
         <div class="option" style="background-color: rgb(113, 113, 230);">
             <a th:href="@{/student/profile}">
-                <p>Profil </p>
+
                 <img th:src="@{/images/user-profile.png}" alt="Profil">
+                <p>Profil </p>
             </a>
         </div>
         <div class="option" style="background: linear-gradient(135deg, #4f8cff, #6ea8fe);">
             <a th:href="@{/logout}">
-                <p>Deconnexion </p>
+
                 <img th:src="@{/images/power-off.png}" alt="Deconnexion">
+                <p>Deconnexion </p>
             </a>
         </div>
-    </section>
+        </section>
+
 
 </main>
 </body>

@@ -1,33 +1,157 @@
+/* =========================================================
+   LISTE / NAVIGATION DES DÉPARTEMENTS
+   ========================================================= */
+
 .content {
     padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    color: var(--text);
 }
 
+/* Liste des groupes */
 .groups {
     list-style: none;
-    padding-left: 1rem;
+    padding: 0.5rem 0 0.5rem 1rem;
     margin: 0;
 }
 
 .groups li {
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-
+    margin-bottom: 0.35rem;
+    padding: 0;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition),
+                transform var(--transition);
 }
 
-
+/* Liens des groupes */
 .groups a {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+
     text-decoration: none;
-    color: inherit;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    border-radius: var(--radius-sm);
+
+    transition:
+        color var(--transition),
+        background-color var(--transition),
+        transform var(--transition);
+}
+
+/* Petit indicateur visuel */
+.groups a::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    margin-right: 0.7rem;
+
+    border-radius: 50%;
+    background-color: var(--text-muted);
+
+    transition:
+        background-color var(--transition),
+        transform var(--transition);
+}
+
+/* Hover */
+.groups li:hover {
+    background-color: var(--primary-light);
+}
+
+.groups li:hover a {
+    color: var(--primary);
+    transform: translateX(3px);
+}
+
+.groups li:hover a::before {
+    background-color: var(--primary);
+    transform: scale(1.25);
+}
+
+/* Département */
+.departement {
     display: block;
+
+    padding: 0.8rem 1rem;
+
+    text-decoration: none;
+    color: var(--text);
+
+    font-size: 0.98rem;
+    font-weight: 600;
+
+    border-radius: var(--radius-sm);
+
+    transition:
+        color var(--transition),
+        background-color var(--transition),
+        transform var(--transition);
 }
 
 .departement:hover {
-    background-color: #e6f0ff;
+    color: var(--primary);
+    background-color: var(--primary-light);
+    transform: translateX(3px);
 }
 
-.departement {
-    text-decoration: none;
-    color: inherit;
+/* Focus clavier */
+.groups a:focus-visible,
+.departement:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.2);
+    outline-offset: 2px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .content {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .groups {
+        padding-left: 0.5rem;
+    }
+
+    .groups a,
+    .departement {
+        padding: 0.7rem 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .content {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .groups a,
+    .departement {
+        font-size: 0.9rem;
+    }
+}
+
+/* Désactive les animations pour les utilisateurs
+   qui les ont désactivées dans leur système */
+@media (prefers-reduced-motion: reduce) {
+
+    .groups li,
+    .groups a,
+    .departement {
+        transition: none;
+    }
+
+    .groups li:hover a,
+    .departement:hover {
+        transform: none;
+    }
 }

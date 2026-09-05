@@ -73,7 +73,7 @@ public class DataInitializer implements CommandLineRunner
             student.setCin("2394595");
             student.setNom("AKAKP");
             student.setPrenom("Renaud");
-            student.setEmail("akakpo@gmail.com");
+            student.setEmail("akanaud17@gmail.com");
             student.setNiveau(2);
             student.setFiliere(Filiere.LSI);
             student.setGroup("TD1 TP1");

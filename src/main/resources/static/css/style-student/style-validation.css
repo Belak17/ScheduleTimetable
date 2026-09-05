@@ -1,112 +1,220 @@
+/* =========================================================
+   RESET & DESIGN SYSTEM
+   ========================================================= */
 
-
-/* ===== Main Content ===== */
-.center-wrapper {
-    margin: 90px auto 20px auto; /* sous le header */
-    padding: 20px;
-    max-width: 1200px;
-       height: auto;      /* ou juste supprimer height */
-    min-height: 500px;
-   background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    display: block;
-    gap:30px;
-    justify-content: center;
-
-
-}
-
-/* ===== Reset & Base ===== */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body {
-    background-color: #c4cfda63;
-    color: #333;
-    font-family: Cairo, system-ui,
-        -apple-system, Segoe UI, Roboto, Oxygen,
-        Ubuntu, Cantarell, Helvetica Neue, Arial,
-        Noto Sans, Liberation Sans, sans-serif;
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+
+    --text: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+
+    --background: #f4f6f9;
+    --surface: #ffffff;
+
+    --border: #e5e7eb;
+    --border-light: #eef0f3;
+
+    --success: #16a34a;
+    --success-light: #f0fdf4;
+    --success-border: #bbf7d0;
+
+    --danger: #dc2626;
+    --danger-dark: #b91c1c;
+    --danger-light: #fef2f2;
+    --danger-border: #fecaca;
+
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.06);
+    --shadow-lg: 0 12px 30px rgba(15, 23, 42, 0.10);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    --transition: 0.2s ease;
 }
 
-/* ===== Main Content ===== */
-.center-wrapper {
-    margin: 90px auto 20px auto;
-    padding: 20px;
-    max-width: 1200px;
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+html {
+    scroll-behavior: smooth;
 }
+
+body {
+    font-family:
+        'Inter',
+        Cairo,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Oxygen,
+        Ubuntu,
+        Cantarell,
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+
+    background: var(--background);
+    color: var(--text);
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.center-wrapper {
+    width: min(1200px, calc(100% - 40px));
+
+    margin: 96px auto 40px;
+
+    min-height: 500px;
+
+    padding: 28px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-md);
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
 
 .center-wrapper h2 {
     text-align: center;
-    padding-bottom: 15px;
-    padding-top: 10px;
+
+    padding: 8px 0 20px;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    color: var(--text);
 }
 
-/* ===== Separator ===== */
+
+/* =========================================================
+   SEPARATOR
+   ========================================================= */
+
 .separator {
+    width: 100%;
+
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-weight: bold;
+
+    gap: 14px;
+
+    margin: 8px 0 24px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: var(--text-secondary);
 }
 
 .separator::before,
 .separator::after {
     content: "";
+
     flex: 1;
-    height: 2px;
-    background-color: black;
+
+    height: 1px;
+
+    background: var(--border);
 }
 
-/* ===== Result Card ===== */
+
+/* =========================================================
+   RESULT CARD
+   ========================================================= */
+
 .result-scanner {
-    padding: 40px 20px;
+    width: 100%;
+
     min-height: 500px;
-    min-width: fit-content;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 
     display: flex;
     flex-direction: column;
+
     justify-content: center;
     align-items: center;
 
-    gap: 30px;
+    gap: 24px;
+
+    padding: 48px 30px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+
+    text-align: center;
 }
 
-/* ===== Success Icon ===== */
+
+/* =========================================================
+   SUCCESS / ERROR ICON
+   ========================================================= */
+
 .check-circle {
-    width: 150px;
-    height: 150px;
-    background-color: #28a745;
-    color: white;
-    border-radius: 50%;
+    width: 120px;
+    height: 120px;
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
-    font-size: 80px;
-    font-weight: bold;
+    border-radius: 50%;
 
-    animation:
-        popIn 0.6s ease-out,
-        pulse 2s infinite 0.6s;
+    background: var(--success);
+    color: white;
+
+    font-size: 64px;
+    font-weight: 700;
+
+    box-shadow: 0 8px 24px rgba(22, 163, 74, 0.20);
+
+    animation: popIn 0.45s ease-out;
 }
 
+
+/* =========================================================
+   SUCCESS ICON ANIMATION
+   ========================================================= */
+
 @keyframes popIn {
+
     0% {
-        transform: scale(0);
+        transform: scale(0.75);
         opacity: 0;
     }
 
     70% {
-        transform: scale(1.15);
+        transform: scale(1.05);
     }
 
     100% {
@@ -115,120 +223,305 @@ body {
     }
 }
 
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.6);
-    }
 
-    70% {
-        box-shadow: 0 0 0 20px rgba(40, 167, 69, 0);
-    }
+/* =========================================================
+   SUCCESS TITLE
+   ========================================================= */
 
-    100% {
-        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
-    }
-}
-
-/* ===== Text ===== */
 .success-title {
-    color: #28a745;
+    color: var(--success);
+
     font-size: 24px;
+    font-weight: 700;
+
     text-align: center;
 }
 
+
+/* =========================================================
+   VALIDATION DETAILS
+   ========================================================= */
+
 .validation-details {
     width: 100%;
-    max-width: 500px;
-
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 20px;
+    max-width: 560px;
 
     display: flex;
     flex-direction: column;
-    gap: 12px;
+
+    gap: 0;
+
+    padding: 4px 20px;
+
+    background: var(--success-light);
+
+    border: 1px solid var(--success-border);
+
+    border-radius: var(--radius-md);
+
+    text-align: left;
 }
 
 .validation-details p {
-    font-size: 16px;
+    padding: 14px 4px;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: var(--text);
+
+    border-bottom: 1px solid var(--success-border);
 }
 
-/* ===== Mobile ===== */
-@media (max-width: 768px) {
-    .center-wrapper {
-        margin: 20px 10px;
-        padding: 10px;
-    }
-
-    .check-circle {
-        width: 120px;
-        height: 120px;
-        font-size: 60px;
-    }
-
-    .success-title {
-        font-size: 20px;
-    }
+.validation-details p:last-child {
+    border-bottom: none;
 }
 
 
-/* ===== ERROR THEME ===== */
+/* =========================================================
+   ERROR THEME
+   ========================================================= */
 
 .error.check-circle {
-    background-color: #dc3545;
-    animation:
-        popIn 0.6s ease-out,
-        pulseError 2s infinite 0.6s;
+    background: var(--danger);
+
+    box-shadow: 0 8px 24px rgba(220, 38, 38, 0.20);
+
+    animation: popIn 0.45s ease-out;
 }
 
 .error-title {
-    color: #dc3545;
+    color: var(--danger);
+
     font-size: 24px;
+    font-weight: 700;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   ERROR SEPARATOR
+   ========================================================= */
+
+.separator.error {
+    color: var(--danger);
 }
 
 .separator.error::before,
 .separator.error::after {
-    background-color: #dc3545;
+    background: var(--danger-border);
 }
 
-/* bouton */
+
+/* =========================================================
+   ERROR BUTTON
+   ========================================================= */
+
 .error-btn {
-    background-color: #dc3545;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 44px;
+
+    padding: 0 20px;
+
+    background: var(--danger);
+
     color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
+
+    border: 1px solid var(--danger);
+
+    border-radius: var(--radius-sm);
+
+    font-size: 14px;
+    font-weight: 600;
+
     text-decoration: none;
-    transition: 0.3s;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
 }
 
 .error-btn:hover {
-    background-color: #b52a37;
+    background: var(--danger-dark);
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.20);
 }
 
-/* animation rouge */
-@keyframes pulseError {
-    0% {
-        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.6);
-    }
-    70% {
-        box-shadow: 0 0 0 20px rgba(220, 53, 69, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
-    }
-}
+
+/* =========================================================
+   ROOM CHANGE BUTTON
+   ========================================================= */
 
 .btn-room-change {
-    background-color: #2563eb;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 44px;
+
+    padding: 0 20px;
+
+    background: var(--primary);
+
     color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 12px 18px;
+
+    border: 1px solid var(--primary);
+
+    border-radius: var(--radius-sm);
+
+    font-size: 14px;
     font-weight: 600;
+
     cursor: pointer;
-    transition: background-color 0.2s ease;
+
+    transition:
+        background-color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
 }
 
 .btn-room-change:hover {
-    background-color: #1d4ed8;
+    background: var(--primary-dark);
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.20);
+}
+
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.25);
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .center-wrapper {
+        width: calc(100% - 20px);
+
+        margin: 80px 10px 20px;
+
+        padding: 16px;
+    }
+
+    .center-wrapper h2 {
+        font-size: 20px;
+    }
+
+    .result-scanner {
+        min-height: 450px;
+
+        padding: 40px 20px;
+
+        gap: 20px;
+    }
+
+    .check-circle {
+        width: 105px;
+        height: 105px;
+
+        font-size: 54px;
+    }
+
+    .success-title,
+    .error-title {
+        font-size: 21px;
+    }
+
+    .validation-details {
+        max-width: 100%;
+
+        padding: 2px 16px;
+    }
+
+    .validation-details p {
+        font-size: 14px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .center-wrapper {
+        width: calc(100% - 12px);
+
+        margin: 76px 6px 16px;
+
+        padding: 10px;
+    }
+
+    .result-scanner {
+        min-height: 420px;
+
+        padding: 32px 14px;
+    }
+
+    .check-circle {
+        width: 90px;
+        height: 90px;
+
+        font-size: 46px;
+    }
+
+    .success-title,
+    .error-title {
+        font-size: 19px;
+    }
+
+    .validation-details {
+        padding: 0 12px;
+    }
+
+    .validation-details p {
+        padding: 12px 2px;
+
+        font-size: 13px;
+    }
+
+    .error-btn,
+    .btn-room-change {
+        width: 100%;
+
+        min-height: 46px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }

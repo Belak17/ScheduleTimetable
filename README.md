@@ -192,17 +192,17 @@ The project follows a layered architecture.
 ---
 
 ##  Dashboard
-![Screenshot](images/dashboard.png)
+![Screenshot](images/admindashboard.png)
 
 ---
 
 ##  Timetable List
 
 ### Timetable Without Department Selection
-![Screenshot](images/emploidutempssansdepartmentselection.png)
+![Screenshot](images/emploidutempssans.png)
 
 ### Timetable By Department
-![Screenshot](images/emploidutempspardepartement.png)
+![Screenshot](images/emploidutempsdepartement.png)
 
 ---
 
@@ -212,37 +212,37 @@ The project follows a layered architecture.
 ---
 
 ##  Field Management
-![Screenshot](images/field.png)
+![Screenshot](images/fieldmng.png)
 
 ---
 
 ##  See Absences
-![Screenshot](images/vueabsence.png)
+![Screenshot](images/vueimg.png)
 
 ---
 
 ##  See All Courses Without Group Selection
-![Screenshot](images/see-all-courses.png)
+![Screenshot](images/see-all-coursesnew.png)
 
 ---
 
 ##  See All Courses With Group Selection
-![Screenshot](images/see-all-courses-with-group-selection.png)
+![Screenshot](images/groupselection.png)
 
 ---
 
 ##  Modify info for Student
-![Screenshot](images/modify-info.png)
+![Screenshot](images/modifyinfo.png)
 
 ---
 
 ## Modify email 
-![Screenshot](images/modify-email.png)
+![Screenshot](images/modifyemail.png)
 
 ---
 
 ## Modify Password
-![Screenshot](images/modify-password.png)
+![Screenshot](images/modifypass.png)
 
 ---
 
