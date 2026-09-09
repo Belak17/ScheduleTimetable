@@ -692,6 +692,152 @@ body {
 
 }
 
+/* =========================================================
+   GRAND ÉCRAN
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    .center-container {
+        width: calc(100% - 80px);
+        max-width: 1700px;
+
+        margin-top: 104px;
+
+        padding: 32px;
+
+        gap: 30px;
+    }
+
+    .list-department {
+        width: 280px;
+
+        padding: 18px;
+
+        max-height: 700px;
+    }
+
+    .departments {
+        gap: 6px;
+    }
+
+    .departement {
+        padding: 13px 14px;
+    }
+
+    .departement h3 {
+        font-size: 15px;
+    }
+
+    .departement img {
+        width: 22px;
+        height: 22px;
+    }
+
+    .departement-title {
+        font-size: 16px;
+        margin-bottom: 18px;
+        padding-bottom: 14px;
+    }
+
+    .list-field {
+        gap: 28px;
+    }
+
+    .field-title {
+        font-size: 15px;
+        letter-spacing: 1.6px;
+    }
+
+    .field-bachelor,
+    .field-master {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+    }
+
+    .field {
+        padding: 24px 20px;
+    }
+
+    .field img {
+        width: 78px;
+        height: 78px;
+        margin-bottom: 14px;
+    }
+
+    .field h4 {
+        font-size: 15px;
+    }
+
+    .level-panel {
+        width: 250px;
+        padding: 14px;
+    }
+
+    .group-panel {
+        width: 230px;
+        padding: 14px;
+    }
+}
+
+
+/* =========================================================
+   TRÈS GRAND ÉCRAN
+   ========================================================= */
+
+@media (min-width: 1920px) {
+
+    .center-container {
+        max-width: 1850px;
+
+        padding: 38px;
+
+        gap: 36px;
+    }
+
+    .list-department {
+        width: 300px;
+
+        padding: 20px;
+
+        max-height: 750px;
+    }
+
+    .departement {
+        padding: 14px 15px;
+    }
+
+    .departement h3 {
+        font-size: 15.5px;
+    }
+
+    .list-field {
+        gap: 32px;
+    }
+
+    .field-bachelor,
+    .field-master {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 24px;
+    }
+
+    .field {
+        padding: 28px 22px;
+    }
+
+    .field img {
+        width: 84px;
+        height: 84px;
+    }
+
+    .field h4 {
+        font-size: 16px;
+    }
+
+    .field-title {
+        font-size: 16px;
+    }
+}
 
 /* =========================================================
    ACCESSIBILITÉ

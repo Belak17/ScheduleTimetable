@@ -140,6 +140,69 @@
     }
 }
 
+/* =========================================================
+   GRAND ÉCRAN
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    .content {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .groups {
+        padding: 0.75rem 0 0.75rem 1.5rem;
+    }
+
+    .groups li {
+        margin-bottom: 0.45rem;
+    }
+
+    .groups a {
+        padding: 0.8rem 1rem;
+        font-size: 1rem;
+    }
+
+    .groups a::before {
+        width: 6px;
+        height: 6px;
+        margin-right: 0.8rem;
+    }
+
+    .departement {
+        padding: 0.9rem 1.1rem;
+        font-size: 1.02rem;
+    }
+}
+
+
+/* =========================================================
+   TRÈS GRAND ÉCRAN
+   ========================================================= */
+
+@media (min-width: 1920px) {
+
+    .content {
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+    }
+
+    .groups {
+        padding-left: 2rem;
+    }
+
+    .groups a {
+        padding: 0.9rem 1.1rem;
+        font-size: 1.05rem;
+    }
+
+    .departement {
+        padding: 1rem 1.2rem;
+        font-size: 1.08rem;
+    }
+}
+
 /* Désactive les animations pour les utilisateurs
    qui les ont désactivées dans leur système */
 @media (prefers-reduced-motion: reduce) {

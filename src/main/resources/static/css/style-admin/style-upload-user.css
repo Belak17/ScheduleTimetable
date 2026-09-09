@@ -679,3 +679,172 @@ button:active {
         animation: none !important;
     }
 }
+
+/* =========================================================
+   GRAND ÉCRAN
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    .center-wrappers {
+        width: calc(100% - 80px);
+        max-width: 1800px;
+
+        margin-top: 104px;
+
+        padding: 40px;
+    }
+
+
+    /* =====================================================
+       FORMULAIRE
+       ===================================================== */
+
+    form {
+        padding: 24px;
+    }
+
+
+    /* =====================================================
+       FIELDSETS
+       ===================================================== */
+
+    .fieldsets {
+        gap: 28px;
+    }
+
+    fieldset {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    legend {
+        padding: 17px 22px;
+
+        font-size: 16px;
+    }
+
+    fieldset > div {
+        padding: 16px 20px;
+    }
+
+
+    /* =====================================================
+       LABELS / INPUTS
+       ===================================================== */
+
+    label {
+        font-size: 14px;
+    }
+
+    input,
+    select {
+        min-height: 46px;
+
+        padding: 10px 14px;
+
+        font-size: 15px;
+    }
+
+    .form-grid-3 {
+        gap: 22px;
+        padding: 20px;
+    }
+
+
+    /* =====================================================
+       FILE INPUT
+       ===================================================== */
+
+    input[type="file"] {
+        min-height: 48px;
+    }
+
+
+    /* =====================================================
+       BUTTONS
+       ===================================================== */
+
+    .buttons {
+        gap: 14px;
+
+        margin-top: 32px;
+
+        padding-top: 28px;
+    }
+
+    button {
+        min-width: 130px;
+        min-height: 44px;
+
+        padding: 10px 20px;
+
+        font-size: 15px;
+    }
+
+
+    /* =====================================================
+       ALERTS
+       ===================================================== */
+
+    .alert {
+        padding: 14px 16px;
+
+        margin-bottom: 22px;
+
+        font-size: 15px;
+    }
+}
+
+
+/* =========================================================
+   TRÈS GRAND ÉCRAN
+   ========================================================= */
+
+@media (min-width: 1920px) {
+
+    .center-wrappers {
+        max-width: 1950px;
+
+        padding: 46px;
+    }
+
+    form {
+        padding: 28px;
+    }
+
+    .fieldsets {
+        gap: 32px;
+    }
+
+    legend {
+        padding: 18px 24px;
+
+        font-size: 17px;
+    }
+
+    fieldset > div {
+        padding: 18px 22px;
+    }
+
+    .form-grid-3 {
+        gap: 24px;
+        padding: 22px;
+    }
+
+    input,
+    select {
+        min-height: 48px;
+
+        font-size: 15px;
+    }
+
+    .buttons {
+        margin-top: 36px;
+        padding-top: 30px;
+    }
+
+    button {
+        min-width: 140px;
+        min-height: 46px;
+    }
+}
