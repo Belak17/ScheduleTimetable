@@ -82,12 +82,10 @@ public class DataInitializer implements CommandLineRunner
             studentRepository.save(student);
 
         }
-
     }
 
     @PostConstruct
     public void initSalles() {
-
 
         if (salleRepository.count() > 0) {
             return; // déjà initialisé → on sort

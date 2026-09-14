@@ -42,7 +42,7 @@ public class FiliereController {
 
         model.addAttribute("department", Departement.valueOf(departement));
         model.addAttribute("masters", masters);
-        return  "/admin/show-filiere-by-department" ;
+        return  "admin/show-filiere-by-department" ;
     }
 
     @GetMapping("/departements/{departement}/{filiere}/{niveau}")

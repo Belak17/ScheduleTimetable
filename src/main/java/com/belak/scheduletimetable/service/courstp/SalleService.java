@@ -22,6 +22,8 @@ public class SalleService {
         try {
             String text = salle.getCode();
 
+            text = "https://172.20.96.216:8082/api/qr/scan?code="+text ;
+
             int width = 300;
             int height = 300;
 

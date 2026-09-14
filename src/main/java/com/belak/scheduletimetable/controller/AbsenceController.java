@@ -37,7 +37,7 @@ public class AbsenceController {
         model.addAttribute("selectedField",filiere);
         model.addAttribute("selectedNiveau",niveau);
         model.addAttribute("groups",groupTimetableService.getAllGroupByDepartmentAndFieldAndLevel(departement,filiere,niveau));
-        return "/admin/see-absence-final";
+        return "admin/see-absence-final";
     }
     @GetMapping("/{departement}/{filiere}/{niveau}/{group}")
     public String showGroupGeneral(
@@ -55,7 +55,7 @@ public class AbsenceController {
         model.addAttribute("selectedGroup", group);
         model.addAttribute("courses", tpService.getAllCoursTPByGroupTimetable(page,size,departement,group,niveau,filiere));
         model.addAttribute("groups",groupTimetableService.getAllGroupByDepartmentAndFieldAndLevel(departement,filiere,niveau));
-        return "/admin/see-absence-final";
+        return "admin/see-absence-final";
     }
     @GetMapping("/courses/{id}")
     public String showCoursePresence(@PathVariable Long id,@RequestParam(defaultValue = "0") int page,
@@ -64,7 +64,7 @@ public class AbsenceController {
         model.addAttribute("attendanceTable",tpService.getAllDatesAndAttendanceByCoursTP(id,page,size));
         model.addAttribute("currentPage", page);
         model.addAttribute("size", size);
-        return "/admin/see-attendance-final";
+        return "admin/see-attendance-final";
     }
     @GetMapping("/{id}")
     public String getAllAbsencesByStudent(

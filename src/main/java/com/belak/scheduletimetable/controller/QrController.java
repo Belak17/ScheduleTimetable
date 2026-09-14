@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -25,17 +26,24 @@ public class QrController {
     public String scanQr(@RequestParam String code,
                          Authentication authentication) {
 
-        PresenceValidationDto dto = presenceService.createPresence(
-                authentication.getName(),
-                code
-        );
-        return "redirect:/student/validation"
-                + "?intitule=" + dto.getIntitule()
-                + "&group=" + dto.getGroup()
-                + "&code=" + dto.getCode()
-                + "&date=" + dto.getDate().format(DateTimeFormatter.ISO_DATE)
-                + "&time=" + dto.getTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-                + "&day=" + dto.getDay();
+        System.out.println("Le code est :"+code);
+
+        if (authentication.getName()!=null&& authentication.isAuthenticated()) {
+            PresenceValidationDto dto = presenceService.createPresence(
+                    authentication.getName(),
+                    code
+            );
+            return "redirect:/student/validation"
+                    + "?intitule=" + dto.getIntitule()
+                    + "&group=" + dto.getGroup()
+                    + "&code=" + dto.getCode()
+                    + "&date=" + dto.getDate().format(DateTimeFormatter.ISO_DATE)
+                    + "&time=" + dto.getTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                    + "&day=" + dto.getDay();
+        }
+
+        return "redirect:/api/qr/authentify"+
+                "?code=" + code;
     }
     @PostMapping("/change/salle")
     public String changeSalle(Authentication authentication , @RequestParam String code)
@@ -58,4 +66,32 @@ public class QrController {
 
         return "redirect:" + url;
     }
+
+    @GetMapping("/authentify")
+    public String authentifyForScanningCodeQr(@RequestParam String code , Model model)
+    {
+        model.addAttribute("code", code);
+        return  "student/authenticationPage";
+    }
+
+
+    @PostMapping("/scan/authenticated")
+    public String registerPresenceNowAuthenticated(@RequestParam String code, @RequestParam String userId) {
+
+
+            PresenceValidationDto dto = presenceService.createPresence(
+                    userId,
+                    code
+            );
+            return "redirect:/student/validation"
+                    + "?intitule=" + dto.getIntitule()
+                    + "&group=" + dto.getGroup()
+                    + "&code=" + dto.getCode()
+                    + "&date=" + dto.getDate().format(DateTimeFormatter.ISO_DATE)
+                    + "&time=" + dto.getTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                    + "&day=" + dto.getDay();
+        }
+
+
+
 }

@@ -58,7 +58,7 @@ public class GroupTimetableController {
         model.addAttribute("GroupTimetableList", timetables);
         model.addAttribute("selectedDepartment", departement);
 
-        return "/admin/see-all-group-timetable";
+        return "admin/see-all-group-timetable";
     }
 
     @GetMapping("/group/timetable")
@@ -69,7 +69,7 @@ public class GroupTimetableController {
     ) {
 
         model.addAttribute("GroupTimetableList", null);
-        return "/admin/see-all-group-timetable";
+        return "admin/see-all-group-timetable";
     }
 
     @GetMapping("/preview/{id}")
