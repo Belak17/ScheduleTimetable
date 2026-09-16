@@ -1,0 +1,294 @@
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f5f7fa;
+
+    font-family: Arial, sans-serif;
+    color: #263238;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.center-wrapper {
+    width: min(620px, calc(100% - 40px));
+
+    margin: 40px auto;
+
+    padding: 0 0 35px;
+
+    background: #ffffff;
+
+    border: 1px solid #e3e7eb;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.separator {
+    margin: 0;
+
+    padding: 22px 25px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    text-align: center;
+
+    font-size: 21px;
+    font-weight: 600;
+
+    color: #263238;
+}
+
+
+/* =========================================================
+   SCANNER RESULT
+   ========================================================= */
+
+.result-scanner {
+    padding: 35px 45px 10px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   ICON CIRCLE
+   ========================================================= */
+
+.check-circle {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef5ff;
+
+    color: #2563eb;
+
+    font-size: 28px;
+}
+
+.check-circle i {
+    display: flex;
+}
+
+
+/* =========================================================
+   SUCCESS MESSAGE
+   ========================================================= */
+
+.success-title {
+    margin: 0 0 8px;
+
+    font-size: 21px;
+    font-weight: 600;
+
+    color: #263238;
+}
+
+.scan-message {
+    margin: 0 auto 25px;
+
+    color: #68737d;
+
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   ROOM DETAILS
+   ========================================================= */
+
+.validation-details {
+    margin: 25px 0;
+
+    padding: 18px 22px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+
+    text-align: left;
+}
+
+.validation-details p {
+    display: flex;
+
+    align-items: center;
+
+    margin: 10px 0;
+
+    font-size: 15px;
+}
+
+.validation-details p:first-child {
+    margin-top: 0;
+}
+
+.validation-details p:last-child {
+    margin-bottom: 0;
+}
+
+.validation-details strong {
+    width: 110px;
+
+    color: #4b5563;
+}
+
+.validation-details span {
+    color: #1f2937;
+}
+
+
+/* =========================================================
+   STUDENT FORM
+   ========================================================= */
+
+.student-form {
+    margin-top: 30px;
+
+    text-align: left;
+}
+
+.student-form label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #374151;
+}
+
+.student-form input {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d5dbe1;
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.student-form input::placeholder {
+    color: #9ca3af;
+}
+
+.student-form input:focus {
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.student-form button {
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 13px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    border: none;
+    border-radius: 7px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.student-form button:hover {
+    background: #1d4ed8;
+}
+
+.student-form button:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .center-wrapper {
+        width: calc(100% - 25px);
+    }
+
+    .result-scanner {
+        padding: 30px 25px 10px;
+    }
+
+    .separator {
+        font-size: 19px;
+    }
+
+    .validation-details p {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3px;
+    }
+
+    .validation-details strong {
+        width: auto;
+    }
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Identification Étudiant</title>
+
+  <link rel="stylesheet"
+        th:href="@{/css/style-student/style-room-scan.css}">
+
+  <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+</head>
+
+<body>
+
+<main class="center-wrapper">
+
+  <h2 class="separator">Validation de présence</h2>
+
+  <section class="result-scanner">
+
+    <!-- Icône -->
+    <div class="check-circle">
+      <i class="fi fi-ss-building"></i>
+    </div>
+
+    <!-- Message -->
+    <h3 class="success-title">
+      QR Code de la salle scanné
+    </h3>
+
+    <p class="scan-message">
+      Vous avez scanné le code QR de cette salle.
+    </p>
+
+    <!-- Informations de la salle -->
+    <div class="validation-details">
+
+      <p>
+        <strong>Salle :</strong>
+        <span th:text="${code}"></span>
+      </p>
+
+
+    </div>
+
+    <!-- Identification étudiant -->
+    <form th:action="@{/student/room-validation}"
+          method="post"
+          class="student-form">
+
+      <label for="studentId">
+        Identifiant étudiant
+      </label>
+
+      <input
+              type="text"
+              id="studentId"
+              name="studentId"
+              placeholder="Entrez votre identifiant"
+              required
+              autocomplete="off"
+      >
+
+      <button type="submit">
+        <i class="fi fi-ss-check"></i>
+        Valider ma présence
+      </button>
+
+    </form>
+
+  </section>
+
+</main>
+
+</body>
+</html>
