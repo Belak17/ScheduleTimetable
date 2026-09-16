@@ -4,13 +4,18 @@
         <span>Changer la photo de profil</span>
     </div>
     <form th:action="@{/admin/profile/update}" method="post" enctype="multipart/form-data">
-        <div class="info-input">
-            <input id="profileImage" type="file" name="image" accept="image/*">
-        </div>
-        <div class="generals-info">
+        <span class="title-container">Information Avatar</span>
+
+        <div class="generals-info inputs-photo">
+
+            <div class="info-input">
+                <input id="profileImage" type="file" name="image" accept="image/*">
+            </div>
+
+            <div class="info-input">
 
             <img th:src="@{/images/self.jpg}" id="img-user">
-
+            </div>
         </div>
     </form>
 </section>

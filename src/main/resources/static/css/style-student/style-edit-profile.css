@@ -10,7 +10,7 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
 
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
     overflow: hidden;
 }
@@ -33,13 +33,13 @@
 
     font-size: 1rem;
     font-weight: 600;
+
+
 }
 
 .title-bloc img {
-    width: 24px;
-    height: 24px;
-    max-width: 30px;
-
+    width: 23px;
+    height: 23px;
     object-fit: contain;
 }
 
@@ -60,13 +60,13 @@
     display: flex;
     flex-direction: column;
 
-    width: 280px;
+    width: 260px;
     min-width: 240px;
 
     background: var(--surface);
 
     border: 1px solid var(--border);
-    border-radius: var(--radius-md);
+    border-radius: 5px;
 
     overflow: hidden;
 }
@@ -103,33 +103,38 @@
 }
 
 .param-option img {
-    width: 20px;
-    height: 20px;
-    max-width: 20px;
+    width: 19px;
+    height: 19px;
 
     object-fit: contain;
 }
 
 
 /* =========================================================
-   OPTION ACTIVE / CONTENU SÉLECTIONNÉ
+   CONTENU SÉLECTIONNÉ
    ========================================================= */
 
 .option-clicked {
+    flex: 1;
     width: 100%;
+    min-width: 0;
+
+    padding: 25px;
 
     background: var(--surface);
 
     border: 1px solid var(--border);
-    border-radius: var(--radius-md);
+    border-radius: 5px;
 
     overflow: hidden;
 
-    box-shadow: var(--shadow-sm);
-
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
 }
 
 .option-clicked .title-bloc {
+    margin: -25px -25px 25px;
+
     padding: 14px 18px;
 
     background: var(--primary-light);
@@ -138,14 +143,8 @@
     border-bottom: 1px solid #dbeafe;
 }
 
-.option-clicked .title-bloc img {
-    filter: none;
-}
-
 .option-clicked label {
     display: block;
-
-    flex: none;
 
     margin-bottom: 6px;
 
@@ -154,10 +153,6 @@
     font-weight: 600;
 }
 
-.option-clicked
-{
-    padding:25px ;
-}
 
 /* =========================================================
    INFORMATIONS
@@ -170,16 +165,18 @@
     width: 100%;
     gap: 24px;
 
-    padding: 24px;
+    box-sizing: border-box;
 }
 
 
-/* Sections générales / académiques */
+/* Sections */
 
 .generals-info,
 .academical-info {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(3, minmax(180px, 1fr));
 
     gap: 18px;
 }
@@ -189,7 +186,6 @@
 }
 
 .academical-info {
-    padding-left: 20px;
     padding-bottom: 20px;
 }
 
@@ -199,14 +195,14 @@
 .info-input {
     display: flex;
     flex-direction: column;
+
     min-width: 0;
 }
 
 .generals-info label,
 .label-ext {
-    padding-left: 0;
-
     color: var(--text-secondary);
+
     font-size: 0.82rem;
     font-weight: 600;
 }
@@ -237,6 +233,7 @@
     content: "";
 
     position: absolute;
+
     left: 0;
     right: 0;
     bottom: 0;
@@ -252,13 +249,13 @@
     display: inline-block;
 
     width: 4px;
-    height: 16px;
+    height: 15px;
 
     margin-right: 9px;
 
     vertical-align: -2px;
 
-    border-radius: 4px;
+    border-radius: 3px;
 
     background: var(--primary);
 }
@@ -268,7 +265,7 @@
    INPUTS
    ========================================================= */
 
-input {
+.option-clicked input {
     width: 100%;
     box-sizing: border-box;
 
@@ -286,34 +283,46 @@ input {
 
     transition:
         border-color var(--transition),
-        box-shadow var(--transition),
-        background-color var(--transition);
+        box-shadow var(--transition);
 }
 
-input:hover {
+.option-clicked input:hover {
     border-color: #cbd5e1;
 }
 
-input:focus {
+.option-clicked input:focus {
     outline: none;
 
     border-color: var(--primary);
 
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
 }
 
-input::placeholder {
+.option-clicked input::placeholder {
     color: var(--text-muted);
 }
 
+.old-pass , .old-mail
+{
+    margin-bottom:40px;
+}
 
-/* Fichier */
+.inputs-photo
+{
+display:flex;
+flex-direction:column;
+gap:40px;
+}
 
-input[type="file"] {
+/* =========================================================
+   FICHIER
+   ========================================================= */
+
+.option-clicked input[type="file"] {
     padding: 7px;
 }
 
-input[type="file"]::file-selector-button {
+.option-clicked input[type="file"]::file-selector-button {
     margin-right: 10px;
 
     padding: 7px 12px;
@@ -322,7 +331,7 @@ input[type="file"]::file-selector-button {
     color: var(--primary);
 
     border: 1px solid #dbeafe;
-    border-radius: 6px;
+    border-radius: 5px;
 
     font-family: inherit;
     font-weight: 600;
@@ -334,7 +343,7 @@ input[type="file"]::file-selector-button {
         color var(--transition);
 }
 
-input[type="file"]::file-selector-button:hover {
+.option-clicked input[type="file"]::file-selector-button:hover {
     background: var(--primary);
     color: #ffffff;
 }
@@ -350,13 +359,13 @@ input[type="file"]::file-selector-button:hover {
 
     width: fit-content;
 
-    padding: 6px 10px;
+    padding: 5px 9px;
 
     background: var(--primary-light);
     color: var(--primary);
 
     border: 1px solid #dbeafe;
-    border-radius: 6px;
+    border-radius: 5px;
 
     font-size: 0.82rem;
     font-weight: 700;
@@ -372,7 +381,6 @@ input[type="file"]::file-selector-button:hover {
 
     width: 180px;
     height: 180px;
-    max-width: 300px;
 
     object-fit: cover;
 
@@ -381,9 +389,7 @@ input[type="file"]::file-selector-button:hover {
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
 
-    filter: none;
-
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 
@@ -422,41 +428,41 @@ button {
     transition:
         background-color var(--transition),
         border-color var(--transition),
-        transform var(--transition),
         box-shadow var(--transition);
 }
 
 button:hover {
-    transform: translateY(-1px);
+    transform: none;
 }
 
 button:active {
-    transform: translateY(0);
+    transform: none;
 }
 
 button:focus-visible {
-    outline: 3px solid rgba(37, 99, 235, 0.18);
+    outline: 3px solid rgba(37, 99, 235, 0.16);
     outline-offset: 2px;
 }
 
 
-/* Bouton réinitialiser */
+/* Réinitialiser */
 
 .reset {
-    background: var(--surface);
-    color: var(--text-secondary);
+    background: var(--danger-light);
+
+    color: var(--danger);
 
     border-color: var(--border);
 }
 
 .reset:hover {
-    background: #f9fafb;
-    color: var(--text);
-    border-color: #d1d5db;
+ background: #fee2e2;
+
+ border-color: #fca5a5;
 }
 
 
-/* Bouton enregistrer */
+/* Enregistrer */
 
 .submit {
     background: var(--primary);
@@ -464,14 +470,14 @@ button:focus-visible {
 
     border-color: var(--primary);
 
-    box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
+    box-shadow: 0 2px 5px rgba(37, 99, 235, 0.16);
 }
 
 .submit:hover {
     background: var(--primary-dark);
     border-color: var(--primary-dark);
 
-    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.22);
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.18);
 }
 
 
@@ -524,10 +530,6 @@ a {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         width: 100%;
     }
-
-    .academical-info {
-        padding-left: 0;
-    }
 }
 
 
@@ -543,13 +545,16 @@ a {
         gap: 16px;
     }
 
-    .all-info {
-        padding: 16px;
+    .option-clicked {
+        padding: 20px;
+    }
+
+    .option-clicked .title-bloc {
+        margin: -20px -20px 20px;
     }
 
     .generals-info,
     .academical-info {
-        display: grid;
         grid-template-columns: 1fr;
         gap: 14px;
     }
@@ -579,12 +584,21 @@ a {
     .center-wrapper {
         width: calc(100% - 16px);
         margin-top: 76px;
+
         border-radius: var(--radius-md);
     }
 
-    .content-container,
-    .all-info {
+    .content-container {
         padding: 12px;
+    }
+
+    .option-clicked {
+        padding: 16px;
+    }
+
+    .option-clicked .title-bloc {
+        margin: -16px -16px 16px;
+        padding: 12px 14px;
     }
 
     .param-option {
@@ -592,16 +606,12 @@ a {
         padding: 10px 12px;
     }
 
-    .option-clicked .title-bloc {
-        padding: 12px 14px;
-    }
-
     #img-user {
         width: 120px;
         height: 120px;
     }
 
-    input {
+    .option-clicked input {
         font-size: 0.88rem;
     }
 }
@@ -619,9 +629,5 @@ a {
         scroll-behavior: auto !important;
         transition: none !important;
         animation: none !important;
-    }
-
-    button:hover {
-        transform: none;
     }
 }

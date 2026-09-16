@@ -5,7 +5,8 @@
     </div>
     <form th:action="@{/professor/edit-my-profile/update/email}" method="post">
 
-        <div class="info-input">
+        <span class="title-container">Information Email</span>
+        <div class="info-input old-mail">
             <label for="old-email" class="label-ext">E-mail</label>
             <input id="old-email" class="input" disabled th:value="${professor.email}">
         </div>
