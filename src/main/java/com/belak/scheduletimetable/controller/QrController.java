@@ -28,7 +28,7 @@ public class QrController {
 
         System.out.println("Le code est :"+code);
 
-        if (authentication.getName()!=null&& authentication.isAuthenticated()) {
+        if (authentication!=null&& authentication.isAuthenticated()) {
             PresenceValidationDto dto = presenceService.createPresence(
                     authentication.getName(),
                     code
@@ -46,10 +46,18 @@ public class QrController {
                 "?code=" + code;
     }
     @PostMapping("/change/salle")
-    public String changeSalle(Authentication authentication , @RequestParam String code)
+    public String changeSalle(Authentication authentication , @RequestParam String code , @RequestParam(required = false) String userId)
     {
+        String username ;
+        if (authentication!=null) {
+            username = authentication.getName();
+        }
+        else
+        {
+            username = userId;
+        }
         PresenceValidationDto dto = presenceService.createPresenceWithoutCode(
-                authentication.getName(), code
+                username, code
         );
 
         String url = UriComponentsBuilder

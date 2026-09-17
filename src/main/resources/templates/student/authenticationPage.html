@@ -52,18 +52,28 @@
           method="post"
           class="student-form">
 
+
+
+      <input
+              type="hidden"
+
+              name="code"
+
+              th:value="${code}"
+
+      >
       <label for="studentId">
         Identifiant étudiant
       </label>
-
       <input
               type="text"
               id="studentId"
-              name="studentId"
+              name="userId"
               placeholder="Entrez votre identifiant"
               required
               autocomplete="off"
       >
+
 
       <button type="submit">
         <i class="fi fi-ss-check"></i>

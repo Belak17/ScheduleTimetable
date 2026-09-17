@@ -39,6 +39,7 @@ public class GlobalExceptionHandler {
 
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
         redirectAttributes.addFlashAttribute("code", ex.getCode());
+        redirectAttributes.addFlashAttribute("userId", ex.getUserId());
         return "redirect:/student/codeNotFound";
     }
 

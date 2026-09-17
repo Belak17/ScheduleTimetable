@@ -54,6 +54,7 @@
     </div>
     <form th:action="@{/api/qr/change/salle}" method="post">
       <input type="hidden" name="code" th:value="${code}">
+      <input type="hidden" name="userId" th:value="${userId}">
       <button type="submit" class="btn-room-change">
         J'ai changé de salle
       </button>

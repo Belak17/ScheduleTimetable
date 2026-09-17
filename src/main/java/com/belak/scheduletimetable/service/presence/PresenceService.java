@@ -60,7 +60,7 @@ public class PresenceService {
                         .getId(),todayDay,now);
         if (optionalCoursTP.isEmpty())
         {
-            throw new CourseAndCodeNotFoundException("Cours Non disponible ",code);
+            throw new CourseAndCodeNotFoundException("Cours Non disponible ",code,userId);
         }
         CoursTP theCoursTP = optionalCoursTP.get();
 
@@ -132,7 +132,7 @@ public class PresenceService {
                         .getId(),todayDay,now);
         if (optionalCoursTP.isEmpty())
         {
-            throw new CourseAndCodeNotFoundException("Cours Non disponible ",code);
+            throw new CourseAndCodeNotFoundException("Cours Non disponible ",code,userId);
         }
         CoursTP theCoursTP = optionalCoursTP.get();
 
