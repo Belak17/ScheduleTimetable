@@ -9,13 +9,13 @@ public interface UserRegisterInterfaceService {
 
     public void registerUserByUserIdAndEmail(UserRegister userRegister) ;
 
-    public  String register(UserRegister request) ;
+    public int register(UserRegister request) ;
 
-    public  String buildEmail(String name, String link) ;
+    public  String buildEmail(String name, int token) ;
 
-    public String signup(User appUser) ;
+    public int signup(User appUser) ;
 
-    public String confirmToken(String token) ;
+    public String confirmToken(int  token) ;
 
     public void enable(String email) ;
 

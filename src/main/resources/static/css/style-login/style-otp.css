@@ -1,0 +1,1987 @@
+*
+{
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+html,
+body
+{
+    overflow-x: hidden;
+}
+
+body
+{
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100dvh;
+
+    margin: 0;
+    padding: 20px;
+
+    overflow-x: hidden;
+}
+
+
+body::before
+{
+    content: "";
+
+    position: fixed;
+
+    inset: -10px;
+
+    background:
+            url("/images/faculte-des-Sciences-de-Gabes.jpeg")
+            center / cover
+            no-repeat;
+
+    filter: blur(3px);
+
+    transform: scale(1.05);
+
+    z-index: -1;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header
+{
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 60px;
+
+    background-color: #2e2e4c;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 20px;
+
+    z-index: 10;
+}
+
+header img
+{
+    height: 40px;
+    width: auto;
+}
+
+.register
+{
+    color: #dbeafe;
+
+    text-decoration: none;
+
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    transition: 0.2s ease;
+}
+
+.register:hover
+{
+    color: white;
+}
+
+
+/* =========================
+   OTP BOX
+========================= */
+
+.otp-box
+{
+    display: flex;
+
+    width: 100%;
+    max-width: 750px;
+
+    min-height: 440px;
+
+    margin-top: 70px;
+    margin-bottom: 80px;
+
+    background-color: white;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.15);
+
+    position: relative;
+}
+
+
+/* =========================
+   LEFT
+========================= */
+
+.left-block
+{
+    flex: 1;
+
+    padding: 50px 35px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+
+    z-index: 2;
+}
+
+
+.presentation
+{
+    text-align: center;
+}
+
+
+.otp-icon
+{
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 22px;
+}
+
+
+.presentation h2
+{
+    margin: 0;
+
+    color: #073772;
+
+    font-size: 1.7rem;
+}
+
+
+.presentation h3
+{
+    margin: 8px 0 0;
+
+    color: #64748b;
+
+    font-size: 0.95rem;
+
+    font-weight: 400;
+}
+
+
+/* =========================
+   INFORMATION
+========================= */
+
+.otp-info
+{
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 0.9rem;
+
+    line-height: 1.5;
+}
+
+.otp-info p
+{
+    margin: 4px 0;
+}
+
+.otp-info strong
+{
+    color: #2563eb;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.otp-form
+{
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.otp-form label
+{
+    color: #334155;
+
+    font-size: 0.9rem;
+
+    font-weight: 500;
+}
+
+
+/* =========================
+   OTP INPUT
+========================= */
+
+.otp-input-container
+{
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    padding: 12px 15px;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 12px;
+
+    background-color: white;
+
+    transition: 0.2s ease;
+}
+
+
+.otp-input-container:focus-within
+{
+    border-color: #2563eb;
+
+    box-shadow:
+            0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+
+.otp-input-container i
+{
+    color: #64748b;
+
+    font-size: 16px;
+}
+
+
+.otp-input-container input
+{
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    font-size: 1.4rem;
+
+    letter-spacing: 8px;
+
+    text-align: center;
+
+    font-weight: 600;
+
+    color: #1e293b;
+}
+
+
+.otp-input-container input::placeholder
+{
+    color: #cbd5e1;
+
+    letter-spacing: 8px;
+}
+
+
+/* =========================
+   TIMER
+========================= */
+
+.timer-container
+{
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: 5px;
+
+    font-size: 0.85rem;
+
+    color: #64748b;
+}
+
+
+.timer-container i
+{
+    color: #2563eb;
+}
+
+
+.timer-container strong
+{
+    color: #2563eb;
+
+    font-size: 1rem;
+
+    min-width: 45px;
+}
+
+
+.timer-container strong.expired
+{
+    color: #dc2626;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.verify-button
+{
+    width: 100%;
+
+    padding: 13px;
+
+    margin-top: 10px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background-color: #2563eb;
+
+    color: white;
+
+    font-size: 1rem;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.verify-button:hover
+{
+    background-color: #1d4ed8;
+}
+
+
+.verify-button:disabled
+{
+    background-color: #94a3b8;
+
+    cursor: not-allowed;
+
+    opacity: 0.8;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.alert
+{
+    width: 100%;
+
+    padding: 10px 12px;
+
+    text-align: center;
+
+    color: #b91c1c;
+
+    background-color: #fef2f2;
+
+    border: 1px solid #fecaca;
+
+    border-radius: 8px;
+
+    font-size: 0.85rem;
+
+    font-weight: 500;
+}
+
+
+/* =========================
+   RESEND
+========================= */
+
+.resend-container
+{
+    text-align: center;
+
+    margin-top: 5px;
+}
+
+
+.resend-container p
+{
+    display: inline;
+
+    color: #64748b;
+
+    font-size: 0.85rem;
+}
+
+
+.resend-container a
+{
+    margin-left: 5px;
+
+    color: #2563eb;
+
+    text-decoration: none;
+
+    font-size: 0.85rem;
+
+    font-weight: 500;
+}
+
+
+.resend-container a:hover
+{
+    text-decoration: underline;
+}
+
+
+/* =========================
+   RIGHT
+========================= */
+
+.right-block
+{
+    width: 45%;
+
+    background:
+            url("/images/login_box_bg.png")
+            center / cover
+            no-repeat;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer
+{
+    position: fixed;
+
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    min-height: 60px;
+
+    background-color: #2e2e4c;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 20px;
+
+    z-index: 10;
+}
+
+
+footer p,
+footer a,
+footer h3
+{
+    color: #dbeafe;
+
+    font-size: 0.8rem;
+}
+
+
+footer a
+{
+    text-decoration: none;
+}
+
+
+footer div
+{
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+footer div img
+{
+    height: 25px;
+
+    width: auto;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media screen and (max-width: 768px)
+{
+    .otp-box
+    {
+        flex-direction: column;
+
+        max-width: 500px;
+
+        min-height: auto;
+    }
+
+    .right-block
+    {
+        width: 100%;
+
+        height: 100px;
+
+        order: -1;
+
+        background-image:
+                url("/images/logo_fsg.jpg");
+
+        background-size: contain;
+
+        background-repeat: no-repeat;
+
+        background-position: center;
+    }
+
+    .left-block
+    {
+        padding: 30px 25px;
+    }
+
+    footer
+    {
+        display: none;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width: 480px)
+{
+    body
+    {
+        padding: 10px;
+    }
+
+    header
+    {
+        padding: 10px 15px;
+    }
+
+    header img
+    {
+        width: 55%;
+
+        height: auto;
+    }
+
+    .register
+    {
+        font-size: 0.85rem;
+    }
+
+    .otp-box
+    {
+        margin-top: 65px;
+
+        margin-bottom: 10px;
+
+        border-radius: 10px;
+    }
+
+    .left-block
+    {
+        padding: 25px 18px;
+    }
+
+    .presentation h2
+    {
+        font-size: 1.45rem;
+    }
+
+    .presentation h3
+    {
+        font-size: 0.85rem;
+    }
+
+    .otp-input-container input
+    {
+        font-size: 1.2rem;
+
+        letter-spacing: 5px;
+    }
+
+    .otp-input-container input::placeholder
+    {
+        letter-spacing: 5px;
+    }
+
+    .right-block
+    {
+        height: 90px;
+    }
+}*
+ {
+     box-sizing: border-box;
+     font-family: 'Poppins', sans-serif;
+ }
+
+html,
+body
+{
+    overflow-x: hidden;
+}
+
+body
+{
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100dvh;
+
+    margin: 0;
+    padding: 20px;
+
+    overflow-x: hidden;
+}
+
+
+body::before
+{
+    content: "";
+
+    position: fixed;
+
+    inset: -10px;
+
+    background:
+            url("/images/faculte-des-Sciences-de-Gabes.jpeg")
+            center / cover
+            no-repeat;
+
+    filter: blur(3px);
+
+    transform: scale(1.05);
+
+    z-index: -1;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header
+{
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 60px;
+
+    background-color: #2e2e4c;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 20px;
+
+    z-index: 10;
+}
+
+header img
+{
+    height: 40px;
+    width: auto;
+}
+
+.register
+{
+    color: #dbeafe;
+
+    text-decoration: none;
+
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    transition: 0.2s ease;
+}
+
+.register:hover
+{
+    color: white;
+}
+
+
+/* =========================
+   OTP BOX
+========================= */
+
+.otp-box
+{
+    display: flex;
+
+    width: 100%;
+    max-width: 750px;
+
+    min-height: 440px;
+
+    margin-top: 70px;
+    margin-bottom: 80px;
+
+    background-color: white;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.15);
+
+    position: relative;
+}
+
+
+/* =========================
+   LEFT
+========================= */
+
+.left-block
+{
+    flex: 1;
+
+    padding: 50px 35px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+
+    z-index: 2;
+}
+
+
+.presentation
+{
+    text-align: center;
+}
+
+
+.otp-icon
+{
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 22px;
+}
+
+
+.presentation h2
+{
+    margin: 0;
+
+    color: #073772;
+
+    font-size: 1.7rem;
+}
+
+
+.presentation h3
+{
+    margin: 8px 0 0;
+
+    color: #64748b;
+
+    font-size: 0.95rem;
+
+    font-weight: 400;
+}
+
+
+/* =========================
+   INFORMATION
+========================= */
+
+.otp-info
+{
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 0.9rem;
+
+    line-height: 1.5;
+}
+
+.otp-info p
+{
+    margin: 4px 0;
+}
+
+.otp-info strong
+{
+    color: #2563eb;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.otp-form
+{
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.otp-form label
+{
+    color: #334155;
+
+    font-size: 0.9rem;
+
+    font-weight: 500;
+}
+
+
+/* =========================
+   OTP INPUT
+========================= */
+
+.otp-input-container
+{
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    padding: 12px 15px;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 12px;
+
+    background-color: white;
+
+    transition: 0.2s ease;
+}
+
+
+.otp-input-container:focus-within
+{
+    border-color: #2563eb;
+
+    box-shadow:
+            0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+
+.otp-input-container i
+{
+    color: #64748b;
+
+    font-size: 16px;
+}
+
+
+.otp-input-container input
+{
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    font-size: 1.4rem;
+
+    letter-spacing: 8px;
+
+    text-align: center;
+
+    font-weight: 600;
+
+    color: #1e293b;
+}
+
+
+.otp-input-container input::placeholder
+{
+    color: #cbd5e1;
+
+    letter-spacing: 8px;
+}
+
+
+/* =========================
+   TIMER
+========================= */
+
+.timer-container
+{
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: 5px;
+
+    font-size: 0.85rem;
+
+    color: #64748b;
+}
+
+
+.timer-container i
+{
+    color: #2563eb;
+}
+
+
+.timer-container strong
+{
+    color: #2563eb;
+
+    font-size: 1rem;
+
+    min-width: 45px;
+}
+
+
+.timer-container strong.expired
+{
+    color: #dc2626;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.verify-button
+{
+    width: 100%;
+
+    padding: 13px;
+
+    margin-top: 10px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background-color: #2563eb;
+
+    color: white;
+
+    font-size: 1rem;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.verify-button:hover
+{
+    background-color: #1d4ed8;
+}
+
+
+.verify-button:disabled
+{
+    background-color: #94a3b8;
+
+    cursor: not-allowed;
+
+    opacity: 0.8;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.alert
+{
+    width: 100%;
+
+    padding: 10px 12px;
+
+    text-align: center;
+
+    color: #b91c1c;
+
+    background-color: #fef2f2;
+
+    border: 1px solid #fecaca;
+
+    border-radius: 8px;
+
+    font-size: 0.85rem;
+
+    font-weight: 500;
+}
+
+
+/* =========================
+   RESEND
+========================= */
+
+.resend-container
+{
+    text-align: center;
+
+    margin-top: 5px;
+}
+
+
+.resend-container p
+{
+    display: inline;
+
+    color: #64748b;
+
+    font-size: 0.85rem;
+}
+
+
+.resend-container a
+{
+    margin-left: 5px;
+
+    color: #2563eb;
+
+    text-decoration: none;
+
+    font-size: 0.85rem;
+
+    font-weight: 500;
+}
+
+
+.resend-container a:hover
+{
+    text-decoration: underline;
+}
+
+
+/* =========================
+   RIGHT
+========================= */
+
+.right-block
+{
+    width: 45%;
+
+    background:
+            url("/images/login_box_bg.png")
+            center / cover
+            no-repeat;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer
+{
+    position: fixed;
+
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    min-height: 60px;
+
+    background-color: #2e2e4c;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 20px;
+
+    z-index: 10;
+}
+
+
+footer p,
+footer a,
+footer h3
+{
+    color: #dbeafe;
+
+    font-size: 0.8rem;
+}
+
+
+footer a
+{
+    text-decoration: none;
+}
+
+
+footer div
+{
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+footer div img
+{
+    height: 25px;
+
+    width: auto;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media screen and (max-width: 768px)
+{
+    .otp-box
+    {
+        flex-direction: column;
+
+        max-width: 500px;
+
+        min-height: auto;
+    }
+
+    .right-block
+    {
+        width: 100%;
+
+        height: 100px;
+
+        order: -1;
+
+        background-image:
+                url("/images/logo_fsg.jpg");
+
+        background-size: contain;
+
+        background-repeat: no-repeat;
+
+        background-position: center;
+    }
+
+    .left-block
+    {
+        padding: 30px 25px;
+    }
+
+    footer
+    {
+        display: none;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width: 480px)
+{
+    body
+    {
+        padding: 10px;
+    }
+
+    header
+    {
+        padding: 10px 15px;
+    }
+
+    header img
+    {
+        width: 55%;
+
+        height: auto;
+    }
+
+    .register
+    {
+        font-size: 0.85rem;
+    }
+
+    .otp-box
+    {
+        margin-top: 65px;
+
+        margin-bottom: 10px;
+
+        border-radius: 10px;
+    }
+
+    .left-block
+    {
+        padding: 25px 18px;
+    }
+
+    .presentation h2
+    {
+        font-size: 1.45rem;
+    }
+
+    .presentation h3
+    {
+        font-size: 0.85rem;
+    }
+
+    .otp-input-container input
+    {
+        font-size: 1.2rem;
+
+        letter-spacing: 5px;
+    }
+
+    .otp-input-container input::placeholder
+    {
+        letter-spacing: 5px;
+    }
+
+    .right-block
+    {
+        height: 90px;
+    }
+}*
+ {
+     box-sizing: border-box;
+     font-family: 'Poppins', sans-serif;
+ }
+
+html,
+body
+{
+    overflow-x: hidden;
+}
+
+body
+{
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100dvh;
+
+    margin: 0;
+    padding: 20px;
+
+    overflow-x: hidden;
+}
+
+
+body::before
+{
+    content: "";
+
+    position: fixed;
+
+    inset: -10px;
+
+    background:
+            url("/images/faculte-des-Sciences-de-Gabes.jpeg")
+            center / cover
+            no-repeat;
+
+    filter: blur(3px);
+
+    transform: scale(1.05);
+
+    z-index: -1;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header
+{
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 60px;
+
+    background-color: #2e2e4c;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 20px;
+
+    z-index: 10;
+}
+
+header img
+{
+    height: 40px;
+    width: auto;
+}
+
+.register
+{
+    color: #dbeafe;
+
+    text-decoration: none;
+
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    transition: 0.2s ease;
+}
+
+.register:hover
+{
+    color: white;
+}
+
+
+/* =========================
+   OTP BOX
+========================= */
+
+.otp-box
+{
+    display: flex;
+
+    width: 100%;
+    max-width: 750px;
+
+    min-height: 440px;
+
+    margin-top: 70px;
+    margin-bottom: 80px;
+
+    background-color: white;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.15);
+
+    position: relative;
+}
+
+
+/* =========================
+   LEFT
+========================= */
+
+.left-block
+{
+    flex: 1;
+
+    padding: 50px 35px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+
+    z-index: 2;
+}
+
+
+.presentation
+{
+    text-align: center;
+}
+
+
+.otp-icon
+{
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 22px;
+}
+
+
+.presentation h2
+{
+    margin: 0;
+
+    color: #073772;
+
+    font-size: 1.7rem;
+}
+
+
+.presentation h3
+{
+    margin: 8px 0 0;
+
+    color: #64748b;
+
+    font-size: 0.95rem;
+
+    font-weight: 400;
+}
+
+
+/* =========================
+   INFORMATION
+========================= */
+
+.otp-info
+{
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 0.9rem;
+
+    line-height: 1.5;
+}
+
+.otp-info p
+{
+    margin: 4px 0;
+}
+
+.otp-info strong
+{
+    color: #2563eb;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.otp-form
+{
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.otp-form label
+{
+    color: #334155;
+
+    font-size: 0.9rem;
+
+    font-weight: 500;
+}
+
+
+/* =========================
+   OTP INPUT
+========================= */
+
+.otp-input-container
+{
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    padding: 12px 15px;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 12px;
+
+    background-color: white;
+
+    transition: 0.2s ease;
+}
+
+
+.otp-input-container:focus-within
+{
+    border-color: #2563eb;
+
+    box-shadow:
+            0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+
+.otp-input-container i
+{
+    color: #64748b;
+
+    font-size: 16px;
+}
+
+
+.otp-input-container input
+{
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    font-size: 1.4rem;
+
+    letter-spacing: 8px;
+
+    text-align: center;
+
+    font-weight: 600;
+
+    color: #1e293b;
+}
+
+
+.otp-input-container input::placeholder
+{
+    color: #cbd5e1;
+
+    letter-spacing: 8px;
+}
+
+
+/* =========================
+   TIMER
+========================= */
+
+.timer-container
+{
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: 5px;
+
+    font-size: 0.85rem;
+
+    color: #64748b;
+}
+
+
+.timer-container i
+{
+    color: #2563eb;
+}
+
+
+.timer-container strong
+{
+    color: #2563eb;
+
+    font-size: 1rem;
+
+    min-width: 45px;
+}
+
+
+.timer-container strong.expired
+{
+    color: #dc2626;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.verify-button
+{
+    width: 100%;
+
+    padding: 13px;
+
+    margin-top: 10px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background-color: #2563eb;
+
+    color: white;
+
+    font-size: 1rem;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.verify-button:hover
+{
+    background-color: #1d4ed8;
+}
+
+
+.verify-button:disabled
+{
+    background-color: #94a3b8;
+
+    cursor: not-allowed;
+
+    opacity: 0.8;
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+.alert
+{
+    width: 100%;
+
+    padding: 10px 12px;
+
+    text-align: center;
+
+    color: #b91c1c;
+
+    background-color: #fef2f2;
+
+    border: 1px solid #fecaca;
+
+    border-radius: 8px;
+
+    font-size: 0.85rem;
+
+    font-weight: 500;
+}
+
+
+/* =========================
+   RESEND
+========================= */
+
+.resend-container
+{
+    text-align: center;
+
+    margin-top: 5px;
+}
+
+
+.resend-container p
+{
+    display: inline;
+
+    color: #64748b;
+
+    font-size: 0.85rem;
+}
+
+
+.resend-container a
+{
+    margin-left: 5px;
+
+    color: #2563eb;
+
+    text-decoration: none;
+
+    font-size: 0.85rem;
+
+    font-weight: 500;
+}
+
+
+.resend-container a:hover
+{
+    text-decoration: underline;
+}
+
+
+/* =========================
+   RIGHT
+========================= */
+
+.right-block
+{
+    width: 45%;
+
+    background:
+            url("/images/login_box_bg.png")
+            center / cover
+            no-repeat;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer
+{
+    position: fixed;
+
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    min-height: 60px;
+
+    background-color: #2e2e4c;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 20px;
+
+    z-index: 10;
+}
+
+
+footer p,
+footer a,
+footer h3
+{
+    color: #dbeafe;
+
+    font-size: 0.8rem;
+}
+
+
+footer a
+{
+    text-decoration: none;
+}
+
+
+footer div
+{
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+footer div img
+{
+    height: 25px;
+
+    width: auto;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media screen and (max-width: 768px)
+{
+    .otp-box
+    {
+        flex-direction: column;
+
+        max-width: 500px;
+
+        min-height: auto;
+    }
+
+    .right-block
+    {
+        width: 100%;
+
+        height: 100px;
+
+        order: -1;
+
+        background-image:
+                url("/images/logo_fsg.jpg");
+
+        background-size: contain;
+
+        background-repeat: no-repeat;
+
+        background-position: center;
+    }
+
+    .left-block
+    {
+        padding: 30px 25px;
+    }
+
+    footer
+    {
+        display: none;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media screen and (max-width: 480px)
+{
+    body
+    {
+        padding: 10px;
+    }
+
+    header
+    {
+        padding: 10px 15px;
+    }
+
+    header img
+    {
+        width: 55%;
+
+        height: auto;
+    }
+
+    .register
+    {
+        font-size: 0.85rem;
+    }
+
+    .otp-box
+    {
+        margin-top: 65px;
+
+        margin-bottom: 10px;
+
+        border-radius: 10px;
+    }
+
+    .left-block
+    {
+        padding: 25px 18px;
+    }
+
+    .presentation h2
+    {
+        font-size: 1.45rem;
+    }
+
+    .presentation h3
+    {
+        font-size: 0.85rem;
+    }
+
+    .otp-input-container input
+    {
+        font-size: 1.2rem;
+
+        letter-spacing: 5px;
+    }
+
+    .otp-input-container input::placeholder
+    {
+        letter-spacing: 5px;
+    }
+
+    .right-block
+    {
+        height: 90px;
+    }
+}

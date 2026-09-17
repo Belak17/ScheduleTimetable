@@ -32,15 +32,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/reset-password/**","/api/**","/register","/confirm","/forgot") // désactive CSRF juste pour reset-password
+                        .ignoringRequestMatchers("/reset-password/**","/api/**","/register","/confirm","/forgot","/login") // désactive CSRF juste pour reset-password
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login","/forgot","/firstlogin","/forgot-password",
                                 "/reset-password","/error","/reset-password/**","/css/**",
-                                "/js/**" , "/images/**" , "/icons/**","/register","/confirm","/reset/**","/api/qr/**","/student/**").permitAll()
+                                "/js/**" , "/images/**" , "/icons/**","/register","/confirm","/reset/**","/api/qr/**","/student/error","/student/validation","/student/alreadyRegistered","/student/codeError","/api/qr/scan","/api/qr/authentify","/student/roomvalidation","/api/qr/scan/authenticated","/student/codeNotFound").permitAll()
                         .requestMatchers("/admin/**","/admin","/filiere/**","/filiere","/error").hasRole("ADMIN")
                         .requestMatchers("/professor/**").hasRole("PROFESSOR")
-                        .requestMatchers("/student/**","/api/**").hasAnyRole("STUDENT","ADMIN")
+                        .requestMatchers("/student/**").hasAnyRole("STUDENT","ADMIN")
                         .requestMatchers("/admin/student/**","/api/**").hasAnyRole("STUDENT", "ADMIN")
                         .anyRequest().authenticated()
                 )

@@ -35,9 +35,12 @@ public class FirstLoginController {
     {
         userRegisterService.register(userRegister);
         //userRegisterService.registerUserByUserIdAndEmail(userRegister);
-        model.addAttribute("message", "Un message a été envoyé à votre email pour activer votre compte");
-        return  "login/login" ;
+        //model.addAttribute("message", "Un message a été envoyé à votre email pour activer votre compte");
+        return  "login/otp";
     }
+
+
+
 
 
 

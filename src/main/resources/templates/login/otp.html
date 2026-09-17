@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vérification OTP</title>
+
+    <link rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+
+    <link rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-brands/css/uicons-brands.css">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style-login/style-otp.css}">
+</head>
+
+<body>
+
+<header>
+    <img th:src="@{/images/logo_header-hb5kR36g.svg}"
+         alt="Logo Faculté des Sciences de Gabès">
+
+    <a class="register" th:href="@{/login}">
+        Retour à la connexion
+    </a>
+</header>
+
+
+<main class="otp-box">
+
+    <section class="left-block">
+
+        <div class="presentation">
+
+            <div class="otp-icon">
+                <i class="fi fi-ss-envelope"></i>
+            </div>
+
+            <h2>Vérification</h2>
+
+            <h3>
+                Entrez le code envoyé à votre adresse email
+            </h3>
+
+        </div>
+
+
+        <div class="otp-info">
+            <p>
+                Un code de vérification à 6 chiffres vous a été envoyé
+                par email.
+            </p>
+
+            <p>
+                Ce code est valable pendant
+                <strong>5 minutes</strong>.
+            </p>
+        </div>
+
+
+        <!-- Message d'erreur venant de Spring -->
+        <div th:if="${error}" class="alert">
+            <span th:text="${error}"></span>
+        </div>
+
+
+        <form method="post"
+              th:action="@{/verify/otp}"
+              class="otp-form">
+
+            <label for="otp">
+                Code de vérification
+            </label>
+
+            <div class="otp-input-container">
+
+                <i class="fi fi-ss-key"></i>
+
+                <input
+                        id="otp"
+                        name="otp"
+                        type="text"
+                        inputmode="numeric"
+                        autocomplete="one-time-code"
+                        maxlength="6"
+                        pattern="[0-9]{6}"
+                        placeholder="000000"
+                        required
+                >
+
+            </div>
+
+
+            <!-- Compteur -->
+            <div class="timer-container">
+
+                <i class="fi fi-ss-clock"></i>
+
+                <span>
+                    Code valable encore :
+                </span>
+
+                <strong id="timer">
+                    05:00
+                </strong>
+
+            </div>
+
+
+            <button
+                    type="submit"
+                    class="verify-button"
+                    id="verifyButton">
+
+                Vérifier le code
+
+            </button>
+
+        </form>
+
+
+        <div class="resend-container">
+
+            <p>Vous n'avez pas reçu le code ?</p>
+
+            <a th:href="@{/resend-otp}" id="resendLink">
+                Renvoyer le code
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <section class="right-block">
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div>
+        <img th:src="@{/images/flag-BfSDlfLV.png}"
+             alt="Drapeau tunisien">
+
+        <h3>République Tunisienne</h3>
+    </div>
+
+    <p>
+        &copy; Faculté des Sciences de Gabès - Tous droits réservés
+    </p>
+
+    <a href="mailto:fsg.rnu.tn">
+        fsg.rnu.tn
+    </a>
+
+</footer>
+
+
+<script>
+
+    /*
+     * 5 minutes = 300 secondes
+     *
+     * Ce compteur est uniquement visuel.
+     * L'expiration réelle doit être vérifiée côté serveur.
+     */
+
+    let remainingSeconds = 5 * 60;
+
+    const timer = document.getElementById("timer");
+    const verifyButton = document.getElementById("verifyButton");
+    const otpInput = document.getElementById("otp");
+    const resendLink = document.getElementById("resendLink");
+
+
+    function updateTimer() {
+
+        const minutes = Math.floor(remainingSeconds / 60);
+        const seconds = remainingSeconds % 60;
+
+        timer.textContent =
+            String(minutes).padStart(2, "0")
+            + ":"
+            + String(seconds).padStart(2, "0");
+
+
+        if (remainingSeconds <= 0) {
+
+            clearInterval(countdown);
+
+            timer.textContent = "00:00";
+
+            timer.classList.add("expired");
+
+            verifyButton.disabled = true;
+
+            otpInput.disabled = true;
+
+            verifyButton.textContent = "Code expiré";
+
+            return;
+        }
+
+        remainingSeconds--;
+    }
+
+
+    updateTimer();
+
+    const countdown = setInterval(updateTimer, 1000);
+
+</script>
+
+</body>
+</html>

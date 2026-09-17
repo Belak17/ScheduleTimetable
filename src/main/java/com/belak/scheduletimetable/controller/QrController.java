@@ -33,13 +33,19 @@ public class QrController {
                     authentication.getName(),
                     code
             );
-            return "redirect:/student/validation"
-                    + "?intitule=" + dto.getIntitule()
-                    + "&group=" + dto.getGroup()
-                    + "&code=" + dto.getCode()
-                    + "&date=" + dto.getDate().format(DateTimeFormatter.ISO_DATE)
-                    + "&time=" + dto.getTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-                    + "&day=" + dto.getDay();
+            String url = UriComponentsBuilder
+                    .fromPath("/student/validation")
+                    .queryParam("intitule", dto.getIntitule())
+                    .queryParam("group", dto.getGroup())
+                    .queryParam("code", dto.getCode())
+                    .queryParam("date", dto.getDate().format(DateTimeFormatter.ISO_DATE))
+                    .queryParam("time", dto.getTime().format(DateTimeFormatter.ofPattern("HH:mm")))
+                    .queryParam("day", dto.getDay())
+                    .build()
+                    .encode(StandardCharsets.UTF_8)
+                    .toUriString();
+
+            return "redirect:" + url;
         }
 
         return "redirect:/api/qr/authentify"+
@@ -85,6 +91,10 @@ public class QrController {
 
     @PostMapping("/scan/authenticated")
     public String registerPresenceNowAuthenticated(@RequestParam String code, @RequestParam String userId) {
+
+
+
+        System.out.println("Méthode appelée");
 
 
             PresenceValidationDto dto = presenceService.createPresence(

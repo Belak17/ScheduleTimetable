@@ -22,27 +22,27 @@ public class EmailSenderService implements EmailSender {
 
     @Override
     @Async
-    public void sendEmail(String to, String subject , String email) {
+    public void sendEmail(String to, String subject, String email) {
 
         try {
-            //MimeMessage mimeMessage = mailSender.createMimeMessage();
-            //MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true,"utf-8");
-            //helper.setText(email,true);
-            //helper.setTo(to);
-            //helper.setSubject("Registration Confirmation");
-            //helper.setFrom("Hello Kaleb");
 
-            SimpleMailMessage message = new SimpleMailMessage();
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
 
-            message.setFrom("akabeb.com@gmail.com");
-            message.setTo(to);
-            message.setSubject(subject);
-            message.setText(email);
+            MimeMessageHelper helper =
+                    new MimeMessageHelper(mimeMessage, false, "UTF-8");
 
-            mailSender.send(message);
-        }
-        catch (Exception ex) {
-            Logger.getLogger(EmailSenderService.class.getName()).log(Level.SEVERE, null, ex);
+            helper.setFrom("akabeb.com@gmail.com");
+            helper.setTo(to);
+            helper.setSubject(subject);
+
+            // true = le contenu est du HTML
+            helper.setText(email, true);
+
+            mailSender.send(mimeMessage);
+
+        } catch (Exception ex) {
+            Logger.getLogger(EmailSenderService.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }
 }

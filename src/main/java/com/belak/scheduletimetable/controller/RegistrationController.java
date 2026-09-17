@@ -4,7 +4,9 @@ import com.belak.scheduletimetable.request.UserRegister;
 import com.belak.scheduletimetable.service.reset.PasswordResetService;
 import com.belak.scheduletimetable.service.user.UserRegisterInterfaceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,18 +18,14 @@ public class RegistrationController {
     @PostMapping("/api/register")
     public String register(@RequestBody UserRegister request) {
 
-        return userRegisterService.register(request);
+        return String.valueOf(userRegisterService.register(request));
     }
 
     @GetMapping("/confirm")
-    public String confirm(@RequestParam String token)
+    public String confirm(@RequestParam int token)
     {
         userRegisterService.confirmToken(token);
         return "Votre compte a été activé";
     }
-
-
-
-
 
 }
