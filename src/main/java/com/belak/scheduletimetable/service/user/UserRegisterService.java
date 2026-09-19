@@ -9,6 +9,7 @@ import com.belak.scheduletimetable.utils.EmailSender;
 import com.belak.scheduletimetable.utils.EmailValidator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserRegisterService implements UserRegisterInterfaceService {
     private  final UserRepository userRepository ;
     private  final PasswordEncoder passwordEncoder ;
@@ -48,10 +50,12 @@ public class UserRegisterService implements UserRegisterInterfaceService {
     }
     public int register(UserRegister request)
     {
+        log.info("Début Envoi Email Pour Activation Compte");
         boolean isValidEmail = emailValidator
                 .test(request.getEmail());
         if (!isValidEmail)
         {
+            log.info("Email Non Valide");
             throw new IllegalArgumentException("email not valid");
         }
         int  token = signup(
@@ -66,6 +70,7 @@ public class UserRegisterService implements UserRegisterInterfaceService {
         emailSender.sendEmail(
                 request.getEmail(),"Registration Confirmation",
                 buildEmail(theUser.getPrenom(),token));
+        log.info("Envoi Email Activation Compte Avec Code Otp");
         return token ;
     }
 
@@ -226,6 +231,7 @@ public class UserRegisterService implements UserRegisterInterfaceService {
         User theUserExists = userRepository.findByEmail(appUser.getEmail()).get() ;
         if (theUserExists.isEnabled())
         {
+            log.info("Le compte client {} est deja active.Veuillez vous connecter",theUserExists.getEmail());
             // TODO check of attributes are the same and
             // TODO if email not confirmed send confirmation email
 
@@ -255,26 +261,32 @@ public class UserRegisterService implements UserRegisterInterfaceService {
     @Transactional
     public String confirmToken(int token)
     {
+        log.info("Début Confirmation Token Activation Compte");
         Optional<ConfirmationToken> optionalToken =
                 confirmationTokenService.getToken(token);
 
         if (optionalToken.isEmpty()) {
-            return "token not found";
+
+            log.info("Le token pas reconnu ");
+            return "Token Non Reconnu.Veuillez reessayer ";
         }
 
         ConfirmationToken confirmationToken = optionalToken.get();
         if (confirmationToken.getConfirmedAt()!=null)
         {
-            return "token already confirmed";
+            log.info("Le Token a dejà ete utlise");
+            return "Ce token a deja ete utilise";
         }
         LocalDateTime expiredAt = confirmationToken.getExpiresAt();
         if (expiredAt.isBefore(LocalDateTime.now()))
         {
-            return "token expired";
+            log.info("Le Token est expire");
+            return "Votre jeton est expire.Veuillez redemander un autre ";
         }
         confirmationToken.setConfirmedAt(LocalDateTime.now());
         enable(confirmationToken.getAppUser().getEmail());
-        return "confirmed";
+        log.info("Confirmation du Token  du Client {}",confirmationToken.getAppUser().getEmail());
+        return "Votre compte a ete active.Veuillez entrer vos informations pour vous connecter";
 
     }
 
@@ -287,6 +299,7 @@ public class UserRegisterService implements UserRegisterInterfaceService {
             User appUser = userRepository.findByEmail(email).get();
             appUser.setEnabled(true);
             userRepository.save(appUser);
+            log.info("Le compte du CLient {} a ete active",appUser.getEmail());
         }
     }
 }

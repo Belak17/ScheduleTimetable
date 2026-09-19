@@ -5,6 +5,7 @@ import com.belak.scheduletimetable.enumeration.TypeDiplome;
 import com.belak.scheduletimetable.exception.EmptyFileException;
 import com.spire.xls.Workbook;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UtilsService {
@@ -101,6 +103,7 @@ public class UtilsService {
         }
         String name = file.getOriginalFilename();
         if (name == null || !name.endsWith(".xlsx")) {
+            log.info("Le fichier recu est invalide : Mauvais format de fichier");
             throw new RuntimeException("Format invalide (.xlsx requis)");
         }
     }

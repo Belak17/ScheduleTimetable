@@ -13,6 +13,7 @@ import com.belak.scheduletimetable.repository.ProfessorRepository;
 import com.belak.scheduletimetable.request.UpdateRequest;
 import com.belak.scheduletimetable.service.UtilsService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
@@ -37,6 +38,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+@Slf4j
 @Service
  @RequiredArgsConstructor
 public class ProfessorService implements  ProfessorInterfaceService  {
@@ -77,6 +79,7 @@ public class ProfessorService implements  ProfessorInterfaceService  {
       }
     public ProfessorProfileDto findByUserId(String userId)
     {
+        log.info("Acces Profile du Professeur Identifiant {}",userId);
         return profileMapper.convertToProfessorProfileDto(professorRepository
                 .findByUserId(userId).get());
     }
@@ -112,10 +115,12 @@ public class ProfessorService implements  ProfessorInterfaceService  {
                 .orElseThrow(() -> new RuntimeException("Professeur introuvable"));
 
         if (!passwordEncoder.matches(oldPassword, professor.getPassword())) {
+            log.info("Ancien Mot de passe Incorrect pour Professeur {}",professor.getUserId());
             throw new IllegalArgumentException("Ancien mot de passe incorrect");
         }
 
         if (!newPassword.equals(confPassword)) {
+            log.info("Mots de Passe Non Correspondant Pour Professeur {}",professor.getUserId());
             throw new IllegalArgumentException("Les mots de passe ne correspondent pas");
         }
 

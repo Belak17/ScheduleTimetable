@@ -24,7 +24,7 @@ public class RegistrationController {
     @GetMapping("/confirm")
     public String confirm(@RequestParam int token)
     {
-        userRegisterService.confirmToken(token);
+        //userRegisterService.confirmToken(token);
         return "Votre compte a été activé";
     }
 

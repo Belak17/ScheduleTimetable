@@ -5,6 +5,7 @@ import com.belak.scheduletimetable.service.reset.ForgotPasswordService;
 import com.belak.scheduletimetable.service.user.UserRegisterInterfaceService;
 import com.belak.scheduletimetable.service.user.UserRegisterService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping
 @RequiredArgsConstructor
+@Slf4j
 public class FirstLoginController {
     private  final ForgotPasswordService forgotPasswordService ;
     private  final UserRegisterInterfaceService userRegisterService ;
@@ -33,6 +35,7 @@ public class FirstLoginController {
     @PostMapping("/firstlogin")
     public  String register( Model model , @ModelAttribute UserRegister userRegister)
     {
+
         userRegisterService.register(userRegister);
         //userRegisterService.registerUserByUserIdAndEmail(userRegister);
         //model.addAttribute("message", "Un message a été envoyé à votre email pour activer votre compte");

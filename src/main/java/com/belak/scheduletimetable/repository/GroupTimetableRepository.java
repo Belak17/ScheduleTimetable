@@ -29,4 +29,9 @@ public interface GroupTimetableRepository  extends JpaRepository<GroupTimetable,
                                                                     @Param("niveau") int niveau);
 
     GroupTimetable findByDepartementAndFiliereAndGroupAndNiveau(Departement departement,Filiere filiere,String group, int niveau);
+
+    List<GroupTimetable> findByFiliereAndNiveau(
+            Filiere filiere,
+            Integer niveau
+    );
 }

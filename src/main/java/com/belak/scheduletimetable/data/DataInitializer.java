@@ -1,24 +1,23 @@
 package com.belak.scheduletimetable.data;
 
 import com.belak.scheduletimetable.enumeration.*;
-import com.belak.scheduletimetable.model.Professor;
-import com.belak.scheduletimetable.model.Salle;
-import com.belak.scheduletimetable.model.Student;
-import com.belak.scheduletimetable.model.User;
-import com.belak.scheduletimetable.repository.ProfessorRepository;
-import com.belak.scheduletimetable.repository.SalleRepository;
-import com.belak.scheduletimetable.repository.StudentRepository;
-import com.belak.scheduletimetable.repository.UserRepository;
+import com.belak.scheduletimetable.model.*;
+import com.belak.scheduletimetable.repository.*;
 import com.belak.scheduletimetable.service.courstp.SalleService;
 import jakarta.annotation.PostConstruct;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner
@@ -29,7 +28,11 @@ public class DataInitializer implements CommandLineRunner
     private final StudentRepository studentRepository ;
     private  final SalleRepository salleRepository ;
     private  final SalleService salleService ;
+    private  final GroupTimetableRepository groupTimetableRepository ;
+    private  final ConfirmationTokenRepository confirmationTokenRepository ;
     @Override
+    @Transactional
+
     public void run(String... args) throws Exception {
         // Vérifie si un utilisateur avec userId "admin" existe
         if (userRepository.findByUserId("BJ240005").isEmpty()) {
@@ -82,6 +85,97 @@ public class DataInitializer implements CommandLineRunner
             studentRepository.save(student);
 
         }
+
+        if (userRepository.findByUserId("TD550005").isEmpty())
+        {
+            Student student = new Student();
+            student.setUserId("TD550005");
+            student.setPassword(passwordEncoder.encode("TD550005"));
+            student.setRole(User.Role.valueOf("STUDENT"));
+            student.setCin("2396795");
+            student.setNom("AKAK");
+            student.setPrenom("Ren Yelongnise");
+            student.setEmail("thefool1709@gmail.com");
+            student.setNiveau(2);
+            student.setFiliere(Filiere.LIRS);
+            student.setGroup("TD1 TP1");
+            student.setTypeDiplome(TypeDiplome.LICENCE);
+            student.setDepartment(Departement.INF);
+            studentRepository.save(student);
+
+        }
+        List<GroupTimetable> timetables =
+                groupTimetableRepository.findByFiliereAndNiveau(
+                        Filiere.LIRS,
+                        2
+                );
+
+        for (GroupTimetable timetable : timetables) {
+            log.info("Groupe : {}", timetable.getGroup());
+        }
+
+//        Optional<Student> studentOpt = studentRepository.findByUserId("KL550005");
+//
+//        if (studentOpt.isPresent()) {
+//
+//            Student student = studentOpt.get();
+//
+//            // Retirer l'étudiant de ses emplois du temps
+//            for (GroupTimetable timetable : new HashSet<>(student.getTimetables())) {
+//                timetable.getStudents().remove(student);
+//            }
+//
+//            student.getTimetables().clear();
+//
+//            // Supprimer les tokens de confirmation liés à cet utilisateur
+//            confirmationTokenRepository.deleteByAppUser(student);
+//
+//            // Supprimer l'étudiant
+//            studentRepository.delete(student);
+//
+//            log.info("Étudiant {} supprimé", student.getUserId());
+//
+//        } else {
+//            log.warn("Étudiant KL550005 introuvable");
+//        }
+
+        if (userRepository.findByUserId("KL550005").isEmpty())
+        {
+            Student student = new Student();
+            student.setUserId("KL550005");
+            student.setPassword(passwordEncoder.encode("KL550005"));
+            student.setRole(User.Role.valueOf("STUDENT"));
+            student.setCin("4496795");
+            student.setNom("AKK");
+            student.setPrenom("Ren Yelogse");
+            student.setEmail("alimatouakakpo2018@gmail.com");
+            student.setNiveau(1);
+            student.setFiliere(Filiere.LSI);
+            student.setGroup("A TD2 TP1");
+            student.setTypeDiplome(TypeDiplome.LICENCE);
+            student.setDepartment(Departement.INF);
+
+            studentRepository.save(student);
+
+            Optional<GroupTimetable> timetable = Optional.ofNullable(
+                    groupTimetableRepository.findByDepartementAndFiliereAndGroupAndNiveau(
+                            Departement.INF,
+                            Filiere.LSI,
+                            "A TD2 TP1",
+                            1
+                    )
+            );
+
+            if (timetable.isPresent()) {
+                timetable.get().addStudent(student);
+                log.info("Étudiant ajouté à l'emploi du temps");
+            } else {
+                log.warn("Emploi du temps introuvable");
+            }
+        }
+
+
+
     }
 
     @PostConstruct

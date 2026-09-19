@@ -32,6 +32,7 @@ public class ProfessorTimetableController {
 
         try {
             timetableService.sendManyProfessorTimetable(file);
+
             redirectAttributes.addFlashAttribute("success", "Upload terminé avec succès");
         } catch (EmptyFileException e) {
             redirectAttributes.addFlashAttribute("error", "Le fichier est vide !");

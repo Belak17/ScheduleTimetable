@@ -8,6 +8,7 @@ import com.belak.scheduletimetable.repository.UserRepository;
 import com.belak.scheduletimetable.response.LoginResponse;
 import com.belak.scheduletimetable.service.ConfirmationTokenService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -44,6 +46,7 @@ public class UserService implements UserDetailsService {
         else {
             response.setPrenom(prenomList.get(0) + " " + prenomList.get(1));
         }
+        log.info("Accés Dashboard Par {} Avec Comme Role {} ",user.getUserId(),user.getRole());
         return response ;
     }
 

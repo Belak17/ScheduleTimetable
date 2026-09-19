@@ -4,6 +4,7 @@ import com.belak.scheduletimetable.dto.PresenceValidationDto;
 import com.belak.scheduletimetable.model.Presence;
 import com.belak.scheduletimetable.service.presence.PresenceService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -20,15 +21,17 @@ import java.util.Map;
 @Controller
 @RequestMapping("/api/qr")
 @RequiredArgsConstructor
+@Slf4j
 public class QrController {
     private final PresenceService presenceService;
     @GetMapping("/scan")
     public String scanQr(@RequestParam String code,
                          Authentication authentication) {
 
-        System.out.println("Le code est :"+code);
+
 
         if (authentication!=null&& authentication.isAuthenticated()) {
+            log.info("Utlisateur Authentifié Pour le Scannage");
             PresenceValidationDto dto = presenceService.createPresence(
                     authentication.getName(),
                     code
@@ -48,19 +51,24 @@ public class QrController {
             return "redirect:" + url;
         }
 
+        log.info("Utilisateur Non Authentifie.Debut Demande Identifiant Pour Verification");
+
         return "redirect:/api/qr/authentify"+
                 "?code=" + code;
     }
     @PostMapping("/change/salle")
     public String changeSalle(Authentication authentication , @RequestParam String code , @RequestParam(required = false) String userId)
     {
+        log.info("Changement de Salle Pour le Cours de TP");
         String username ;
         if (authentication!=null) {
             username = authentication.getName();
+            log.info("Utilisateur Authentifie");
         }
         else
         {
             username = userId;
+            log.info("Utlisateur Non Authentifie");
         }
         PresenceValidationDto dto = presenceService.createPresenceWithoutCode(
                 username, code
@@ -77,13 +85,14 @@ public class QrController {
                 .build()
                 .encode(StandardCharsets.UTF_8)
                 .toUriString();
-
+        log.info("Confirmation du Changement de Salle et Seance de Cours Disponible");
         return "redirect:" + url;
     }
 
     @GetMapping("/authentify")
     public String authentifyForScanningCodeQr(@RequestParam String code , Model model)
     {
+        log.info("Appel de la page de Demande Identifiant");
         model.addAttribute("code", code);
         return  "student/authenticationPage";
     }
@@ -94,7 +103,7 @@ public class QrController {
 
 
 
-        System.out.println("Méthode appelée");
+            log.info("Confirmation Presence avec Utlisateur Authenfie via authenticationPage");
 
 
             PresenceValidationDto dto = presenceService.createPresence(

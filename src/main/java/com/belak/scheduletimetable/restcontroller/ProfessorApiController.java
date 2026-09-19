@@ -43,7 +43,7 @@ public class ProfessorApiController {
                 professorService.getAllProfessorByDepartment(page, size, Departement.valueOf(departement));
         model.addAttribute("Professors", professors);
         model.addAttribute("selectedDepartment", departement);
-        return "/admin/see-all-professor-timetable";
+        return "admin/see-all-professor-timetable";
     }
     @GetMapping("/professor/timetable")
     public String showProfessorTimetables(
@@ -53,7 +53,7 @@ public class ProfessorApiController {
     )
     {
         model.addAttribute("Professors", null);
-        return "/admin/see-all-professor-timetable";
+        return "admin/see-all-professor-timetable";
     }
     @GetMapping("/preview/{userId}")
     public ResponseEntity<byte[]> getPreview(@PathVariable String userId ) throws IOException {

@@ -19,6 +19,7 @@ import com.belak.scheduletimetable.service.timetable.TimetableService;
 import com.spire.xls.ExcelVersion;
 import com.spire.xls.Worksheet;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,7 @@ import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GroupTimetableService extends TimetableService {
     private final GroupTimetableRepository groupTimetableRepository ;
     private final StudentRepository studentRepository ;
@@ -213,6 +215,7 @@ public class GroupTimetableService extends TimetableService {
         byte[] pdfBytes = timetable.getFileData();
 
         if (pdfBytes == null || pdfBytes.length == 0) {
+            log.info("Le fichier PDF est vide");
             throw new ResourceNotFoundException("Le fichier PDF est vide");
         }
 
@@ -251,6 +254,7 @@ public class GroupTimetableService extends TimetableService {
 
     public List<String> getAllGroupByDepartmentAndFieldAndLevel(String departement , String field , int niveau)
     {
+        log.info("Envoi Au FrontEnd des groupes par niveau , filiere et departement ");
         return groupTimetableRepository.findDistinctGroupByDepartementAndFiliereAndNiveau(Departement.valueOf(departement),Filiere.fromCode(field),niveau) ;
 
     }

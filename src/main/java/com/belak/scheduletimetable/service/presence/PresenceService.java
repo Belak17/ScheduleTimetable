@@ -18,6 +18,7 @@ import com.belak.scheduletimetable.repository.SeanceRepository;
 import com.belak.scheduletimetable.repository.StudentRepository;
 import com.belak.scheduletimetable.service.student.StudentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +33,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PresenceService {
     private  final PresenceRepository presenceRepository ;
     private  final StudentRepository studentRepository ;
@@ -60,6 +62,7 @@ public class PresenceService {
                         .getId(),todayDay,now);
         if (optionalCoursTP.isEmpty())
         {
+            log.info("Cours Non Disponble pour le code {} et utilisateur {}",code,userId);
             throw new CourseAndCodeNotFoundException("Cours Non disponible ",code,userId);
         }
         CoursTP theCoursTP = optionalCoursTP.get();
@@ -67,6 +70,7 @@ public class PresenceService {
         Optional<Seance> optionalSeance = seanceRepository.findByCoursTPIdAndDate(theCoursTP.getId(), today);
         if (optionalSeance.isEmpty())
         {
+            log.info("Seance Non Disponible pour le cours {}",theCoursTP.getIntitule());
             throw new ElementNotFoundException("Seance Non disponible ");
         }
         Seance theSeance = optionalSeance.get();
@@ -76,6 +80,7 @@ public class PresenceService {
         );
         if (exists) {
             Presence presence = presenceRepository.findBySeanceIdAndStudentId(theSeance.getId(), theStudent.getId()).get();
+            log.info("Presence Deje Enregistre avec ID {} pour etudiant {}",presence.getId(),theStudent.getUserId());
             throw new PresenceAlreadyExistsException("Présence déjà enregistrée",presence.getSeance()
                     .getCoursTP().getIntitule(),
                     presence.getSeance().getDate(),
@@ -120,6 +125,7 @@ public class PresenceService {
         todayDay = todayDay.substring(0, 1).toUpperCase() + todayDay.substring(1);
         if (student.isEmpty())
         {
+            log.info("Etudiant avec Identifiant {} Non Enregistre Dans La Faculté",userId);
             throw  new ResourceNotFoundException("Cet etudiant n'est pas enregistre dans la faculte");
         }
         Student theStudent = student.get();
@@ -132,6 +138,7 @@ public class PresenceService {
                         .getId(),todayDay,now);
         if (optionalCoursTP.isEmpty())
         {
+            log.info("Cours Non Disponble pour le code {}  utilisateur {}",code,userId);
             throw new CourseAndCodeNotFoundException("Cours Non disponible ",code,userId);
         }
         CoursTP theCoursTP = optionalCoursTP.get();
@@ -148,6 +155,7 @@ public class PresenceService {
         );
         if (exists) {
             Presence presence = presenceRepository.findBySeanceIdAndStudentId(theSeance.getId(), theStudent.getId()).get();
+            log.info("Presence Deja Enregistre");
             throw new PresenceAlreadyExistsException("Présence déjà enregistrée",presence.getSeance()
                     .getCoursTP().getIntitule(),
                     presence.getSeance().getDate(),

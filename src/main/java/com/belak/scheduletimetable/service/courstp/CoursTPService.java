@@ -13,6 +13,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.spire.xls.Worksheet;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +29,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CoursTPService extends CoursTPUtilsService {
@@ -71,24 +73,27 @@ public class CoursTPService extends CoursTPUtilsService {
 
         String frequency = extractTPFrequency(value);
 
-        System.out.println("Cours : " + value);
-        System.out.println("Frequency extraite : " + frequency);
-        System.out.println("Exists : " + exists);
+        //System.out.println("Cours : " + value);
+        //System.out.println("Frequency extraite : " + frequency);
+        //System.out.println("Exists : " + exists);
+
+        log.info("Le cours TP intitule {} a pour frequence {} ",value,frequency);
+        log.info("Existence de ce cours dans la base de donnee {}",exists);
 
         if (exists) {
-            System.out.println("=> fréquence 2 à cause de exists");
+            log.info("=> fréquence 2 à cause de exists");
             tp.setFrequence(2);
         } else if (frequency == null) {
-            System.out.println("=> fréquence 1");
+            log.info("=> fréquence 1");
             tp.setFrequence(1);
         } else if (frequency.contains("15")) {
-            System.out.println("=> fréquence 2 à cause du texte");
+            log.info("=> fréquence 2 à cause du texte");
             tp.setFrequence(2);
         } else if (frequency.contains("3s")) {
-            System.out.println("=> fréquence 3");
+            log.info("=> fréquence 3");
             tp.setFrequence(3);
         } else {
-            System.out.println("=> fréquence 1");
+            log.info("=> fréquence 1");
             tp.setFrequence(1);
         }
 
@@ -130,6 +135,7 @@ public class CoursTPService extends CoursTPUtilsService {
                             int freq = tp.getFrequence();
 
                             if (freq <= 0) {
+                                log.info("Frequence invalide pour le cours {}",tp.getIntitule());
                                 throw new IllegalArgumentException("frequence invalide");
                             }
 

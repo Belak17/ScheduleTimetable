@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login","/forgot","/firstlogin","/forgot-password",
                                 "/reset-password","/error","/reset-password/**","/css/**",
-                                "/js/**" , "/images/**" , "/icons/**","/register","/confirm","/reset/**","/api/qr/**","/student/error","/student/validation","/student/alreadyRegistered","/student/codeError","/api/qr/scan","/api/qr/authentify","/student/roomvalidation","/api/qr/scan/authenticated","/student/codeNotFound").permitAll()
+                                "/js/**" , "/images/**" , "/icons/**","/register","/confirm","/reset/**","/api/qr/**","/student/error","/student/validation","/student/alreadyRegistered","/student/codeError","/api/qr/scan","/api/qr/authentify","/student/roomvalidation","/api/qr/scan/authenticated","/student/codeNotFound","/verify/otp").permitAll()
                         .requestMatchers("/admin/**","/admin","/filiere/**","/filiere","/error").hasRole("ADMIN")
                         .requestMatchers("/professor/**").hasRole("PROFESSOR")
                         .requestMatchers("/student/**").hasAnyRole("STUDENT","ADMIN")
