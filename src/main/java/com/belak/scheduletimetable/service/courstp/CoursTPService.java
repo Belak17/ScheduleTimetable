@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,27 +59,42 @@ public class CoursTPService extends CoursTPUtilsService {
         return null;
     }
 
-    private CoursTP buildTP(String value, String dayRaw, String start, String end ,GroupTimetable groupTimetable) {
+    private CoursTP buildTP(
+            String value,
+            String dayRaw,
+            String start,
+            String end,
+            GroupTimetable groupTimetable
+    ) {
         CoursTP tp = new CoursTP();
+
+        tp.setGroupTimetable(groupTimetable);
+
         tp.setIntitule(value);
         tp.setDayOfWeek(dayRaw);
         tp.setDebut(LocalTime.parse(start));
         tp.setFin(LocalTime.parse(end));
         tp.setSalle(extractGroupSalle(value));
+
         boolean exists = coursTPrepository.existsCoursTPByDayAndHoraireAndGroupTimetable(
                 dayRaw,
                 LocalTime.parse(start),
-                LocalTime.parse(end),groupTimetable
+                LocalTime.parse(end),
+                groupTimetable
         );
 
         String frequency = extractTPFrequency(value);
 
-        //System.out.println("Cours : " + value);
-        //System.out.println("Frequency extraite : " + frequency);
-        //System.out.println("Exists : " + exists);
+        log.info(
+                "Le cours TP intitule {} a pour frequence {}",
+                value,
+                frequency
+        );
 
-        log.info("Le cours TP intitule {} a pour frequence {} ",value,frequency);
-        log.info("Existence de ce cours dans la base de donnee {}",exists);
+        log.info(
+                "Existence de ce cours dans la base de donnee {}",
+                exists
+        );
 
         if (exists) {
             log.info("=> fréquence 2 à cause de exists");
@@ -104,54 +120,88 @@ public class CoursTPService extends CoursTPUtilsService {
         for (int row = 10; row <= 15; row++) {
 
             String hourRaw = sheet.getCellRange(row, 4).getValue();
-            if (hourRaw == null || !hourRaw.contains("à")) continue;
+
+            if (hourRaw == null || !hourRaw.contains("à")) {
+                continue;
+            }
 
             hourRaw = hourRaw.replace("de", "").trim();
 
             String[] parts = hourRaw.split("à");
+
             String start = parts[0].trim();
             String end = parts[1].trim();
 
             for (int col = 5; col <= 15; col++) {
 
                 String value = sheet.getCellRange(row, col).getValue();
-                if (value == null || value.isEmpty()) continue;
+
+                if (value == null || value.isBlank()) {
+                    continue;
+                }
 
                 String dayRaw = sheet.getCellRange(9, col).getValue();
+
                 if (dayRaw == null || dayRaw.isBlank()) {
                     dayRaw = sheet.getCellRange(10, col).getValue();
                 }
 
-                if (value.contains("TP")) {
-                    List<String> courses = extractCourses(value);
+                if (!value.contains("TP")) {
+                    continue;
+                }
 
-                    //  : plusieurs TP dans la cellule
-                    if (courses.size() > 1) {
+                List<String> courses = extractCourses(value);
 
-                        for (int j = 0; j < courses.size(); j++) {
+                if (courses.size() > 1) {
 
-                            CoursTP tp = buildTP(courses.get(j), dayRaw, start, end , timetable);
-                           // tp.setRotationOffset(j);  0,1 (plus logique que j+1)
-                            int freq = tp.getFrequence();
+                    for (int j = 0; j < courses.size(); j++) {
 
-                            if (freq <= 0) {
-                                log.info("Frequence invalide pour le cours {}",tp.getIntitule());
-                                throw new IllegalArgumentException("frequence invalide");
-                            }
+                        CoursTP tp = buildTP(
+                                courses.get(j),
+                                dayRaw,
+                                start,
+                                end,
+                                timetable
+                        );
 
-                            tp.setRotationOffset(j % freq);
-                            coursTPrepository.save(tp);
-                            timetable.addCoursTP(tp);
+                        int freq = tp.getFrequence();
+
+                        if (freq <= 0) {
+                            log.warn(
+                                    "Fréquence invalide pour le cours : {}",
+                                    tp.getIntitule()
+                            );
+
+                            throw new IllegalArgumentException(
+                                    "Fréquence invalide pour le cours : "
+                                            + tp.getIntitule()
+                            );
                         }
-                    }
-                    else {
-                        CoursTP tp = buildTP(value, dayRaw, start, end, timetable);
-                        coursTPrepository.save(tp);
+
+                        tp.setRotationOffset(j % freq);
+
+                        // La relation CoursTP -> GroupTimetable
+                        // est déjà définie dans buildTP().
+                        // Ici, on synchronise également le côté GroupTimetable.
                         timetable.addCoursTP(tp);
                     }
+
+                } else {
+
+                    CoursTP tp = buildTP(
+                            value,
+                            dayRaw,
+                            start,
+                            end,
+                            timetable
+                    );
+
+                    timetable.addCoursTP(tp);
                 }
             }
         }
+
+        // CascadeType.ALL persiste les CoursTP associés au timetable
         timetableRepository.save(timetable);
     }
     public Page<CoursTPDto> getAllCoursTPByGroupTimetable(int page , int size ,String departement , String group ,
@@ -219,7 +269,7 @@ public class CoursTPService extends CoursTPUtilsService {
 
                     Presence presence = optionalPresence.get();
 
-                    if (presence.getPresent()) {
+                    if (presence.isPresent()) {
                         studentAttendanceDto.addStatuses("Present");
                     } else {
                         studentAttendanceDto.addStatuses("Absent");

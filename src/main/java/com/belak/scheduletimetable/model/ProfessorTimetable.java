@@ -6,13 +6,14 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name = "professor_timetable")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Getter
-@Setter
-@Table(name = "professor_timetable")
 public class ProfessorTimetable {
+
         @Id
         @GeneratedValue(
                 strategy = GenerationType.SEQUENCE,
@@ -23,19 +24,27 @@ public class ProfessorTimetable {
                 sequenceName = "timetable_sequence",
                 allocationSize = 1
         )
-        private Long id ;
-        private String speciality ;
-        private Statuts statut ;
-        private Grade grade ;
-        @Column(name = "position_index")
-        private int position;
-        private String filename ;
+        private Long id;
 
-        @Column( name = "file_data")
+        private String speciality;
+
+        @Enumerated(EnumType.STRING)
+        private Statuts statut;
+
+        @Enumerated(EnumType.STRING)
+        private Grade grade;
+
+        @Column(name = "position_index", nullable = false)
+        private int position;
+
+        private String filename;
+
+
+        @Column(name = "file_data")
         private byte[] fileData;
+
         private String contentType;
-        // côté inverse
+
         @OneToOne(mappedBy = "timetable")
         private Professor professor;
-
-    }
+}

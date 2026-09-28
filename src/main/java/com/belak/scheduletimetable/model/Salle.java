@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "salle")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Salle {
 
     @Id
@@ -23,7 +23,10 @@ public class Salle {
     )
     private Long id;
 
-    private String code; // S1, A0.1...
+    @Column(nullable = false, unique = true, length = 50)
+    private String code;
 
-    private  byte[] codeQr ;
+    @Lob
+    @Column(name = "code_qr")
+    private byte[] codeQr;
 }

@@ -84,7 +84,7 @@ public class PresenceService {
             throw new PresenceAlreadyExistsException("Présence déjà enregistrée",presence.getSeance()
                     .getCoursTP().getIntitule(),
                     presence.getSeance().getDate(),
-                    presence.getSeance().getCoursTP().getDayOfWeek() ,
+                    presence.getSeance().getCoursTP().getDayOfWeek().toString() ,
                     presence.getLocalTime() ,
                     presence.getSeance().getCoursTP().getSalle().getCode()
             );
@@ -159,7 +159,7 @@ public class PresenceService {
             throw new PresenceAlreadyExistsException("Présence déjà enregistrée",presence.getSeance()
                     .getCoursTP().getIntitule(),
                     presence.getSeance().getDate(),
-                    presence.getSeance().getCoursTP().getDayOfWeek() ,
+                    presence.getSeance().getCoursTP().getDayOfWeek().toString() ,
                     presence.getLocalTime() ,
                     presence.getSeance().getCoursTP().getSalle().getCode()
             );

@@ -1,80 +1,41 @@
 package com.belak.scheduletimetable.model;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.TextStyle;
-import java.util.Locale;
 
 @Entity
-@Table(name = "presence",    uniqueConstraints = @UniqueConstraint(
-        columnNames = {"student_id", "seance_id"}))
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(
+        name = "presence",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_presence_student_seance",
+                        columnNames = {"student_id", "seance_id"}
+                )
+        }
+)
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Presence {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private boolean present;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
-    @ManyToOne
-    @JoinColumn(name = "seance_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "seance_id", nullable = false)
     private Seance seance;
 
     private LocalTime localTime;
 
-    public boolean getPresent() {
-        return present ;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public boolean isPresent() {
-        return present;
-    }
-
-    public void setPresent(boolean present) {
-        this.present = present;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Seance getSeance() {
-        return seance;
-    }
-
-    public void setSeance(Seance seance) {
-        this.seance = seance;
-    }
-
-    public LocalTime getLocalTime() {
-        return localTime;
-    }
-
-    public void setLocalTime(LocalTime localTime) {
-        this.localTime = localTime;
-    }
 }

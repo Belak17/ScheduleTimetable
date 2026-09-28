@@ -4,29 +4,35 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(
+        name = "password_reset_token",
+        indexes = {
+                @Index(name = "idx_password_reset_token_token", columnList = "token"),
+                @Index(name = "idx_password_reset_token_user", columnList = "user_id")
+        }
+)
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PasswordResetToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 36)
     private String token;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(nullable = false)
     private LocalDateTime expirationDate;
 
-    public String generateToken() {
-        return UUID.randomUUID().toString();
-    }
-
+    @Column(nullable = false)
+    private boolean used = false;
 }

@@ -12,13 +12,14 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "group_timetable")
 public class GroupTimetable {
+
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -29,21 +30,30 @@ public class GroupTimetable {
             sequenceName = "group_sequence",
             allocationSize = 1
     )
-    private Long id ;
+    private Long id;
+
     @Enumerated(EnumType.STRING)
     private Departement departement;
+
     @Enumerated(EnumType.STRING)
     private Filiere filiere;
+
     private Integer niveau;
+
     @Column(name = "group_name")
     private String group;
-    @Column(name = "semester")
+
     @Enumerated(EnumType.STRING)
-    private Semester semester ;
-    @Column(name = "position_index")
+    @Column(name = "semester")
+    private Semester semester;
+
+    @Column(name = "position_index", nullable = false)
     private int position;
-    private String filename ;
-    private String contentType ;
+
+    private String filename;
+
+    private String contentType;
+
     @Column(name = "data")
     private byte[] fileData;
 
@@ -55,23 +65,51 @@ public class GroupTimetable {
     )
     @Builder.Default
     private Set<Student> students = new HashSet<>();
-    public void addStudent(Student student){
-        if (students == null) {
-            students = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "groupTimetable",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @Builder.Default
+    private List<CoursTP> coursTPList = new ArrayList<>();
+
+
+    public void addStudent(Student student) {
+        if (student == null) {
+            throw new IllegalArgumentException("Student cannot be null");
         }
+
         students.add(student);
         student.getTimetables().add(this);
     }
 
-    @OneToMany(mappedBy = "groupTimetable" , fetch = FetchType.LAZY , cascade = CascadeType.ALL , orphanRemoval = true)
-    @Builder.Default
-    private List<CoursTP> coursTPList = new ArrayList<>();
-
-    public void addCoursTP(CoursTP coursTP){
-        if (coursTPList == null) {
-            coursTPList = new ArrayList<>();
+    public void removeStudent(Student student) {
+        if (student == null) {
+            return;
         }
+
+        students.remove(student);
+        student.getTimetables().remove(this);
+    }
+
+
+    public void addCoursTP(CoursTP coursTP) {
+        if (coursTP == null) {
+            throw new IllegalArgumentException("CoursTP cannot be null");
+        }
+
         coursTPList.add(coursTP);
         coursTP.setGroupTimetable(this);
+    }
+
+    public void removeCoursTP(CoursTP coursTP) {
+        if (coursTP == null) {
+            return;
+        }
+
+        coursTPList.remove(coursTP);
+        coursTP.setGroupTimetable(null);
     }
 }

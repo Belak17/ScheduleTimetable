@@ -2,23 +2,20 @@ package com.belak.scheduletimetable.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 
 import java.time.DayOfWeek;
-
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "cours_TP")
 @Getter
 @Setter
-@Table(name = "cours_TP")
+@NoArgsConstructor
+@AllArgsConstructor
 public class CoursTP {
+
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -29,53 +26,86 @@ public class CoursTP {
             sequenceName = "tp_sequence",
             allocationSize = 1
     )
-    private Long id ;
+    private Long id;
 
-    private  String intitule ;
-    private String  dayOfWeek ;
-    private  LocalTime debut ;
-    private LocalTime fin ;
-    @Builder.Default
+    private String intitule;
+
+
+    @Column(nullable = false)
+    private String  dayOfWeek;
+
+    private LocalTime debut;
+
+    private LocalTime fin;
+
+    @Column(nullable = false)
     private boolean inverseOfAnother = false;
-    @Builder.Default
-    private Long dependsOnCoursId = null;
-    @ManyToOne
-    @JoinColumn(name = "grouptimetable_id")
+
+    private Long dependsOnCoursId;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(
+            name = "grouptimetable_id",
+            nullable = false
+    )
     private GroupTimetable groupTimetable;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "salle_id")
     private Salle salle;
 
-    private int frequence ;
-    private  int rotationOffset ;
-    @Builder.Default
-    @OneToMany(mappedBy = "coursTP", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(nullable = false)
+    private int frequence;
+
+    @Column(nullable = false)
+    private int rotationOffset;
+
+    @OneToMany(
+            mappedBy = "coursTP",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<Seance> seances = new ArrayList<>();
 
-    public void addSeance (Seance seance)
-    {
-        if (seances == null) {
-            seances = new ArrayList<>();
+    public void addSeance(Seance seance) {
+        if (seance == null) {
+            throw new IllegalArgumentException("Seance cannot be null");
         }
+
         seances.add(seance);
         seance.setCoursTP(this);
+    }
+
+    public void removeSeance(Seance seance) {
+        if (seance == null) {
+            return;
+        }
+
+        seances.remove(seance);
+        seance.setCoursTP(null);
     }
 
     public boolean shouldOccurThisWeek(int weekNumber) {
 
         if (inverseOfAnother) {
-            throw new IllegalStateException("Use service-level logic for dependent TP");
+            throw new IllegalStateException(
+                    "Dependent TP occurrence must be handled by the service"
+            );
         }
+
         if (frequence <= 0) {
-            throw new IllegalArgumentException("frequency must be > 0");
+            throw new IllegalArgumentException(
+                    "Frequency must be greater than 0"
+            );
         }
+
         if (rotationOffset < 0 || rotationOffset >= frequence) {
-            throw new IllegalArgumentException("offsetRotation invalide");
+            throw new IllegalArgumentException(
+                    "Rotation offset must be between 0 and frequency - 1"
+            );
         }
+
         return weekNumber % frequence == rotationOffset;
     }
-
-
-
 }
