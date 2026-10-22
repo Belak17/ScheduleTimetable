@@ -7,8 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,5 +44,29 @@ public interface PresenceRepository extends JpaRepository<Presence,Long> {
     List<AbsenceOverviewDto> findAbsenceOverview(
             Long studentId,
             Long coursTPId
+    );
+
+    @Query("""
+    SELECT p
+    FROM Presence p
+    WHERE p.student.id IN :studentIds
+      AND p.seance.id IN :seanceIds
+""")
+    List<Presence> findAllByStudentIdsAndSeanceIds(
+            @Param("studentIds") Collection<Long> studentIds,
+            @Param("seanceIds") Collection<Long> seanceIds
+    );
+
+
+    @Query("""
+    SELECT DISTINCT p.seance.id
+    FROM Presence p
+    WHERE p.student.id = :studentId
+      AND p.seance.id IN :seanceIds
+      AND p.present = true
+    """)
+    List<Long> findPresentSeanceIdsByStudentAndSeanceIds(
+            @Param("studentId") Long studentId,
+            @Param("seanceIds") Collection<Long> seanceIds
     );
 }

@@ -56,9 +56,7 @@ public class ProfessorExcelService {
 
         dto.setPrenom(utilsService.getCellValue(row.getCell(0)));
         dto.setNom(utilsService.getCellValue(row.getCell(1)));
-        dto.setPrenomArabe(utilsService.getCellValue(row.getCell(2)));
-        dto.setNomArabe(utilsService.getCellValue(row.getCell(3)));
-        dto.setCin(utilsService.getCellValue(row.getCell(4)));
+
         dto.setUserId(utilsService.getCellValue(row.getCell(5)));
 
         // password sécurisé
@@ -71,16 +69,10 @@ public class ProfessorExcelService {
 
         dto.setDateNaissance(utilsService.parseDate(row.getCell(10)));
 
-        dto.setVilleNaissance(utilsService.getCellValue(row.getCell(11)));
-        dto.setAdresse(utilsService.getCellValue(row.getCell(12)));
-        dto.setCodePostal(utilsService.getCellValue(row.getCell(13)));
-        dto.setVille(utilsService.getCellValue(row.getCell(14)));
 
         // ENUM Nationalité
         dto.setNationalite(utilsService.parseNationalite(row.getCell(15)));
 
-        // Département
-        dto.setCodeDepartement(utilsService.getCellValue(row.getCell(16)));
         dto.setNomDepartement(utilsService.getCellValue(row.getCell(17)));
 
         // Grade

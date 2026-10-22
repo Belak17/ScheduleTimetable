@@ -37,10 +37,34 @@ public class StudentService implements  StudentInterfaceService {
     private  final PresenceRepository presenceRepository ;
     private  final StudentProfileMapper profileMapper ;
     private  final PasswordEncoder passwordEncoder ;
-    public Page<StudentDto> getStudentByFieldAndYearAndGroup(String field,int year,String group,int page,int size)
+    public Page<StudentDto> getStudentByFieldAndYearAndGroup(String field,String year,String groupe,int page,int size)
     {
         Pageable pageable = PageRequest.of(page, size);
-        return studentRepository.findByFiliereAndNiveauAndGroup(Filiere.valueOf(field), year,group,pageable).map(studentMapper::convertToDto);
+        String group = Filiere.fromCode(field).toString()+year;
+        if (!groupe.startsWith("T"))
+        {
+            group = group+groupe;
+        }
+        else
+        {
+            group = group+" "+groupe;
+        }
+        return studentRepository.findByGroup(group,pageable).map(studentMapper::convertToDto);
+    }
+
+    public Page<StudentDto> getStudentByFieldAndYearAndGroup(String field,int year,String groupe,int page,int size)
+    {
+        Pageable pageable = PageRequest.of(page, size);
+        String group = Filiere.fromCode(field).getCode()+year;
+        if (!groupe.startsWith("T"))
+        {
+            group = group+groupe;
+        }
+        else
+        {
+            group = group+" "+groupe;
+        }
+        return studentRepository.findByGroup(group,pageable).map(studentMapper::convertToDto);
     }
     public void saveStudent(StudentImportDto studentDto)
     {
@@ -73,13 +97,13 @@ public class StudentService implements  StudentInterfaceService {
         studentRepository.save(student);
     }
 
-    public void updateInfo(String userId, String address, String telephone, String code) {
+    public void updateInfo(String userId, String telephone) {
         Student student = studentRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Étudiant introuvable"));
         student.setUserId(userId);
-        student.setAdresse(address);
+
         student.setTelephone(telephone);
-        student.setCodePostal(code);
+
         studentRepository.save(student);
     }
 

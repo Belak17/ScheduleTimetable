@@ -28,7 +28,6 @@
     <table bgcolor="lightgray" border="1" rules="all" class="styled-table">
         <thead>
         <tr>
-            <th>Departement</th>
             <th>Filiere</th>
             <th>Groupe</th>
             <th>Annee</th>
@@ -39,7 +38,6 @@
         </tr>
         </thead>
         <tr th:each="student : ${students.content}">
-            <td th:text="${student.department}"></td>
             <td th:text="${student.field}"></td>
             <td th:text="${student.group}"></td>
             <td th:text="${student.year}"></td>

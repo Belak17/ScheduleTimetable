@@ -23,7 +23,7 @@ public interface ProfessorInterfaceService {
     public void updateEmail(String nouvEmail, String confEmail, String userId) ;
 
 
-    public void updateInfo(String userId, String address, String telephone, String code) ;
+    public void updateInfo(String userId ,String telephone) ;
 
 
     public void updatePassword(String oldPassword,

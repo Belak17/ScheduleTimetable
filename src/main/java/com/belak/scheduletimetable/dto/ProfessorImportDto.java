@@ -13,17 +13,16 @@ import java.time.LocalDate;
 @Setter
 public class ProfessorImportDto {
     private  String userId ;
-    private  String cin ;
+
     private  String nom ;
     private  String prenom ;
+
     private String email ;
     private  String  telephone;
     private  String sexe ;
     private LocalDate dateNaissance;
-    private String villeNaissance;
-    private String adresse ;
-    private String codePostal;
-    private String ville ;
+
+
     private Nationalite nationalite ;
     private Departement departement ;
     private String specialite ;
@@ -41,14 +40,6 @@ public class ProfessorImportDto {
         this.userId = userId;
     }
 
-    public String getCin() {
-        return cin;
-    }
-
-    public void setCin(String cin) {
-        this.cin = cin;
-    }
-
     public String getNom() {
         return nom;
     }
@@ -64,6 +55,7 @@ public class ProfessorImportDto {
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
+
 
     public String getEmail() {
         return email;
@@ -95,38 +87,6 @@ public class ProfessorImportDto {
 
     public void setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
-    }
-
-    public String getVilleNaissance() {
-        return villeNaissance;
-    }
-
-    public void setVilleNaissance(String villeNaissance) {
-        this.villeNaissance = villeNaissance;
-    }
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public String getCodePostal() {
-        return codePostal;
-    }
-
-    public void setCodePostal(String codePostal) {
-        this.codePostal = codePostal;
-    }
-
-    public String getVille() {
-        return ville;
-    }
-
-    public void setVille(String ville) {
-        this.ville = ville;
     }
 
     public Nationalite getNationalite() {

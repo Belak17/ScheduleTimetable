@@ -22,19 +22,18 @@ import java.time.LocalDate;
 public class CreateStudentDto extends  CreateUserDto{
 
     private Filiere filiere;
-    private Integer niveau;
+
+    private String niveau;
+
     private String codeDiplome;
+
     private String nomDiplome;
+
     private TypeDiplome typeDiplome;
+
     private String numeroInscription;
 
-    private String groupeC;
-    private String groupeTD;
-    private String groupeM;
-    private String groupeArchive;
-
-    private String group ;
-
+    private String group;
 
     public Filiere getFiliere() {
         return filiere;
@@ -44,11 +43,11 @@ public class CreateStudentDto extends  CreateUserDto{
         this.filiere = filiere;
     }
 
-    public Integer getNiveau() {
+    public String getNiveau() {
         return niveau;
     }
 
-    public void setNiveau(Integer niveau) {
+    public void setNiveau(String niveau) {
         this.niveau = niveau;
     }
 
@@ -82,38 +81,6 @@ public class CreateStudentDto extends  CreateUserDto{
 
     public void setNumeroInscription(String numeroInscription) {
         this.numeroInscription = numeroInscription;
-    }
-
-    public String getGroupeC() {
-        return groupeC;
-    }
-
-    public void setGroupeC(String groupeC) {
-        this.groupeC = groupeC;
-    }
-
-    public String getGroupeTD() {
-        return groupeTD;
-    }
-
-    public void setGroupeTD(String groupeTD) {
-        this.groupeTD = groupeTD;
-    }
-
-    public String getGroupeM() {
-        return groupeM;
-    }
-
-    public void setGroupeM(String groupeM) {
-        this.groupeM = groupeM;
-    }
-
-    public String getGroupeArchive() {
-        return groupeArchive;
-    }
-
-    public void setGroupeArchive(String groupeArchive) {
-        this.groupeArchive = groupeArchive;
     }
 
     public String getGroup() {

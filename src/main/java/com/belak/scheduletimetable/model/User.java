@@ -1,6 +1,7 @@
 package com.belak.scheduletimetable.model;
 
 import com.belak.scheduletimetable.enumeration.Departement;
+import com.belak.scheduletimetable.enumeration.Filiere;
 import com.belak.scheduletimetable.enumeration.Nationalite;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,52 +27,50 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-    @SequenceGenerator(
-            name = "user_seq",
-            sequenceName = "USER_SEQ",
-            allocationSize = 1
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idUser;
+
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String userId;
+    //@Column(unique = true, nullable = false)
+    //private String cin;
 
-    @Column(unique = true, nullable = false)
-    private String cin;
-
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password;
 
     private String nom;
 
     private String prenom;
 
-    private String prenomArabe;
+    @Column(unique = true, nullable = false)
+    private String userId;
 
-    private String nomArabe;
+
+    @Enumerated(EnumType.STRING)
+    private Nationalite nationalite;
+
+    private String sexe;
 
     @Column(unique = true, nullable = false)
     private String email;
 
-    private String telephone;
-
-    private String sexe;
-
     private LocalDate dateNaissance;
 
-    private String villeNaissance;
+    private String isEmailVerified ;
 
-    private String villeNaissanceArabe;
+    private String telephone;
 
-    private String adresse;
+//    private String villeNaissance;
+//
+//    private String villeNaissanceArabe;
+//
+//    private String adresse;
+//
+//    private String codePostal;
+//
+//    private String ville;
 
-    private String codePostal;
 
-    private String ville;
-
-    @Enumerated(EnumType.STRING)
-    private Nationalite nationalite;
 
     @Enumerated(EnumType.STRING)
     private Departement department;

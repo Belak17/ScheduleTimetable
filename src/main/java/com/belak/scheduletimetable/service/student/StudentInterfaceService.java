@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 
 public interface StudentInterfaceService {
 
-    public Page<StudentDto> getStudentByFieldAndYearAndGroup(String field, int year, String group, int page, int size) ;
+    public Page<StudentDto> getStudentByFieldAndYearAndGroup(String field, String year, String group, int page, int size) ;
 
     public void saveStudent(StudentImportDto studentDto) ;
 
@@ -19,7 +19,7 @@ public interface StudentInterfaceService {
 
     public void updateEmail(String nouvEmail, String confEmail, String userId) ;
 
-    public void updateInfo(String userId, String address, String telephone, String code) ;
+    public void updateInfo(String userId, String telephone) ;
 
     public void updatePassword(String oldPassword,
                                String newPassword,

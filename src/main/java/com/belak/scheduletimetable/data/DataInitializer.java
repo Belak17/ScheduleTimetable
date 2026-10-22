@@ -35,84 +35,85 @@ public class DataInitializer implements CommandLineRunner
 
     public void run(String... args) throws Exception {
         // Vérifie si un utilisateur avec userId "admin" existe
-        if (userRepository.findByUserId("BJ240005").isEmpty()) {
+        if (userRepository.findByUserId("BJ2400005").isEmpty()) {
             // Crée un nouvel admin
             User admin = new User();
-            admin.setUserId("BJ240005"); // identifiant admin
-            admin.setPassword(passwordEncoder.encode("BJ240005"));// mot de passe hashé
-            admin.setCin("24PP37392");
+            admin.setUserId("BJ2400005"); // identifiant admin
+            admin.setPassword(passwordEncoder.encode("BJ2400005"));// mot de passe hashé
+
             admin.setRole(User.Role.valueOf("ADMIN")); // rôle
-            admin.setEmail("akabeb.com@gmail.com");
+            admin.setEmail("akakpokaleb09@gmail.com");
             admin.setPrenom("Yelongnise Kaleb Renaud Gerald");
             admin.setNom("AKAKPO");
+            admin.setEnabled(true);
             // Sauvegarde dans la base
             userRepository.save(admin);
             System.out.println("Admin créé avec succès !");
         }
 
-        if (userRepository.findByUserId("BJ340005").isEmpty())
-        {
-            Professor professor = new Professor();
-            professor.setUserId("BJ340005");
-            professor.setPassword(passwordEncoder.encode("BJ340005"));
-            professor.setCin("2403994");
-            professor.setRole(User.Role.valueOf("PROFESSOR"));
-            professor.setEmail("akakpokaleb09@gmail.com");
-            professor.setNom("Afef");
-            professor.setPrenom("Troudi");
-            professor.setGrade(Grade.MAITRE_ASSISTANT);
-            professor.setSchoolStatus(Statuts.PERMANENT);
-            professor.setDepartment(Departement.ST);
-            professor.setSpecialite("Biologie");
-            professorRepository.save(professor);
-
-        }
-        if (userRepository.findByUserId("BJ440005").isEmpty())
-        {
-            Student student = new Student();
-            student.setUserId("BJ440005");
-            student.setPassword(passwordEncoder.encode("BJ440005"));
-            student.setRole(User.Role.valueOf("STUDENT"));
-            student.setCin("2394595");
-            student.setNom("AKAKP");
-            student.setPrenom("Renaud");
-            student.setEmail("akanaud17@gmail.com");
-            student.setNiveau(2);
-            student.setFiliere(Filiere.LSI);
-            student.setGroup("TD3 TP1");
-            student.setTypeDiplome(TypeDiplome.LICENCE);
-            student.setDepartment(Departement.INF);
-            studentRepository.save(student);
-
-        }
-
-        if (userRepository.findByUserId("TD550005").isEmpty())
-        {
-            Student student = new Student();
-            student.setUserId("TD550005");
-            student.setPassword(passwordEncoder.encode("TD550005"));
-            student.setRole(User.Role.valueOf("STUDENT"));
-            student.setCin("2396795");
-            student.setNom("AKAK");
-            student.setPrenom("Ren Yelongnise");
-            student.setEmail("thefool1709@gmail.com");
-            student.setNiveau(2);
-            student.setFiliere(Filiere.LIRS);
-            student.setGroup("TD1 TP1");
-            student.setTypeDiplome(TypeDiplome.LICENCE);
-            student.setDepartment(Departement.INF);
-            studentRepository.save(student);
-
-        }
-        List<GroupTimetable> timetables =
-                groupTimetableRepository.findByFiliereAndNiveau(
-                        Filiere.LIRS,
-                        2
-                );
-
-        for (GroupTimetable timetable : timetables) {
-            log.info("Groupe : {}", timetable.getGroup());
-        }
+//        if (userRepository.findByUserId("BJ340005").isEmpty())
+//        {
+//            Professor professor = new Professor();
+//            professor.setUserId("BJ340005");
+//            professor.setPassword(passwordEncoder.encode("BJ340005"));
+//
+//            professor.setRole(User.Role.valueOf("PROFESSOR"));
+//            professor.setEmail("akakpokaleb09@gmail.com");
+//            professor.setNom("Afef");
+//            professor.setPrenom("Troudi");
+//            professor.setGrade(Grade.MAITRE_ASSISTANT);
+//            professor.setSchoolStatus(Statuts.PERMANENT);
+//            professor.setDepartment(Departement.ST);
+//            professor.setSpecialite("Biologie");
+//            professorRepository.save(professor);
+//
+//        }
+//        if (userRepository.findByUserId("BJ440005").isEmpty())
+//        {
+//            Student student = new Student();
+//            student.setUserId("BJ440005");
+//            student.setPassword(passwordEncoder.encode("BJ440005"));
+//            student.setRole(User.Role.valueOf("STUDENT"));
+//
+//            student.setNom("AKAKP");
+//            student.setPrenom("Renaud");
+//            student.setEmail("akanaud17@gmail.com");
+//            student.setNiveau("2");
+//            student.setFiliere(Filiere.LSI);
+//            student.setGroup("TD3 TP1");
+//            student.setTypeDiplome(TypeDiplome.LICENCE);
+//            student.setDepartment(Departement.INF);
+//            studentRepository.save(student);
+//
+//        }
+//
+//        if (userRepository.findByUserId("TD550005").isEmpty())
+//        {
+//            Student student = new Student();
+//            student.setUserId("TD550005");
+//            student.setPassword(passwordEncoder.encode("TD550005"));
+//            student.setRole(User.Role.valueOf("STUDENT"));
+//
+//            student.setNom("AKAK");
+//            student.setPrenom("Ren Yelongnise");
+//            student.setEmail("thefool1709@gmail.com");
+//            student.setNiveau("2");
+//            student.setFiliere(Filiere.LIRS);
+//            student.setGroup("TD1 TP1");
+//            student.setTypeDiplome(TypeDiplome.LICENCE);
+//            student.setDepartment(Departement.INF);
+//            studentRepository.save(student);
+//
+//        }
+//        List<GroupTimetable> timetables =
+//                groupTimetableRepository.findByFiliereAndNiveau(
+//                        Filiere.LIRS,
+//                        2
+//                );
+//
+//        for (GroupTimetable timetable : timetables) {
+//            log.info("Groupe : {}", timetable.getGroup());
+//        }
 
 //        Optional<Student> studentOpt = studentRepository.findByUserId("KL550005");
 //
@@ -139,40 +140,40 @@ public class DataInitializer implements CommandLineRunner
 //            log.warn("Étudiant KL550005 introuvable");
 //        }
 
-        if (userRepository.findByUserId("KL550005").isEmpty())
-        {
-            Student student = new Student();
-            student.setUserId("KL550005");
-            student.setPassword(passwordEncoder.encode("KL550005"));
-            student.setRole(User.Role.valueOf("STUDENT"));
-            student.setCin("4496795");
-            student.setNom("AKK");
-            student.setPrenom("Ren Yelogse");
-            student.setEmail("alimatouakakpo2018@gmail.com");
-            student.setNiveau(1);
-            student.setFiliere(Filiere.LSI);
-            student.setGroup("A TD2 TP1");
-            student.setTypeDiplome(TypeDiplome.LICENCE);
-            student.setDepartment(Departement.INF);
-
-            studentRepository.save(student);
-
-            Optional<GroupTimetable> timetable = Optional.ofNullable(
-                    groupTimetableRepository.findByDepartementAndFiliereAndGroupAndNiveau(
-                            Departement.INF,
-                            Filiere.LSI,
-                            "A TD2 TP1",
-                            1
-                    )
-            );
-
-            if (timetable.isPresent()) {
-                timetable.get().addStudent(student);
-                log.info("Étudiant ajouté à l'emploi du temps");
-            } else {
-                log.warn("Emploi du temps introuvable");
-            }
-        }
+        //if (userRepository.findByUserId("KL550005").isEmpty())
+//        {
+//            Student student = new Student();
+//            student.setUserId("KL550005");
+//            student.setPassword(passwordEncoder.encode("KL550005"));
+//            student.setRole(User.Role.valueOf("STUDENT"));
+//
+//            student.setNom("AKK");
+//            student.setPrenom("Ren Yelogse");
+//            student.setEmail("alimatouakakpo2018@gmail.com");
+//            student.setNiveau("1");
+//            student.setFiliere(Filiere.LSI);
+//            student.setGroup("A TD2 TP1");
+//            student.setTypeDiplome(TypeDiplome.LICENCE);
+//            student.setDepartment(Departement.INF);
+//
+//            studentRepository.save(student);
+//
+//            Optional<GroupTimetable> timetable = Optional.ofNullable(
+//                    groupTimetableRepository.findByDepartementAndFiliereAndGroupAndNiveau(
+//                            Departement.INF,
+//                            Filiere.LSI,
+//                            "A TD2 TP1",
+//                            1
+//                    )
+//            );
+//
+//            if (timetable.isPresent()) {
+//                timetable.get().addStudent(student);
+//                log.info("Étudiant ajouté à l'emploi du temps");
+//            } else {
+//                log.warn("Emploi du temps introuvable");
+//            }
+//        }
 
 
 

@@ -172,11 +172,19 @@ public class GroupTimetableService extends TimetableService {
                 .group(info.getGroup())
                 .build();
         entity.setSemester(Semester.fromDate(LocalDate.now(ZoneId.of("Africa/Tunis"))));
-        List<Student> students = studentRepository.findByDepartmentAndFiliereAndNiveauAndGroup(
-                Departement.fromLibelle(info.getDepname()),
-                Filiere.fromCode(info.getField()),
-                info.getYear(),
-                info.getGroup()
+
+        String group = Filiere.fromCode(info.getField()).getCode()+info.getYear();
+
+            if (!info.getGroup().startsWith("T"))
+            {
+                group = group+info.getGroup();
+            }
+            else
+            {
+                group = group+" "+info.getGroup();
+            }
+        List<Student> students = studentRepository.findByGroup(
+                group
         );
         Semester semester = entity.getSemester();
         for (Student student : students) {
@@ -186,6 +194,7 @@ public class GroupTimetableService extends TimetableService {
             );
             entity.addStudent(student);
         }
+        log.info("Assignement de l'emploi du temps du groupe {} de taille {}",group,students.size());
        return groupTimetableRepository.save(entity);
     }
 

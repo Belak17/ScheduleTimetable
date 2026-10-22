@@ -136,11 +136,11 @@ public class StudentController {
 
     @PostMapping("/edit-my-profile/update/info")
     public String updateInfo( @RequestParam String userId,
-                              @RequestParam String address , @RequestParam String telephone ,
-                              @RequestParam String code ,
+                              @RequestParam String telephone ,
+
                                @RequestParam(defaultValue = "student/change-info") String tab,
                                Model model , Authentication authentication) {
-        studentService.updateInfo(userId,address,telephone,code);
+        studentService.updateInfo(userId,telephone);
         StudentProfileDto student = studentService.findByUserId(authentication.getName());
         model.addAttribute("student",student);
         model.addAttribute("fragmentName", tab);

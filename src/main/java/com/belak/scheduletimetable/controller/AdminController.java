@@ -103,11 +103,11 @@ public class AdminController {
 
     @PostMapping("/edit-my-profile/update/info")
     public String updateInfo( @RequestParam String userId,
-                              @RequestParam String address , @RequestParam String telephone ,
-                              @RequestParam String code ,
+                               @RequestParam String telephone ,
+
                               @RequestParam(defaultValue = "admin/change-info") String tab,
                               Model model , Authentication authentication) {
-        adminService.updateInfo(userId,address,telephone,code);
+        adminService.updateInfo(userId,telephone);
         AdminProfileDto admin = adminService.findByUserId(authentication.getName());
         model.addAttribute("admin",admin);
         model.addAttribute("fragmentName", tab);

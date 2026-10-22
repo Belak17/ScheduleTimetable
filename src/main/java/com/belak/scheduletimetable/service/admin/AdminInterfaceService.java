@@ -12,7 +12,7 @@ public interface AdminInterfaceService {
                                String confPassword,
                                String userId) ;
 
-    public void updateInfo(String userId, String address, String telephone, String code) ;
+    public void updateInfo(String userId, String telephone) ;
 
     public void updateEmail(String nouvEmail, String confEmail, String userId) ;
 }

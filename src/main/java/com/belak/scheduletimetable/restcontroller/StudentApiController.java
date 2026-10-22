@@ -3,8 +3,7 @@ package com.belak.scheduletimetable.restcontroller;
 import com.belak.scheduletimetable.dto.ProfessorImportDto;
 import com.belak.scheduletimetable.dto.StudentDto;
 import com.belak.scheduletimetable.dto.StudentImportDto;
-import com.belak.scheduletimetable.enumeration.Filiere;
-import com.belak.scheduletimetable.enumeration.Semester;
+import com.belak.scheduletimetable.enumeration.*;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.service.student.StudentExcelService;
 import com.belak.scheduletimetable.service.student.StudentService;
@@ -39,11 +38,12 @@ public class StudentApiController {
                                     @PathVariable int year
     )
     {
-        Page<StudentDto> students = studentService.getStudentByFieldAndYearAndGroup(Filiere.fromCode(field).toString(),year,group,page,size);
+        Page<StudentDto> students = studentService.getStudentByFieldAndYearAndGroup(Filiere.fromCode(field).getCode(),year,group,page,size);
         model.addAttribute("students", students);
         model.addAttribute("field", field);
         model.addAttribute("group", group);
         model.addAttribute("year", year);
+        model.addAttribute("GroupStudentList",students);
         return "admin/see-group-student.html";
     }
 
@@ -66,6 +66,14 @@ public class StudentApiController {
                                  Model model ,
                                  RedirectAttributes redirectAttributes)  {
         try {
+
+            model.addAttribute("student", new StudentImportDto());
+
+            model.addAttribute("nationalites", Nationalite.values());
+            model.addAttribute("departments", Departement.values());
+            model.addAttribute("filieres", Filiere.values());
+            model.addAttribute("typeDiplome", TypeDiplome.values());
+
             studentExcelService.processSheet(file);
         } catch (IOException e) {
             throw new RuntimeException(e);

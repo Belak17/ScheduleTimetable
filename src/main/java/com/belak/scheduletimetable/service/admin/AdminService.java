@@ -19,16 +19,13 @@ public class AdminService implements AdminInterfaceService {
         return userRepository.findByUserId(userId)
                 .map(user -> new AdminProfileDto(
                         user.getUserId(),
-                        user.getCin(),
+
                         user.getNom(),
                         user.getPrenom(),
                         user.getEmail(),
                         user.getTelephone(),
                         user.getSexe(),
-                        user.getVilleNaissance(),
-                        user.getAdresse(),
-                        user.getCodePostal(),
-                        user.getVille(),
+
                         user.getNationalite()
                 ))
                 .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
@@ -46,13 +43,13 @@ public class AdminService implements AdminInterfaceService {
         userRepository.save(user);
     }
 
-    public void updateInfo(String userId, String address, String telephone, String code) {
+    public void updateInfo(String userId, String telephone) {
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Admin introuvable"));
         user.setUserId(userId);
-        user.setAdresse(address);
+
         user.setTelephone(telephone);
-        user.setCodePostal(code);
+
         userRepository.save(user);
     }
 

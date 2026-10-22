@@ -95,11 +95,11 @@ public class ProfessorController {
 
     @PostMapping("/edit-my-profile/update/info")
     public String updateInfo( @RequestParam String userId,
-                              @RequestParam String address , @RequestParam String telephone ,
-                              @RequestParam String code ,
+                               @RequestParam String telephone ,
+
                               @RequestParam(defaultValue = "professor/change-info") String tab,
                               Model model , Authentication authentication) {
-        professorService.updateInfo(userId,address,telephone,code);
+        professorService.updateInfo(userId,telephone);
         ProfessorProfileDto professor = professorService.findByUserId(authentication.getName());
         model.addAttribute("professor",professor);
         model.addAttribute("fragmentName", tab);

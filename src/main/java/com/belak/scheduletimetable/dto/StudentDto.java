@@ -11,10 +11,9 @@ import lombok.Setter;
 @Setter
 public class StudentDto {
     private String userId ;
-    private String department ;
     private  String field ;
     private  String group ;
-    private int year ;
+    private String  year ;
     private String nom ;
     private String prenom ;
     private String email ;

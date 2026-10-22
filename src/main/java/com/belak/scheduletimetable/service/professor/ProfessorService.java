@@ -96,13 +96,13 @@ public class ProfessorService implements  ProfessorInterfaceService  {
         professorRepository.save(professor);
     }
 
-    public void updateInfo(String userId, String address, String telephone, String code) {
+    public void updateInfo(String userId, String telephone) {
         Professor professor = professorRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Professeur introuvable"));
         professor.setUserId(userId);
-        professor.setAdresse(address);
+
         professor.setTelephone(telephone);
-        professor.setCodePostal(code);
+
         professorRepository.save(professor);
     }
 

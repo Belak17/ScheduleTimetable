@@ -9,8 +9,8 @@ public class StudentMapper {
     public StudentDto convertToDto(Student student)
     {
         return new StudentDto(student.getUserId(),
-                student.getDepartment().getLibelle()
-                ,student.getFiliere().getCode(),
+
+                student.getFiliere().getCode(),
                 student.getGroup() ,
                 student.getNiveau(),
                 student.getNom(),

@@ -28,7 +28,7 @@ public class Student extends User {
     private Filiere filiere;
 
     @Column(name = "student_year")
-    private Integer niveau;
+    private String niveau;
 
     private String codeDiplome;
 
@@ -39,13 +39,6 @@ public class Student extends User {
 
     private String numeroInscription;
 
-    private String groupeC;
-
-    private String groupeTD;
-
-    private String groupeM;
-
-    private String groupeArchive;
 
     @Column(name = "student_group")
     private String group;
@@ -88,25 +81,42 @@ public class Student extends User {
     }
 
     public Student(CreateStudentDto dto) {
-        this.setUserId(dto.getUserId());
-        this.setCin(dto.getCin());
+
+        this.setId(dto.getId());
+        this.setPassword(dto.getPassword());
         this.setNom(dto.getNom());
         this.setPrenom(dto.getPrenom());
-        this.setPrenomArabe(dto.getPrenomArabe());
-        this.setNomArabe(dto.getNomArabe());
-        this.setEmail(dto.getEmail());
-        this.setTelephone(dto.getTelephone());
-        this.setSexe(dto.getSexe());
-        this.setDateNaissance(dto.getDateNaissance());
-        this.setVilleNaissance(dto.getVilleNaissance());
-        this.setVilleNaissanceArabe(dto.getVilleNaissanceArabe());
-        this.setAdresse(dto.getAdresse());
-        this.setCodePostal(dto.getCodePostal());
-        this.setVille(dto.getVille());
+
+        this.setUserId(dto.getUserId());
         this.setNationalite(dto.getNationalite());
-        this.setDepartment(dto.getDepartment());
-        this.setCodeDepartement(dto.getCodeDepartement());
-        this.setRole(dto.getRole());
+        this.setSexe(dto.getSexe());
+        this.setEmail(dto.getEmail());
+        this.setDateNaissance(dto.getDateNaissance());
+        this.setIsEmailVerified(dto.getIsEmailVerified());
+        this.setTelephone(dto.getTelephone());
+
+        this.filiere = dto.getFiliere();
+        this.niveau = dto.getNiveau();
+        this.codeDiplome = dto.getCodeDiplome();
+        this.nomDiplome = dto.getNomDiplome();
+        this.typeDiplome = dto.getTypeDiplome();
+        this.numeroInscription = dto.getNumeroInscription();
+        this.group = dto.getGroup();
+        this.setRole(Role.STUDENT);
+    }
+    public Student(StudentImportDto dto) {
+        this.setId(dto.getId());
+        this.setPassword(dto.getPassword());
+        this.setNom(dto.getNom());
+        this.setPrenom(dto.getPrenom());
+        this.setUserId(dto.getUserId());
+        this.setNationalite(dto.getNationalite());
+        this.setSexe(dto.getSexe());
+        this.setEmail(dto.getEmail());
+        this.setDateNaissance(dto.getDateNaissance());
+        this.setIsEmailVerified(dto.getIsEmailVerified());
+        this.setTelephone(dto.getTelephone());
+
         this.setFiliere(dto.getFiliere());
         this.setNiveau(dto.getNiveau());
         this.setCodeDiplome(dto.getCodeDiplome());
@@ -114,37 +124,6 @@ public class Student extends User {
         this.setTypeDiplome(dto.getTypeDiplome());
         this.setNumeroInscription(dto.getNumeroInscription());
         this.setGroup(dto.getGroup());
-        this.setGroupeC(dto.getGroupeC());
-        this.setGroupeTD(dto.getGroupeTD());
-        this.setGroupeArchive(dto.getGroupeArchive());
-        this.setGroupeM(dto.getGroupeM());
-        this.setPassword(dto.getPassword()); }
-    public Student(StudentImportDto dto) {
-        this.setUserId(dto.getUserId());
-        this.setCin(dto.getCin());
-        this.setNom(dto.getNom());
-        this.setPrenom(dto.getPrenom());
-        this.setEmail(dto.getEmail());
-        this.setTelephone(dto.getTelephone());
-        this.setSexe(dto.getSexe());
-        this.setDateNaissance(dto.getDateNaissance());
-        this.setVilleNaissance(dto.getVilleNaissance());
-        this.setAdresse(dto.getAdresse());
-        this.setCodePostal(dto.getCodePostal());
-        this.setVille(dto.getVille());
-        this.setNationalite(dto.getNationalite());
-        this.setDepartment(dto.getDepartement());
-        this.setCodeDepartement(dto.getDepartement().getCode());
         this.setRole(Role.STUDENT);
-        this.setFiliere(dto.getFiliere());
-        this.setNiveau(dto.getNiveau());
-        this.setCodeDiplome(dto.getTypeDiplome().getCode());
-        this.setNomDiplome(dto.getTypeDiplome().getLibelle());
-        this.setTypeDiplome(dto.getTypeDiplome());
-        this.setNumeroInscription(dto.getNumeroInscription());
-        this.setGroup(dto.getGroup());
-        this.setGroupeC(dto.getGroupeC());
-        this.setGroupeTD(dto.getGroupeTD());
-        this.setGroupeArchive(dto.getGroupeArchive());
-        this.setGroupeM(dto.getGroupeM()); }
+    }
 }

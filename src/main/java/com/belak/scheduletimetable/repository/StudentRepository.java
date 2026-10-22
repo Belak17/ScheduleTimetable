@@ -37,4 +37,7 @@ WHERE s.userId = :userId
     List<Student> findByGroupId(@Param("timetableId") Long groupId);
 
 
+    List<Student> findByGroup(String s);
+
+    Page<Student> findByGroup(String s,Pageable pageable);
 }

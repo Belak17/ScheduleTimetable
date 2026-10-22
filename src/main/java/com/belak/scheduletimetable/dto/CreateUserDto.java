@@ -3,6 +3,9 @@ package com.belak.scheduletimetable.dto;
 import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.enumeration.Nationalite;
 import com.belak.scheduletimetable.model.User;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,43 +18,52 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @SuperBuilder
 public class CreateUserDto {
+    private Long id;
+
+
+
+    @Column(nullable = true)
+    private String password;
+
+    private String nom;
+
+    private String prenom;
+
+
 
     private String userId;
-    private String cin ;
-    private String nom; //nom
-    private String prenom;//prenom
-    private String prenomArabe;
-    private String nomArabe;
-    private String email ;
-    private String telephone;
-    private String sexe;
-    private LocalDate dateNaissance;
-    private String villeNaissance;
-    private String villeNaissanceArabe;
-    private String adresse;
-    private String codePostal;
-    private String ville;
+
+
+
     private Nationalite nationalite;
-    private Departement department ;
-    private String codeDepartement;
+
+    private String sexe;
+
+
+    private String email;
+
+    private LocalDate dateNaissance;
+
+    private String isEmailVerified ;
+
+    private String telephone;
     @Builder.Default
     private User.Role role = User.Role.USER;
-    private String password ;
 
-    public String getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getCin() {
-        return cin;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCin(String cin) {
-        this.cin = cin;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getNom() {
@@ -70,92 +82,12 @@ public class CreateUserDto {
         this.prenom = prenom;
     }
 
-    public String getPrenomArabe() {
-        return prenomArabe;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setPrenomArabe(String prenomArabe) {
-        this.prenomArabe = prenomArabe;
-    }
-
-    public String getNomArabe() {
-        return nomArabe;
-    }
-
-    public void setNomArabe(String nomArabe) {
-        this.nomArabe = nomArabe;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public String getSexe() {
-        return sexe;
-    }
-
-    public void setSexe(String sexe) {
-        this.sexe = sexe;
-    }
-
-    public LocalDate getDateNaissance() {
-        return dateNaissance;
-    }
-
-    public void setDateNaissance(LocalDate dateNaissance) {
-        this.dateNaissance = dateNaissance;
-    }
-
-    public String getVilleNaissance() {
-        return villeNaissance;
-    }
-
-    public void setVilleNaissance(String villeNaissance) {
-        this.villeNaissance = villeNaissance;
-    }
-
-    public String getVilleNaissanceArabe() {
-        return villeNaissanceArabe;
-    }
-
-    public void setVilleNaissanceArabe(String villeNaissanceArabe) {
-        this.villeNaissanceArabe = villeNaissanceArabe;
-    }
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public String getCodePostal() {
-        return codePostal;
-    }
-
-    public void setCodePostal(String codePostal) {
-        this.codePostal = codePostal;
-    }
-
-    public String getVille() {
-        return ville;
-    }
-
-    public void setVille(String ville) {
-        this.ville = ville;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Nationalite getNationalite() {
@@ -166,28 +98,44 @@ public class CreateUserDto {
         this.nationalite = nationalite;
     }
 
-    public Departement getDepartment() {
-        return department;
+    public String getSexe() {
+        return sexe;
     }
 
-    public void setDepartment(Departement department) {
-        this.department = department;
+    public void setSexe(String sexe) {
+        this.sexe = sexe;
     }
 
-    public String getCodeDepartement() {
-        return codeDepartement;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCodeDepartement(String codeDepartement) {
-        this.codeDepartement = codeDepartement;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public LocalDate getDateNaissance() {
+        return dateNaissance;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setDateNaissance(LocalDate dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
+
+    public String getIsEmailVerified() {
+        return isEmailVerified;
+    }
+
+    public void setIsEmailVerified(String isEmailVerified) {
+        this.isEmailVerified = isEmailVerified;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public User.Role getRole() {

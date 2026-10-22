@@ -52,17 +52,14 @@ public class Professor extends User {
 
     public Professor(ProfessorImportDto dto) {
         this.setUserId(dto.getUserId());
-        this.setCin(dto.getCin());
+
         this.setNom(dto.getNom());
         this.setPrenom(dto.getPrenom());
         this.setEmail(dto.getEmail());
         this.setTelephone(dto.getTelephone());
         this.setSexe(dto.getSexe());
         this.setDateNaissance(dto.getDateNaissance());
-        this.setVilleNaissance(dto.getVilleNaissance());
-        this.setAdresse(dto.getAdresse());
-        this.setCodePostal(dto.getCodePostal());
-        this.setVille(dto.getVille());
+
         this.setNationalite(dto.getNationalite());
         this.setDepartment(dto.getDepartement());
         this.setCodeDepartement(dto.getDepartement().getCode());
@@ -81,23 +78,17 @@ public class Professor extends User {
 
     public Professor(CreateProfessorDto dto) {
         this.setUserId(dto.getUserId());
-        this.setCin(dto.getCin());
+
         this.setNom(dto.getNom());
         this.setPrenom(dto.getPrenom());
-        this.setPrenomArabe(dto.getPrenomArabe());
-        this.setNomArabe(dto.getNomArabe());
+
         this.setEmail(dto.getEmail());
         this.setTelephone(dto.getTelephone());
         this.setSexe(dto.getSexe());
         this.setDateNaissance(dto.getDateNaissance());
-        this.setVilleNaissance(dto.getVilleNaissance());
-        this.setVilleNaissanceArabe(dto.getVilleNaissanceArabe());
-        this.setAdresse(dto.getAdresse());
-        this.setCodePostal(dto.getCodePostal());
-        this.setVille(dto.getVille());
+
         this.setNationalite(dto.getNationalite());
-        this.setDepartment(dto.getDepartment());
-        this.setCodeDepartement(dto.getCodeDepartement());
+
         this.setRole(dto.getRole());
         this.setSpecialite(dto.getSpecialite());
         this.setGrade(dto.getGrade());

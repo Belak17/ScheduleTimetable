@@ -1,6 +1,9 @@
 package com.belak.scheduletimetable.enumeration;
 
+import java.util.Arrays;
+
 public enum Filiere {
+
     LCHI("LCH", "LICENCE EN CHIMIE"),
     LCHR("LCHR", "LICENCE EN CHIMIE R"),
     LPHY("LPH", "LICENCE EN PHYSIQUE"),
@@ -18,6 +21,7 @@ public enum Filiere {
     LBIO("LBT", "LICENCE EN BIOTECHNOLOGIE"),
     LBMC("LBMC", "LICENCE EN BIOTECHNOLOGIE"),
     LEEA("LEEA", "LICENCE EN ELECTRONIQUE ELECTROTECHNIQUE ET AUTOMATISME"),
+
     MR_MATH("MR-MATH", "MASTER DE RECHERCHE EN MATHEMATIQUES"),
     MR_PVMA("MR-PVMA", "MASTER DE RECHERCHE EN PATHOGENIE VIRULENCE DES MICROORGANISMES ET AGENTS"),
     MR_CME("MR-CME", "MASTER DE RECHERCHE EN CHIMIE MATERIAUX ET ENVIRONNEMENT"),
@@ -29,7 +33,26 @@ public enum Filiere {
     MR_GBS("MR-GBS", "MASTER DE RECHERCHE EN GEOLOGIE DES BASSINS SEDIMENTAIRES"),
     MR_BOPE("MR-BOPE", "MASTER DE RECHERCHE EN BIOLOGIE DES ORGANISMES, DES POPULATIONS ET ENVIRONNEMENT"),
     MR_BOPEA("MR-BOPEA", "MASTER DE RECHERCHE EN BIOLOGIE DES ORGANISMES, DES POPULATIONS ET ENVIRONNEMENT"),
-    MR_IR("MR-IR", "MASTER DE RECHERCHE EN INFORMATIQUE ET RESEAUX");
+    MR_IR("MR-IR", "MASTER DE RECHERCHE EN INFORMATIQUE ET RESEAUX"),
+
+    LBDA("LBDA", "LICENCE BIG DATA AND DATA ANALYSIS"),
+
+    LBIO_ALIAS("LBIO", "LICENCE EN BIOTECHNOLOGIE"),
+
+    LISI_ALIAS("LISI", "LICENCE EN INGENIERIE DES SYSTEMES INFORMATIQUES"),
+
+    LSI_ALIAS("LSI", "LICENCE EN SCIENCES INFORMATIQUES"),
+
+    LMI("LMI", "LICENCE EN MATHEMATIQUES"),
+
+    LMP("LMP", "LICENCE MATHEMATIQUES APPLIQUEES"),
+
+    LIMDM("LIMDM", "Licence en Instrumentation et Maintenance des Dispositifs Médicaux"),
+
+    LIMDMA("LIMDMA", "Licence en Instrumentation et Maintenance des Dispositifs Médicaux"),
+
+    LIMDMB("LIMDMB", "Licence en Instrumentation et Maintenance des Dispositifs Médicaux");
+
     private final String code;
     private final String libelle;
 
@@ -47,19 +70,44 @@ public enum Filiere {
     }
 
     public static Filiere fromCode(String code) {
-        for (Filiere d : Filiere.values()) {
-            if (d.code.equalsIgnoreCase(code)) {
-                return d;
-            }
+        if (code == null || code.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Le code de la filière ne peut pas être vide."
+            );
         }
-        throw new IllegalArgumentException("Code inconnu pour Diplome : " + code);
+
+        return Arrays.stream(values())
+                .filter(filiere -> filiere.getCode().equalsIgnoreCase(code.trim()))
+                .findFirst()
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "Code inconnu pour Filiere : " + code
+                        )
+                );
     }
+
     public static String getLabelByEnumName(String name) {
-        try {
-            return Filiere.valueOf(name).getLibelle();
-        } catch (IllegalArgumentException e) {
-            return null; // ou message d'erreur
+        if (name == null || name.isBlank()) {
+            return null;
         }
+
+        try {
+            return Filiere.valueOf(name.trim()).getLibelle();
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
+    public static Filiere fromLibelle(String libelle) {
+        if (libelle == null || libelle.isBlank()) {
+            return null;
+        }
+
+        return Arrays.stream(values())
+                .filter(filiere ->
+                        filiere.getLibelle().equalsIgnoreCase(libelle.trim())
+                )
+                .findFirst()
+                .orElse(null);
     }
 }
-
