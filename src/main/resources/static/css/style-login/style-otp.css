@@ -1,1987 +1,894 @@
-*
-{
+/* =========================================================
+   1. RESET & CONFIGURATION
+   ========================================================= */
+
+* {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
     font-family: 'Poppins', sans-serif;
 }
 
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+
+    --text: #0f172a;
+    --text-secondary: #64748b;
+
+    --background: #f4f6f9;
+    --surface: #ffffff;
+
+    --border: #dbe4f0;
+
+    --header-bg: #2e2e4c;
+
+    --radius-sm: 5px;
+    --radius-md: 7px;
+    --radius-lg: 10px;
+
+    --transition: 0.2s ease;
+}
+
 html,
-body
-{
+body {
+    width: 100%;
+    min-height: 100%;
     overflow-x: hidden;
 }
 
-body
-{
-    background-color: white;
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    position: relative;
+    isolation: isolate;
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
+    min-height: 100vh;
     min-height: 100dvh;
 
-    margin: 0;
-    padding: 20px;
+    padding: 75px 20px 80px;
 
-    overflow-x: hidden;
+    color: var(--text);
+    background: var(--background);
 }
 
 
-body::before
-{
+/* =========================================================
+   2. ARRIÈRE-PLAN
+   ========================================================= */
+
+body::before {
     content: "";
 
     position: fixed;
-
     inset: -10px;
 
     background:
-            url("/images/faculte-des-Sciences-de-Gabes.jpeg")
-            center / cover
-            no-repeat;
+        linear-gradient(
+            rgba(15, 23, 42, 0.22),
+            rgba(15, 23, 42, 0.32)
+        ),
+        url("/images/faculte-des-Sciences-de-Gabes.jpeg")
+        center / cover no-repeat;
 
     filter: blur(3px);
-
-    transform: scale(1.05);
+    transform: scale(1.03);
 
     z-index: -1;
+    pointer-events: none;
 }
 
 
-/* =========================
-   HEADER
-========================= */
+/* =========================================================
+   3. HEADER
+   ========================================================= */
 
-header
-{
+header {
     position: fixed;
-
     top: 0;
     left: 0;
     right: 0;
 
-    height: 60px;
-
-    background-color: #2e2e4c;
+    z-index: 100;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 12px 20px;
+    gap: 16px;
 
-    z-index: 10;
+    width: 100%;
+    height: 60px;
+
+    padding: 10px 24px;
+
+    background: var(--header-bg);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-header img
-{
-    height: 40px;
+header img {
+    display: block;
+
     width: auto;
+    max-width: 230px;
+    height: 38px;
+
+    object-fit: contain;
 }
 
-.register
-{
+.register {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 12px;
+
     color: #dbeafe;
 
-    text-decoration: none;
-
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     font-weight: 500;
 
-    transition: 0.2s ease;
+    text-decoration: none;
+    white-space: nowrap;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+
+    transition:
+        color var(--transition),
+        background var(--transition),
+        border-color var(--transition);
 }
 
-.register:hover
-{
-    color: white;
+.register:hover {
+    color: #ffffff;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.register:focus-visible {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
 }
 
 
-/* =========================
-   OTP BOX
-========================= */
+/* =========================================================
+   4. CARTE OTP
+   ========================================================= */
 
-.otp-box
-{
+.otp-box {
+    position: relative;
+
     display: flex;
 
     width: 100%;
     max-width: 750px;
+    min-width: 0;
 
-    min-height: 440px;
+    min-height: 420px;
 
-    margin-top: 70px;
-    margin-bottom: 80px;
+    margin: 0;
 
-    background-color: white;
+    background: var(--surface);
 
-    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: var(--radius-lg);
 
     overflow: hidden;
 
-    box-shadow:
-            0 10px 30px rgba(0, 0, 0, 0.15);
-
-    position: relative;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.16);
 }
 
 
-/* =========================
-   LEFT
-========================= */
+/* =========================================================
+   5. PARTIE GAUCHE
+   ========================================================= */
 
-.left-block
-{
+.left-block {
     flex: 1;
 
-    padding: 50px 35px;
+    min-width: 0;
 
     display: flex;
     flex-direction: column;
+    justify-content: center;
 
-    gap: 20px;
+    gap: 19px;
 
+    padding: 38px 32px;
+
+    position: relative;
     z-index: 2;
+
+    background: #ffffff;
 }
 
 
-.presentation
-{
+/* =========================================================
+   6. PRÉSENTATION
+   ========================================================= */
+
+.presentation {
     text-align: center;
 }
 
-
-.otp-icon
-{
-    width: 55px;
-    height: 55px;
-
-    margin: 0 auto 15px;
-
+.otp-icon {
     display: flex;
     align-items: center;
     justify-content: center;
 
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 13px;
+
+    color: var(--primary);
+
+    background: #eff6ff;
+
+    border: 1px solid #dbeafe;
     border-radius: 50%;
 
-    background-color: #eff6ff;
-
-    color: #2563eb;
-
-    font-size: 22px;
+    font-size: 20px;
 }
 
-
-.presentation h2
-{
+.presentation h2 {
     margin: 0;
 
     color: #073772;
 
-    font-size: 1.7rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+
+    line-height: 1.35;
 }
 
+.presentation h3 {
+    margin: 7px 0 0;
 
-.presentation h3
-{
-    margin: 8px 0 0;
+    color: var(--text-secondary);
 
-    color: #64748b;
-
-    font-size: 0.95rem;
-
+    font-size: 0.88rem;
     font-weight: 400;
-}
-
-
-/* =========================
-   INFORMATION
-========================= */
-
-.otp-info
-{
-    text-align: center;
-
-    color: #64748b;
-
-    font-size: 0.9rem;
 
     line-height: 1.5;
 }
 
-.otp-info p
-{
-    margin: 4px 0;
+
+/* =========================================================
+   7. INFORMATIONS
+   ========================================================= */
+
+.otp-info {
+    color: var(--text-secondary);
+
+    font-size: 0.86rem;
+    line-height: 1.6;
+
+    text-align: center;
+
+    overflow-wrap: anywhere;
 }
 
-.otp-info strong
-{
-    color: #2563eb;
+.otp-info p {
+    margin: 3px 0;
+}
+
+.otp-info strong {
+    color: var(--primary);
+    font-weight: 600;
 }
 
 
-/* =========================
-   FORM
-========================= */
+/* =========================================================
+   8. FORMULAIRE
+   ========================================================= */
 
-.otp-form
-{
+.otp-form {
     display: flex;
-
     flex-direction: column;
 
-    gap: 10px;
+    gap: 9px;
+
+    width: 100%;
 }
 
-
-.otp-form label
-{
+.otp-form label {
     color: #334155;
 
-    font-size: 0.9rem;
-
+    font-size: 0.86rem;
     font-weight: 500;
 }
 
 
-/* =========================
-   OTP INPUT
-========================= */
+/* =========================================================
+   9. CHAMP OTP
+   ========================================================= */
 
-.otp-input-container
-{
+.otp-input-container {
     display: flex;
-
     align-items: center;
 
-    gap: 12px;
+    gap: 10px;
 
     width: 100%;
+    min-height: 46px;
 
-    padding: 12px 15px;
+    padding: 0 12px;
 
-    border: 1px solid #dbeafe;
+    background: #f8fafc;
 
-    border-radius: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
 
-    background-color: white;
-
-    transition: 0.2s ease;
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
 }
 
-
-.otp-input-container:focus-within
-{
-    border-color: #2563eb;
-
-    box-shadow:
-            0 0 0 3px rgba(37, 99, 235, 0.15);
+.otp-input-container:hover {
+    background: #ffffff;
+    border-color: #b8c8dc;
 }
 
+.otp-input-container:focus-within {
+    background: #ffffff;
 
-.otp-input-container i
-{
-    color: #64748b;
+    border-color: var(--primary);
 
-    font-size: 16px;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
+.otp-input-container i {
+    flex-shrink: 0;
 
-.otp-input-container input
-{
+    color: var(--text-secondary);
+
+    font-size: 15px;
+}
+
+.otp-input-container input {
+    flex: 1;
+
     width: 100%;
+    min-width: 0;
+    min-height: 44px;
+
+    padding: 0;
+
+    color: #1e293b;
+    background: transparent;
 
     border: none;
     outline: none;
 
-    font-size: 1.4rem;
-
-    letter-spacing: 8px;
-
-    text-align: center;
-
+    font-size: 1.25rem;
     font-weight: 600;
 
-    color: #1e293b;
+    letter-spacing: 6px;
+    text-align: center;
 }
 
-
-.otp-input-container input::placeholder
-{
+.otp-input-container input::placeholder {
     color: #cbd5e1;
+    letter-spacing: 6px;
+}
 
-    letter-spacing: 8px;
+.otp-input-container input:focus {
+    outline: none;
 }
 
 
-/* =========================
-   TIMER
-========================= */
+/* =========================================================
+   10. MINUTEUR
+   ========================================================= */
 
-.timer-container
-{
+.timer-container {
     display: flex;
-
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
 
     gap: 7px;
 
-    margin-top: 5px;
+    margin-top: 3px;
 
-    font-size: 0.85rem;
+    color: var(--text-secondary);
 
-    color: #64748b;
+    font-size: 0.82rem;
 }
 
-
-.timer-container i
-{
-    color: #2563eb;
+.timer-container i {
+    color: var(--primary);
 }
 
-
-.timer-container strong
-{
-    color: #2563eb;
-
-    font-size: 1rem;
-
+.timer-container strong {
     min-width: 45px;
+
+    color: var(--primary);
+
+    font-size: 0.95rem;
+    font-weight: 600;
 }
 
-
-.timer-container strong.expired
-{
+.timer-container strong.expired {
     color: #dc2626;
 }
 
 
-/* =========================
-   BUTTON
-========================= */
+/* =========================================================
+   11. BOUTON DE VÉRIFICATION
+   ========================================================= */
 
-.verify-button
-{
+.verify-button {
     width: 100%;
+    min-height: 44px;
 
-    padding: 13px;
+    margin-top: 7px;
+    padding: 11px 16px;
 
-    margin-top: 10px;
+    color: #ffffff;
+    background: var(--primary);
 
-    border: none;
+    border: 1px solid var(--primary);
+    border-radius: 6px;
 
-    border-radius: 8px;
-
-    background-color: #2563eb;
-
-    color: white;
-
-    font-size: 1rem;
-
+    font-size: 0.92rem;
     font-weight: 500;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    transition:
+        background var(--transition),
+        border-color var(--transition);
 }
 
-
-.verify-button:hover
-{
-    background-color: #1d4ed8;
+.verify-button:hover:not(:disabled) {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
 }
 
+.verify-button:active:not(:disabled) {
+    background: #1e40af;
+}
 
-.verify-button:disabled
-{
-    background-color: #94a3b8;
+.verify-button:disabled {
+    color: #ffffff;
+
+    background: #94a3b8;
+    border-color: #94a3b8;
 
     cursor: not-allowed;
-
     opacity: 0.8;
 }
 
+.verify-button:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
 
-/* =========================
-   ERROR
-========================= */
 
-.alert
-{
+/* =========================================================
+   12. MESSAGE D'ERREUR
+   ========================================================= */
+
+.alert {
     width: 100%;
 
     padding: 10px 12px;
 
-    text-align: center;
-
     color: #b91c1c;
-
-    background-color: #fef2f2;
+    background: #fef2f2;
 
     border: 1px solid #fecaca;
+    border-left: 3px solid #dc2626;
 
-    border-radius: 8px;
+    border-radius: 5px;
 
-    font-size: 0.85rem;
-
+    font-size: 0.82rem;
     font-weight: 500;
-}
 
-
-/* =========================
-   RESEND
-========================= */
-
-.resend-container
-{
+    line-height: 1.5;
     text-align: center;
 
-    margin-top: 5px;
+    overflow-wrap: anywhere;
 }
 
 
-.resend-container p
-{
+/* =========================================================
+   13. RENVOI DU CODE
+   ========================================================= */
+
+.resend-container {
+    margin-top: 3px;
+
+    text-align: center;
+    line-height: 1.6;
+}
+
+.resend-container p {
     display: inline;
 
-    color: #64748b;
+    color: var(--text-secondary);
 
-    font-size: 0.85rem;
+    font-size: 0.82rem;
 }
 
+.resend-container a {
+    display: inline-block;
 
-.resend-container a
-{
-    margin-left: 5px;
+    margin-left: 4px;
 
-    color: #2563eb;
+    color: var(--primary);
+
+    font-size: 0.82rem;
+    font-weight: 500;
 
     text-decoration: none;
-
-    font-size: 0.85rem;
-
-    font-weight: 500;
 }
 
-
-.resend-container a:hover
-{
+.resend-container a:hover {
+    color: var(--primary-dark);
     text-decoration: underline;
 }
 
-
-/* =========================
-   RIGHT
-========================= */
-
-.right-block
-{
-    width: 45%;
-
-    background:
-            url("/images/login_box_bg.png")
-            center / cover
-            no-repeat;
+.resend-container a:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
 }
 
 
-/* =========================
-   FOOTER
-========================= */
+/* =========================================================
+   14. PARTIE DROITE
+   ========================================================= */
 
-footer
-{
+.right-block {
+    flex: 0 0 40%;
+
+    min-width: 0;
+
+    position: relative;
+
+    background:
+        linear-gradient(
+            160deg,
+            rgba(30, 64, 175, 0.08),
+            rgba(15, 23, 42, 0.16)
+        ),
+        url("/images/login_box_bg.png")
+        center / cover no-repeat;
+}
+
+
+/* =========================================================
+   15. FOOTER
+   ========================================================= */
+
+footer {
     position: fixed;
 
     bottom: 0;
     left: 0;
     right: 0;
 
-    min-height: 60px;
-
-    background-color: #2e2e4c;
+    z-index: 100;
 
     display: flex;
-
     align-items: center;
     justify-content: space-between;
 
-    padding: 10px 20px;
+    flex-wrap: wrap;
 
-    z-index: 10;
+    gap: 10px 20px;
+
+    width: 100%;
+    min-height: 60px;
+
+    padding: 10px 24px;
+
+    background: var(--header-bg);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+footer div {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+footer div img {
+    display: block;
+
+    width: auto;
+    height: 25px;
+
+    object-fit: contain;
+}
 
 footer p,
 footer a,
-footer h3
-{
-    color: #dbeafe;
-
-    font-size: 0.8rem;
-}
-
-
-footer a
-{
-    text-decoration: none;
-}
-
-
-footer div
-{
-    display: flex;
-
-    align-items: center;
-
-    gap: 20px;
-}
-
-
-footer div img
-{
-    height: 25px;
-
-    width: auto;
-}
-
-
-/* =========================
-   TABLET
-========================= */
-
-@media screen and (max-width: 768px)
-{
-    .otp-box
-    {
-        flex-direction: column;
-
-        max-width: 500px;
-
-        min-height: auto;
-    }
-
-    .right-block
-    {
-        width: 100%;
-
-        height: 100px;
-
-        order: -1;
-
-        background-image:
-                url("/images/logo_fsg.jpg");
-
-        background-size: contain;
-
-        background-repeat: no-repeat;
-
-        background-position: center;
-    }
-
-    .left-block
-    {
-        padding: 30px 25px;
-    }
-
-    footer
-    {
-        display: none;
-    }
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media screen and (max-width: 480px)
-{
-    body
-    {
-        padding: 10px;
-    }
-
-    header
-    {
-        padding: 10px 15px;
-    }
-
-    header img
-    {
-        width: 55%;
-
-        height: auto;
-    }
-
-    .register
-    {
-        font-size: 0.85rem;
-    }
-
-    .otp-box
-    {
-        margin-top: 65px;
-
-        margin-bottom: 10px;
-
-        border-radius: 10px;
-    }
-
-    .left-block
-    {
-        padding: 25px 18px;
-    }
-
-    .presentation h2
-    {
-        font-size: 1.45rem;
-    }
-
-    .presentation h3
-    {
-        font-size: 0.85rem;
-    }
-
-    .otp-input-container input
-    {
-        font-size: 1.2rem;
-
-        letter-spacing: 5px;
-    }
-
-    .otp-input-container input::placeholder
-    {
-        letter-spacing: 5px;
-    }
-
-    .right-block
-    {
-        height: 90px;
-    }
-}*
- {
-     box-sizing: border-box;
-     font-family: 'Poppins', sans-serif;
- }
-
-html,
-body
-{
-    overflow-x: hidden;
-}
-
-body
-{
-    background-color: white;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    min-height: 100dvh;
-
-    margin: 0;
-    padding: 20px;
-
-    overflow-x: hidden;
-}
-
-
-body::before
-{
-    content: "";
-
-    position: fixed;
-
-    inset: -10px;
-
-    background:
-            url("/images/faculte-des-Sciences-de-Gabes.jpeg")
-            center / cover
-            no-repeat;
-
-    filter: blur(3px);
-
-    transform: scale(1.05);
-
-    z-index: -1;
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-header
-{
-    position: fixed;
-
-    top: 0;
-    left: 0;
-    right: 0;
-
-    height: 60px;
-
-    background-color: #2e2e4c;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 12px 20px;
-
-    z-index: 10;
-}
-
-header img
-{
-    height: 40px;
-    width: auto;
-}
-
-.register
-{
-    color: #dbeafe;
-
-    text-decoration: none;
-
-    font-size: 0.95rem;
-    font-weight: 500;
-
-    transition: 0.2s ease;
-}
-
-.register:hover
-{
-    color: white;
-}
-
-
-/* =========================
-   OTP BOX
-========================= */
-
-.otp-box
-{
-    display: flex;
-
-    width: 100%;
-    max-width: 750px;
-
-    min-height: 440px;
-
-    margin-top: 70px;
-    margin-bottom: 80px;
-
-    background-color: white;
-
-    border-radius: 12px;
-
-    overflow: hidden;
-
-    box-shadow:
-            0 10px 30px rgba(0, 0, 0, 0.15);
-
-    position: relative;
-}
-
-
-/* =========================
-   LEFT
-========================= */
-
-.left-block
-{
-    flex: 1;
-
-    padding: 50px 35px;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 20px;
-
-    z-index: 2;
-}
-
-
-.presentation
-{
-    text-align: center;
-}
-
-
-.otp-icon
-{
-    width: 55px;
-    height: 55px;
-
-    margin: 0 auto 15px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background-color: #eff6ff;
-
-    color: #2563eb;
-
-    font-size: 22px;
-}
-
-
-.presentation h2
-{
+footer h3 {
     margin: 0;
 
-    color: #073772;
+    color: #dbeafe;
 
-    font-size: 1.7rem;
-}
-
-
-.presentation h3
-{
-    margin: 8px 0 0;
-
-    color: #64748b;
-
-    font-size: 0.95rem;
-
+    font-size: 0.78rem;
     font-weight: 400;
-}
-
-
-/* =========================
-   INFORMATION
-========================= */
-
-.otp-info
-{
-    text-align: center;
-
-    color: #64748b;
-
-    font-size: 0.9rem;
 
     line-height: 1.5;
 }
 
-.otp-info p
-{
-    margin: 4px 0;
-}
-
-.otp-info strong
-{
-    color: #2563eb;
-}
-
-
-/* =========================
-   FORM
-========================= */
-
-.otp-form
-{
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-}
-
-
-.otp-form label
-{
-    color: #334155;
-
-    font-size: 0.9rem;
-
-    font-weight: 500;
-}
-
-
-/* =========================
-   OTP INPUT
-========================= */
-
-.otp-input-container
-{
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    width: 100%;
-
-    padding: 12px 15px;
-
-    border: 1px solid #dbeafe;
-
-    border-radius: 12px;
-
-    background-color: white;
-
-    transition: 0.2s ease;
-}
-
-
-.otp-input-container:focus-within
-{
-    border-color: #2563eb;
-
-    box-shadow:
-            0 0 0 3px rgba(37, 99, 235, 0.15);
-}
-
-
-.otp-input-container i
-{
-    color: #64748b;
-
-    font-size: 16px;
-}
-
-
-.otp-input-container input
-{
-    width: 100%;
-
-    border: none;
-    outline: none;
-
-    font-size: 1.4rem;
-
-    letter-spacing: 8px;
-
-    text-align: center;
-
-    font-weight: 600;
-
-    color: #1e293b;
-}
-
-
-.otp-input-container input::placeholder
-{
-    color: #cbd5e1;
-
-    letter-spacing: 8px;
-}
-
-
-/* =========================
-   TIMER
-========================= */
-
-.timer-container
-{
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    gap: 7px;
-
-    margin-top: 5px;
-
-    font-size: 0.85rem;
-
-    color: #64748b;
-}
-
-
-.timer-container i
-{
-    color: #2563eb;
-}
-
-
-.timer-container strong
-{
-    color: #2563eb;
-
-    font-size: 1rem;
-
-    min-width: 45px;
-}
-
-
-.timer-container strong.expired
-{
-    color: #dc2626;
-}
-
-
-/* =========================
-   BUTTON
-========================= */
-
-.verify-button
-{
-    width: 100%;
-
-    padding: 13px;
-
-    margin-top: 10px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background-color: #2563eb;
-
-    color: white;
-
-    font-size: 1rem;
-
-    font-weight: 500;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-}
-
-
-.verify-button:hover
-{
-    background-color: #1d4ed8;
-}
-
-
-.verify-button:disabled
-{
-    background-color: #94a3b8;
-
-    cursor: not-allowed;
-
-    opacity: 0.8;
-}
-
-
-/* =========================
-   ERROR
-========================= */
-
-.alert
-{
-    width: 100%;
-
-    padding: 10px 12px;
-
-    text-align: center;
-
-    color: #b91c1c;
-
-    background-color: #fef2f2;
-
-    border: 1px solid #fecaca;
-
-    border-radius: 8px;
-
-    font-size: 0.85rem;
-
-    font-weight: 500;
-}
-
-
-/* =========================
-   RESEND
-========================= */
-
-.resend-container
-{
-    text-align: center;
-
-    margin-top: 5px;
-}
-
-
-.resend-container p
-{
-    display: inline;
-
-    color: #64748b;
-
-    font-size: 0.85rem;
-}
-
-
-.resend-container a
-{
-    margin-left: 5px;
-
-    color: #2563eb;
-
+footer a {
     text-decoration: none;
-
-    font-size: 0.85rem;
-
-    font-weight: 500;
 }
 
-
-.resend-container a:hover
-{
+footer a:hover {
+    color: #ffffff;
     text-decoration: underline;
 }
 
 
-/* =========================
-   RIGHT
-========================= */
+/* =========================================================
+   16. TABLETTES
+   ========================================================= */
 
-.right-block
-{
-    width: 45%;
+@media screen and (max-width: 768px) {
 
-    background:
-            url("/images/login_box_bg.png")
-            center / cover
-            no-repeat;
-}
+    body {
+        padding: 75px 18px 20px;
+    }
 
-
-/* =========================
-   FOOTER
-========================= */
-
-footer
-{
-    position: fixed;
-
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    min-height: 60px;
-
-    background-color: #2e2e4c;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 10px 20px;
-
-    z-index: 10;
-}
-
-
-footer p,
-footer a,
-footer h3
-{
-    color: #dbeafe;
-
-    font-size: 0.8rem;
-}
-
-
-footer a
-{
-    text-decoration: none;
-}
-
-
-footer div
-{
-    display: flex;
-
-    align-items: center;
-
-    gap: 20px;
-}
-
-
-footer div img
-{
-    height: 25px;
-
-    width: auto;
-}
-
-
-/* =========================
-   TABLET
-========================= */
-
-@media screen and (max-width: 768px)
-{
-    .otp-box
-    {
+    .otp-box {
         flex-direction: column;
 
         max-width: 500px;
-
-        min-height: auto;
+        min-height: 0;
     }
 
-    .right-block
-    {
-        width: 100%;
+    /* Logo au-dessus du formulaire */
 
-        height: 100px;
+    .right-block {
+        display: block;
 
+        flex: none;
         order: -1;
 
-        background-image:
-                url("/images/logo_fsg.jpg");
+        width: 100%;
+        height: 90px;
 
-        background-size: contain;
-
-        background-repeat: no-repeat;
-
-        background-position: center;
+        background:
+            url("/images/logo_fsg.jpg")
+            center / contain no-repeat;
     }
 
-    .left-block
-    {
-        padding: 30px 25px;
+    .left-block {
+        padding: 28px 25px;
+        gap: 17px;
     }
 
-    footer
-    {
+    footer {
         display: none;
     }
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* =========================================================
+   17. MOBILES
+   ========================================================= */
 
-@media screen and (max-width: 480px)
-{
-    body
-    {
-        padding: 10px;
+@media screen and (max-width: 480px) {
+
+    body {
+        align-items: center;
+        padding: 72px 12px 18px;
     }
 
-    header
-    {
-        padding: 10px 15px;
+    header {
+        height: 58px;
+        padding: 9px 14px;
+        gap: 10px;
     }
 
-    header img
-    {
-        width: 55%;
-
-        height: auto;
+    header img {
+        width: auto;
+        max-width: 55%;
+        height: 34px;
     }
 
-    .register
-    {
-        font-size: 0.85rem;
+    .register {
+        padding: 7px 9px;
+        font-size: 0.8rem;
     }
 
-    .otp-box
-    {
-        margin-top: 65px;
-
-        margin-bottom: 10px;
-
-        border-radius: 10px;
-    }
-
-    .left-block
-    {
-        padding: 25px 18px;
-    }
-
-    .presentation h2
-    {
-        font-size: 1.45rem;
-    }
-
-    .presentation h3
-    {
-        font-size: 0.85rem;
-    }
-
-    .otp-input-container input
-    {
-        font-size: 1.2rem;
-
-        letter-spacing: 5px;
-    }
-
-    .otp-input-container input::placeholder
-    {
-        letter-spacing: 5px;
-    }
-
-    .right-block
-    {
-        height: 90px;
-    }
-}*
- {
-     box-sizing: border-box;
-     font-family: 'Poppins', sans-serif;
- }
-
-html,
-body
-{
-    overflow-x: hidden;
-}
-
-body
-{
-    background-color: white;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    min-height: 100dvh;
-
-    margin: 0;
-    padding: 20px;
-
-    overflow-x: hidden;
-}
-
-
-body::before
-{
-    content: "";
-
-    position: fixed;
-
-    inset: -10px;
-
-    background:
-            url("/images/faculte-des-Sciences-de-Gabes.jpeg")
-            center / cover
-            no-repeat;
-
-    filter: blur(3px);
-
-    transform: scale(1.05);
-
-    z-index: -1;
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-header
-{
-    position: fixed;
-
-    top: 0;
-    left: 0;
-    right: 0;
-
-    height: 60px;
-
-    background-color: #2e2e4c;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 12px 20px;
-
-    z-index: 10;
-}
-
-header img
-{
-    height: 40px;
-    width: auto;
-}
-
-.register
-{
-    color: #dbeafe;
-
-    text-decoration: none;
-
-    font-size: 0.95rem;
-    font-weight: 500;
-
-    transition: 0.2s ease;
-}
-
-.register:hover
-{
-    color: white;
-}
-
-
-/* =========================
-   OTP BOX
-========================= */
-
-.otp-box
-{
-    display: flex;
-
-    width: 100%;
-    max-width: 750px;
-
-    min-height: 440px;
-
-    margin-top: 70px;
-    margin-bottom: 80px;
-
-    background-color: white;
-
-    border-radius: 12px;
-
-    overflow: hidden;
-
-    box-shadow:
-            0 10px 30px rgba(0, 0, 0, 0.15);
-
-    position: relative;
-}
-
-
-/* =========================
-   LEFT
-========================= */
-
-.left-block
-{
-    flex: 1;
-
-    padding: 50px 35px;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 20px;
-
-    z-index: 2;
-}
-
-
-.presentation
-{
-    text-align: center;
-}
-
-
-.otp-icon
-{
-    width: 55px;
-    height: 55px;
-
-    margin: 0 auto 15px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background-color: #eff6ff;
-
-    color: #2563eb;
-
-    font-size: 22px;
-}
-
-
-.presentation h2
-{
-    margin: 0;
-
-    color: #073772;
-
-    font-size: 1.7rem;
-}
-
-
-.presentation h3
-{
-    margin: 8px 0 0;
-
-    color: #64748b;
-
-    font-size: 0.95rem;
-
-    font-weight: 400;
-}
-
-
-/* =========================
-   INFORMATION
-========================= */
-
-.otp-info
-{
-    text-align: center;
-
-    color: #64748b;
-
-    font-size: 0.9rem;
-
-    line-height: 1.5;
-}
-
-.otp-info p
-{
-    margin: 4px 0;
-}
-
-.otp-info strong
-{
-    color: #2563eb;
-}
-
-
-/* =========================
-   FORM
-========================= */
-
-.otp-form
-{
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-}
-
-
-.otp-form label
-{
-    color: #334155;
-
-    font-size: 0.9rem;
-
-    font-weight: 500;
-}
-
-
-/* =========================
-   OTP INPUT
-========================= */
-
-.otp-input-container
-{
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    width: 100%;
-
-    padding: 12px 15px;
-
-    border: 1px solid #dbeafe;
-
-    border-radius: 12px;
-
-    background-color: white;
-
-    transition: 0.2s ease;
-}
-
-
-.otp-input-container:focus-within
-{
-    border-color: #2563eb;
-
-    box-shadow:
-            0 0 0 3px rgba(37, 99, 235, 0.15);
-}
-
-
-.otp-input-container i
-{
-    color: #64748b;
-
-    font-size: 16px;
-}
-
-
-.otp-input-container input
-{
-    width: 100%;
-
-    border: none;
-    outline: none;
-
-    font-size: 1.4rem;
-
-    letter-spacing: 8px;
-
-    text-align: center;
-
-    font-weight: 600;
-
-    color: #1e293b;
-}
-
-
-.otp-input-container input::placeholder
-{
-    color: #cbd5e1;
-
-    letter-spacing: 8px;
-}
-
-
-/* =========================
-   TIMER
-========================= */
-
-.timer-container
-{
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    gap: 7px;
-
-    margin-top: 5px;
-
-    font-size: 0.85rem;
-
-    color: #64748b;
-}
-
-
-.timer-container i
-{
-    color: #2563eb;
-}
-
-
-.timer-container strong
-{
-    color: #2563eb;
-
-    font-size: 1rem;
-
-    min-width: 45px;
-}
-
-
-.timer-container strong.expired
-{
-    color: #dc2626;
-}
-
-
-/* =========================
-   BUTTON
-========================= */
-
-.verify-button
-{
-    width: 100%;
-
-    padding: 13px;
-
-    margin-top: 10px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background-color: #2563eb;
-
-    color: white;
-
-    font-size: 1rem;
-
-    font-weight: 500;
-
-    cursor: pointer;
-
-    transition: 0.2s ease;
-}
-
-
-.verify-button:hover
-{
-    background-color: #1d4ed8;
-}
-
-
-.verify-button:disabled
-{
-    background-color: #94a3b8;
-
-    cursor: not-allowed;
-
-    opacity: 0.8;
-}
-
-
-/* =========================
-   ERROR
-========================= */
-
-.alert
-{
-    width: 100%;
-
-    padding: 10px 12px;
-
-    text-align: center;
-
-    color: #b91c1c;
-
-    background-color: #fef2f2;
-
-    border: 1px solid #fecaca;
-
-    border-radius: 8px;
-
-    font-size: 0.85rem;
-
-    font-weight: 500;
-}
-
-
-/* =========================
-   RESEND
-========================= */
-
-.resend-container
-{
-    text-align: center;
-
-    margin-top: 5px;
-}
-
-
-.resend-container p
-{
-    display: inline;
-
-    color: #64748b;
-
-    font-size: 0.85rem;
-}
-
-
-.resend-container a
-{
-    margin-left: 5px;
-
-    color: #2563eb;
-
-    text-decoration: none;
-
-    font-size: 0.85rem;
-
-    font-weight: 500;
-}
-
-
-.resend-container a:hover
-{
-    text-decoration: underline;
-}
-
-
-/* =========================
-   RIGHT
-========================= */
-
-.right-block
-{
-    width: 45%;
-
-    background:
-            url("/images/login_box_bg.png")
-            center / cover
-            no-repeat;
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-footer
-{
-    position: fixed;
-
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    min-height: 60px;
-
-    background-color: #2e2e4c;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 10px 20px;
-
-    z-index: 10;
-}
-
-
-footer p,
-footer a,
-footer h3
-{
-    color: #dbeafe;
-
-    font-size: 0.8rem;
-}
-
-
-footer a
-{
-    text-decoration: none;
-}
-
-
-footer div
-{
-    display: flex;
-
-    align-items: center;
-
-    gap: 20px;
-}
-
-
-footer div img
-{
-    height: 25px;
-
-    width: auto;
-}
-
-
-/* =========================
-   TABLET
-========================= */
-
-@media screen and (max-width: 768px)
-{
-    .otp-box
-    {
-        flex-direction: column;
-
-        max-width: 500px;
-
-        min-height: auto;
-    }
-
-    .right-block
-    {
+    .otp-box {
         width: 100%;
+        max-width: 390px;
 
-        height: 100px;
+        margin: 0;
 
-        order: -1;
-
-        background-image:
-                url("/images/logo_fsg.jpg");
-
-        background-size: contain;
-
-        background-repeat: no-repeat;
-
-        background-position: center;
+        border-radius: 8px;
     }
 
-    .left-block
-    {
-        padding: 30px 25px;
+    .right-block {
+        height: 78px;
     }
 
-    footer
-    {
-        display: none;
+    .left-block {
+        padding: 23px 18px;
+        gap: 16px;
+    }
+
+    .otp-icon {
+        width: 43px;
+        height: 43px;
+
+        margin-bottom: 11px;
+
+        font-size: 18px;
+    }
+
+    .presentation h2 {
+        font-size: 1.4rem;
+    }
+
+    .presentation h3 {
+        margin-top: 6px;
+        font-size: 0.8rem;
+    }
+
+    .otp-info {
+        font-size: 0.82rem;
+    }
+
+    .otp-form {
+        gap: 8px;
+    }
+
+    .otp-form label {
+        font-size: 0.82rem;
+    }
+
+    .otp-input-container {
+        min-height: 44px;
+        padding: 0 10px;
+        gap: 8px;
+    }
+
+    .otp-input-container input {
+        min-height: 42px;
+
+        /* 16px évite le zoom automatique sur certains mobiles */
+        font-size: 16px;
+        letter-spacing: 5px;
+    }
+
+    .otp-input-container input::placeholder {
+        letter-spacing: 5px;
+    }
+
+    .verify-button {
+        min-height: 43px;
+        margin-top: 5px;
+        font-size: 0.88rem;
+    }
+
+    .timer-container,
+    .timer-container strong {
+        font-size: 0.82rem;
+    }
+
+    .resend-container p,
+    .resend-container a {
+        font-size: 0.8rem;
+    }
+
+    .alert {
+        padding: 9px 10px;
+        font-size: 0.79rem;
     }
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* =========================================================
+   18. TRÈS PETITS ÉCRANS
+   ========================================================= */
 
-@media screen and (max-width: 480px)
-{
-    body
-    {
-        padding: 10px;
+@media screen and (max-width: 360px) {
+
+    body {
+        padding-right: 9px;
+        padding-left: 9px;
     }
 
-    header
-    {
-        padding: 10px 15px;
+    header {
+        padding-right: 10px;
+        padding-left: 10px;
     }
 
-    header img
-    {
-        width: 55%;
-
-        height: auto;
+    header img {
+        max-width: 52%;
+        height: 30px;
     }
 
-    .register
-    {
-        font-size: 0.85rem;
+    .register {
+        font-size: 0.74rem;
     }
 
-    .otp-box
-    {
-        margin-top: 65px;
-
-        margin-bottom: 10px;
-
-        border-radius: 10px;
+    .left-block {
+        padding: 20px 14px;
+        gap: 14px;
     }
 
-    .left-block
-    {
-        padding: 25px 18px;
+    .right-block {
+        height: 68px;
     }
 
-    .presentation h2
-    {
-        font-size: 1.45rem;
+    .presentation h2 {
+        font-size: 1.3rem;
     }
 
-    .presentation h3
-    {
-        font-size: 0.85rem;
+    .presentation h3 {
+        font-size: 0.76rem;
     }
 
-    .otp-input-container input
-    {
-        font-size: 1.2rem;
-
-        letter-spacing: 5px;
+    .otp-input-container input {
+        letter-spacing: 4px;
     }
 
-    .otp-input-container input::placeholder
-    {
-        letter-spacing: 5px;
+    .otp-input-container input::placeholder {
+        letter-spacing: 4px;
+    }
+}
+
+
+/* =========================================================
+   19. ÉCRANS DE FAIBLE HAUTEUR
+   ========================================================= */
+
+@media screen and (max-height: 650px) and (min-width: 769px) {
+
+    body {
+        align-items: flex-start;
+        padding-top: 75px;
+        padding-bottom: 75px;
     }
 
-    .right-block
-    {
-        height: 90px;
+    .otp-box {
+        min-height: 0;
+    }
+
+    .left-block {
+        padding-top: 24px;
+        padding-bottom: 24px;
+        gap: 14px;
+    }
+}
+
+
+/* =========================================================
+   20. ACCESSIBILITÉ
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
     }
 }

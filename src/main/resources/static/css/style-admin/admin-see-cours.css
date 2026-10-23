@@ -1,54 +1,60 @@
 /* =========================================================
-   LISTE / NAVIGATION DES DÉPARTEMENTS
+   NAVIGATION DES DÉPARTEMENTS ET DES GROUPES
    ========================================================= */
 
 .content {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding: 1rem 1.5rem;
     color: var(--text);
+    min-width: 0;
 }
 
-/* Liste des groupes */
+/* =========================================================
+   LISTE DES GROUPES
+   ========================================================= */
+
 .groups {
     list-style: none;
-    padding: 0.5rem 0 0.5rem 1rem;
+    padding: 0.4rem 0 0.4rem 0.75rem;
     margin: 0;
 }
 
 .groups li {
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.25rem;
     padding: 0;
     border-radius: var(--radius-sm);
-    transition: background-color var(--transition),
-                transform var(--transition);
+    transition: background-color var(--transition);
 }
 
 /* Liens des groupes */
+
 .groups a {
     display: flex;
     align-items: center;
+    gap: 0.7rem;
     width: 100%;
-    padding: 0.65rem 0.85rem;
+    min-height: 42px;
+    padding: 0.6rem 0.85rem;
 
-    text-decoration: none;
     color: var(--text-secondary);
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 500;
+    line-height: 1.45;
+    text-decoration: none;
 
     border-radius: var(--radius-sm);
 
     transition:
         color var(--transition),
-        background-color var(--transition),
-        transform var(--transition);
+        background-color var(--transition);
 }
 
-/* Petit indicateur visuel */
+/* Indicateur des groupes */
+
 .groups a::before {
     content: "";
-    width: 5px;
-    height: 5px;
-    margin-right: 0.7rem;
+    flex: 0 0 6px;
+    width: 6px;
+    height: 6px;
 
     border-radius: 50%;
     background-color: var(--text-muted);
@@ -58,163 +64,187 @@
         transform var(--transition);
 }
 
-/* Hover */
+/* Survol d'un groupe */
+
 .groups li:hover {
     background-color: var(--primary-light);
 }
 
 .groups li:hover a {
     color: var(--primary);
-    transform: translateX(3px);
 }
 
 .groups li:hover a::before {
     background-color: var(--primary);
-    transform: scale(1.25);
+    transform: scale(1.2);
 }
 
-/* Département */
+/* =========================================================
+   NAVIGATION DES DÉPARTEMENTS
+   ========================================================= */
+
 .departement {
-    display: block;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 44px;
+    padding: 0.7rem 1rem;
 
-    padding: 0.8rem 1rem;
-
-    text-decoration: none;
     color: var(--text);
-
-    font-size: 0.98rem;
+    font-size: 0.95rem;
     font-weight: 600;
+    line-height: 1.45;
+    text-decoration: none;
 
     border-radius: var(--radius-sm);
 
     transition:
         color var(--transition),
-        background-color var(--transition),
-        transform var(--transition);
+        background-color var(--transition);
 }
 
 .departement:hover {
     color: var(--primary);
     background-color: var(--primary-light);
-    transform: translateX(3px);
 }
 
-/* Focus clavier */
+/* =========================================================
+   ACCESSIBILITÉ : NAVIGATION AU CLAVIER
+   ========================================================= */
+
 .groups a:focus-visible,
 .departement:focus-visible {
-    outline: 3px solid rgba(37, 99, 235, 0.2);
+    outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
 
 /* =========================================================
-   RESPONSIVE
+   RESPONSIVE : TABLETTES ET PETITS ÉCRANS
    ========================================================= */
 
 @media (max-width: 768px) {
 
     .content {
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding: 0.75rem 1rem;
     }
 
     .groups {
         padding-left: 0.5rem;
     }
 
-    .groups a,
+    .groups a {
+        min-height: 42px;
+        padding: 0.65rem 0.75rem;
+        font-size: 0.9rem;
+    }
+
     .departement {
-        padding: 0.7rem 0.8rem;
+        min-height: 42px;
+        padding: 0.65rem 0.8rem;
+        font-size: 0.93rem;
     }
 }
+
+/* =========================================================
+   RESPONSIVE : SMARTPHONES
+   ========================================================= */
 
 @media (max-width: 480px) {
 
     .content {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
+        padding: 0.65rem 0.75rem;
     }
 
-    .groups a,
+    .groups {
+        padding-left: 0.25rem;
+    }
+
+    .groups li {
+        margin-bottom: 0.2rem;
+    }
+
+    .groups a {
+        gap: 0.55rem;
+        padding: 0.65rem 0.7rem;
+        font-size: 0.88rem;
+    }
+
     .departement {
+        padding: 0.7rem 0.75rem;
         font-size: 0.9rem;
     }
 }
 
 /* =========================================================
-   GRAND ÉCRAN
+   GRANDS ÉCRANS
    ========================================================= */
 
 @media (min-width: 1600px) {
 
     .content {
-        padding-left: 2rem;
         padding-right: 2rem;
+        padding-left: 2rem;
     }
 
     .groups {
-        padding: 0.75rem 0 0.75rem 1.5rem;
+        padding: 0.6rem 0 0.6rem 1rem;
     }
 
     .groups li {
-        margin-bottom: 0.45rem;
+        margin-bottom: 0.35rem;
     }
 
     .groups a {
-        padding: 0.8rem 1rem;
-        font-size: 1rem;
-    }
-
-    .groups a::before {
-        width: 6px;
-        height: 6px;
-        margin-right: 0.8rem;
+        min-height: 44px;
+        padding: 0.7rem 0.9rem;
+        font-size: 0.96rem;
     }
 
     .departement {
-        padding: 0.9rem 1.1rem;
-        font-size: 1.02rem;
+        min-height: 46px;
+        padding: 0.8rem 1rem;
+        font-size: 0.98rem;
     }
 }
 
-
 /* =========================================================
-   TRÈS GRAND ÉCRAN
+   TRÈS GRANDS ÉCRANS
    ========================================================= */
 
 @media (min-width: 1920px) {
 
     .content {
-        padding-left: 2.5rem;
         padding-right: 2.5rem;
+        padding-left: 2.5rem;
     }
 
     .groups {
-        padding-left: 2rem;
+        padding-left: 1.5rem;
     }
 
     .groups a {
-        padding: 0.9rem 1.1rem;
-        font-size: 1.05rem;
+        min-height: 46px;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
     }
 
     .departement {
-        padding: 1rem 1.2rem;
-        font-size: 1.08rem;
+        min-height: 48px;
+        padding: 0.85rem 1.1rem;
+        font-size: 1.02rem;
     }
 }
 
-/* Désactive les animations pour les utilisateurs
-   qui les ont désactivées dans leur système */
+/* =========================================================
+   PRÉFÉRENCE : RÉDUCTION DES ANIMATIONS
+   ========================================================= */
+
 @media (prefers-reduced-motion: reduce) {
 
     .groups li,
     .groups a,
+    .groups a::before,
     .departement {
         transition: none;
-    }
-
-    .groups li:hover a,
-    .departement:hover {
-        transform: none;
     }
 }

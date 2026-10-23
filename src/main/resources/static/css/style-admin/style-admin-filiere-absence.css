@@ -36,7 +36,6 @@
 .center-container {
     width: min(1200px, calc(100% - 40px));
     margin: 92px auto 30px;
-
     padding: 24px;
 
     min-height: 500px;
@@ -50,7 +49,6 @@
     background: var(--surface);
     border: 1px solid var(--border-light);
     border-radius: var(--radius-lg);
-
     box-shadow: var(--shadow-md);
 
     overflow: visible;
@@ -63,22 +61,27 @@
 
 .list-department {
     width: 240px;
-    flex-shrink: 0;
+    flex: 0 0 240px;
+    min-width: 0;
 
     padding: 16px;
 
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-
     box-shadow: var(--shadow-sm);
 
     max-height: 600px;
     overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
-
 /* Scrollbar */
+
+.list-department {
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
+}
 
 .list-department::-webkit-scrollbar {
     width: 5px;
@@ -95,7 +98,7 @@
 
 
 /* =========================================================
-   DÉPARTEMENTS
+   LISTE DES DÉPARTEMENTS
    ========================================================= */
 
 .departments {
@@ -105,48 +108,48 @@
 }
 
 
+/* =========================================================
+   ÉLÉMENT DÉPARTEMENT
+   ========================================================= */
+
 .departement {
-    padding: 11px 12px;
-
-    border-radius: var(--radius-sm);
-    border-left: 3px solid transparent;
-
     display: flex;
     flex-direction: column;
+
+    padding: 11px 12px;
+
+    border: 1px solid transparent;
+    border-left: 3px solid transparent;
+    border-radius: var(--radius-sm);
 
     cursor: pointer;
 
     transition:
         background-color var(--transition),
-        border-color var(--transition),
-        transform var(--transition);
+        border-color var(--transition);
 }
-
 
 .departement:hover {
     background: var(--primary-light);
     border-left-color: var(--primary);
-
-    transform: translateX(3px);
 }
-
 
 .departement input {
     display: none;
 }
 
-
 .departement img {
     width: 20px;
     height: 20px;
+    flex-shrink: 0;
+
     object-fit: contain;
 
     transition: transform var(--transition);
 }
 
-
 .departement:hover img {
-    transform: scale(1.08);
+    transform: scale(1.05);
 }
 
 
@@ -158,35 +161,35 @@
     gap: 10px;
 
     cursor: pointer;
+    min-width: 0;
 }
-
 
 .departement h3 {
     margin: 0;
 
+    color: var(--text);
     font-size: 14px;
     font-weight: 600;
+    line-height: 1.45;
 
-    color: var(--text);
-
-    line-height: 1.4;
+    overflow-wrap: anywhere;
 }
 
 
 /* =========================================================
-   TITRE DÉPARTEMENT
+   TITRE DE LA LISTE DES DÉPARTEMENTS
    ========================================================= */
 
 .departement-title {
     margin: 0 0 16px;
     padding-bottom: 12px;
 
+    color: var(--text);
     text-align: center;
 
     font-size: 15px;
     font-weight: 700;
-
-    color: var(--text);
+    line-height: 1.4;
 
     border-bottom: 1px solid var(--border);
 }
@@ -197,7 +200,7 @@
    ========================================================= */
 
 .list-field {
-    flex: 1;
+    flex: 1 1 0;
     width: 100%;
     min-width: 0;
 
@@ -208,33 +211,34 @@
 
 
 /* =========================================================
-   TITRES DES NIVEAUX / DOMAINES
+   TITRES DES NIVEAUX ET DOMAINES
    ========================================================= */
 
 .field-title {
     display: flex;
     align-items: center;
-
     gap: 14px;
 
     margin: 0;
 
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+    color: var(--text);
 
     font-size: 14px;
     font-weight: 700;
+    line-height: 1.5;
 
-    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    text-align: center;
 }
-
 
 .field-title::before,
 .field-title::after {
     content: "";
 
     height: 1px;
-    flex: 1;
+    flex: 1 1 auto;
+    min-width: 12px;
 
     background: var(--border);
 }
@@ -247,11 +251,11 @@
 .field-bachelor,
 .field-master {
     display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-
+    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    align-items: stretch;
     gap: 16px;
+
+    min-width: 0;
 }
 
 
@@ -261,8 +265,9 @@
 
 .field {
     position: relative;
-
+    min-width: 0;
     width: 100%;
+    min-height: 170px;
 
     display: flex;
     flex-direction: column;
@@ -271,128 +276,87 @@
 
     padding: 20px 16px;
 
+    color: var(--text);
     text-align: center;
 
     background: var(--surface);
-
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
 
     box-shadow: var(--shadow-sm);
 
     transition:
-        transform var(--transition),
         box-shadow var(--transition),
-        border-color var(--transition);
+        border-color var(--transition),
+        transform var(--transition);
 }
-
 
 .field:hover {
-    transform: translateY(-3px);
-
-    border-color: #dbe4f0;
-
+    border-color: #cbd5e1;
     box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
-
 
 .field img {
     width: 70px;
     height: 70px;
+    flex-shrink: 0;
 
     object-fit: contain;
-
     margin-bottom: 12px;
 
     transition: transform var(--transition);
 }
 
-
 .field:hover img {
-    transform: scale(1.08);
+    transform: scale(1.04);
 }
-
 
 .field h4 {
     margin: 0;
 
+    color: var(--text);
     font-size: 14px;
     font-weight: 600;
-
-    color: var(--text);
-
     line-height: 1.5;
+
+    overflow-wrap: anywhere;
 }
 
 
 /* =========================================================
-   BOUTONS
+   LIENS
    ========================================================= */
 
 a {
     text-decoration: none;
-    color: inherit;
 }
 
+/* Boutons utilisant la classe .button */
 
 a.button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
 
     min-height: 38px;
+    max-width: 100%;
 
     padding: 8px 14px;
 
-    border-radius: var(--radius-sm);
+    color: var(--text);
+    background: #f9fafb;
+
+    border: 1px solid var(--border);
+    border-radius: 6px;
 
     font-size: 13px;
     font-weight: 600;
-
-    color: var(--text);
-
-    border: 1px solid var(--border);
-    background: #f9fafb;
-
-    transition:
-        background-color var(--transition),
-        border-color var(--transition),
-        color var(--transition),
-        transform var(--transition);
-}
-
-
-a.button:hover {
-    background: var(--primary-light);
-    border-color: #bfdbfe;
-    color: var(--primary);
-
-    transform: translateY(-1px);
-}
-
-
-/* Boutons dans les tableaux */
-
-td .button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-width: 100px;
-
-    padding: 8px 12px;
-    margin: 3px;
-
+    line-height: 1.4;
     text-align: center;
 
-    background: #f3f4f6;
-    color: var(--text);
-
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-
-    font-size: 13px;
-    font-weight: 500;
+    overflow-wrap: anywhere;
 
     transition:
         background-color var(--transition),
@@ -400,11 +364,49 @@ td .button {
         color var(--transition);
 }
 
-
-td .button:hover {
+a.button:hover {
+    color: var(--primary);
     background: var(--primary-light);
     border-color: #bfdbfe;
+}
+
+
+/* =========================================================
+   BOUTONS DANS LES TABLEAUX
+   ========================================================= */
+
+td .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 100px;
+    min-height: 36px;
+    max-width: 100%;
+
+    margin: 3px;
+    padding: 8px 12px;
+
+    color: var(--text);
+    background: #f9fafb;
+
+    border: 1px solid var(--border);
+    border-radius: 6px;
+
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition),
+        color var(--transition);
+}
+
+td .button:hover {
     color: var(--primary);
+    background: var(--primary-light);
+    border-color: #bfdbfe;
 }
 
 
@@ -414,23 +416,24 @@ td .button:hover {
 
 .field-container {
     position: relative;
+    min-width: 0;
 }
-
 
 .level-panel {
     display: none;
 
     position: absolute;
-
     top: calc(100% + 8px);
     left: 0;
 
     width: 220px;
+    max-width: min(300px, calc(100vw - 32px));
+    max-height: 60vh;
+    overflow-y: auto;
 
     padding: 12px;
 
     background: var(--surface);
-
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
 
@@ -439,10 +442,8 @@ td .button:hover {
     z-index: 100;
 }
 
-
 .level-panel.active {
     display: block;
-
     animation: panelAppear 0.18s ease;
 }
 
@@ -456,25 +457,26 @@ td .button:hover {
 
     display: flex;
     align-items: flex-start;
-
     gap: 15px;
-}
 
+    min-width: 0;
+}
 
 .group-panel {
     display: none;
 
     position: absolute;
-
     top: 0;
     left: calc(100% + 8px);
 
     width: 200px;
+    max-width: min(300px, calc(100vw - 32px));
+    max-height: 60vh;
+    overflow-y: auto;
 
     padding: 12px;
 
     background: var(--surface);
-
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
 
@@ -483,10 +485,8 @@ td .button:hover {
     z-index: 100;
 }
 
-
 .group-panel.active {
     display: block;
-
     animation: panelAppear 0.18s ease;
 }
 
@@ -502,14 +502,12 @@ td .button:hover {
 
     transition:
         background-color var(--transition),
-        transform var(--transition);
+        color var(--transition);
 }
 
-
 .level-card:hover {
+    color: var(--primary);
     background: var(--primary-light);
-
-    transform: translateX(3px);
 }
 
 
@@ -518,7 +516,7 @@ td .button:hover {
    ========================================================= */
 
 .field-container > a.button {
-    border-bottom: 1px solid var(--border);
+    border-bottom-color: var(--border);
 }
 
 
@@ -529,7 +527,7 @@ td .button:hover {
 @keyframes panelAppear {
     from {
         opacity: 0;
-        transform: translateY(-4px);
+        transform: translateY(-3px);
     }
 
     to {
@@ -549,27 +547,44 @@ body {
 
 
 /* =========================================================
-   RESPONSIVE — TABLETTE
+   ACCESSIBILITÉ : FOCUS CLAVIER
+   ========================================================= */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+.departement:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLETTES
    ========================================================= */
 
 @media (max-width: 900px) {
 
     .center-container {
-        width: min(100% - 30px, 1200px);
-
+        width: calc(100% - 30px);
         padding: 18px;
-
         gap: 18px;
     }
 
     .list-department {
         width: 210px;
+        flex-basis: 210px;
+        padding: 13px;
     }
 
     .field-bachelor,
     .field-master {
-        grid-template-columns:
-            repeat(auto-fit, minmax(180px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+        gap: 14px;
+    }
+
+    .field {
+        padding: 18px 13px;
     }
 
 }
@@ -583,117 +598,150 @@ body {
 
     .center-container {
         width: calc(100% - 24px);
-
         margin-top: 84px;
+        margin-bottom: 24px;
         padding: 15px;
 
         flex-direction: column-reverse;
-
         gap: 18px;
     }
 
-
     .list-department {
         width: 100%;
+        flex: 0 0 auto;
 
         max-height: none;
         overflow: visible;
     }
 
-
     .list-field {
         width: 100%;
+        flex: 1 1 auto;
+        gap: 22px;
     }
-
 
     .field-bachelor,
     .field-master {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+        gap: 12px;
     }
 
+    /*
+       Sur mobile, les panneaux passent dans le flux normal.
+       Ils ne recouvrent donc pas les autres éléments.
+    */
 
-    .level-panel {
-        position: static;
-
-        width: 100%;
-
-        margin-top: 8px;
-
-        box-shadow: var(--shadow-sm);
-    }
-
-
+    .level-panel,
     .group-panel {
         position: static;
 
         width: 100%;
+        max-width: none;
+        max-height: none;
 
         margin-top: 8px;
 
         box-shadow: var(--shadow-sm);
     }
-
 
     .level-wrapper {
         flex-direction: column;
         gap: 8px;
     }
 
-
     .field-title {
+        gap: 10px;
         font-size: 12px;
-        letter-spacing: 1px;
+        letter-spacing: 0.8px;
+    }
+
+    .field {
+        min-height: 150px;
     }
 
 }
 
 
 /* =========================================================
-   PETITS ÉCRANS
+   RESPONSIVE — PETITS SMARTPHONES
    ========================================================= */
 
 @media (max-width: 480px) {
 
     .center-container {
         width: calc(100% - 16px);
-
         margin-top: 78px;
-
+        margin-bottom: 16px;
         padding: 12px;
 
         border-radius: var(--radius-md);
     }
 
-
     .list-department {
         padding: 12px;
     }
-
-
-    .field {
-        padding: 16px 12px;
-    }
-
-
-    .field img {
-        width: 60px;
-        height: 60px;
-    }
-
 
     .departement {
         padding: 10px;
     }
 
-
     .departement h3 {
         font-size: 13px;
     }
 
+    .departement img {
+        width: 19px;
+        height: 19px;
+    }
+
+    .departement-title {
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .field-bachelor,
+    .field-master {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+    }
+
+    .field {
+        min-height: 140px;
+        padding: 16px 12px;
+    }
+
+    .field img {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+    }
+
+    .field h4 {
+        font-size: 13px;
+    }
+
+    .field-title {
+        font-size: 11px;
+        letter-spacing: 0.6px;
+    }
+
+    a.button {
+        padding: 8px 11px;
+        font-size: 12px;
+    }
+
+    td .button {
+        min-width: 0;
+        padding: 7px 9px;
+        font-size: 12px;
+    }
+
 }
 
+
 /* =========================================================
-   GRAND ÉCRAN
+   GRANDS ÉCRANS
    ========================================================= */
 
 @media (min-width: 1600px) {
@@ -703,17 +751,15 @@ body {
         max-width: 1700px;
 
         margin-top: 104px;
-
         padding: 32px;
-
         gap: 30px;
     }
 
     .list-department {
         width: 280px;
+        flex-basis: 280px;
 
         padding: 18px;
-
         max-height: 700px;
     }
 
@@ -735,9 +781,9 @@ body {
     }
 
     .departement-title {
-        font-size: 16px;
         margin-bottom: 18px;
         padding-bottom: 14px;
+        font-size: 16px;
     }
 
     .list-field {
@@ -746,16 +792,17 @@ body {
 
     .field-title {
         font-size: 15px;
-        letter-spacing: 1.6px;
+        letter-spacing: 1.4px;
     }
 
     .field-bachelor,
     .field-master {
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
         gap: 20px;
     }
 
     .field {
+        min-height: 185px;
         padding: 24px 20px;
     }
 
@@ -778,28 +825,27 @@ body {
         width: 230px;
         padding: 14px;
     }
+
 }
 
 
 /* =========================================================
-   TRÈS GRAND ÉCRAN
+   TRÈS GRANDS ÉCRANS
    ========================================================= */
 
 @media (min-width: 1920px) {
 
     .center-container {
         max-width: 1850px;
-
         padding: 38px;
-
         gap: 36px;
     }
 
     .list-department {
         width: 300px;
+        flex-basis: 300px;
 
         padding: 20px;
-
         max-height: 750px;
     }
 
@@ -817,11 +863,12 @@ body {
 
     .field-bachelor,
     .field-master {
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
         gap: 24px;
     }
 
     .field {
+        min-height: 200px;
         padding: 28px 22px;
     }
 
@@ -837,10 +884,12 @@ body {
     .field-title {
         font-size: 16px;
     }
+
 }
 
+
 /* =========================================================
-   ACCESSIBILITÉ
+   PRÉFÉRENCE DE RÉDUCTION DES ANIMATIONS
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -848,9 +897,9 @@ body {
     *,
     *::before,
     *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
     }
 
 }

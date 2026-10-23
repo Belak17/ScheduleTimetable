@@ -54,5 +54,18 @@ public class GlobalExceptionHandler {
     }
 
 
+    @ExceptionHandler(AccountNotActivatedException.class)
+    public String handleAccountNotActivated(
+             AccountNotActivatedException ex,
+            Model model) {
+
+        model.addAttribute("errorMessage", ex.getMessage());
+
+        return "login/login";
+    }
+
+
+
+
 
 }

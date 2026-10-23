@@ -4,10 +4,7 @@ import com.belak.scheduletimetable.component.PresenceMapper;
 import com.belak.scheduletimetable.dto.PresenceDto;
 import com.belak.scheduletimetable.dto.PresenceValidationDto;
 import com.belak.scheduletimetable.enumeration.Semester;
-import com.belak.scheduletimetable.exception.CourseAndCodeNotFoundException;
-import com.belak.scheduletimetable.exception.ElementNotFoundException;
-import com.belak.scheduletimetable.exception.PresenceAlreadyExistsException;
-import com.belak.scheduletimetable.exception.ResourceNotFoundException;
+import com.belak.scheduletimetable.exception.*;
 import com.belak.scheduletimetable.model.CoursTP;
 import com.belak.scheduletimetable.model.Presence;
 import com.belak.scheduletimetable.model.Seance;
@@ -47,9 +44,17 @@ public class PresenceService {
         LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
         LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
         Student theStudent = studentService.findStudentByUserId(userId);
+        // Verifions que le compte est activé
+        if(theStudent.isEnabled()==false)
+        {
+            log.info("Compte Utilisateur avec usedId {}.Activation de compte doit être effectué",userId);
+            throw new AccountNotActivatedException("Votre compte n'est pas activé . Veuillez le faire en cliquant sur Nouveau Ici ");
+
+        }
         String todayDay = today
                 .getDayOfWeek()
                 .getDisplayName(TextStyle.FULL, Locale.FRANCE);
+
 
         todayDay = todayDay.substring(0, 1).toUpperCase() + todayDay.substring(1);
         code = code.trim();

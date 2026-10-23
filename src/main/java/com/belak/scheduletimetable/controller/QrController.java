@@ -103,7 +103,7 @@ public class QrController {
 
 
 
-            log.info("Confirmation Presence avec Utlisateur Authenfie via authenticationPage");
+            log.info("Confirmation Presence avec Utilisateur Authentifie via authenticationPage");
 
 
             PresenceValidationDto dto = presenceService.createPresence(
