@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -39,18 +40,19 @@ public class PresenceService {
     private  final PresenceMapper presenceMapper ;
     private  final StudentService studentService ;
 
+    @Transactional
     public PresenceValidationDto createPresence(String userId , String code)
     {
         LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
         LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
         Student theStudent = studentService.findStudentByUserId(userId);
         // Verifions que le compte est activé
-        if(theStudent.isEnabled()==false)
-        {
-            log.info("Compte Utilisateur avec usedId {}.Activation de compte doit être effectué",userId);
-            throw new AccountNotActivatedException("Votre compte n'est pas activé . Veuillez le faire en cliquant sur Nouveau Ici ");
-
-        }
+//        if(theStudent.isEnabled()==false)
+//        {
+//            log.info("Compte Utilisateur avec usedId {}.Activation de compte doit être effectué",userId);
+//            throw new AccountNotActivatedException("Votre compte n'est pas activé . Veuillez le faire en cliquant sur Nouveau Ici ");
+//
+//        }
         String todayDay = today
                 .getDayOfWeek()
                 .getDisplayName(TextStyle.FULL, Locale.FRANCE);
@@ -85,7 +87,7 @@ public class PresenceService {
         );
         if (exists) {
             Presence presence = presenceRepository.findBySeanceIdAndStudentId(theSeance.getId(), theStudent.getId()).get();
-            log.info("Presence Deje Enregistre avec ID {} pour etudiant {}",presence.getId(),theStudent.getUserId());
+            log.info("Presence Deje Enregistre avec ID {} pour etudiant",presence.getId());
             throw new PresenceAlreadyExistsException("Présence déjà enregistrée",presence.getSeance()
                     .getCoursTP().getIntitule(),
                     presence.getSeance().getDate(),
