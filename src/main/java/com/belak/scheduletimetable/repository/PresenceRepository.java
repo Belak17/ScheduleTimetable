@@ -69,4 +69,15 @@ public interface PresenceRepository extends JpaRepository<Presence,Long> {
             @Param("studentId") Long studentId,
             @Param("seanceIds") Collection<Long> seanceIds
     );
+
+    @Query("""
+    SELECT p
+    FROM Presence p
+    WHERE p.seance.id IN :seanceIds
+      AND p.student.id IN :studentIds
+    """)
+    List<Presence> findBySeanceIdsAndStudentIds(
+            @Param("seanceIds") Collection<Long> seanceIds,
+            @Param("studentIds") Collection<Long> studentIds
+    );
 }

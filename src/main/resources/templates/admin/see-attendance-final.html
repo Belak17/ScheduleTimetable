@@ -54,13 +54,26 @@
             </tbody>
         </table>
         <div style="margin-top:20px">
-            <a th:if="${currentPage > 0}"
-               th:href="@{/absence/courses/{id}(id=${id}, page=${currentPage - 1})}">
-                Précédent
-            </a>
-            <a th:href="@{/absence/courses/{id}(id=${id}, page=${currentPage + 1})}">
-                Suivant
-            </a>
+            <div style="margin-top:20px">
+
+                <a th:if="${currentPage > 0}"
+                   th:href="@{/absence/courses/{id}(
+           id=${id},
+           page=${currentPage - 1},
+           size=${size}
+       )}">
+                    Précédent
+                </a>
+
+                <a th:href="@{/absence/courses/{id}(
+           id=${id},
+           page=${currentPage + 1},
+           size=${size}
+       )}">
+                    Suivant
+                </a>
+
+            </div>
         </div>
     </div>
 </main>

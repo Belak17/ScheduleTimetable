@@ -63,6 +63,7 @@ public class AbsenceController {
     {
         model.addAttribute("attendanceTable",tpService.getAllDatesAndAttendanceByCoursTP(id,page,size));
         model.addAttribute("currentPage", page);
+        model.addAttribute("id", id);
         model.addAttribute("size", size);
         return "admin/see-attendance-final";
     }
