@@ -49,9 +49,8 @@
         <div th:if="${error == 'user_not_found'}" class="alert">
             Utilisateur introuvable.
         </div>
-        <div th:if="${message}" th:text="${message}" class="alert">
+        <div th:if="${message}" th:text="${message}" class="success">
         </div>
-
         <div class="others">
             <div class="forgot-link"><a th:href="@{/forgot}">Mot de passe oublié ? </a></div>
             <button  type="submit" class="connect">Se connecter</button>

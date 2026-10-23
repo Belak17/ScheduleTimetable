@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
 
         model.addAttribute("errorMessage", ex.getMessage());
 
-        return "login/login";
+        return "redirect:/firstlogin?code="+ex.code+"&userId="+ex.userId;
     }
 
 

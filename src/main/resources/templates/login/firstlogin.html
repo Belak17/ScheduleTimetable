@@ -17,7 +17,17 @@
     <a class="register" th:href="@{/firstlogin}">Nouveau ici ? </a>
 
 </header>
+
 <form class="login-box" method="post" th:action="@{/firstlogin}" th:object="${userRegister}">
+
+    <input
+            type="hidden"
+
+            name="code"
+
+            th:value="${code}"
+
+    >
 
     <section class="left-block">
         <div class="presentation">
@@ -47,6 +57,12 @@
         <div th:if="${failure}" class="alert">
             <span th:text="${failure}"></span>
         </div>
+
+
+        <div th:if="${message}" class="pending">
+            <span th:text="${message}"></span>
+        </div>
+
         <div class="others">
             <button  type="submit" class="connect">Activer mon Compte</button>
         </div>

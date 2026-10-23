@@ -47,12 +47,11 @@ public class PresenceService {
         LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
         Student theStudent = studentService.findStudentByUserId(userId);
         // Verifions que le compte est activé
-//        if(theStudent.isEnabled()==false)
-//        {
-//            log.info("Compte Utilisateur avec usedId {}.Activation de compte doit être effectué",userId);
-//            throw new AccountNotActivatedException("Votre compte n'est pas activé . Veuillez le faire en cliquant sur Nouveau Ici ");
-//
-//        }
+       if(theStudent.isEnabled()==false)
+        {
+            log.info("Compte Utilisateur avec usedId {}.Activation de compte doit être effectué",userId);
+            throw new AccountNotActivatedException("Votre compte n'est pas activé . Veuillez le faire en cliquant sur Nouveau Ici ",code,userId);
+        }
         String todayDay = today
                 .getDayOfWeek()
                 .getDisplayName(TextStyle.FULL, Locale.FRANCE);

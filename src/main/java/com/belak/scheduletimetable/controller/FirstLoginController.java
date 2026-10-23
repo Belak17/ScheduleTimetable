@@ -18,10 +18,16 @@ public class FirstLoginController {
     private  final ForgotPasswordService forgotPasswordService ;
     private  final UserRegisterInterfaceService userRegisterService ;
     @GetMapping("/firstlogin")
-    public String showLogin( Model model)
+    public String showLogin( Model model , @RequestParam(required = false) String code)
     {
+        if(code!=null)
+        {
+            model.addAttribute("code",code);
+        }
         model.addAttribute("userRegister", new UserRegister());
+
         return "login/firstlogin" ;
+
     }
 
 
@@ -33,13 +39,19 @@ public class FirstLoginController {
     }
 
     @PostMapping("/firstlogin")
-    public  String register( Model model , @ModelAttribute UserRegister userRegister)
+    public  String register( Model model , @ModelAttribute UserRegister userRegister, @RequestParam(required = false) String code)
     {
 
         userRegisterService.register(userRegister);
         //userRegisterService.registerUserByUserIdAndEmail(userRegister);
         //model.addAttribute("message", "Un message a été envoyé à votre email pour activer votre compte");
-        return  "login/otp";
+        if (code==null) {
+            return "login/otp";
+        }
+        else
+        {
+            return "redirect:/scan/scan/authenticated";
+        }
     }
 
 
