@@ -103,22 +103,26 @@ public class QrController {
 
 
 
-            log.info("Confirmation Presence avec Utilisateur Authentifie via authenticationPage");
+        log.info("Confirmation Presence avec Utilisateur Authentifie via authenticationPage");
 
 
-            PresenceValidationDto dto = presenceService.createPresence(
-                    userId,
-                    code
-            );
-            return "redirect:/student/validation"
-                    + "?intitule=" + dto.getIntitule()
-                    + "&group=" + dto.getGroup()
-                    + "&code=" + dto.getCode()
-                    + "&date=" + dto.getDate().format(DateTimeFormatter.ISO_DATE)
-                    + "&time=" + dto.getTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-                    + "&day=" + dto.getDay();
-        }
-
-
-
+        PresenceValidationDto dto = presenceService.createPresence(
+                userId,
+                code
+        );
+        return "redirect:" + UriComponentsBuilder
+                .fromPath("/student/validation")
+                .queryParam("intitule", dto.getIntitule())
+                .queryParam("group", dto.getGroup())
+                .queryParam("code", dto.getCode())
+                .queryParam("date", dto.getDate().format(DateTimeFormatter.ISO_DATE))
+                .queryParam("time", dto.getTime().format(DateTimeFormatter.ofPattern("HH:mm")))
+                .queryParam("day", dto.getDay())
+                .queryParam("nom",dto.getNom())
+                .queryParam("prenom",dto.getPrenom())
+                .build()
+                .encode()
+                .toUriString();
+    }
+    
 }

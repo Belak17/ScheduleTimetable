@@ -28,7 +28,7 @@ public class SeanceService {
     private  final AbsenceService absenceService ;
 
     @Transactional
-    @Scheduled(cron = "0 40 11 * * *", zone = "Africa/Tunis")
+    @Scheduled(cron = "0 05 14 * * *", zone = "Africa/Tunis")
     public void generateDailySeances() {
         createSeancesForToday();
     }
@@ -100,5 +100,5 @@ public class SeanceService {
         // 3. sauvegarder les changements
         seanceRepository.saveAll(seances);
     }
-    
+
 }

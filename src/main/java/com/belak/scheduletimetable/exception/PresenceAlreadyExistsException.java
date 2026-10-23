@@ -19,15 +19,24 @@ public class PresenceAlreadyExistsException extends RuntimeException {
     @Getter
     private final String salle;
 
+    @Getter
+    private final String nom;
+
+    @Getter
+    private final String prenom;
+
+
 
     public PresenceAlreadyExistsException(String présenceDéjàEnregistrée, String intitule, LocalDate date, String dayOfWeek ,  LocalTime time,
-                                          String salle) {
+                                          String salle,String nom,String prenom) {
         super(présenceDéjàEnregistrée);
         this.date = date;
         this.intitule = intitule;
         this.dayOfWeek = dayOfWeek;
         this.salle = salle;
         this.time = time;
+        this.nom = nom ;
+        this.prenom = prenom ;
     }
 
 }

@@ -37,6 +37,7 @@ public class StudentController {
     private  final TimetablePreviewService preview ;
     private  final StudentPresenceInterfaceService studentPresenceService ;
     private  final PresenceService presenceService ;
+
     @GetMapping("/dashboard")
     public String showStudentDashboard(Model model ,
                                        HttpSession session , Authentication authentication )
@@ -57,7 +58,7 @@ public class StudentController {
     }
     @GetMapping("/timetable")
     public String showStudentTimetable(  Model model,
-                                       HttpSession session)
+                                         HttpSession session)
     {
         return "student/student-timetable.html";
     }
@@ -81,7 +82,7 @@ public class StudentController {
     {
         Semester effectiveSemester =
                 (semester != null) ? semester : Semester.fromDate(LocalDate.now());
-         model.addAttribute("courses",studentPresenceService.getAllStudentOverviewByUserId(authentication.getName(),effectiveSemester));
+        model.addAttribute("courses",studentPresenceService.getAllStudentOverviewByUserId(authentication.getName(),effectiveSemester));
         return "student/student-absence.html";
     }
 
@@ -124,8 +125,8 @@ public class StudentController {
 
     @PostMapping("/edit-my-profile/update/email")
     public String updateEmail( @RequestParam String nouvEmail, @RequestParam String confEmail ,
-            @RequestParam(defaultValue = "student/change-email") String tab,
-            Model model , Authentication authentication) {
+                               @RequestParam(defaultValue = "student/change-email") String tab,
+                               Model model , Authentication authentication) {
         studentService.updateEmail(nouvEmail,confEmail, authentication.getName()) ;
         StudentProfileDto student = studentService.findByUserId(authentication.getName());
         model.addAttribute("student",student);
@@ -138,8 +139,8 @@ public class StudentController {
     public String updateInfo( @RequestParam String userId,
                               @RequestParam String telephone ,
 
-                               @RequestParam(defaultValue = "student/change-info") String tab,
-                               Model model , Authentication authentication) {
+                              @RequestParam(defaultValue = "student/change-info") String tab,
+                              Model model , Authentication authentication) {
         studentService.updateInfo(userId,telephone);
         StudentProfileDto student = studentService.findByUserId(authentication.getName());
         model.addAttribute("student",student);
@@ -152,9 +153,9 @@ public class StudentController {
     @PostMapping("/edit-my-profile/update/password")
     public String updatePassword( @RequestParam String oldPassword,
                                   @RequestParam String newPassword,
-                              @RequestParam String confPassword ,
-                              @RequestParam(defaultValue = "student/change-password") String tab,
-                              Model model , Authentication authentication) {
+                                  @RequestParam String confPassword ,
+                                  @RequestParam(defaultValue = "student/change-password") String tab,
+                                  Model model , Authentication authentication) {
         studentService.updatePassword(oldPassword,newPassword,confPassword , authentication.getName()) ;
         StudentProfileDto student = studentService.findByUserId(authentication.getName());
         model.addAttribute("student",student);
@@ -171,11 +172,13 @@ public class StudentController {
             @RequestParam LocalDate date,
             @RequestParam LocalTime time,
             @RequestParam String day,
+            @RequestParam String nom ,
+            @RequestParam String prenom ,
             Model model
     ) {
 
         PresenceValidationDto validationDto = new PresenceValidationDto(intitule,group,code
-        ,date,time,day);
+                ,date,time,day,nom,prenom);
 
         model.addAttribute("validation", validationDto);
 

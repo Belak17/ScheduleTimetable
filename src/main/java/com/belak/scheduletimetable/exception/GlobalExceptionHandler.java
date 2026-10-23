@@ -31,6 +31,8 @@ public class GlobalExceptionHandler {
         );
         redirectAttributes.addFlashAttribute("dayOfWeek", ex.getDayOfWeek());
         redirectAttributes.addFlashAttribute("date", ex.getDate().format(DateTimeFormatter.ISO_DATE));
+        redirectAttributes.addFlashAttribute("nom",ex.getNom());
+        redirectAttributes.addFlashAttribute("prenom",ex.getPrenom());
         return "redirect:/student/alreadyRegistered";
     }
 
@@ -40,6 +42,8 @@ public class GlobalExceptionHandler {
         redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
         redirectAttributes.addFlashAttribute("code", ex.getCode());
         redirectAttributes.addFlashAttribute("userId", ex.getUserId());
+        redirectAttributes.addFlashAttribute("nom",ex.getNom());
+        redirectAttributes.addFlashAttribute("prenom",ex.getPrenom());
         return "redirect:/student/codeNotFound";
     }
 
@@ -56,12 +60,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccountNotActivatedException.class)
     public String handleAccountNotActivated(
-             AccountNotActivatedException ex,
+            AccountNotActivatedException ex,
             Model model) {
 
         model.addAttribute("errorMessage", ex.getMessage());
 
-        return "redirect:/firstlogin?code="+ex.code+"&userId="+ex.userId;
+        return "login/login";
     }
 
 

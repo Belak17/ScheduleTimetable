@@ -14,13 +14,13 @@ import com.belak.scheduletimetable.repository.PresenceRepository;
 import com.belak.scheduletimetable.repository.SeanceRepository;
 import com.belak.scheduletimetable.repository.StudentRepository;
 import com.belak.scheduletimetable.service.student.StudentService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -47,11 +47,12 @@ public class PresenceService {
         LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
         Student theStudent = studentService.findStudentByUserId(userId);
         // Verifions que le compte est activé
-       if(theStudent.isEnabled()==false)
-        {
-            log.info("Compte Utilisateur avec usedId {}.Activation de compte doit être effectué",userId);
-            throw new AccountNotActivatedException("Votre compte n'est pas activé . Veuillez le faire en cliquant sur Nouveau Ici ",code,userId);
-        }
+        // if(theStudent.isEnabled()==false)
+        //{
+        //  log.info("Compte Utilisateur avec usedId {}.Activation de compte doit être effectué",userId);
+        //throw new AccountNotActivatedException("Votre compte n'est pas activé . Veuillez le faire en cliquant sur Nouveau Ici ");
+
+        //}
         String todayDay = today
                 .getDayOfWeek()
                 .getDisplayName(TextStyle.FULL, Locale.FRANCE);
@@ -69,7 +70,7 @@ public class PresenceService {
         if (optionalCoursTP.isEmpty())
         {
             log.info("Cours Non Disponble pour le code {} et utilisateur {}",code,userId);
-            throw new CourseAndCodeNotFoundException("Cours Non disponible ",code,userId);
+            throw new CourseAndCodeNotFoundException("Cours Non disponible ",code,userId,theStudent.getNom(), theStudent.getPrenom());
         }
         CoursTP theCoursTP = optionalCoursTP.get();
 
@@ -86,13 +87,15 @@ public class PresenceService {
         );
         if (exists) {
             Presence presence = presenceRepository.findBySeanceIdAndStudentId(theSeance.getId(), theStudent.getId()).get();
-            log.info("Presence Deje Enregistre avec ID {} pour etudiant",presence.getId());
+            log.info("Presence Deje Enregistre avec ID {} pour etudiant {}",presence.getId(),theStudent.getUserId());
             throw new PresenceAlreadyExistsException("Présence déjà enregistrée",presence.getSeance()
                     .getCoursTP().getIntitule(),
                     presence.getSeance().getDate(),
                     presence.getSeance().getCoursTP().getDayOfWeek().toString() ,
                     presence.getLocalTime() ,
-                    presence.getSeance().getCoursTP().getSalle().getCode()
+                    presence.getSeance().getCoursTP().getSalle().getCode(),
+                    presence.getStudent().getNom(),
+                    presence.getStudent().getPrenom()
             );
         }
 
@@ -106,7 +109,7 @@ public class PresenceService {
 
         seanceRepository.save(theSeance);
 
-        return validatePresence(code, theStudent.getGroup(), theCoursTP.getIntitule(), todayDay) ;
+        return validatePresence(code, theStudent.getGroup(), theStudent.getNom(),theStudent.getPrenom(), theCoursTP.getIntitule(), todayDay) ;
     }
     public Page<PresenceDto> getAbsencesByUserId(String userId , int page , int size )
     {
@@ -145,7 +148,7 @@ public class PresenceService {
         if (optionalCoursTP.isEmpty())
         {
             log.info("Cours Non Disponble pour le code {}  utilisateur {}",code,userId);
-            throw new CourseAndCodeNotFoundException("Cours Non disponible ",code,userId);
+            throw new CourseAndCodeNotFoundException("Cours Non disponible ",code,userId,theStudent.getNom(), theStudent.getPrenom());
         }
         CoursTP theCoursTP = optionalCoursTP.get();
 
@@ -167,7 +170,9 @@ public class PresenceService {
                     presence.getSeance().getDate(),
                     presence.getSeance().getCoursTP().getDayOfWeek().toString() ,
                     presence.getLocalTime() ,
-                    presence.getSeance().getCoursTP().getSalle().getCode()
+                    presence.getSeance().getCoursTP().getSalle().getCode(),
+                    presence.getStudent().getNom(),
+                    presence.getStudent().getPrenom()
             );
         }
         Presence thePresence = new Presence();
@@ -180,16 +185,18 @@ public class PresenceService {
 
         seanceRepository.save(theSeance);
 
-        return validatePresence(code, theStudent.getGroup(), theCoursTP.getIntitule(), todayDay) ;
+        return validatePresence(code, theStudent.getGroup(), theStudent.getNom(),theStudent.getPrenom(),theCoursTP.getIntitule(), todayDay) ;
     }
 
-    public PresenceValidationDto validatePresence(String code, String group ,
+    public PresenceValidationDto validatePresence(String code, String group , String nom , String prenom ,
                                                   String intitule, String day)
     {
         PresenceValidationDto presenceValidationDto = new PresenceValidationDto();
         presenceValidationDto.setCode(code);
         presenceValidationDto.setDate(LocalDate.now());
         presenceValidationDto.setGroup(group);
+        presenceValidationDto.setNom(nom) ;
+        presenceValidationDto.setPrenom(prenom) ;
         presenceValidationDto.setIntitule(intitule);
         presenceValidationDto.setDay(day);
         presenceValidationDto.setTime(LocalTime.now(ZoneId.of("Africa/Tunis")));

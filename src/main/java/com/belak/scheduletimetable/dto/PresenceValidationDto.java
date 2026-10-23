@@ -18,4 +18,7 @@ public class PresenceValidationDto {
     private LocalDate date;
     private LocalTime time;
     private String day ;
+    private String nom ;
+
+    private String prenom ;
 }
