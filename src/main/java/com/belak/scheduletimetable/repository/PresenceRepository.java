@@ -76,8 +76,10 @@ public interface PresenceRepository extends JpaRepository<Presence,Long> {
     WHERE p.seance.id IN :seanceIds
       AND p.student.id IN :studentIds
     """)
-    List<Presence> findBySeanceIdsAndStudentIds(
+    List<Presence> findAllBySeanceIdsAndStudentIds(
             @Param("seanceIds") Collection<Long> seanceIds,
             @Param("studentIds") Collection<Long> studentIds
     );
+
+
 }

@@ -127,15 +127,10 @@ public class StudentService implements  StudentInterfaceService {
         studentRepository.save(student);
     }
 
-    public Student findStudentByUserId(String userId)
-    {
-        Optional<Student> student = studentRepository.findByUserId(userId);
 
-        if (student.isEmpty())
-        {
-            throw  new ResourceNotFoundException("Cet etudiant n'est pas enregistre dans la faculte");
-        }
 
-        return student.get() ;
+    public Optional<Student> findStudentByUserId(String userId) {
+        return studentRepository.findByUserId(userId);
     }
 }
+

@@ -74,35 +74,44 @@
       </tbody>
     </table>
 
-    <div style="margin-top:20px" th:if="${courses != null}">
+    <div class="pagination"
+         style="margin-top: 20px;"
+         th:if="${courses != null}">
 
+      <!-- Bouton Précédent -->
       <a th:if="${courses.hasPrevious()}"
          th:href="@{/absence/{departement}/{filiere}/{niveau}/{group}(
-            departement=${selectedDepartment},
-            filiere=${selectedField},
-            niveau=${selectedNiveau},
-            group=${selectedGroup},
-            page=${courses.number - 1},
-            size=${courses.size})}">
-        ⬅ Previous
+           departement=${selectedDepartment},
+           filiere=${selectedField},
+           niveau=${selectedNiveau},
+           group=${selectedGroup},
+           page=${courses.number - 1},
+           size=${courses.size}
+       )}"
+         class="button">
+        ← Précédent
       </a>
 
+      <!-- Numéro de page -->
       <span th:if="${courses.totalPages > 0}">
         Page
         <span th:text="${courses.number + 1}"></span>
-        /
+        sur
         <span th:text="${courses.totalPages}"></span>
     </span>
 
+      <!-- Bouton Suivant -->
       <a th:if="${courses.hasNext()}"
          th:href="@{/absence/{departement}/{filiere}/{niveau}/{group}(
-            departement=${selectedDepartment},
-            filiere=${selectedField},
-            niveau=${selectedNiveau},
-            group=${selectedGroup},
-            page=${courses.number + 1},
-            size=${courses.size})}">
-        Next ➡
+           departement=${selectedDepartment},
+           filiere=${selectedField},
+           niveau=${selectedNiveau},
+           group=${selectedGroup},
+           page=${courses.number + 1},
+           size=${courses.size}
+       )}"
+         class="button">
+        Suivant →
       </a>
 
     </div>

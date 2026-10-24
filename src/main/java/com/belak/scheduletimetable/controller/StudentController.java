@@ -202,4 +202,11 @@ public class StudentController {
 
 
 
+    @GetMapping("/studentNotFound")
+    public String StudentNotFoundPage() {
+        return "student/studentNotFound";
+    }
+
+
+
 }

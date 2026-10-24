@@ -12,7 +12,7 @@ public class StudentAttendanceDto {
     private  String id ;
     private String studentName;
 
-    private List<String> statuses;
+    private List<String> statuses = new ArrayList<>();
 
     public void addStatuses(String status) {
         if (statuses==null)

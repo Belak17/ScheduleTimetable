@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Étudiant introuvable</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style-student/style-validation.css}">
+
+    <link rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+
+    <style>
+        .error-icon {
+            font-size: 2.5rem;
+            color: #dc2626;
+        }
+
+        .error-title {
+            color: #b91c1c;
+            margin-bottom: 12px;
+        }
+
+        .validation-details {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .validation-details p {
+            margin: 12px 0;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .user-id {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #f1f5f9;
+            border-radius: 5px;
+            color: #334155;
+            font-family: monospace;
+        }
+
+        .action-message {
+            margin-top: 18px;
+            padding: 12px 14px;
+            background: #f8fafc;
+            border-left: 3px solid #64748b;
+            border-radius: 5px;
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 11px 20px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.2s ease;
+        }
+
+        .back-link:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="center-wrapper">
+
+    <h2 class="separator error">
+        Étudiant introuvable
+    </h2>
+
+    <section class="result-scanner error">
+
+        <!-- Icône d'erreur -->
+        <div class="check-circle error">
+            <i class="fi fi-ss-user-slash error-icon"></i>
+        </div>
+
+        <!-- Titre -->
+        <h3 class="error-title">
+            Aucun étudiant associé à cet utilisateur
+        </h3>
+
+        <!-- Informations sur l'erreur -->
+        <div class="validation-details">
+
+            <p>
+                <strong>Cause :</strong>
+                <span th:text="${errorMessage}">
+                </span>
+            </p>
+
+            <p th:if="${userId != null}">
+                <strong>Identifiant utilisateur :</strong>
+                <span class="user-id" th:text="${userId}"></span>
+            </p>
+
+        </div>
+
+        <!-- Recommandation -->
+        <div class="action-message">
+            <strong>Que faire ?</strong><br>
+            Vérifiez que votre compte est correctement associé à un
+            profil étudiant. Si le problème persiste, contactez
+            l'administration de la faculté.
+        </div>
+
+        <!-- Retour -->
+        <a th:href="@{https://172.20.96.216:8082/api/qr/scan(code=${code})}"
+           class="back-link">
+            Veuillez réessayer
+        </a>
+
+
+    </section>
+
+</main>
+
+</body>
+</html>

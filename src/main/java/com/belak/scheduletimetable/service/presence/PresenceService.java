@@ -40,12 +40,19 @@ public class PresenceService {
     private  final PresenceMapper presenceMapper ;
     private  final StudentService studentService ;
 
+
+
     @Transactional
     public PresenceValidationDto createPresence(String userId , String code)
     {
         LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
         LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
-        Student theStudent = studentService.findStudentByUserId(userId);
+        String finalCode = code;
+        Student theStudent = studentService.findStudentByUserId(userId)
+                .orElseThrow(() -> new StudentNotFoundException(
+                        "Aucun étudiant trouvé pour l'utilisateur : " + userId,userId,
+                        finalCode
+                ));
         // Verifions que le compte est activé
         // if(theStudent.isEnabled()==false)
         //{
@@ -69,7 +76,7 @@ public class PresenceService {
                         .getId(),todayDay,now);
         if (optionalCoursTP.isEmpty())
         {
-            log.info("Cours Non Disponble pour le code {} et utilisateur {}",code,userId);
+            log.info("Cours Non Disponible pour le code {} et utilisateur {}",code,userId);
             throw new CourseAndCodeNotFoundException("Cours Non disponible ",code,userId,theStudent.getNom(), theStudent.getPrenom());
         }
         CoursTP theCoursTP = optionalCoursTP.get();

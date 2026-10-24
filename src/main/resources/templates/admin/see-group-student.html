@@ -48,24 +48,40 @@
         </tr>
 
     </table>
-    <div style="margin-top:20px">
+    <div class="pagination" style="margin-top: 20px;">
 
+        <!-- Bouton Précédent -->
         <a th:if="${students.hasPrevious()}"
-           th:href="@{/students/student/{field}/{year}/{group}/details(field=${field}, year=${year}, group=${group}, page=${GroupStudentList.number - 1}, size=${GroupStudentList.size})}">
-            ⬅ Précédent
+           th:href="@{/students/student/{field}/{year}/{group}/details(
+           field=${field},
+           year=${year},
+           group=${group},
+           page=${students.number - 1},
+           size=${students.size}
+       )}"
+           class="button">
+            ← Précédent
         </a>
 
-        <!-- Page -->
+        <!-- Numéro de page -->
         <span th:if="${students.totalPages > 0}">
         Page
         <span th:text="${students.number + 1}"></span>
-        /
+        sur
         <span th:text="${students.totalPages}"></span>
     </span>
 
+        <!-- Bouton Suivant -->
         <a th:if="${students.hasNext()}"
-           th:href="@{/students/{field}/{year}/{group}/details(field=${field}, year=${year}, group=${group}, page=${GroupStudentList.number + 1}, size=${GroupStudentList.size})}">
-            Suivant ➡
+           th:href="@{/students/{field}/{year}/{group}/details(
+           field=${field},
+           year=${year},
+           group=${group},
+           page=${students.number + 1},
+           size=${students.size}
+       )}"
+           class="button">
+            Suivant →
         </a>
 
     </div>

@@ -7,6 +7,9 @@ import com.belak.scheduletimetable.dto.StudentProfileDto;
 import com.belak.scheduletimetable.model.Student;
 import org.springframework.data.domain.Page;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
+
 public interface StudentInterfaceService {
 
     public Page<StudentDto> getStudentByFieldAndYearAndGroup(String field, String year, String group, int page, int size) ;
@@ -25,5 +28,5 @@ public interface StudentInterfaceService {
                                String newPassword,
                                String confPassword,
                                String userId) ;
-    public Student findStudentByUserId(String userId) ;
+    public Optional<Student> findStudentByUserId(String userId) ;
 }

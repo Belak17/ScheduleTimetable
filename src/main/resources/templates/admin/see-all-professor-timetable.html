@@ -124,32 +124,38 @@
             </tr>
             </tbody>
         </table>
-        <div style="margin-top:20px" th:if="${Professors != null}">
+        <div class="pagination"
+             style="margin-top: 20px;"
+             th:if="${Professors != null}">
 
-            <!-- Previous -->
+            <!-- Bouton Précédent -->
             <a th:if="${Professors.hasPrevious()}"
                th:href="@{/professors/professor/timetable/{departement}(
-        departement=${selectedDepartment},
-        page=${Professors.number - 1},
-        size=${Professors.size})}">
-                ⬅ Précédent
+           departement=${selectedDepartment},
+           page=${Professors.number - 1},
+           size=${Professors.size}
+       )}"
+               class="button">
+                ← Précédent
             </a>
 
             <!-- Numéro de page -->
-            <span  th:if="${Professors.totalPages > 0}">
+            <span th:if="${Professors.totalPages > 0}">
         Page
         <span th:text="${Professors.number + 1}"></span>
-        /
+        sur
         <span th:text="${Professors.totalPages}"></span>
     </span>
 
-            <!-- Next -->
+            <!-- Bouton Suivant -->
             <a th:if="${Professors.hasNext()}"
                th:href="@{/professors/professor/timetable/{departement}(
-        departement=${selectedDepartment},
-        page=${GroupTimetableList.number + 1},
-        size=${GroupTimetableList.size})}">
-                Suivant ➡
+           departement=${selectedDepartment},
+           page=${Professors.number + 1},
+           size=${Professors.size}
+       )}"
+               class="button">
+                Suivant →
             </a>
 
         </div>

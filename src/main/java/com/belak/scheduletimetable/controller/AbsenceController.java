@@ -1,6 +1,9 @@
 package com.belak.scheduletimetable.controller;
 
+import com.belak.scheduletimetable.dto.AttendanceDto;
 import com.belak.scheduletimetable.enumeration.Semester;
+import com.belak.scheduletimetable.exception.ResourceNotFoundException;
+import com.belak.scheduletimetable.repository.CoursTPRepository;
 import com.belak.scheduletimetable.service.courstp.CoursTPService;
 import com.belak.scheduletimetable.service.student.StudentPresenceInterfaceService;
 import com.belak.scheduletimetable.service.student.StudentPresenceService;
@@ -23,6 +26,7 @@ public class AbsenceController {
     private  final GroupTimetableService groupTimetableService ;
     private  final CoursTPService tpService ;
     private  final StudentPresenceInterfaceService studentPresenceService ;
+    private  final CoursTPRepository coursTPrepository;
     @GetMapping("/{departement}/{filiere}/{niveau}")
     public String showGroup(
             @PathVariable String departement,
@@ -58,13 +62,36 @@ public class AbsenceController {
         return "admin/see-absence-final";
     }
     @GetMapping("/courses/{id}")
-    public String showCoursePresence(@PathVariable Long id,@RequestParam(defaultValue = "0") int page,
-                                     @RequestParam(defaultValue = "10") int size,  Model model)
-    {
-        model.addAttribute("attendanceTable",tpService.getAllDatesAndAttendanceByCoursTP(id,page,size));
+    public String showCoursePresence(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model) {
+
+        // Taille de page fixée à 10 étudiants
+        size = 10;
+
+        AttendanceDto attendanceTable =
+                tpService.getAllDatesAndAttendanceByCoursTP(id, page, size);
+
+        model.addAttribute("attendanceTable", attendanceTable);
         model.addAttribute("currentPage", page);
-        model.addAttribute("id", id);
         model.addAttribute("size", size);
+        model.addAttribute("id", id);
+
+        // Nombre total d'étudiants du groupe
+        int totalStudents = coursTPrepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Cours TP introuvable"))
+                .getGroupTimetable()
+                .getStudents()
+                .size();
+
+        int totalPages = (int) Math.ceil((double) totalStudents / size);
+
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalStudents", totalStudents);
+
         return "admin/see-attendance-final";
     }
     @GetMapping("/{id}")

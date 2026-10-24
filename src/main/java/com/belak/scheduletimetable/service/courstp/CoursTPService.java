@@ -14,10 +14,13 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.spire.xls.Worksheet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -36,6 +39,9 @@ public class CoursTPService extends CoursTPUtilsService {
     private  final StudentRepository studentRepository;
     private  final PresenceRepository presenceRepository ;
     private final SalleRepository salleRepository;
+
+    private static final Logger logger =
+            LoggerFactory.getLogger(CoursTPService.class);
 
     public Salle extractGroupSalle(String text) {
 
@@ -225,34 +231,38 @@ public class CoursTPService extends CoursTPUtilsService {
     public AttendanceDto getAllDatesAndAttendanceByCoursTP(
             Long id,
             int page,
-            int size
-    ) {
-        // 1. Validation des paramètres
-        if (page < 0) {
-            throw new IllegalArgumentException(
-                    "Le numéro de page ne peut pas être négatif."
-            );
-        }
+            int size) {
 
-        if (size <= 0) {
-            throw new IllegalArgumentException(
-                    "La taille de page doit être supérieure à zéro."
-            );
-        }
+        logger.info("========== DÉBUT getAllDatesAndAttendanceByCoursTP ==========");
+        logger.info("Cours TP ID reçu : {}", id);
+        logger.info("Paramètres initiaux : page={}, size={}", page, size);
 
-        // 2. Récupération du cours TP
+        // 1. Récupérer le cours TP
         CoursTP tp = coursTPrepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Cours TP introuvable")
-                );
+                .orElseThrow(() -> {
+                    logger.error("Cours TP introuvable pour l'ID : {}", id);
+                    return new ResourceNotFoundException("Cours TP introuvable");
+                });
 
-        // 3. Récupération et tri des séances
+        logger.info("Cours TP récupéré avec succès : {}", tp.getId());
+
+        AttendanceDto attendanceDto = new AttendanceDto();
+
+        // 2. Récupérer et trier les séances
         List<Seance> sortedSeances = tp.getSeances()
                 .stream()
                 .sorted(Comparator.comparing(Seance::getDate))
                 .toList();
 
-        AttendanceDto attendanceDto = new AttendanceDto();
+        logger.info("Nombre de séances récupérées : {}", sortedSeances.size());
+
+        sortedSeances.forEach(seance ->
+                logger.debug(
+                        "Séance ID={}, date={}",
+                        seance.getId(),
+                        seance.getDate()
+                )
+        );
 
         attendanceDto.setDates(
                 sortedSeances.stream()
@@ -260,90 +270,212 @@ public class CoursTPService extends CoursTPUtilsService {
                         .toList()
         );
 
-        // 4. Récupération des étudiants
-        List<Student> students = new ArrayList<>(
-                tp.getGroupTimetable().getStudents()
+        logger.info(
+                "Nombre de dates transmises au DTO : {}",
+                attendanceDto.getDates().size()
         );
 
-        // 5. Pagination
-        long startLong = (long) page * size;
-
-        if (startLong >= students.size() && !students.isEmpty()) {
-            throw new IllegalArgumentException(
-                    "La page demandée n'existe pas."
+        // 3. Vérifier le groupe avant de récupérer ses étudiants
+        if (tp.getGroupTimetable() == null) {
+            logger.error("Aucun groupe associé au cours TP {}", id);
+            throw new ResourceNotFoundException(
+                    "Aucun groupe associé à ce cours TP"
             );
         }
 
-        int start = (int) startLong;
+        logger.info(
+                "Groupe associé au cours TP : {}",
+                tp.getGroupTimetable().getId()
+        );
+
+        // 4. Récupérer les étudiants du groupe
+        logger.info("Récupération des étudiants du groupe...");
+
+        List<Student> students = tp.getGroupTimetable()
+                .getStudents()
+                .stream()
+                .toList();
+
+        logger.info("Nombre total d'étudiants récupérés : {}", students.size());
+
+        students.forEach(student ->
+                logger.debug(
+                        "Étudiant ID={}, userId={}, nom={}, prénom={}",
+                        student.getId(),
+                        student.getUserId(),
+                        student.getNom(),
+                        student.getPrenom()
+                )
+        );
+
+        // 5. Vérifier les paramètres de pagination
+        if (page < 0) {
+            logger.warn("Page négative détectée : {}. Réinitialisation à 0.", page);
+            page = 0;
+        }
+
+        if (size <= 0) {
+            logger.warn("Taille invalide : {}. Réinitialisation à 10.", size);
+            size = 10;
+        }
+
+        logger.info(
+                "Paramètres de pagination utilisés : page={}, size={}",
+                page,
+                size
+        );
+
+        // 6. Calculer les indices de pagination
+        int start = page * size;
+
+        logger.info(
+                "Calcul pagination : start={}, totalStudents={}",
+                start,
+                students.size()
+        );
+
+        if (start >= students.size()) {
+            logger.warn(
+                    "Aucun étudiant sur cette page : start={} >= total={}",
+                    start,
+                    students.size()
+            );
+
+            attendanceDto.setRows(Collections.emptyList());
+
+            logger.info("========== FIN getAllDatesAndAttendanceByCoursTP ==========");
+            return attendanceDto;
+        }
+
         int end = Math.min(start + size, students.size());
 
-        List<Student> paginatedStudents =
-                students.subList(start, end);
+        logger.info("Indices de pagination : start={}, end={}", start, end);
 
-        // 6. Récupération groupée des présences
-        List<Long> seanceIds = sortedSeances.stream()
-                .map(Seance::getId)
-                .toList();
+        List<Student> paginatedStudents = students.subList(start, end);
 
-        List<Long> studentIds = paginatedStudents.stream()
-                .map(Student::getId)
-                .toList();
+        logger.info(
+                "Nombre d'étudiants après pagination : {}",
+                paginatedStudents.size()
+        );
 
-        List<Presence> presences;
+        // 7. Initialiser la liste des présences
+        Map<String, Presence> presenceMap = new HashMap<>();
 
-        if (seanceIds.isEmpty() || studentIds.isEmpty()) {
-            presences = Collections.emptyList();
-        } else {
-            presences = presenceRepository.findBySeanceIdsAndStudentIds(
-                    seanceIds,
-                    studentIds
+        // Récupérer les présences seulement s'il existe des étudiants
+        // et au moins une séance.
+        if (!paginatedStudents.isEmpty() && !sortedSeances.isEmpty()) {
+
+            List<Long> studentIds = paginatedStudents.stream()
+                    .map(Student::getId)
+                    .toList();
+
+            List<Long> seanceIds = sortedSeances.stream()
+                    .map(Seance::getId)
+                    .toList();
+
+            logger.info("Identifiants des étudiants de la page : {}", studentIds);
+            logger.info("Identifiants des séances : {}", seanceIds);
+
+            // 8. Récupérer toutes les présences en une requête
+            logger.info("Recherche des présences en base de données...");
+
+            List<Presence> presences =
+                    presenceRepository.findAllBySeanceIdsAndStudentIds(
+                            seanceIds,
+                            studentIds
+                    );
+
+            logger.info(
+                    "Nombre de présences récupérées : {}",
+                    presences.size()
+            );
+
+            // 9. Indexer les présences
+            for (Presence presence : presences) {
+
+                String key = presence.getStudent().getId()
+                        + "_" + presence.getSeance().getId();
+
+                presenceMap.put(key, presence);
+
+                logger.debug(
+                        "Présence : étudiant={}, séance={}, présent={}, clé={}",
+                        presence.getStudent().getId(),
+                        presence.getSeance().getId(),
+                        presence.isPresent(),
+                        key
+                );
+            }
+
+            logger.info("Taille de la map des présences : {}", presenceMap.size());
+
+        } else if (sortedSeances.isEmpty()) {
+
+            logger.info(
+                    "Aucune séance pour le cours TP {}. " +
+                            "Les étudiants seront affichés sans colonnes de présence.",
+                    id
             );
         }
 
-        // 7. Indexation des présences en mémoire
-        Map<String, Presence> presenceMap = new HashMap<>();
-
-        for (Presence presence : presences) {
-            String key = presence.getSeance().getId()
-                    + "_" + presence.getStudent().getId();
-
-            presenceMap.put(key, presence);
-        }
-
-        // 8. Construction des lignes du tableau
+        // 10. Construire les lignes des étudiants
+        // IMPORTANT : cette partie s'exécute même si aucune séance n'existe.
         List<StudentAttendanceDto> rows = new ArrayList<>();
 
         for (Student student : paginatedStudents) {
 
-            StudentAttendanceDto studentAttendanceDto =
-                    new StudentAttendanceDto();
+            StudentAttendanceDto row = new StudentAttendanceDto();
 
-            studentAttendanceDto.setStudentName(
+            row.setStudentName(
                     student.getNom() + " " + student.getPrenom()
             );
 
-            studentAttendanceDto.setId(student.getUserId());
+            row.setId(student.getUserId());
 
+            logger.debug(
+                    "Construction de la ligne pour {} {}",
+                    student.getNom(),
+                    student.getPrenom()
+            );
+
+            // Les statuts sont ajoutés uniquement pour les séances existantes.
             for (Seance seance : sortedSeances) {
 
-                String key = seance.getId()
-                        + "_" + student.getId();
+                String key = student.getId() + "_" + seance.getId();
 
                 Presence presence = presenceMap.get(key);
 
                 if (presence == null) {
-                    studentAttendanceDto.addStatuses("-");
+                    row.addStatuses("-");
                 } else if (presence.isPresent()) {
-                    studentAttendanceDto.addStatuses("Present");
+                    row.addStatuses("Present");
                 } else {
-                    studentAttendanceDto.addStatuses("Absent");
+                    row.addStatuses("Absent");
                 }
             }
 
-            rows.add(studentAttendanceDto);
+            logger.debug(
+                    "Ligne créée : étudiant={}, nombre de statuts={}",
+                    row.getStudentName(),
+                    row.getStatuses() != null
+                            ? row.getStatuses().size()
+                            : 0
+            );
+
+            rows.add(row);
         }
 
+        logger.info("Nombre de lignes construites : {}", rows.size());
+
+        // 11. Retourner le résultat
         attendanceDto.setRows(rows);
+
+        logger.info(
+                "Nombre de lignes dans le DTO final : {}",
+                attendanceDto.getRows().size()
+        );
+
+        logger.info("========== FIN getAllDatesAndAttendanceByCoursTP ==========");
 
         return attendanceDto;
     }

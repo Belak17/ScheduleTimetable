@@ -24,56 +24,89 @@
     <div class="table-content">
         <!-- Tableau -->
         <table bgcolor="lightgray" border="1" rules="all" class="styled-table">
-
             <thead>
             <tr>
-                <th>Nom & Prénom</th>
-                <th th:each="date:${attendanceTable.dates}"
+                <!-- Toujours afficher le nom et prénom -->
+                <th>Nom &amp; Prénom</th>
+
+                <!-- Afficher les dates uniquement si des séances existent -->
+                <th th:if="${not #lists.isEmpty(attendanceTable.dates)}"
+                    th:each="date : ${attendanceTable.dates}"
                     th:text="${date}">
                 </th>
+
+                <!-- Toujours afficher Option -->
                 <th>Option</th>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="row:${attendanceTable.rows}">
 
+            <tbody>
+
+            <!-- Afficher les étudiants même sans séance -->
+            <tr th:each="row : ${attendanceTable.rows}">
+
+                <!-- Nom et prénom toujours visibles -->
                 <td>
-                    <a
-                       th:text="${row.studentName}">
-                    </a>
+                    <span th:text="${row.studentName}"></span>
                 </td>
-                <td th:each="status:${row.statuses}"
-                    th:text="${status}">
-                </td>
+
+                <!-- Afficher les statuts uniquement si des séances existent -->
+                <th:block th:if="${not #lists.isEmpty(attendanceTable.dates)}">
+                    <td th:each="status : ${row.statuses}"
+                        th:text="${status}">
+                    </td>
+                </th:block>
+
+                <!-- Option toujours visible -->
                 <td>
-                    <a class="button clickable-row" th:href="@{/absence/{id}(id=${row.id})}">
+                    <a class="button clickable-row"
+                       th:href="@{/absence/{id}(id=${row.id})}">
                         Historiques des Absences
                     </a>
                 </td>
+
             </tr>
+
+            <!-- Message si aucun étudiant n'est disponible -->
+            <tr th:if="${#lists.isEmpty(attendanceTable.rows)}">
+                <td th:colspan="${attendanceTable.dates.size() + 2}"
+                    style="text-align: center;">
+                    Aucun étudiant à afficher sur cette page.
+                </td>
+            </tr>
+
             </tbody>
         </table>
-        <div style="margin-top:20px">
-            <div style="margin-top:20px">
+        <!-- Pagination -->
+        <div class="pagination" style="margin-top: 20px;">
 
-                <a th:if="${currentPage > 0}"
-                   th:href="@{/absence/courses/{id}(
+            <!-- Bouton Précédent -->
+            <a th:if="${currentPage > 0}"
+               th:href="@{/absence/courses/{id}(
            id=${id},
            page=${currentPage - 1},
            size=${size}
-       )}">
-                    Précédent
-                </a>
+       )}"
+               class="button">
+                ← Précédent
+            </a>
 
-                <a th:href="@{/absence/courses/{id}(
+            <!-- Informations sur la page -->
+            <span th:text="'Page ' + (${currentPage + 1}) + ' sur ' + ${totalPages}">
+        Page 1 sur 2
+    </span>
+
+            <!-- Bouton Suivant -->
+            <a th:if="${currentPage + 1 < totalPages}"
+               th:href="@{/absence/courses/{id}(
            id=${id},
            page=${currentPage + 1},
            size=${size}
-       )}">
-                    Suivant
-                </a>
+       )}"
+               class="button">
+                Suivant →
+            </a>
 
-            </div>
         </div>
     </div>
 </main>
