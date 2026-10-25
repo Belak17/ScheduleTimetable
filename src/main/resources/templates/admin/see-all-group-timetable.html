@@ -33,51 +33,51 @@
         <div class="departments">
             <div class="departement">
                 <a th:href="@{/timetables/group/timetable/MAT}">
-                <div class="dep-header">
-                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                    <h3>Mathématiques</h3>
-                </div>
+                    <div class="dep-header">
+                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                        <h3>Mathématiques</h3>
+                    </div>
                 </a>
 
             </div>
             <div class="departement">
                 <a th:href="@{/timetables/group/timetable/INF}">
-                <div class="dep-header">
-                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                    <h3>Informatique</h3>
-                </div>
+                    <div class="dep-header">
+                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                        <h3>Informatique</h3>
+                    </div>
                 </a>
             </div>
             <div class="departement">
                 <a th:href="@{/timetables/group/timetable/SV}">
-                <div class="dep-header">
-                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                    <h3>Sciences de la vie</h3>
-                </div>
+                    <div class="dep-header">
+                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                        <h3>Sciences de la vie</h3>
+                    </div>
                 </a>
             </div>
             <div class="departement">
                 <a th:href="@{/timetables/group/timetable/CHI}">
-                <div class="dep-header">
-                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                    <h3>Chimie</h3>
-                </div>
+                    <div class="dep-header">
+                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                        <h3>Chimie</h3>
+                    </div>
                 </a>
             </div>
             <div class="departement">
                 <a th:href="@{/timetables/group/timetable/PHY}">
-                <div class="dep-header">
-                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                    <h3>Physique</h3>
-                </div>
+                    <div class="dep-header">
+                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                        <h3>Physique</h3>
+                    </div>
                 </a>
             </div>
             <div class="departement">
                 <a th:href="@{/timetables/group/timetable/ST}">
-                <div class="dep-header">
-                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                    <h3>Sciences de la terre</h3>
-                </div>
+                    <div class="dep-header">
+                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
+                        <h3>Sciences de la terre</h3>
+                    </div>
                 </a>
             </div>
         </div>
@@ -111,21 +111,24 @@
                 <td th:text="${grouptimetable.year}"></td>
                 <td>
                     <a
-                       th:text="${grouptimetable.group}" >
+                            th:text="${grouptimetable.group}" >
                     </a>
                 </td>
                 <td>
                     <a class="button clickable-row"
                        th:data-image="@{/timetables/preview/{id}(id=${grouptimetable.id})}" onclick="event.stopPropagation()">
                         Emploi du Temps
-                    </a>
-                    <a class="button"
-                       th:href="@{/students/{group}/{year}/{field}/details(
-        field=${grouptimetable.field},
-        year=${grouptimetable.year},
-        group=${grouptimetable.group})}">
-                        Voir Étudiants
-                    </a>
+                    </a><a class="button"
+                           th:href="${grouptimetable.field != null and !#strings.isEmpty(grouptimetable.field)}
+       ? @{/students/{group}/{year}/{field}/details(
+            group=${grouptimetable.group},
+            year=${grouptimetable.year},
+            field=${grouptimetable.field})}
+       : @{/students/{group}/{year}/details(
+            group=${grouptimetable.group},
+            year=${grouptimetable.year})}">
+                    Voir Étudiants
+                </a>
                 </td>
             </tr>
             </tbody>

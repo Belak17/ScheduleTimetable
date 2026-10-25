@@ -56,7 +56,11 @@ public class StudentService implements  StudentInterfaceService {
     {
         Pageable pageable = PageRequest.of(page, size);
         String group = Filiere.fromCode(field).getCode()+year;
-        if (!groupe.startsWith("T"))
+        if (groupe==null)
+        {
+            return studentRepository.findByGroup(group,pageable).map(studentMapper::convertToDto);
+        }
+        else if (!groupe.startsWith("T"))
         {
             group = group+groupe;
         }

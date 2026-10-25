@@ -29,21 +29,56 @@ public class StudentApiController {
     private  final StudentService studentService ;
     private  final TimetablePreviewService preview ;
 
+    // Avec un groupe
     @GetMapping("/{field}/{year}/{group}/details")
-    public String showGroupStudents( Model model,
-                                    @RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "10") int size,
-                                    @PathVariable String field,
-                                    @PathVariable String group,
-                                    @PathVariable int year
-    )
-    {
-        Page<StudentDto> students = studentService.getStudentByFieldAndYearAndGroup(Filiere.fromCode(field).getCode(),year,group,page,size);
+    public String showGroupStudents(
+            Model model,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @PathVariable String field,
+            @PathVariable String group,
+            @PathVariable int year
+    ) {
+        return showStudents(model, page, size, field, year, group);
+    }
+
+    // Sans groupe
+    @GetMapping("/{field}/{year}/details")
+    public String showStudentsWithoutGroup(
+            Model model,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @PathVariable String field,
+            @PathVariable int year
+    ) {
+        return showStudents(model, page, size, field, year, null);
+    }
+
+    // Méthode commune
+    private String showStudents(
+            Model model,
+            int page,
+            int size,
+            String field,
+            int year,
+            String group
+    ) {
+
+        Page<StudentDto> students =
+                studentService.getStudentByFieldAndYearAndGroup(
+                        Filiere.fromCode(field).getCode(),
+                        year,
+                        group,
+                        page,
+                        size
+                );
+
         model.addAttribute("students", students);
         model.addAttribute("field", field);
         model.addAttribute("group", group);
         model.addAttribute("year", year);
-        model.addAttribute("GroupStudentList",students);
+        model.addAttribute("GroupStudentList", students);
+
         return "admin/see-group-student.html";
     }
 

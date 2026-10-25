@@ -4,6 +4,7 @@ import com.belak.scheduletimetable.dto.GroupTimetableDto;
 import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.enumeration.Filiere;
 
+import com.belak.scheduletimetable.enumeration.Groupe;
 import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.exception.InvalidExcelFormatException;
 
@@ -57,6 +58,11 @@ public class GroupTimetableService extends TimetableService {
             for (int position = 0; position < sheetNumbers; position++) {
                 processSheet(originalWorkbook, position);
             }
+            long totalStudents = studentRepository.countStudentsWithTimetableBySemester(Semester.S1);
+
+            log.info("Nombre total d'étudiants ayant un emploi du temps pour le semestre {} : {}",
+                    "S1", totalStudents);
+            System.out.println("Nombre total d'étudiants ayant un emploi du temps pour le semestre : "+totalStudents);
         } finally {
             originalWorkbook.dispose();
         }
@@ -135,11 +141,40 @@ public class GroupTimetableService extends TimetableService {
         int year = Integer.parseInt(matcher.group());
         int index = matcher.start();
 
-        String field = fullfield.substring(0, index).trim();
+        String field = Filiere.fromCode(fullfield.substring(0, index).trim()).getCode();
         String group = fullfield.substring(index + 1).trim();
 
         if (group.endsWith(" .")) group = group.substring(0, group.length() - 2).trim();
         if (group.startsWith("-")) group = group.substring(1).trim();
+
+        if (group == null)
+        {
+            return new GroupInfo(depname, field,null, year);
+        }
+        else
+        {
+            if (group.length()==1)
+            {
+                if (fullfield.startsWith("M"))
+                {
+                    return new GroupInfo(depname, field,null, year);
+                }
+                else
+                {
+                    group = Groupe.fromCode(group).getLibelle();
+                }
+
+            }
+            else if (group.length()==2)
+            {
+                group = group.charAt(0)+" "+Groupe.fromCode(String.valueOf(group.charAt(1))).getLibelle();
+            }
+            else {
+                group = Groupe.fromCode(
+                        group.substring(group.length() - 1)
+                ).getLibelle();
+            }
+        }
 
         return new GroupInfo(depname, field, group, year);
     }
@@ -173,18 +208,17 @@ public class GroupTimetableService extends TimetableService {
                 .build();
         entity.setSemester(Semester.fromDate(LocalDate.now(ZoneId.of("Africa/Tunis"))));
 
-        String group = Filiere.fromCode(info.getField()).getCode()+info.getYear();
+        String fullfield = Filiere.fromCode(info.getField()).getCode()+info.getYear();
+        if (info.getGroup()!=null) {
+            if (!info.getGroup().trim().startsWith("T")) {
+                fullfield = fullfield + info.getGroup().trim();
+            } else {
+                fullfield = fullfield + " " + info.getGroup().trim();
+            }
+        }
 
-            if (!info.getGroup().startsWith("T"))
-            {
-                group = group+info.getGroup();
-            }
-            else
-            {
-                group = group+" "+info.getGroup();
-            }
         List<Student> students = studentRepository.findByGroup(
-                group
+                fullfield
         );
         Semester semester = entity.getSemester();
         for (Student student : students) {
@@ -194,8 +228,8 @@ public class GroupTimetableService extends TimetableService {
             );
             entity.addStudent(student);
         }
-        log.info("Assignement de l'emploi du temps du groupe {} de taille {}",group,students.size());
-       return groupTimetableRepository.save(entity);
+        log.info("Assignement de l'emploi du temps du groupe {} de taille {}",fullfield,students.size());
+        return groupTimetableRepository.save(entity);
     }
 
     public Page<GroupTimetableDto> getGroupTimetables(int page , int size)
@@ -251,7 +285,7 @@ public class GroupTimetableService extends TimetableService {
     public List<Filiere> getFilieresByDepartement(Departement departement) {
         return groupTimetableRepository
                 .findDistinctFilieresByDepartement(departement)
-              ;
+                ;
     }
 
     public Page<GroupTimetableDto> getGroupTimetablesByDepartment(int page , int size , Departement departement)

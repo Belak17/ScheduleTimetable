@@ -52,13 +52,18 @@
 
         <!-- Bouton Précédent -->
         <a th:if="${students.hasPrevious()}"
-           th:href="@{/students/student/{field}/{year}/{group}/details(
-           field=${field},
-           year=${year},
-           group=${group},
-           page=${students.number - 1},
-           size=${students.size}
-       )}"
+           th:href="${group != null}
+           ? @{/students/{field}/{year}/{group}/details(
+                field=${field},
+                year=${year},
+                group=${group},
+                page=${students.number - 1},
+                size=${students.size})}
+           : @{/students/{field}/{year}/details(
+                field=${field},
+                year=${year},
+                page=${students.number - 1},
+                size=${students.size})}"
            class="button">
             ← Précédent
         </a>
@@ -73,13 +78,18 @@
 
         <!-- Bouton Suivant -->
         <a th:if="${students.hasNext()}"
-           th:href="@{/students/{field}/{year}/{group}/details(
-           field=${field},
-           year=${year},
-           group=${group},
-           page=${students.number + 1},
-           size=${students.size}
-       )}"
+           th:href="${group != null}
+           ? @{/students/{field}/{year}/{group}/details(
+                field=${field},
+                year=${year},
+                group=${group},
+                page=${students.number + 1},
+                size=${students.size})}
+           : @{/students/{field}/{year}/details(
+                field=${field},
+                year=${year},
+                page=${students.number + 1},
+                size=${students.size})}"
            class="button">
             Suivant →
         </a>

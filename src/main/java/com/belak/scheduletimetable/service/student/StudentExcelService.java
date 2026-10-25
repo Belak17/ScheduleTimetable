@@ -7,6 +7,7 @@ import com.belak.scheduletimetable.enumeration.TypeDiplome;
 import com.belak.scheduletimetable.exception.EmptyFileException;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.repository.StudentRepository;
+import com.belak.scheduletimetable.service.OrthographyService;
 import com.belak.scheduletimetable.service.UtilsService;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
@@ -16,18 +17,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+import java.text.Normalizer;
 @Service
 @RequiredArgsConstructor
 public class StudentExcelService {
     private  final StudentRepository studentRepository ;
     private  final PasswordEncoder passwordEncoder ;
     private  final UtilsService utilsService ;
+    private  final OrthographyService orthographyService ;
 
 
     private XSSFWorkbook loadWorkbook(MultipartFile file) throws IOException {
@@ -113,7 +116,7 @@ public class StudentExcelService {
 
         System.out.println("Sauvegarde terminée.");
     }
-    private Student extractStudent(Row row) {
+    private Student extractStudent(Row row) throws IOException {
 
         CreateStudentDto dto = new CreateStudentDto();
         dto.setId(Long.parseLong(utilsService.getCellValue(row.getCell(0))));
@@ -131,13 +134,37 @@ public class StudentExcelService {
 
         dto.setDateNaissance(utilsService.parseDate(row.getCell(10)));
 
-        dto.setFiliere(Filiere.fromLibelle(utilsService.getCellValue((row.getCell(13))).toUpperCase()));
+        dto.setFiliere(Filiere.fromLibelle(
+                orthographyService.correctText(
+                        utilsService.getCellValue(
+                                (row.getCell(13))
+                        )).toUpperCase()));
 
         dto.setNiveau(utilsService.getCellValue((row.getCell(14))));
 
-        dto.setGroup(utilsService.getCellValue((row.getCell(15))));
+        String group = utilsService.getCellValue(row.getCell(15));
+
+// Extraire la partie avant le premier chiffre
+        String fieldCode = group.replaceFirst("\\d.*", "");
+
+// Normaliser le code de la filière
+        String normalizedField = Filiere.fromCode(fieldCode).getCode();
+
+// Remplacer le code initial par le code normalisé
+        dto.setGroup(group.replaceFirst(
+                "^" + java.util.regex.Pattern.quote(fieldCode),
+                normalizedField
+        ));
 
         return new Student(dto);
+    }
+
+
+
+    public static String removeAccents(String text) {
+        return Normalizer
+                .normalize(text, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "");
     }
 
 

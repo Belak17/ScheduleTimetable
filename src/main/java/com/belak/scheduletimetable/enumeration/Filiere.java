@@ -1,6 +1,7 @@
 package com.belak.scheduletimetable.enumeration;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public enum Filiere {
 
@@ -13,6 +14,7 @@ public enum Filiere {
     LSV("LSV", "LICENCE EN SCIENCE DE LA VIE"),
     LST("LST", "LICENCE EN SCIENCE DE LA TERRE"),
     LGEOR("LGEOR", "LICENCE EN SCIENCE DE LA TERRE"),
+    LGD("LGD", "LICENCE EN SCIENCE DE LA TERRE"),
     LSVT("LSVT", "LICENCE EN SCIENCE DE LA VIE ET DE LA TERRE"),
     LSI("LGLSI", "LICENCE EN SCIENCES INFORMATIQUES"),
     LISI("LIRIS", "LICENCE EN INGENIERIE DES SYSTEMES INFORMATIQUES"),
@@ -32,7 +34,7 @@ public enum Filiere {
     MR_MGB("MR-MGB", "MASTER DE RECHERCHE EN MICROBIOLOGIE, GENETIQUE ET BIORESSOURCES"),
     MR_GBS("MR-GBS", "MASTER DE RECHERCHE EN GEOLOGIE DES BASSINS SEDIMENTAIRES"),
     MR_BOPE("MR-BOPE", "MASTER DE RECHERCHE EN BIOLOGIE DES ORGANISMES, DES POPULATIONS ET ENVIRONNEMENT"),
-    MR_BOPEA("MR-BOPEA", "MASTER DE RECHERCHE EN BIOLOGIE DES ORGANISMES, DES POPULATIONS ET ENVIRONNEMENT"),
+    //MR_BOPEA("MR-BOPEA", "MASTER DE RECHERCHE EN BIOLOGIE DES ORGANISMES, DES POPULATIONS ET ENVIRONNEMENT"),
     MR_IR("MR-IR", "MASTER DE RECHERCHE EN INFORMATIQUE ET RESEAUX"),
 
     LBDA("LBDA", "LICENCE BIG DATA AND DATA ANALYSIS"),
@@ -47,11 +49,11 @@ public enum Filiere {
 
     LMP("LMP", "LICENCE MATHEMATIQUES APPLIQUEES"),
 
-    LIMDM("LIMDM", "Licence en Instrumentation et Maintenance des Dispositifs Médicaux"),
+    LIMDM("LIMDM", "LICENCE EN INSTRUMENTATION ET MAINTENANCE DES DISPOSITIFS MEDICAUX"),
 
-    LIMDMA("LIMDMA", "Licence en Instrumentation et Maintenance des Dispositifs Médicaux"),
+    LIMDMA("LIMDMA", "LICENCE EN INSTRUMENTATION ET MAINTENANCE DES DISPOSITIFS MEDICAUX"),
 
-    LIMDMB("LIMDMB", "Licence en Instrumentation et Maintenance des Dispositifs Médicaux");
+    LIMDMB("LIMDMB", "LICENCE EN INSTRUMENTATION ET MAINTENANCE DES DISPOSITIFS MEDICAUX");
 
     private final String code;
     private final String libelle;
@@ -76,8 +78,48 @@ public enum Filiere {
             );
         }
 
+        // Normaliser le code reçu
+        String normalizedCode = code.trim()
+                .replace("-", "")
+                .toUpperCase(Locale.ROOT);
+
+        // Gérer les codes alternatifs
+        switch (normalizedCode) {
+            case "LBDDA":
+                normalizedCode = "LBDA";
+                break;
+
+            case "MPSSIR":
+                normalizedCode = "MPSSRI";
+                break;
+            case "MRMA":
+                normalizedCode = "MRMATH";
+                break;
+            case "MRPVM":
+                normalizedCode = "MRPVMA";
+                break;
+            case "LIRS" :
+                normalizedCode = "LIRIS";
+                break;
+            case "MRBOPEA" :
+                normalizedCode = "MRBOPE";
+                break;
+
+
+
+
+            default:
+                break;
+        }
+
+        final String finalCode = normalizedCode;
+
         return Arrays.stream(values())
-                .filter(filiere -> filiere.getCode().equalsIgnoreCase(code.trim()))
+                .filter(filiere ->
+                        filiere.getCode()
+                                .replace("-", "")
+                                .equalsIgnoreCase(finalCode)
+                )
                 .findFirst()
                 .orElseThrow(() ->
                         new IllegalArgumentException(
@@ -85,7 +127,6 @@ public enum Filiere {
                         )
                 );
     }
-
     public static String getLabelByEnumName(String name) {
         if (name == null || name.isBlank()) {
             return null;
@@ -109,5 +150,32 @@ public enum Filiere {
                 )
                 .findFirst()
                 .orElse(null);
+    }
+    public static String normalizeGroup(String group) {
+        if (group == null || group.isBlank()) {
+            return group;
+        }
+
+        String normalizedGroup = group.trim();
+
+        for (Filiere filiere : values()) {
+            String code = filiere.getCode();
+
+            // Vérifier si le groupe commence par le code de la filière
+            if (normalizedGroup.regionMatches(true, 0, code, 0, code.length())) {
+
+                // Vérifier que le code est suivi d'un chiffre
+                if (normalizedGroup.length() > code.length()
+                        && Character.isDigit(normalizedGroup.charAt(code.length()))) {
+
+                    Filiere canonicalFiliere = fromCode(code);
+
+                    return canonicalFiliere.getCode()
+                            + normalizedGroup.substring(code.length());
+                }
+            }
+        }
+
+        return normalizedGroup;
     }
 }

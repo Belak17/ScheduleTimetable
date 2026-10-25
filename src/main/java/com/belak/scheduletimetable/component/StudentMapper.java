@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 public class StudentMapper {
     public StudentDto convertToDto(Student student)
     {
-        return new StudentDto(student.getUserId(),
-
-                student.getFiliere().getCode(),
-                student.getGroup() ,
+        return new StudentDto(
+                student.getUserId(),
+                student.getFiliere() != null ? student.getFiliere().getCode() : "",
+                student.getGroup(),
                 student.getNiveau(),
                 student.getNom(),
                 student.getPrenom(),
