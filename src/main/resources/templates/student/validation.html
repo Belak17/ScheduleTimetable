@@ -9,6 +9,15 @@
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
 </head>
 <body>
+<!-- HEADER -->
+<header class="validation-header">
+    <img th:src="@{/images/logo_header-hb5kR36g.svg}"
+         alt="Logo de la Faculté des Sciences de Gabès">
+
+    <a class="register" th:href="@{/login}">
+        Retour à la connexion
+    </a>
+</header>
 <main class="center-wrapper">
 
     <h2 class="separator">Présence Enregistrée</h2>
@@ -66,8 +75,29 @@
         </div>
 
     </section>
-
+    <!-- Bouton de retour à la connexion -->
+    <div class="login-button-container">
+        <a th:href="@{/login}" class="login-btn">
+            <i class="fi fi-ss-sign-in-alt"></i>
+            Retour à la connexion
+        </a>
+    </div>
 </main>
+<footer class="validation-footer">
 
+    <div>
+        <img th:src="@{/images/flag-BfSDlfLV.png}"
+             alt="Drapeau tunisien">
+
+        <h3>République Tunisienne</h3>
+    </div>
+
+    <p>
+        &copy; Faculté des Sciences de Gabès - Tous droits réservés
+    </p>
+
+    <a href="mailto:fsg.rnu.tn">fsg.rnu.tn</a>
+
+</footer>
 </body>
 </html>

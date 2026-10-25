@@ -1,527 +1,339 @@
 /* =========================================================
-   RESET & DESIGN SYSTEM
+   HEADER ET FOOTER — IDENTITÉ VISUELLE DE LA PAGE DE LOGIN
    ========================================================= */
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
 
 :root {
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
-    --primary-light: #eff6ff;
-
-    --text: #111827;
-    --text-secondary: #6b7280;
-    --text-muted: #9ca3af;
-
-    --background: #f4f6f9;
-    --surface: #ffffff;
-
-    --border: #e5e7eb;
-    --border-light: #eef0f3;
-
-    --success: #16a34a;
-    --success-light: #f0fdf4;
-    --success-border: #bbf7d0;
-
-    --danger: #dc2626;
-    --danger-dark: #b91c1c;
-    --danger-light: #fef2f2;
-    --danger-border: #fecaca;
-
-    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
-    --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.06);
-    --shadow-lg: 0 12px 30px rgba(15, 23, 42, 0.10);
-
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-
-    --transition: 0.2s ease;
+    --header-bg: #172554;
+    --footer-bg: #172554;
 }
 
-
 /* =========================================================
-   BASE
+   ARRIÈRE-PLAN COMMUN AVEC LA PAGE DE LOGIN
    ========================================================= */
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
-    font-family:
-        'Inter',
-        Cairo,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Oxygen,
-        Ubuntu,
-        Cantarell,
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
+    position: relative;
+    isolation: isolate;
 
-    background: var(--background);
-    color: var(--text);
+    min-height: 100vh;
+    min-height: 100dvh;
 
-    overflow-x: hidden;
+    /*
+     * Le header mesure environ 70px.
+     * Le footer mesure environ 62px.
+     */
+    padding: 95px 24px 85px;
+
+    background-color: #f1f5f9;
 }
 
+/* Même image et même filtre que sur la page de connexion */
+
+body::before {
+    content: "";
+
+    position: fixed;
+    inset: -8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(15, 23, 42, 0.72),
+            rgba(30, 64, 175, 0.45)
+        ),
+        url("/images/faculte-des-Sciences-de-Gabes.jpeg")
+        center / cover no-repeat;
+
+    filter: blur(3px);
+    transform: scale(1.02);
+
+    z-index: -1;
+    pointer-events: none;
+}
 
 /* =========================================================
-   MAIN CONTAINER
+   HEADER
+   ========================================================= */
+
+.validation-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    width: 100%;
+    min-height: 70px;
+
+    padding: 12px 5%;
+
+    background: rgba(23, 37, 84, 0.97);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.1);
+}
+
+/* Logo */
+
+.validation-header img {
+    display: block;
+
+    width: auto;
+    max-width: 230px;
+    height: 40px;
+
+    object-fit: contain;
+}
+
+/* Bouton de connexion */
+
+.validation-header .register {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+
+    min-height: 38px;
+    padding: 9px 14px;
+
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.07);
+
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 6px;
+
+    font-size: 0.85rem;
+    font-weight: 500;
+
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.validation-header .register:hover {
+    background: rgba(255, 255, 255, 0.14);
+
+    border-color: rgba(255, 255, 255, 0.45);
+}
+
+.validation-header .register:focus-visible {
+    outline: 2px solid #93c5fd;
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   CONTENU PRINCIPAL
    ========================================================= */
 
 .center-wrapper {
-    width: min(1200px, calc(100% - 40px));
+    /*
+     * Le contenu reste au-dessus de l'arrière-plan.
+     */
+    position: relative;
+    z-index: 1;
 
-    margin: 96px auto 40px;
-
-    min-height: 500px;
-
-    padding: 28px;
-
-    background: var(--surface);
-
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-
-    box-shadow: var(--shadow-md);
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
-
 /* =========================================================
-   TITLE
+   FOOTER
    ========================================================= */
 
-.center-wrapper h2 {
-    text-align: center;
+.validation-footer {
+    position: fixed;
 
-    padding: 8px 0 20px;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-    font-size: 22px;
-    font-weight: 700;
-
-    color: var(--text);
-}
-
-
-/* =========================================================
-   SEPARATOR
-   ========================================================= */
-
-.separator {
-    width: 100%;
+    z-index: 100;
 
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
-    gap: 14px;
+    flex-wrap: wrap;
+    gap: 10px 20px;
 
-    margin: 8px 0 24px;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    color: var(--text-secondary);
-}
-
-.separator::before,
-.separator::after {
-    content: "";
-
-    flex: 1;
-
-    height: 1px;
-
-    background: var(--border);
-}
-
-
-/* =========================================================
-   RESULT CARD
-   ========================================================= */
-
-.result-scanner {
     width: 100%;
+    min-height: 62px;
 
-    min-height: 500px;
+    margin: 0;
+    padding: 11px 5%;
 
-    display: flex;
-    flex-direction: column;
+    background: rgba(23, 37, 84, 0.97);
 
-    justify-content: center;
-    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 
-    gap: 24px;
-
-    padding: 48px 30px;
-
-    background: var(--surface);
-
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius-lg);
-
-    box-shadow: var(--shadow-sm);
-
-    text-align: center;
+    box-shadow: 0 -3px 12px rgba(15, 23, 42, 0.08);
 }
 
-
-/* =========================================================
-   SUCCESS / ERROR ICON
-   ========================================================= */
-
-.check-circle {
-    width: 120px;
-    height: 120px;
-
+.validation-footer div {
     display: flex;
     align-items: center;
-    justify-content: center;
+    flex-direction: row;
 
-    border-radius: 50%;
-
-    background: var(--success);
-    color: white;
-
-    font-size: 64px;
-    font-weight: 700;
-
-    box-shadow: 0 8px 24px rgba(22, 163, 74, 0.20);
-
-    animation: popIn 0.45s ease-out;
+    gap: 10px;
 }
 
+.validation-footer div img {
+    width: 26px;
+    height: auto;
 
-/* =========================================================
-   SUCCESS ICON ANIMATION
-   ========================================================= */
-
-@keyframes popIn {
-
-    0% {
-        transform: scale(0.75);
-        opacity: 0;
-    }
-
-    70% {
-        transform: scale(1.05);
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+    object-fit: contain;
 }
 
+.validation-footer p,
+.validation-footer a,
+.validation-footer h3 {
+    margin: 0;
 
-/* =========================================================
-   SUCCESS TITLE
-   ========================================================= */
+    color: #dbeafe;
 
-.success-title {
-    color: var(--success);
-
-    font-size: 24px;
-    font-weight: 700;
-
-    text-align: center;
-}
-
-
-/* =========================================================
-   VALIDATION DETAILS
-   ========================================================= */
-
-.validation-details {
-    width: 100%;
-    max-width: 560px;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 0;
-
-    padding: 4px 20px;
-
-    background: var(--success-light);
-
-    border: 1px solid var(--success-border);
-
-    border-radius: var(--radius-md);
-
-    text-align: left;
-}
-
-.validation-details p {
-    padding: 14px 4px;
-
-    font-size: 14px;
+    font-size: 0.78rem;
     line-height: 1.5;
-
-    color: var(--text);
-
-    border-bottom: 1px solid var(--success-border);
 }
 
-.validation-details p:last-child {
-    border-bottom: none;
+.validation-footer h3 {
+    font-weight: 400;
 }
 
-
-/* =========================================================
-   ERROR THEME
-   ========================================================= */
-
-.error.check-circle {
-    background: var(--danger);
-
-    box-shadow: 0 8px 24px rgba(220, 38, 38, 0.20);
-
-    animation: popIn 0.45s ease-out;
-}
-
-.error-title {
-    color: var(--danger);
-
-    font-size: 24px;
-    font-weight: 700;
-
-    text-align: center;
-}
-
-
-/* =========================================================
-   ERROR SEPARATOR
-   ========================================================= */
-
-.separator.error {
-    color: var(--danger);
-}
-
-.separator.error::before,
-.separator.error::after {
-    background: var(--danger-border);
-}
-
-
-/* =========================================================
-   ERROR BUTTON
-   ========================================================= */
-
-.error-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-height: 44px;
-
-    padding: 0 20px;
-
-    background: var(--danger);
-
-    color: white;
-
-    border: 1px solid var(--danger);
-
-    border-radius: var(--radius-sm);
-
-    font-size: 14px;
-    font-weight: 600;
-
+.validation-footer a {
     text-decoration: none;
 
-    cursor: pointer;
-
-    transition:
-        background-color var(--transition),
-        transform var(--transition),
-        box-shadow var(--transition);
+    transition: color 0.2s ease;
 }
 
-.error-btn:hover {
-    background: var(--danger-dark);
-
-    transform: translateY(-1px);
-
-    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.20);
+.validation-footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
 }
-
 
 /* =========================================================
-   ROOM CHANGE BUTTON
-   ========================================================= */
-
-.btn-room-change {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-height: 44px;
-
-    padding: 0 20px;
-
-    background: var(--primary);
-
-    color: white;
-
-    border: 1px solid var(--primary);
-
-    border-radius: var(--radius-sm);
-
-    font-size: 14px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        background-color var(--transition),
-        transform var(--transition),
-        box-shadow var(--transition);
-}
-
-.btn-room-change:hover {
-    background: var(--primary-dark);
-
-    transform: translateY(-1px);
-
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.20);
-}
-
-
-/* =========================================================
-   FOCUS ACCESSIBILITY
-   ========================================================= */
-
-button:focus-visible,
-a:focus-visible {
-    outline: 3px solid rgba(37, 99, 235, 0.25);
-    outline-offset: 2px;
-}
-
-
-/* =========================================================
-   RESPONSIVE — TABLET
+   TABLETTES
    ========================================================= */
 
 @media (max-width: 768px) {
 
+    body {
+        padding: 90px 20px 82px;
+    }
+
+    .validation-header {
+        padding: 12px 20px;
+    }
+
+    .validation-header img {
+        max-width: 200px;
+    }
+
+    .validation-footer {
+        justify-content: center;
+        gap: 8px 18px;
+    }
+
     .center-wrapper {
-        width: calc(100% - 20px);
-
-        margin: 80px 10px 20px;
-
-        padding: 16px;
-    }
-
-    .center-wrapper h2 {
-        font-size: 20px;
-    }
-
-    .result-scanner {
-        min-height: 450px;
-
-        padding: 40px 20px;
-
-        gap: 20px;
-    }
-
-    .check-circle {
-        width: 105px;
-        height: 105px;
-
-        font-size: 54px;
-    }
-
-    .success-title,
-    .error-title {
-        font-size: 21px;
-    }
-
-    .validation-details {
-        max-width: 100%;
-
-        padding: 2px 16px;
-    }
-
-    .validation-details p {
-        font-size: 14px;
+        width: 100%;
     }
 }
 
-
 /* =========================================================
-   RESPONSIVE — SMALL MOBILE
+   SMARTPHONES
    ========================================================= */
 
 @media (max-width: 480px) {
 
+    body {
+        padding: 78px 14px 20px;
+    }
+
+    .validation-header {
+        min-height: 62px;
+
+        padding: 9px 15px;
+        gap: 12px;
+    }
+
+    .validation-header img {
+        width: auto;
+        max-width: 55%;
+        height: 34px;
+    }
+
+    .validation-header .register {
+        min-height: 38px;
+
+        margin: 0;
+        padding: 8px 11px;
+
+        font-size: 0.77rem;
+    }
+
     .center-wrapper {
-        width: calc(100% - 12px);
+        width: 100%;
 
-        margin: 76px 6px 16px;
-
+        margin: 0;
         padding: 10px;
     }
 
-    .result-scanner {
-        min-height: 420px;
-
-        padding: 32px 14px;
-    }
-
-    .check-circle {
-        width: 90px;
-        height: 90px;
-
-        font-size: 46px;
-    }
-
-    .success-title,
-    .error-title {
-        font-size: 19px;
-    }
-
-    .validation-details {
-        padding: 0 12px;
-    }
-
-    .validation-details p {
-        padding: 12px 2px;
-
-        font-size: 13px;
-    }
-
-    .error-btn,
-    .btn-room-change {
-        width: 100%;
-
-        min-height: 46px;
+    /*
+     * Le footer est masqué sur mobile,
+     * comme sur la page de connexion.
+     */
+    .validation-footer {
+        display: none;
     }
 }
 
+/* =========================================================
+   TRÈS PETITS ÉCRANS
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    body {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .validation-header {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .validation-header img {
+        max-width: 52%;
+        height: 31px;
+    }
+
+    .validation-header .register {
+        padding: 7px 9px;
+        font-size: 0.72rem;
+    }
+}
 
 /* =========================================================
-   REDUCED MOTION
+   ACCESSIBILITÉ
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    .validation-header *,
+    .validation-footer * {
+        animation: none !important;
+        transition: none !important;
     }
 }
