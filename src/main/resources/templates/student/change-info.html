@@ -8,7 +8,7 @@
         <div class="generals-info">
             <div class="info-input">
                 <label for="login">Login</label>
-                <input id="login" class="input" name="userId" type="text" th:value="${student.userId}" required>
+                <input id="login" class="input" name="userId" type="text" th:value="${student.userId}" disabled>
             </div>
             <div class="info-input">
                 <label for="lastname">Nom</label>
@@ -21,14 +21,6 @@
             <div class="info-input">
                 <label for="telephone">Téléphone</label>
                 <input id="telephone" class="input" name="telephone" type="text" th:value="${student.telephone}" required>
-            </div>
-            <div class="info-input">
-                <label for="address">Adresse Postale</label>
-                <input id="address" class="input" name="address" type="text" th:value="${student.adresse}" required>
-            </div>
-            <div class="info-input">
-                <label for="code">Code Postale</label>
-                <input id="code" class="input" name="code"  type="text" th:value="${student.codePostale}" required>
             </div>
         </div>
         <span class="title-container">Informations Academiques</span>

@@ -898,3 +898,30 @@ footer a:hover {
         scroll-behavior: auto !important;
     }
 }
+
+@media (max-width: 480px) {
+    .right-block {
+        display: block;
+
+        width: 120px;
+        height: 90px;
+
+        flex: 0 0 90px;
+        order: -1;
+
+        margin: 18px auto 0;
+        align-self: center;
+
+        background-image: url("/images/logo_fsg.jpg");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+
+        border-radius: 7px;
+        overflow: hidden;
+    }
+
+    .right-block::after {
+        display: none;
+    }
+}

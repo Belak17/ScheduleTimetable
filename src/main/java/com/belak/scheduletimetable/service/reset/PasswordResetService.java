@@ -1,5 +1,6 @@
 package com.belak.scheduletimetable.service.reset;
 
+import com.belak.scheduletimetable.exception.ResetNotPossibleAccountNotActivatedException;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.ConfirmationToken;
 import com.belak.scheduletimetable.model.PasswordResetToken;
@@ -61,7 +62,7 @@ public class PasswordResetService {
             // TODO check of attributes are the same and
             // TODO if email not confirmed send confirmation email
 
-            throw  new IllegalArgumentException("Account disabled . You can't reset your email");
+            throw  new ResetNotPossibleAccountNotActivatedException("Votre compte est désactivé . Vous ne pouvez pas réinitialiser votre mot de passe");
         }
         String token = UUID.randomUUID().toString();
         // TODO : SEND CONFIRMATION TOKEN

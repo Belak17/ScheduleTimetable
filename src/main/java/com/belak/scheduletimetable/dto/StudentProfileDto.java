@@ -22,7 +22,7 @@ public class StudentProfileDto {
     private String telephone;
     private String sexe;
 
-    private Nationalite nationalite;
+    private String nationalite;
 
     private String department ;
 

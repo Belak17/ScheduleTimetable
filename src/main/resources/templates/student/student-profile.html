@@ -28,7 +28,7 @@
     <section class="all-info">
         <div class="summary">
             <div class="photo">
-                <img th:src="@{/images/self.jpg}">
+                <img th:src="@{/images/user-profile.png}">
             </div>
             <span class="name" th:text="${student.prenom+' '+student.nom}">
 
@@ -95,7 +95,7 @@
                 <img th:src="@{/images/building.png}">
                 <span class="content">
                     <span class="label">CIN/Passeport :</span>
-                <span class="value" th:text="${student.cin}"></span>
+                <span class="value" th:text="${student.userId}"></span>
                 </span>
             </span>
                 <span class="info">
@@ -105,12 +105,12 @@
                 <span class="value" th:text="${student.nationalite}"></span>
                 </span>
              </span>
-                <span class="info"><img th:src="@{/images/building.png}">
-                <span class="content">
-                <span class="label">Ville Naissance :</span>
-                <span class="value" th:text="${student.villeNaissance}"></span>
-                </span>
-            </span>
+<!--                <span class="info"><img th:src="@{/images/building.png}">-->
+<!--                <span class="content">-->
+<!--                <span class="label">Ville Naissance :</span>-->
+<!--                <span class="value" th:text="${student.villeNaissance}"></span>-->
+<!--                </span>-->
+<!--            </span>-->
             </div>
             <span class="title-container">Informations de Localisation</span>
             <div class="container">
@@ -118,21 +118,21 @@
                 <img th:src="@{/images/building.png}">
                 <span class="content">
                 <span class="label">Ville:</span>
-                <span class="value" th:text="${student.ville}"></span>
+                <span class="value">Gabès</span>
                 </span>
                </span>
-                <span class="info">
-                <img th:src="@{/images/address.png}">
-                <span class="content">
-                <span class="label">Adresse Postale :</span>
-                <span class="value" th:text="${student.adresse}"></span>
-                </span>
-                </span>
+<!--                <span class="info">-->
+<!--                <img th:src="@{/images/address.png}">-->
+<!--                <span class="content">-->
+<!--                <span class="label">Adresse Postale :</span>-->
+<!--                <span class="value" th:text="${student.adresse}"></span>-->
+<!--                </span>-->
+<!--                </span>-->
                 <span class="info">
                 <img th:src="@{/images/internet.png}">
                 <span class="content">
                                 <span class="label">Code Postale :</span>
-                <span class="value" th:text="${student.codePostale}"></span>
+                <span class="value">6033</span>
                 </span>
             </span>
             </div>

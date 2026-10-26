@@ -39,19 +39,15 @@ public class FirstLoginController {
     }
 
     @PostMapping("/firstlogin")
-    public  String register( Model model , @ModelAttribute UserRegister userRegister, @RequestParam(required = false) String code)
+    public  String register( Model model , @ModelAttribute UserRegister userRegister)
     {
 
         userRegisterService.register(userRegister);
         //userRegisterService.registerUserByUserIdAndEmail(userRegister);
         //model.addAttribute("message", "Un message a été envoyé à votre email pour activer votre compte");
-        if (code==null) {
+
             return "login/otp";
-        }
-        else
-        {
-            return "redirect:/scan/scan/authenticated";
-        }
+
     }
 
 

@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
 
         model.addAttribute(
                 "errorMessage",
-                "Les informations fournies sont invalides. Veuillez vérifier votre saisie."
+                ex.getMessage()
         );
 
         return "student/exceptionError";
@@ -78,6 +78,16 @@ public class GlobalExceptionHandler {
         model.addAttribute("errorMessage", ex.getMessage());
 
         return "login/login";
+    }
+
+    @ExceptionHandler(ResetNotPossibleAccountNotActivatedException.class)
+    public String handleResetNotPossibleAccountNotActivated(
+            AccountNotActivatedException ex,
+            Model model) {
+
+        model.addAttribute("errorMessage", ex.getMessage());
+
+        return "login/forgot";
     }
 
 

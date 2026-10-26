@@ -2,6 +2,7 @@ package com.belak.scheduletimetable.component;
 
 import com.belak.scheduletimetable.dto.StudentProfileDto;
 import com.belak.scheduletimetable.enumeration.Filiere;
+import com.belak.scheduletimetable.enumeration.Nationalite;
 import com.belak.scheduletimetable.model.Student;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ public class StudentProfileMapper {
         return new StudentProfileDto(student.getUserId() , student.getNom(), student.getPrenom(), student.getPassword(),
                 student.getEmail(),student.getTelephone(),
                 student.getSexe(),
-                student.getNationalite() , student.getDepartment().getLibelle() , student.getFiliere().getLibelle() ,
+                student.getNationalite().getLibelleNationalite().toString() , student.getTimetables().iterator().next().getDepartement().getLibelle() , student.getFiliere().getLibelle() ,
                 student.getNiveau() , student.getGroup()
         ) ;
     }

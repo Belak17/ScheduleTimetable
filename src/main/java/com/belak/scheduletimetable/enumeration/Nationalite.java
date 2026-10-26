@@ -244,4 +244,10 @@ public enum Nationalite {
         );
     }
 
+
+    public String getLibelleNationalite() {
+        return this.nationalite;
+    }
+
+
 }

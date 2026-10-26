@@ -35,11 +35,11 @@ public class DataInitializer implements CommandLineRunner
 
     public void run(String... args) throws Exception {
         // Vérifie si un utilisateur avec userId "admin" existe
-        if (userRepository.findByUserId("BJ2400005").isEmpty()) {
+        if (userRepository.findByUserId("TN240005").isEmpty()) {
             // Crée un nouvel admin
             User admin = new User();
-            admin.setUserId("BJ2400005"); // identifiant admin
-            admin.setPassword(passwordEncoder.encode("BJ2400005"));// mot de passe hashé
+            admin.setUserId("TN240005"); // identifiant admin
+            admin.setPassword(passwordEncoder.encode("TN240005"));// mot de passe hashé
 
             admin.setRole(User.Role.valueOf("ADMIN")); // rôle
             admin.setEmail("akakpokaleb09@gmail.com");
