@@ -44,6 +44,8 @@ public class QrController {
                     .queryParam("date", dto.getDate().format(DateTimeFormatter.ISO_DATE))
                     .queryParam("time", dto.getTime().format(DateTimeFormatter.ofPattern("HH:mm")))
                     .queryParam("day", dto.getDay())
+                    .queryParam("nom",dto.getNom())
+                    .queryParam("prenom",dto.getPrenom())
                     .build()
                     .encode(StandardCharsets.UTF_8)
                     .toUriString();
