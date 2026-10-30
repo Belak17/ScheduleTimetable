@@ -41,4 +41,19 @@ public enum Grade {
         }
         return null; // ou lancer exception
     }
+
+    // Méthode pour récupérer l'enum à partir du libellé
+    public static Grade fromLibelle(String libelle) {
+        if (libelle == null || libelle.isBlank()) {
+            return null;
+        }
+
+        for (Grade grade : Grade.values()) {
+            if (grade.getLibelle().equalsIgnoreCase(libelle.trim())) {
+                return grade;
+            }
+        }
+
+        return null;
+    }
 }

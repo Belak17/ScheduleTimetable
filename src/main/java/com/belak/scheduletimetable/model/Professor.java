@@ -19,7 +19,8 @@ import lombok.Setter;
 public class Professor extends User {
 
 
-    private String grade;
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
 
 
     @OneToOne(

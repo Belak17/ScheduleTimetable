@@ -1,5 +1,6 @@
 package com.belak.scheduletimetable.dto;
 
+import com.belak.scheduletimetable.enumeration.Grade;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,7 +10,7 @@ public class ProfessorDto {
     private  String userId ;
     private String nom ;
     private  String prenom ;
-    private  String grade ;
+    private Grade grade ;
 
 
 

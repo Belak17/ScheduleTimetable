@@ -1,6 +1,7 @@
 package com.belak.scheduletimetable.service.professor;
 
 import com.belak.scheduletimetable.dto.CreateProfessorDto;
+import com.belak.scheduletimetable.enumeration.Grade;
 import com.belak.scheduletimetable.model.Professor;
 import com.belak.scheduletimetable.repository.ProfessorRepository;
 import com.belak.scheduletimetable.service.UtilsService;
@@ -61,6 +62,8 @@ public class ProfessorExcelService {
         dto.setNom(fullname[1]);
 
         dto.setUserId(utilsService.getCellValue(row.getCell(3)));
+
+        dto.setGrade(Grade.fromLibelle(utilsService.getCellValue(row.getCell(1))));
 
         // password sécurisé
 //        String password = utilsService.getCellValue(row.getCell(6));

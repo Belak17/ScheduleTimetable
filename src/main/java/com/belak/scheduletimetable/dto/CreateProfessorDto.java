@@ -23,7 +23,7 @@ import com.belak.scheduletimetable.dto.CreateUserDto;
 public class CreateProfessorDto extends CreateUserDto {
 
     private String specialite;
-    private String grade ;
+    private Grade grade ;
 
     private String nomDepartement ;
 

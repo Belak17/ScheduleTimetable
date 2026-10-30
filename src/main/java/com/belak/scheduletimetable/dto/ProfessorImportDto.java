@@ -24,7 +24,7 @@ public class ProfessorImportDto {
     private  String sexe ;
     private LocalDate dateNaissance;
 
-    private String grade ;
+    private Grade grade ;
 
     private Nationalite nationalite;
 

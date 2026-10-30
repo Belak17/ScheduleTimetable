@@ -14,7 +14,7 @@ public class ProfessorProfileMapper {
                 professor.getEmail(), professor.getTelephone(),
                 professor.getSexe(),
                   professor.getNationalite() , professor.getDepartment().getLibelle()
-                 , professor.getGrade()
+                 , professor.getGrade().getLibelle()
         ) ;
     }
 }
