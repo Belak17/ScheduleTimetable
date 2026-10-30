@@ -68,4 +68,23 @@ WHERE s.userId = :userId
     WHERE t.semester = :semester
     """)
     long countStudentsWithTimetableBySemester(@Param("semester") Semester semester);
+
+    @Query(
+            value = """
+        SELECT DISTINCT s
+        FROM Student s
+        JOIN s.timetables t
+        WHERE t.id = :timetableId
+        """,
+            countQuery = """
+        SELECT COUNT(DISTINCT s.id)
+        FROM Student s
+        JOIN s.timetables t
+        WHERE t.id = :timetableId
+        """
+    )
+    Page<Student> findByGroupId(
+            @Param("timetableId") Long groupId,
+            Pageable pageable
+    );
 }

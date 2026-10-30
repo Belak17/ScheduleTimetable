@@ -43,4 +43,18 @@ public interface GroupTimetableRepository  extends JpaRepository<GroupTimetable,
                                                             @Param("niveau") int niveau ,
                                                             @Param("group") String group ,
                                                             @Param("Semester") Semester semester);
+
+
+
+    @Query("""
+    SELECT g FROM GroupTimetable g
+    WHERE CONCAT(g.filiere, g.niveau, 
+        CASE 
+            WHEN g.group IS NULL THEN ''
+            WHEN TRIM(g.group) LIKE 'T%' THEN CONCAT(' ', TRIM(g.group))
+            ELSE TRIM(g.group)
+        END
+    ) = :fullfield
+""")
+    Optional<GroupTimetable> findTimetable(@Param("fullfield") String fullfield);
 }

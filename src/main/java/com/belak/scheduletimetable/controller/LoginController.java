@@ -1,6 +1,5 @@
 package com.belak.scheduletimetable.controller;
 
-
 import com.belak.scheduletimetable.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,16 +15,29 @@ public class LoginController {
 
     private final LoginService loginService;
 
+    // Connexion étudiant
     @GetMapping
     public String loginPage(
             @RequestParam(required = false) String error,
             Model model
     ) {
-
         if (error != null) {
             model.addAttribute("error", error);
         }
 
         return "login/login";
+    }
+
+    // Connexion professeur
+    @GetMapping("/professor")
+    public String loginPageProfessor(
+            @RequestParam(required = false) String error,
+            Model model
+    ) {
+        if (error != null) {
+            model.addAttribute("error", error);
+        }
+
+        return "login/login-professor";
     }
 }

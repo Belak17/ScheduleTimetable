@@ -77,7 +77,7 @@
                 <img th:src="@{/images/building.png}">
                 <span class="content">
                     <span class="label">CIN/Passeport :</span>
-                <span class="value" th:text="${admin.cin}"></span>
+                <span class="value" th:text="${admin.userId}"></span>
                 </span>
             </span>
                 <span class="info">
@@ -87,36 +87,9 @@
                 <span class="value" th:text="${admin.nationalite}"></span>
                 </span>
              </span>
-                <span class="info"><img th:src="@{/images/building.png}">
-                <span class="content">
-                <span class="label">Ville Naissance :</span>
-                <span class="value" th:text="${admin.villeNaissance}"></span>
-                </span>
-            </span>
             </div>
             <span class="title-container">Informations de Localisation</span>
             <div class="container">
-               <span class="info">
-                <img th:src="@{/images/building.png}">
-                <span class="content">
-                <span class="label">Ville:</span>
-                <span class="value" th:text="${admin.ville}"></span>
-                </span>
-               </span>
-                <span class="info">
-                <img th:src="@{/images/address.png}">
-                <span class="content">
-                <span class="label">Adresse Postale :</span>
-                <span class="value" th:text="${admin.adresse}"></span>
-                </span>
-                </span>
-                <span class="info">
-                <img th:src="@{/images/internet.png}">
-                <span class="content">
-                                <span class="label">Code Postale :</span>
-                <span class="value" th:text="${admin.codePostale}"></span>
-                </span>
-            </span>
             </div>
             <span class="title-container">Informations de Contact</span>
             <div class="container">

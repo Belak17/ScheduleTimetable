@@ -54,41 +54,43 @@ public class ProfessorExcelService {
 
         CreateProfessorDto dto = new CreateProfessorDto();
 
-        dto.setPrenom(utilsService.getCellValue(row.getCell(0)));
-        dto.setNom(utilsService.getCellValue(row.getCell(1)));
+        String [] fullname = utilsService.getCellValue(row.getCell(0)).split(" ");
 
-        dto.setUserId(utilsService.getCellValue(row.getCell(5)));
+        dto.setPrenom(fullname[0]);
+
+        dto.setNom(fullname[1]);
+
+        dto.setUserId(utilsService.getCellValue(row.getCell(3)));
 
         // password sécurisé
-        String password = utilsService.getCellValue(row.getCell(6));
-        dto.setPassword(password != null ? passwordEncoder.encode(password) : null);
+//        String password = utilsService.getCellValue(row.getCell(6));
+//        dto.setPassword(password != null ? passwordEncoder.encode(password) : null);
+//
+          dto.setEmail(utilsService.getCellValue(row.getCell(3)));
+//        dto.setTelephone(utilsService.getCellValue(row.getCell(8)));
+//        dto.setSexe(utilsService.getCellValue(row.getCell(9)));
+//
+//        dto.setDateNaissance(utilsService.parseDate(row.getCell(10)));
+//
+//        // ENUM Nationalité
+//        dto.setNationalite(utilsService.parseNationalite(row.getCell(15)));
 
-        dto.setEmail(utilsService.getCellValue(row.getCell(7)));
-        dto.setTelephone(utilsService.getCellValue(row.getCell(8)));
-        dto.setSexe(utilsService.getCellValue(row.getCell(9)));
-
-        dto.setDateNaissance(utilsService.parseDate(row.getCell(10)));
-
-
-        // ENUM Nationalité
-        dto.setNationalite(utilsService.parseNationalite(row.getCell(15)));
-
-        dto.setNomDepartement(utilsService.getCellValue(row.getCell(17)));
+        dto.setNomDepartement(utilsService.getCellValue(row.getCell(2)));
 
         // Grade
-        dto.setCodeGrade(utilsService.getCellValue(row.getCell(18)));
-        dto.setLibelleGrade(utilsService.getCellValue(row.getCell(19)));
-
-        // Status
-        dto.setCodeStatus(utilsService.getCellValue(row.getCell(20)));
-        dto.setLibelleStatus(utilsService.getCellValue(row.getCell(21)));
-
-        dto.setSpecialite(utilsService.getCellValue(row.getCell(22)));
-
-        dto.setEtablissement_origine(utilsService.getCellValue(row.getCell(23)));
-        dto.setRib(utilsService.getCellValue(row.getCell(24)));
-        dto.setApplication_tiers(utilsService.getCellValue(row.getCell(25)));
-        dto.setIdentifiantUnique(utilsService.getCellValue(row.getCell(26)));
+//        dto.setCodeGrade(utilsService.getCellValue(row.getCell(18)));
+//        dto.setLibelleGrade(utilsService.getCellValue(row.getCell(19)));
+//
+//        // Status
+//        dto.setCodeStatus(utilsService.getCellValue(row.getCell(20)));
+//        dto.setLibelleStatus(utilsService.getCellValue(row.getCell(21)));
+//
+//        dto.setSpecialite(utilsService.getCellValue(row.getCell(22)));
+//
+//        dto.setEtablissement_origine(utilsService.getCellValue(row.getCell(23)));
+//        dto.setRib(utilsService.getCellValue(row.getCell(24)));
+//        dto.setApplication_tiers(utilsService.getCellValue(row.getCell(25)));
+//        dto.setIdentifiantUnique(utilsService.getCellValue(row.getCell(26)));
 
         return new Professor(dto);
     }

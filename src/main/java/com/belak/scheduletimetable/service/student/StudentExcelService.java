@@ -5,7 +5,9 @@ import com.belak.scheduletimetable.enumeration.Filiere;
 import com.belak.scheduletimetable.enumeration.Nationalite;
 import com.belak.scheduletimetable.enumeration.TypeDiplome;
 import com.belak.scheduletimetable.exception.EmptyFileException;
+import com.belak.scheduletimetable.model.GroupTimetable;
 import com.belak.scheduletimetable.model.Student;
+import com.belak.scheduletimetable.repository.GroupTimetableRepository;
 import com.belak.scheduletimetable.repository.StudentRepository;
 import com.belak.scheduletimetable.service.OrthographyService;
 import com.belak.scheduletimetable.service.UtilsService;
@@ -14,6 +16,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.text.Normalizer;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class StudentExcelService {
@@ -31,6 +36,7 @@ public class StudentExcelService {
     private  final PasswordEncoder passwordEncoder ;
     private  final UtilsService utilsService ;
     private  final OrthographyService orthographyService ;
+    private  final GroupTimetableRepository timetableRepository ;
 
 
     private XSSFWorkbook loadWorkbook(MultipartFile file) throws IOException {
@@ -38,6 +44,8 @@ public class StudentExcelService {
         return new XSSFWorkbook(file.getInputStream());
     }
 
+
+    @Transactional
     public void processSheet(MultipartFile file) throws IOException {
 
         List<Student> students = new ArrayList<>();
@@ -86,7 +94,6 @@ public class StudentExcelService {
                 try {
 
                     Student student = extractStudent(row);
-
                     students.add(student);
                     extractedRows++;
 
@@ -113,6 +120,9 @@ public class StudentExcelService {
         System.out.println("\nÉtudiants à sauvegarder : " + students.size());
 
         studentRepository.saveAll(students);
+
+        //addEachStudentToRelatedTimetable(students);
+
 
         System.out.println("Sauvegarde terminée.");
     }
@@ -165,6 +175,37 @@ public class StudentExcelService {
         return Normalizer
                 .normalize(text, Normalizer.Form.NFD)
                 .replaceAll("\\p{M}", "");
+    }
+
+    public void  addStudentToGroupTimetable(Student student)
+    {
+        String fullfield = student.getGroup();
+        // Extraire la partie avant le premier chiffre
+        String fieldCode = fullfield.replaceFirst("\\d.*", "");
+
+        // Normaliser le code de la filière
+        String normalizedField = Filiere.fromCode(fieldCode).toString();
+
+        // Remplacer le code initial par le code normalisé
+        fullfield = fullfield.replaceFirst(
+                "^" + java.util.regex.Pattern.quote(fieldCode),
+                normalizedField);
+        Optional< GroupTimetable> oGroupTimetable  = timetableRepository.findTimetable(fullfield);
+        if (oGroupTimetable.isPresent())
+            {
+            GroupTimetable groupTimetable = oGroupTimetable.get();
+            groupTimetable.addStudent(student);
+            timetableRepository.save(groupTimetable);
+            }
+
+    }
+
+    public void addEachStudentToRelatedTimetable(List<Student> students)
+    {
+        for (Student student : students)
+        {
+            addStudentToGroupTimetable(student);
+        }
     }
 
 

@@ -41,12 +41,6 @@
         <label>User ID</label>
         <input type="text" th:field="*{userId}" required>
       </div>
-
-      <div class="info-input">
-        <label>CIN</label>
-        <input type="text" th:field="*{cin}" required>
-      </div>
-
       <div class="info-input">
         <label>Nom</label>
         <input type="text" th:field="*{nom}">
@@ -76,15 +70,6 @@
         </select>
       </div>
 
-      <div class="info-input">
-        <label>Date de naissance</label>
-        <input type="date" th:field="*{dateNaissance}">
-      </div>
-
-      <div class="info-input">
-        <label>Ville de naissance</label>
-        <input type="text" th:field="*{villeNaissance}">
-      </div>
 
       <div class="info-input">
         <label>Nationalité</label>
@@ -97,20 +82,6 @@
         </select>
       </div>
 
-      <div class="info-input full">
-        <label>Adresse</label>
-        <input type="text" th:field="*{adresse}">
-      </div>
-
-      <div class="info-input">
-        <label>Ville</label>
-        <input type="text" th:field="*{ville}">
-      </div>
-
-      <div class="info-input">
-        <label>Code Postal</label>
-        <input type="text" th:field="*{codePostal}">
-      </div>
 
     </fieldset>
 
@@ -141,33 +112,23 @@
           </option>
         </select>
       </div>
-      <div class="info-input">
-        <label>Statut</label>
-        <select th:field="*{schoolStatus}">
-          <option value="">--Choisir--</option>
-          <option th:each="s : ${statuses}"
-                  th:value="${s}"
-                  th:text="${s}">
-          </option>
-        </select>
-      </div>
     </fieldset>
     <!-- ===================== INFORMATIONS COMPLÉMENTAIRES ===================== -->
-    <fieldset>
-      <legend>Informations complémentaires</legend>
-      <div class="info-input">
-        <label>RIB</label>
-        <input type="text" th:field="*{rib}">
-      </div>
-      <div class="info-input">
-        <label>Établissement origine</label>
-        <input type="text" th:field="*{etablissement_origine}">
-      </div>
-      <div class="info-input">
-        <label>Application tiers</label>
-        <input type="text" th:field="*{application_tiers}">
-      </div>
-    </fieldset>
+<!--    <fieldset>-->
+<!--      <legend>Informations complémentaires</legend>-->
+<!--      <div class="info-input">-->
+<!--        <label>RIB</label>-->
+<!--        <input type="text" th:field="*{rib}">-->
+<!--      </div>-->
+<!--      <div class="info-input">-->
+<!--        <label>Établissement origine</label>-->
+<!--        <input type="text" th:field="*{etablissement_origine}">-->
+<!--      </div>-->
+<!--      <div class="info-input">-->
+<!--        <label>Application tiers</label>-->
+<!--        <input type="text" th:field="*{application_tiers}">-->
+<!--      </div>-->
+<!--    </fieldset>-->
     <div class="buttons">
       <button type="reset" class="reset">Annuler</button>
       <button type="submit" class="submit">Enregistrer</button>

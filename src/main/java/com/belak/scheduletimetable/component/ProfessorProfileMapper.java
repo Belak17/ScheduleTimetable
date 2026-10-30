@@ -13,8 +13,8 @@ public class ProfessorProfileMapper {
         return new ProfessorProfileDto(professor.getUserId(), professor.getNom(), professor.getPrenom(),
                 professor.getEmail(), professor.getTelephone(),
                 professor.getSexe(),
-                  professor.getNationalite() , professor.getDepartment().getLibelle() , professor.getSpecialite()
-                 , professor.getGrade().getLibelle()
+                  professor.getNationalite() , professor.getDepartment().getLibelle()
+                 , professor.getGrade()
         ) ;
     }
 }

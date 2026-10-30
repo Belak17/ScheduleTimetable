@@ -55,8 +55,24 @@
         <div th:if="${message}" th:text="${message}" class="success">
         </div>
         <div class="others">
-            <!-- <div class="forgot-link"><a th:href="@{/forgot}">Mot de passe oublié ? </a></div> -->
-            <button  type="submit" class="connect">Se connecter</button>
+
+            <div class="forgot-link">
+                <a th:href="@{/forgot}">Mot de passe oublié ?</a>
+            </div>
+
+            <button type="submit" class="connect">
+                Se connecter
+            </button>
+
+            <div class="login-separator">
+                <span>OU</span>
+            </div>
+
+            <a th:href="@{/login/professor}" class="professor-login">
+                <i class="fi fi-ss-user"></i>
+                Connexion professeur
+            </a>
+
         </div>
     </section>
 
@@ -207,6 +223,8 @@ body::before
     }
 }
 </style>
+
+
 
 </body>
 </html>

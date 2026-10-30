@@ -25,4 +25,8 @@ public interface SeanceRepository extends JpaRepository<Seance,Long> {
     List<Seance> findByEndTimeBeforeAndAbsencesProcessedFalse(LocalTime now);
 
     List<Seance> findByCoursTP(CoursTP coursTP);
+
+    List<Seance> findByCoursTPIdOrderByDateAsc(Long coursTPId);
+
+    List<Seance> findByCoursTP_IdOrderByDateAsc(Long id);
 }

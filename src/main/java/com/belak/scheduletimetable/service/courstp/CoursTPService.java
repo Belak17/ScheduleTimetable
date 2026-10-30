@@ -1,5 +1,6 @@
 package com.belak.scheduletimetable.service.courstp;
 
+import com.belak.scheduletimetable.dto.AttendancePageDto;
 import com.belak.scheduletimetable.dto.CoursTPDto;
 import com.belak.scheduletimetable.dto.AttendanceDto;
 import com.belak.scheduletimetable.dto.StudentAttendanceDto;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +41,7 @@ public class CoursTPService extends CoursTPUtilsService {
     private  final StudentRepository studentRepository;
     private  final PresenceRepository presenceRepository ;
     private final SalleRepository salleRepository;
+    private final SeanceRepository seanceRepository;
 
     private static final Logger logger =
             LoggerFactory.getLogger(CoursTPService.class);
@@ -228,37 +231,18 @@ public class CoursTPService extends CoursTPUtilsService {
         return dto;
     }
     @Transactional(readOnly = true)
-    public AttendanceDto getAllDatesAndAttendanceByCoursTP(
-            Long id,
-            int page,
-            int size) {
+    public AttendancePageDto getAllDatesAndAttendanceByCoursTP(
+            Long id, int page, int size) {
 
-        // 1. Récupérer le cours TP
+        // 1. Récupération du cours TP
         CoursTP tp = coursTPrepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Cours TP introuvable"));
+                .orElseThrow(() -> new ResourceNotFoundException("Cours TP introuvable"));
 
+        // 2. Initialisation des DTO
         AttendanceDto attendanceDto = new AttendanceDto();
+        AttendancePageDto pageDto = new AttendancePageDto();
 
-        // 2. Récupérer les séances et les trier par date
-        List<Seance> sortedSeances = tp.getSeances()
-                .stream()
-                .sorted(Comparator.comparing(Seance::getDate))
-                .toList();
-
-        attendanceDto.setDates(
-                sortedSeances.stream()
-                        .map(Seance::getDate)
-                        .toList()
-        );
-
-        // 3. Récupérer les étudiants du groupe
-        List<Student> students = tp.getGroupTimetable()
-                .getStudents()
-                .stream()
-                .toList();
-
-        // 4. Vérifier les paramètres de pagination
+        // 3. Validation des paramètres de pagination
         if (page < 0) {
             page = 0;
         }
@@ -267,26 +251,47 @@ public class CoursTPService extends CoursTPUtilsService {
             size = 10;
         }
 
-        // 5. Calculer les indices de pagination
-        int start = page * size;
+        // 4. Récupération des séances triées depuis la base
+        List<Seance> sortedSeances =
+                seanceRepository.findByCoursTP_IdOrderByDateAsc(id);
 
-        // Éviter tout dépassement des limites de la liste
-        if (start >= students.size()) {
+        attendanceDto.setDates(
+                sortedSeances.stream()
+                        .map(Seance::getDate)
+                        .toList()
+        );
+
+        // 5. Pagination SQL des étudiants
+        Long groupTimetableId = tp.getGroupTimetable().getId();
+
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by(
+                        Sort.Order.asc("nom"),
+                        Sort.Order.asc("id")
+                )
+        );
+
+        Page<Student> studentPage =
+                studentRepository.findByGroupId(groupTimetableId, pageable);
+
+        // 6. Informations de pagination
+        pageDto.setTotalStudents(studentPage.getTotalElements());
+        pageDto.setTotalPages(studentPage.getTotalPages());
+        pageDto.setCurrentPage(page);
+        pageDto.setPageSize(size);
+
+        List<Student> paginatedStudents = studentPage.getContent();
+
+        // 7. Aucun étudiant sur cette page
+        if (paginatedStudents.isEmpty()) {
             attendanceDto.setRows(Collections.emptyList());
-            return attendanceDto;
+            pageDto.setAttendanceTable(attendanceDto);
+            return pageDto;
         }
 
-        int end = Math.min(start + size, students.size());
-
-        List<Student> paginatedStudents = students.subList(start, end);
-
-        // 6. Si aucun étudiant ou aucune séance, retourner un résultat vide
-        if (paginatedStudents.isEmpty() || sortedSeances.isEmpty()) {
-            attendanceDto.setRows(Collections.emptyList());
-            return attendanceDto;
-        }
-
-        // 7. Récupérer les identifiants des étudiants et des séances
+        // 8. Récupération des identifiants
         List<Long> studentIds = paginatedStudents.stream()
                 .map(Student::getId)
                 .toList();
@@ -295,35 +300,34 @@ public class CoursTPService extends CoursTPUtilsService {
                 .map(Seance::getId)
                 .toList();
 
-        // 8. Récupérer toutes les présences en une seule requête
-        List<Presence> presences =
-                presenceRepository.findAllBySeanceIdsAndStudentIds(
-                        seanceIds,
-                        studentIds
-                );
-
-        // 9. Indexer les présences pour éviter les recherches répétées
+        // 9. Récupération groupée des présences
         Map<String, Presence> presenceMap = new HashMap<>();
 
-        for (Presence presence : presences) {
+        if (!seanceIds.isEmpty()) {
 
-            String key = presence.getStudent().getId()
-                    + "_" + presence.getSeance().getId();
+            List<Presence> presences =
+                    presenceRepository.findAllBySeanceIdsAndStudentIds(
+                            seanceIds,
+                            studentIds
+                    );
 
-            presenceMap.put(key, presence);
+            for (Presence presence : presences) {
+
+                String key = presence.getStudent().getId()
+                        + "_" + presence.getSeance().getId();
+
+                presenceMap.put(key, presence);
+            }
         }
 
-        // 10. Construire les lignes du tableau
+        // 10. Construction des lignes du tableau
         List<StudentAttendanceDto> rows = new ArrayList<>();
 
         for (Student student : paginatedStudents) {
 
             StudentAttendanceDto row = new StudentAttendanceDto();
 
-            row.setStudentName(
-                    student.getNom() + " " + student.getPrenom()
-            );
-
+            row.setStudentName(student.getNom() + " " + student.getPrenom());
             row.setId(student.getUserId());
 
             for (Seance seance : sortedSeances) {
@@ -344,9 +348,10 @@ public class CoursTPService extends CoursTPUtilsService {
             rows.add(row);
         }
 
-        // 11. Retourner le résultat
+        // 11. Assemblage des DTO
         attendanceDto.setRows(rows);
+        pageDto.setAttendanceTable(attendanceDto);
 
-        return attendanceDto;
+        return pageDto;
     }
 }

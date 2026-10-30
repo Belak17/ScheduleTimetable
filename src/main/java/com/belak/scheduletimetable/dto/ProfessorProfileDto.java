@@ -22,6 +22,5 @@ public class ProfessorProfileDto {
 
     private String department ;
 
-    private String specialite ;
     private String grade ;
 }

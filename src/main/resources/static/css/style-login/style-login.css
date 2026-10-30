@@ -925,3 +925,57 @@ footer a:hover {
         display: none;
     }
 }
+
+/* Connexion professeur */
+
+.login-separator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #94a3b8;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.login-separator::before,
+.login-separator::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+.professor-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    width: 100%;
+    min-height: 44px;
+
+    padding: 10px 18px;
+
+    color: #1e3a8a;
+    background: #eff6ff;
+
+    border: 1px solid #bfdbfe;
+    border-radius: 6px;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.professor-login:hover {
+    background: #dbeafe;
+    border-color: #93c5fd;
+}
+
+.professor-login:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 3px;
+}

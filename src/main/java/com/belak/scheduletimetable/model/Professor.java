@@ -18,21 +18,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Professor extends User {
 
-    private String specialite;
 
-    @Enumerated(EnumType.STRING)
-    private Grade grade;
+    private String grade;
 
-    private String codeGrade;
-
-    private String libelleGrade;
-
-    @Enumerated(EnumType.STRING)
-    private Statuts schoolStatus;
-
-    private String codeStatus;
-
-    private String libelleStatus;
 
     @OneToOne(
             cascade = CascadeType.ALL,
@@ -41,11 +29,7 @@ public class Professor extends User {
     @JoinColumn(name = "timetable_id")
     private ProfessorTimetable timetable;
 
-    private String etablissement_origine;
 
-    private String rib;
-
-    private String application_tiers;
 
     private String nomDepartement;
 
@@ -62,19 +46,11 @@ public class Professor extends User {
 
         this.setNationalite(dto.getNationalite());
         this.setDepartment(dto.getDepartement());
-        this.setCodeDepartement(dto.getDepartement().getCode());
         this.setRole(Role.PROFESSOR);
-        this.setSpecialite(dto.getSpecialite());
+
         this.setGrade(dto.getGrade());
-        this.setCodeGrade(dto.getGrade().getCode()) ;
-        this.setLibelleGrade(dto.getGrade().getLibelle());
-        this.setSchoolStatus(dto.getSchoolStatus());
-        this.setCodeStatus(dto.getSchoolStatus().getCode());
-        this.setLibelleStatus(dto.getSchoolStatus().getLibelle());
-        this.setEtablissement_origine(dto.getEtablissement_origine());
-        this.setRib(dto.getRib());
-        this.setApplication_tiers(dto.getApplication_tiers());
-        this.setNomDepartement(dto.getDepartement().getLibelle()); }
+        this.setNomDepartement(dto.getDepartement().getLibelle());
+    }
 
     public Professor(CreateProfessorDto dto) {
         this.setUserId(dto.getUserId());
@@ -90,16 +66,10 @@ public class Professor extends User {
         this.setNationalite(dto.getNationalite());
 
         this.setRole(dto.getRole());
-        this.setSpecialite(dto.getSpecialite());
         this.setGrade(dto.getGrade());
-        this.setCodeGrade(dto.getCodeGrade());
-        this.setLibelleGrade(dto.getLibelleGrade());
-        this.setSchoolStatus(dto.getSchoolStatus());
-        this.setCodeStatus(dto.getCodeStatus());
-        this.setLibelleStatus(dto.getLibelleStatus());
-        this.setEtablissement_origine(dto.getEtablissement_origine());
-        this.setRib(dto.getRib());
-        this.setApplication_tiers(dto.getApplication_tiers());
+
         this.setPassword(dto.getPassword());
-        this.setNomDepartement(dto.getNomDepartement()); }
+        this.setNomDepartement(dto.getNomDepartement());
+    }
+
 }
