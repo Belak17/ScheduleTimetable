@@ -14,7 +14,8 @@ public enum Grade {
     CONTRACTUEL("CR", "Contractuel"),
     C_EXPERT("EC", "C-EXPERT"),
     VACATAIRE("VA", "Vacataire"),
-    EXPERT_COMPTABLE("EX_COMPT", "Expert Comptable");
+    EXPERT_COMPTABLE("EX_COMPT", "Expert Comptable"),
+    AUTRE("AUTRE", "Autre");
 
     private final String code;
     private final String libelle;

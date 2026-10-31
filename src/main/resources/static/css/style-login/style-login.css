@@ -550,23 +550,24 @@ h3 {
    11. PARTIE DROITE
 ========================================= */
 
-/* Image latérale sur ordinateur */
+/* =========================================
+   11. PARTIE DROITE
+========================================= */
 
 .right-block {
-    flex: 0 0 40%;
+    flex: 0 0 46.5%;
 
     min-width: 0;
+    min-height: 420px;
+
     position: relative;
 
-    background:
-        linear-gradient(
-            160deg,
-            rgba(30, 64, 175, 0.08),
-            rgba(15, 23, 42, 0.18)
-        ),
-        url("/images/login_box_bg.png")
-        center / cover no-repeat;
-    z-index:10 ;
+    background-image: url("/images/login_box_bg.png");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+
+    z-index: 1;
 }
 
 .right-block::after {

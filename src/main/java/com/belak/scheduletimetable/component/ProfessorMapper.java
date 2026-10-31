@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 public class ProfessorMapper {
     public ProfessorDto convertToDto(Professor professor)
     {
-        return new ProfessorDto(professor.getUserId(),
+        return new ProfessorDto(
+                professor.getUserId(),
                 professor.getNom()
                 ,professor.getPrenom(),
                 professor.getGrade());

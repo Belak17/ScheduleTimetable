@@ -31,6 +31,20 @@ public class FirstLoginController {
     }
 
 
+    @GetMapping("/firstlogin/professor")
+    public String showFirstLoginProfessor( Model model , @RequestParam(required = false) String code)
+    {
+        if(code!=null)
+        {
+            model.addAttribute("code",code);
+        }
+        model.addAttribute("userRegister", new UserRegister());
+
+        return "login/firstlogin-professor" ;
+
+    }
+
+
     @PostMapping("/forgot-password")
     public String processForgotPassword(@RequestParam String email, Model model) {
         forgotPasswordService.sendResetLink(email);

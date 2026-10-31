@@ -32,55 +32,21 @@
             <h3>DEPARTEMENTS</h3>
         </div>
         <div class="departments">
-            <div class="departement">
-                <a th:href="@{/professors/professor/timetable/MAT}">
+
+            <div class="departement" th:each="specialite : ${specialites}">
+
+                <a th:href="@{/professors/professor/timetable/{specialite}(specialite=${specialite})}">
+
                     <div class="dep-header">
-                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                        <h3>Mathématiques</h3>
+                        <img th:src="@{/images/inline-right-svgrepo-com.svg}" alt="">
+
+                        <h3 th:text="${specialite}"></h3>
                     </div>
+
                 </a>
 
             </div>
-            <div class="departement">
-                <a th:href="@{/professors/professor/timetable/INF}">
-                    <div class="dep-header">
-                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                        <h3>Informatique</h3>
-                    </div>
-                </a>
-            </div>
-            <div class="departement">
-                <a th:href="@{/professors/professor/timetable/SV}">
-                    <div class="dep-header">
-                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                        <h3>Sciences de la vie</h3>
-                    </div>
-                </a>
-            </div>
-            <div class="departement">
-                <a th:href="@{/professors/professor/timetable/CHI}">
-                    <div class="dep-header">
-                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                        <h3>Chimie</h3>
-                    </div>
-                </a>
-            </div>
-            <div class="departement">
-                <a th:href="@{/professors/professor/timetable/PHY}">
-                    <div class="dep-header">
-                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                        <h3>Physique</h3>
-                    </div>
-                </a>
-            </div>
-            <div class="departement">
-                <a th:href="@{/professors/professor/timetable/ST}">
-                    <div class="dep-header">
-                        <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                        <h3>Sciences de la terre</h3>
-                    </div>
-                </a>
-            </div>
+
         </div>
     </section>
     <div class="table-content">
@@ -99,7 +65,6 @@
                 <th>Identifiant</th>
                 <th>Spécialité</th>
                 <th>Grade</th>
-                <th>Statut</th>
                 <th>Nom</th>
                 <th>Option</th>
             </tr>
@@ -108,9 +73,9 @@
             <tbody>
             <tr th:each="professor : ${Professors.content}">
                 <td th:text="${professor.userId}"></td>
-                <td th:text="${professor.speciality}"></td>
+                <td th:text="${selectedDepartment}"></td>
                 <td th:text="${professor.grade}"></td>
-                <td th:text="${professor.statut}"></td>
+
                 <td th:text="${professor.nom != null
         ? professor.nom + ' ' + professor.prenom
         : 'Non assigné'}">

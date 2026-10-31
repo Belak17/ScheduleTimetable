@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
@@ -55,11 +56,10 @@ public class ProfessorExcelService {
 
         CreateProfessorDto dto = new CreateProfessorDto();
 
-        String [] fullname = utilsService.getCellValue(row.getCell(0)).split(" ");
-
-        dto.setPrenom(fullname[0]);
-
-        dto.setNom(fullname[1]);
+        String fullname = utilsService.getCellValue(row.getCell(0));
+        String[] parts = fullname.trim().split("\\s+", 2);
+        dto.setPrenom(capitalize(parts[0].trim()));
+        dto.setNom(capitalize(parts[1].trim()));
 
         dto.setUserId(utilsService.getCellValue(row.getCell(3)));
 
@@ -96,6 +96,17 @@ public class ProfessorExcelService {
 //        dto.setIdentifiantUnique(utilsService.getCellValue(row.getCell(26)));
 
         return new Professor(dto);
+    }
+
+    private String capitalize(String value) {
+        if (value == null || value.isBlank()) {
+            return value;
+        }
+
+        value = value.trim().toLowerCase(Locale.FRENCH);
+
+        return value.substring(0, 1).toUpperCase(Locale.FRENCH)
+                + value.substring(1);
     }
 
 

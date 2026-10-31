@@ -54,10 +54,10 @@ public class ProfessorService implements  ProfessorInterfaceService  {
         return professorRepository.findAll(pageable).map(professorMapper::convertToDto);
     }
 
-    public Page<ProfessorDto> getAllProfessorByDepartment(int page , int size , Departement departement)
+    public Page<ProfessorDto> getAllProfessorBySpecialite(int page , int size , String specialite)
     {
         Pageable pageable = PageRequest.of(page, size);
-        return professorRepository.findByDepartment(pageable, departement).map(professorMapper::convertToDto);
+        return professorRepository.findByNomDepartementIgnoreCase(specialite,pageable).map(professorMapper::convertToDto);
     }
 
     public void saveProfessor(ProfessorImportDto professorDto)
@@ -127,4 +127,10 @@ public class ProfessorService implements  ProfessorInterfaceService  {
         professor.setPassword(passwordEncoder.encode(newPassword));
         professorRepository.save(professor);
     }
+
+    public List<String> getAllNameDepartement()
+    {
+        return  professorRepository.findDistinctNomDepartements();
+    }
+
 }

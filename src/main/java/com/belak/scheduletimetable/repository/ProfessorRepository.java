@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProfessorRepository  extends JpaRepository<Professor,Long> {
@@ -31,4 +32,13 @@ WHERE p.userId = :userId
     Optional<Professor> findByUserId(String userId);
 
     Page<Professor> findByDepartment(Pageable pageable, Departement departement);
+
+    Page<Professor> findByNomDepartementIgnoreCase(
+            String nomDepartement,
+            Pageable pageable
+    );
+
+
+    @Query("SELECT DISTINCT p.nomDepartement FROM Professor p WHERE p.nomDepartement IS NOT NULL ORDER BY p.nomDepartement")
+    List<String> findDistinctNomDepartements();
 }

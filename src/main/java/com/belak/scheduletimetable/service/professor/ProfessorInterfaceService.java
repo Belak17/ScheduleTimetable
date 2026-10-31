@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 public interface ProfessorInterfaceService {
     public Page<ProfessorDto> getAllProfessor(int page , int size) ;
 
-    public Page<ProfessorDto> getAllProfessorByDepartment(int page , int size , Departement departement) ;
+    public Page<ProfessorDto> getAllProfessorBySpecialite(int page , int size , String department) ;
 
 
     public void saveProfessor(ProfessorImportDto professorDto) ;

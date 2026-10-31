@@ -32,17 +32,18 @@ public class ProfessorApiController {
     private final ProfessorPreviewService timetablePreviewService ;
     private  final ProfessorService professorService ;
     private  final ProfessorExcelService professorExcelService ;
-    @GetMapping("/professor/timetable/{departement}")
+    @GetMapping("/professor/timetable/{specialite}")
     public String showProfessorTimetables(
-            @PathVariable String departement ,
+            @PathVariable String specialite,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Model model
     ) {
         Page<ProfessorDto> professors =
-                professorService.getAllProfessorByDepartment(page, size, Departement.valueOf(departement));
+                professorService.getAllProfessorBySpecialite(page, size, specialite);
         model.addAttribute("Professors", professors);
-        model.addAttribute("selectedDepartment", departement);
+        model.addAttribute("specialites",professorService.getAllNameDepartement());
+        model.addAttribute("selectedDepartment", specialite);
         return "admin/see-all-professor-timetable";
     }
     @GetMapping("/professor/timetable")
@@ -53,6 +54,7 @@ public class ProfessorApiController {
     )
     {
         model.addAttribute("Professors", null);
+        model.addAttribute("specialites",professorService.getAllNameDepartement());
         return "admin/see-all-professor-timetable";
     }
     @GetMapping("/preview/{userId}")
