@@ -108,4 +108,8 @@ public class CoursTP {
 
         return weekNumber % frequence == rotationOffset;
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "professor_id")
+    private Professor professor;
 }

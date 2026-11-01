@@ -15,6 +15,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.spire.xls.Worksheet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.text.WordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -30,8 +31,11 @@ import java.io.ByteArrayOutputStream;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -42,6 +46,7 @@ public class CoursTPService extends CoursTPUtilsService {
     private  final PresenceRepository presenceRepository ;
     private final SalleRepository salleRepository;
     private final SeanceRepository seanceRepository;
+    private final ProfessorRepository professorRepository;
 
     private static final Logger logger =
             LoggerFactory.getLogger(CoursTPService.class);
@@ -70,7 +75,8 @@ public class CoursTPService extends CoursTPUtilsService {
             String dayRaw,
             String start,
             String end,
-            GroupTimetable groupTimetable
+            GroupTimetable groupTimetable,
+            Map<String,Professor> professorMap
     ) {
         CoursTP tp = new CoursTP();
 
@@ -81,6 +87,32 @@ public class CoursTPService extends CoursTPUtilsService {
         tp.setDebut(LocalTime.parse(start));
         tp.setFin(LocalTime.parse(end));
         tp.setSalle(extractGroupSalle(value));
+
+        String intitule = normalizeName(tp.getIntitule());
+
+        for (Map.Entry<String, Professor> entry : professorMap.entrySet()) {
+
+            String professorName = normalizeName(entry.getKey());
+
+            String[] nameParts = professorName.split("\\s+");
+
+            boolean allWordsFound = Arrays.stream(nameParts)
+                    .allMatch(word -> Arrays.asList(intitule.split("\\s+"))
+                            .contains(word));
+
+            if (allWordsFound) {
+
+                tp.setProfessor(entry.getValue());
+
+                log.info("Cours '{}' attribué à {} {}",
+                        tp.getIntitule(),
+                        entry.getValue().getPrenom(),
+                        entry.getValue().getNom());
+
+                break;
+            }
+        }
+
 
         boolean exists = coursTPrepository.existsCoursTPByDayAndHoraireAndGroupTimetable(
                 dayRaw,
@@ -122,6 +154,23 @@ public class CoursTPService extends CoursTPUtilsService {
         return tp;
     }
     public void extractAllCoursTPforOneGroup(Worksheet sheet, GroupTimetable timetable) {
+
+        Map<String, Professor> professorMap = professorRepository.findAll()
+                .stream()
+                .collect(Collectors.toMap(
+                        p -> WordUtils.capitalizeFully(p.getPrenom() + " " + p.getNom()),
+                        Function.identity(),
+                        (first, second) -> {
+                            log.warn(
+                                    "Homonymie détectée : '{}'. Professeurs concernés : ID {} et ID {}. Le premier sera conservé.",
+                                    first.getPrenom() + " " + first.getNom(),
+                                    first.getId(),
+                                    second.getId()
+                            );
+                            return first;
+                        },
+                        LinkedHashMap::new
+                ));
 
         for (int row = 10; row <= 15; row++) {
 
@@ -167,7 +216,7 @@ public class CoursTPService extends CoursTPUtilsService {
                                 dayRaw,
                                 start,
                                 end,
-                                timetable
+                                timetable,professorMap
                         );
 
                         int freq = tp.getFrequence();
@@ -186,6 +235,7 @@ public class CoursTPService extends CoursTPUtilsService {
 
                         tp.setRotationOffset(j % freq);
 
+
                         // La relation CoursTP -> GroupTimetable
                         // est déjà définie dans buildTP().
                         // Ici, on synchronise également le côté GroupTimetable.
@@ -199,7 +249,8 @@ public class CoursTPService extends CoursTPUtilsService {
                             dayRaw,
                             start,
                             end,
-                            timetable
+                            timetable,
+                            professorMap
                     );
 
                     timetable.addCoursTP(tp);
@@ -353,5 +404,21 @@ public class CoursTPService extends CoursTPUtilsService {
         pageDto.setAttendanceTable(attendanceDto);
 
         return pageDto;
+    }
+
+    private String normalizeName(String value) {
+        if (value == null || value.isBlank()) {
+            return "";
+        }
+
+        return java.text.Normalizer.normalize(
+                        value,
+                        java.text.Normalizer.Form.NFD
+                )
+                .replaceAll("\\p{M}+", "")       // Supprime les accents
+                .toLowerCase(Locale.ROOT)          // Ignore majuscules/minuscules
+                .replaceAll("[^\\p{L}\\p{N}]+", " ") // Remplace la ponctuation par des espaces
+                .trim()
+                .replaceAll("\\s+", " ");         // Supprime les espaces multiples
     }
 }

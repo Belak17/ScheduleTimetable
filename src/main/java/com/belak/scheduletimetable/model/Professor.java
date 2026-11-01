@@ -10,6 +10,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "professor")
 @Getter
@@ -33,6 +36,12 @@ public class Professor extends User {
 
 
     private String nomDepartement;
+
+    @OneToMany(
+            mappedBy = "professor",
+            fetch = FetchType.LAZY
+    )
+    private List<CoursTP> coursTPList = new ArrayList<>();
 
 
     public Professor(ProfessorImportDto dto) {
@@ -66,11 +75,29 @@ public class Professor extends User {
 
         this.setNationalite(dto.getNationalite());
 
-        this.setRole(dto.getRole());
+        this.setRole(Role.PROFESSOR);
         this.setGrade(dto.getGrade());
 
         this.setPassword(dto.getPassword());
         this.setNomDepartement(dto.getNomDepartement());
+    }
+
+    public void addCoursTP(CoursTP coursTP) {
+        if (coursTP == null) {
+            throw new IllegalArgumentException("CoursTP cannot be null");
+        }
+
+        coursTPList.add(coursTP);
+        coursTP.setProfessor(this);
+    }
+
+    public void removeCoursTP(CoursTP coursTP) {
+        if (coursTP == null) {
+            return;
+        }
+
+        coursTPList.remove(coursTP);
+        coursTP.setProfessor(null);
     }
 
 }

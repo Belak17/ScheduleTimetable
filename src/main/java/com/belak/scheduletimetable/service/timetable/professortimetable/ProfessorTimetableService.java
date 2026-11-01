@@ -305,4 +305,5 @@ public class ProfessorTimetableService extends TimetableService {
         return value.substring(0, 1).toUpperCase(Locale.FRENCH)
                 + value.substring(1);
     }
+
 }
