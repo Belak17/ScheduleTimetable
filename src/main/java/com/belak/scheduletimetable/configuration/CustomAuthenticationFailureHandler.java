@@ -20,16 +20,28 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
             HttpServletResponse response,
             AuthenticationException exception
     ) throws IOException {
+
+        // Déterminer le type d'erreur
         String error = "bad_credentials";
+
         if (exception instanceof UsernameNotFoundException) {
             error = "user_not_found";
-        }
-        else if (exception instanceof BadCredentialsException) {
-            error = "bad_credentials";
         } else if (exception instanceof DisabledException) {
-            error ="account_disabled";
-
+            error = "account_disabled";
+        } else if (exception instanceof BadCredentialsException) {
+            error = "bad_credentials";
         }
-        response.sendRedirect("/login?error=" + error);
+
+        // Identifier le type de connexion
+        String loginType = request.getParameter("loginType");
+
+        // Déterminer la page de redirection
+        String redirectUrl = "professor".equals(loginType)
+                ? "/login/professor?error=" + error
+                : "/login?error=" + error;
+
+        response.sendRedirect(
+                request.getContextPath() + redirectUrl
+        );
     }
 }

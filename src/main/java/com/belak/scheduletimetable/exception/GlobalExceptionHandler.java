@@ -1,5 +1,6 @@
 package com.belak.scheduletimetable.exception;
 
+import com.belak.scheduletimetable.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -78,6 +79,29 @@ public class GlobalExceptionHandler {
         model.addAttribute("errorMessage", ex.getMessage());
 
         return "login/login";
+    }
+
+    @ExceptionHandler(DeviceAlreadyUsed.class)
+    public String handleAccountNotActivated(
+            DeviceAlreadyUsed ex,
+            Model model) {
+
+        model.addAttribute("errorMessage", ex.getMessage());
+
+        return "student/deviceAlreadyUsed";
+    }
+
+    @ExceptionHandler(InformationNotFoundException.class)
+    public String handleAccountNotActivated(
+            InformationNotFoundException ex,
+            Model model) {
+
+        model.addAttribute("errorMessage", ex.getMessage());
+        if (ex.getRole().equals(User.Role.PROFESSOR))
+        {
+            return "login/firstlogin-professor";
+        }
+        return "login/firstlogin";
     }
 
     @ExceptionHandler(ResetNotPossibleAccountNotActivatedException.class)

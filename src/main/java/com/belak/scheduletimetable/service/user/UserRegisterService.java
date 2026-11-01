@@ -1,8 +1,10 @@
 package com.belak.scheduletimetable.service.user;
 
+import com.belak.scheduletimetable.exception.InformationNotFoundException;
 import com.belak.scheduletimetable.model.ConfirmationToken;
 import com.belak.scheduletimetable.model.User;
 import com.belak.scheduletimetable.repository.UserRepository;
+import com.belak.scheduletimetable.request.ProfessorRegister;
 import com.belak.scheduletimetable.request.UserRegister;
 import com.belak.scheduletimetable.service.ConfirmationTokenService;
 import com.belak.scheduletimetable.utils.EmailSender;
@@ -65,6 +67,10 @@ public class UserRegisterService implements UserRegisterInterfaceService {
                         request.getPassword()
                 )
         );
+        if (userRepository.findByEmail(request.getEmail()).isEmpty())
+        {
+            throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG,request.getEmail()));
+        }
         User theUser = userRepository.findByEmail(request.getEmail()).get();
         //String link = "http://localhost:8082/confirm?token=" + token;
         emailSender.sendEmail(
@@ -73,6 +79,45 @@ public class UserRegisterService implements UserRegisterInterfaceService {
         log.info("Envoi Email Activation Compte Avec Code Otp");
         return token ;
     }
+
+
+    public int registerProfessor(ProfessorRegister request)
+    {
+        log.info("Début Envoi Email Pour Activation Compte");
+        boolean isValidEmail = emailValidator
+                .test(request.getEmail());
+        if (!isValidEmail)
+        {
+            log.info("Email Non Valide");
+            throw new IllegalArgumentException("email not valid");
+        }
+        int  token = signup(
+                new User(
+                        request.getEmail(),
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+        if (userRepository.findByEmail(request.getEmail()).isEmpty())
+        {
+            throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG,request.getEmail()));
+        }
+        User theUser = userRepository.findByEmail(request.getEmail()).get();
+
+        if (!theUser.getRole().equals(User.Role.PROFESSOR))
+        {
+            throw new InformationNotFoundException("Informations introuvables." +
+                    "Veuillez rééssayer ou vous connecter en tant qu'étudiant si vous en êtes un "
+                    , request.getEmail(),User.Role.PROFESSOR);
+        }
+        //String link = "http://localhost:8082/confirm?token=" + token;
+        emailSender.sendEmail(
+                request.getEmail(),"Registration Confirmation",
+                buildEmail(theUser.getPrenom(),token));
+        log.info("Envoi Email Activation Compte Avec Code Otp");
+        return token ;
+    }
+
 
     public  String buildEmail(String name, int token) {
 

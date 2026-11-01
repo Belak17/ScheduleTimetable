@@ -62,24 +62,26 @@
                rules="all" class="styled-table">
             <thead>
             <tr>
-                <th>Identifiant</th>
+                <th>Nom</th>
                 <th>Spécialité</th>
                 <th>Grade</th>
-                <th>Nom</th>
+                <th>Email</th>
                 <th>Option</th>
             </tr>
             </thead>
 
             <tbody>
             <tr th:each="professor : ${Professors.content}">
-                <td th:text="${professor.userId}"></td>
-                <td th:text="${selectedDepartment}"></td>
-                <td th:text="${professor.grade}"></td>
-
                 <td th:text="${professor.nom != null
         ? professor.nom + ' ' + professor.prenom
         : 'Non assigné'}">
                 </td>
+
+                <td th:text="${selectedDepartment}"></td>
+                <td th:text="${professor.grade}"></td>
+                <td th:text="${professor.userId}"></td>
+
+
                 <td>
                     <a class="button clickable-row"
                        th:data-image="@{/professors/preview/{userId}(userId=${professor.userId})}">

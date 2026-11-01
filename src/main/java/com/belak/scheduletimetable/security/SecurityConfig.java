@@ -47,10 +47,12 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .usernameParameter("userId")  // correspond à ton champ username
+                        .loginProcessingUrl("/perform_login")
+                        .usernameParameter("userId")
                         .passwordParameter("password")
                         .successHandler(customAuthSuccessHandler)
-                        .failureHandler(customAuthenticationFailureHandler)// ici tu rediriges selon le rôle
+                        .failureHandler(customAuthenticationFailureHandler)
+                        .permitAll()
                 )
 
                 .logout(logout -> logout

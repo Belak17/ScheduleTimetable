@@ -5,14 +5,8 @@ import com.belak.scheduletimetable.dto.PresenceDto;
 import com.belak.scheduletimetable.dto.PresenceValidationDto;
 import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.exception.*;
-import com.belak.scheduletimetable.model.CoursTP;
-import com.belak.scheduletimetable.model.Presence;
-import com.belak.scheduletimetable.model.Seance;
-import com.belak.scheduletimetable.model.Student;
-import com.belak.scheduletimetable.repository.CoursTPRepository;
-import com.belak.scheduletimetable.repository.PresenceRepository;
-import com.belak.scheduletimetable.repository.SeanceRepository;
-import com.belak.scheduletimetable.repository.StudentRepository;
+import com.belak.scheduletimetable.model.*;
+import com.belak.scheduletimetable.repository.*;
 import com.belak.scheduletimetable.service.student.StudentService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.TextStyle;
@@ -39,11 +34,12 @@ public class PresenceService {
     private  final SeanceRepository seanceRepository ;
     private  final PresenceMapper presenceMapper ;
     private  final StudentService studentService ;
+    private  final DeviceAttendanceRepository attendanceRepository ;
 
 
 
     @Transactional
-    public PresenceValidationDto createPresence(String userId , String code)
+    public PresenceValidationDto createPresence(String userId , String code,String deviceUUID)
     {
         LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
         LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
@@ -98,7 +94,7 @@ public class PresenceService {
             throw new PresenceAlreadyExistsException("Présence déjà enregistrée",presence.getSeance()
                     .getCoursTP().getIntitule(),
                     presence.getSeance().getDate(),
-                    presence.getSeance().getCoursTP().getDayOfWeek().toString() ,
+                    presence.getSeance().getCoursTP().getDayOfWeek(),
                     presence.getLocalTime() ,
                     presence.getSeance().getCoursTP().getSalle().getCode(),
                     presence.getStudent().getNom(),
@@ -106,15 +102,27 @@ public class PresenceService {
             );
         }
 
+        boolean deviceRegistered = attendanceRepository.existsByDeviceUuidAndSeanceId(deviceUUID, theSeance.getId());
+        if (deviceRegistered) {
+            log.info("Détection de fraude avec appareil {}",deviceUUID);
+            throw new DeviceAlreadyUsed("Cet appareil a déjà été utilisé pour enregistrer" +
+                    "une présence.Veuillez utiliser un autre appareil",userId);
+        }
+
+
         Presence thePresence = new Presence();
         thePresence.setStudent(theStudent);
         thePresence.setPresent(true);
-        thePresence.setLocalTime(
-                LocalTime.now(ZoneId.of("Africa/Tunis"))
-        );
+        LocalTime time = LocalTime.now(ZoneId.of("Africa/Tunis"));
+        thePresence.setLocalTime(time);
         theSeance.addPresence(thePresence);
-
+        DeviceAttendance deviceAttendance = new DeviceAttendance();
+        deviceAttendance.setDeviceUuid(deviceUUID);
+        deviceAttendance.setStudent(theStudent);
+        deviceAttendance.setScannedAt(LocalDateTime.from(time));
+        deviceAttendance.setSeance(theSeance);
         seanceRepository.save(theSeance);
+        attendanceRepository.save(deviceAttendance);
 
         return validatePresence(code, theStudent.getGroup(), theStudent.getNom(),theStudent.getPrenom(), theCoursTP.getIntitule(), todayDay) ;
     }
@@ -129,7 +137,7 @@ public class PresenceService {
         return  presenceRepository.findByStudentAndPresentFalse(student,pageable).map(presenceMapper::convertPresencetoDto);
     }
 
-    public PresenceValidationDto createPresenceWithoutCode(String userId , String code)
+    public PresenceValidationDto createPresenceWithoutCode(String userId , String code,String deviceUUID)
     {
         LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
         LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
@@ -154,7 +162,7 @@ public class PresenceService {
                         .getId(),todayDay,now);
         if (optionalCoursTP.isEmpty())
         {
-            log.info("Cours Non Disponble pour le code {}  utilisateur {}",code,userId);
+            log.info("Cours Non Disponible pour le code {}  utilisateur {}",code,userId);
             throw new CourseAndCodeNotFoundException("Cours Non disponible ",code,userId,theStudent.getNom(), theStudent.getPrenom());
         }
         CoursTP theCoursTP = optionalCoursTP.get();
@@ -175,22 +183,32 @@ public class PresenceService {
             throw new PresenceAlreadyExistsException("Présence déjà enregistrée",presence.getSeance()
                     .getCoursTP().getIntitule(),
                     presence.getSeance().getDate(),
-                    presence.getSeance().getCoursTP().getDayOfWeek().toString() ,
+                    presence.getSeance().getCoursTP().getDayOfWeek(),
                     presence.getLocalTime() ,
                     presence.getSeance().getCoursTP().getSalle().getCode(),
                     presence.getStudent().getNom(),
                     presence.getStudent().getPrenom()
             );
         }
+        boolean deviceRegistered = attendanceRepository.existsByDeviceUuidAndSeanceId(deviceUUID, theSeance.getId());
+        if (deviceRegistered) {
+            log.info("Détection de fraude avec appareil {}",deviceUUID);
+            throw new DeviceAlreadyUsed("Cet appareil a déjà été utilisé pour enregistrer" +
+                    "une présence.Veuillez utiliser un autre appareil",userId);
+        }
         Presence thePresence = new Presence();
         thePresence.setStudent(theStudent);
         thePresence.setPresent(true);
-        thePresence.setLocalTime(
-                LocalTime.now(ZoneId.of("Africa/Tunis"))
-        );
+        LocalTime time = LocalTime.now(ZoneId.of("Africa/Tunis"));
+        thePresence.setLocalTime(time);
         theSeance.addPresence(thePresence);
-
+        DeviceAttendance deviceAttendance = new DeviceAttendance();
+        deviceAttendance.setDeviceUuid(deviceUUID);
+        deviceAttendance.setStudent(theStudent);
+        deviceAttendance.setScannedAt(LocalDateTime.from(time));
+        deviceAttendance.setSeance(theSeance);
         seanceRepository.save(theSeance);
+        attendanceRepository.save(deviceAttendance);
 
         return validatePresence(code, theStudent.getGroup(), theStudent.getNom(),theStudent.getPrenom(),theCoursTP.getIntitule(), todayDay) ;
     }

@@ -26,15 +26,14 @@ public class QrController {
     private final PresenceService presenceService;
     @GetMapping("/scan")
     public String scanQr(@RequestParam String code,
+                         @RequestParam String deviceUUID,
                          Authentication authentication) {
-
-
 
         if (authentication!=null&& authentication.isAuthenticated()) {
             log.info("Utlisateur Authentifié Pour le Scannage");
             PresenceValidationDto dto = presenceService.createPresence(
                     authentication.getName(),
-                    code
+                    code,deviceUUID
             );
             String url = UriComponentsBuilder
                     .fromPath("/student/validation")
@@ -59,7 +58,8 @@ public class QrController {
                 "?code=" + code;
     }
     @PostMapping("/change/salle")
-    public String changeSalle(Authentication authentication , @RequestParam String code , @RequestParam(required = false) String userId)
+    public String changeSalle(Authentication authentication , @RequestParam String code , @RequestParam(required = false) String userId,
+                              @RequestParam String deviceUUID)
     {
         log.info("Changement de Salle Pour le Cours de TP");
         String username ;
@@ -73,7 +73,7 @@ public class QrController {
             log.info("Utlisateur Non Authentifie");
         }
         PresenceValidationDto dto = presenceService.createPresenceWithoutCode(
-                username, code
+                username, code,deviceUUID
         );
 
         String url = UriComponentsBuilder
@@ -101,7 +101,7 @@ public class QrController {
 
 
     @PostMapping("/scan/authenticated")
-    public String registerPresenceNowAuthenticated(@RequestParam String code, @RequestParam String userId) {
+    public String registerPresenceNowAuthenticated(@RequestParam String code, @RequestParam String userId,@RequestParam String deviceUUID) {
 
 
 
@@ -110,7 +110,8 @@ public class QrController {
 
         PresenceValidationDto dto = presenceService.createPresence(
                 userId,
-                code
+                code,
+                deviceUUID
         );
         return "redirect:" + UriComponentsBuilder
                 .fromPath("/student/validation")

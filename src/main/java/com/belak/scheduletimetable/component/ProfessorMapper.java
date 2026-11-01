@@ -12,6 +12,6 @@ public class ProfessorMapper {
                 professor.getUserId(),
                 professor.getNom()
                 ,professor.getPrenom(),
-                professor.getGrade());
+                professor.getGrade().getLibelle());
     }
 }

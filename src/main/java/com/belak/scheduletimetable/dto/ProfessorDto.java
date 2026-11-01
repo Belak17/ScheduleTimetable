@@ -10,7 +10,7 @@ public class ProfessorDto {
     private  String userId ;
     private String nom ;
     private  String prenom ;
-    private Grade grade ;
+    private String grade ;
 
 
 

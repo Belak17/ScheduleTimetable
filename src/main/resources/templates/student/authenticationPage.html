@@ -53,19 +53,19 @@
           method="post"
           class="student-form">
 
+      <input type="hidden"
+             name="code"
+             th:value="${code}">
 
+      <!-- Identifiant unique de l'appareil -->
+      <input type="hidden"
+             id="deviceUuid"
+             name="deviceUuid">
 
-      <input
-              type="hidden"
-
-              name="code"
-
-              th:value="${code}"
-
-      >
       <label for="studentId">
         Identifiant étudiant
       </label>
+
       <input
               type="text"
               id="studentId"
@@ -76,16 +76,40 @@
               maxlength="8"
               autocomplete="off"
       >
+
       <button type="submit">
         <i class="fi fi-ss-check"></i>
         Valider ma présence
       </button>
 
     </form>
-
   </section>
 
 </main>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
 
+      function getDeviceUUID() {
+
+          let deviceUUID = localStorage.getItem("device_uuid");
+
+          if (!deviceUUID) {
+
+              deviceUUID = crypto.randomUUID();
+
+              localStorage.setItem("device_uuid", deviceUUID);
+          }
+
+          return deviceUUID;
+      }
+
+      // Récupération de l'identifiant persistant
+      const deviceUUID = getDeviceUUID();
+
+      // Transmission au formulaire
+      document.getElementById("deviceUuid").value = deviceUUID;
+
+  });
+</script>
 </body>
 </html>

@@ -53,11 +53,23 @@
 
     </div>
     <form th:action="@{/api/qr/change/salle}" method="post">
-      <input type="hidden" name="code" th:value="${code}">
-      <input type="hidden" name="userId" th:value="${userId}">
+
+      <input type="hidden"
+             name="code"
+             th:value="${code}">
+
+      <input type="hidden"
+             name="userId"
+             th:value="${userId}">
+
+      <input type="hidden"
+             name="deviceUuid"
+             id="deviceUuid">
+
       <button type="submit" class="btn-room-change">
         J'ai changé de salle
       </button>
+
     </form>
   </section>
 
@@ -68,5 +80,19 @@
     Retour à la connexion
   </a>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+      let deviceUUID = localStorage.getItem("device_uuid");
+
+      if (!deviceUUID) {
+          deviceUUID = crypto.randomUUID();
+          localStorage.setItem("device_uuid", deviceUUID);
+      }
+
+      document.getElementById("deviceUuid").value = deviceUUID;
+
+  });
+</script>
 </body>
 </html>

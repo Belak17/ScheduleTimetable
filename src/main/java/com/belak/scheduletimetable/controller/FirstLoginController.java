@@ -1,5 +1,6 @@
 package com.belak.scheduletimetable.controller;
 
+import com.belak.scheduletimetable.request.ProfessorRegister;
 import com.belak.scheduletimetable.request.UserRegister;
 import com.belak.scheduletimetable.service.reset.ForgotPasswordService;
 import com.belak.scheduletimetable.service.user.UserRegisterInterfaceService;
@@ -38,7 +39,7 @@ public class FirstLoginController {
         {
             model.addAttribute("code",code);
         }
-        model.addAttribute("userRegister", new UserRegister());
+        model.addAttribute("professorRegister", new ProfessorRegister());
 
         return "login/firstlogin-professor" ;
 
@@ -61,6 +62,18 @@ public class FirstLoginController {
         //model.addAttribute("message", "Un message a été envoyé à votre email pour activer votre compte");
 
             return "login/otp";
+
+    }
+
+    @PostMapping("/firstlogin/professor")
+    public  String registerProfessor( Model model , @ModelAttribute ProfessorRegister professorRegister)
+    {
+
+        userRegisterService.registerProfessor(professorRegister);
+        //userRegisterService.registerUserByUserIdAndEmail(userRegister);
+        //model.addAttribute("message", "Un message a été envoyé à votre email pour activer votre compte");
+
+        return "login/otp";
 
     }
 

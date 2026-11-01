@@ -118,14 +118,13 @@
         </div>
 
         <!-- Retour -->
-        <a th:href="@{https://172.20.96.216:8082/api/qr/scan(code=${code})}"
+        <a th:href="@{/api/qr/scan(code=${code})}"
+           id="retryLink"
            class="back-link">
             Veuillez réessayer
         </a>
 
-
     </section>
-
 
 </main>
 
@@ -135,5 +134,28 @@
         Retour à la connexion
     </a>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        // Récupération de l'identifiant de l'appareil
+        let deviceUUID = localStorage.getItem("device_uuid");
+
+        // Génération si inexistant
+        if (!deviceUUID) {
+            deviceUUID = crypto.randomUUID();
+            localStorage.setItem("device_uuid", deviceUUID);
+        }
+
+        // Transmission dans le lien de réessai
+        const retryLink = document.getElementById("retryLink");
+
+        const url = new URL(retryLink.href);
+
+        url.searchParams.set("deviceUuid", deviceUUID);
+
+        retryLink.href = url.toString();
+
+    });
+</script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.belak.scheduletimetable.service.user;
 
 import com.belak.scheduletimetable.model.User;
+import com.belak.scheduletimetable.request.ProfessorRegister;
 import com.belak.scheduletimetable.request.UserRegister;
 
 public interface UserRegisterInterfaceService {
@@ -18,6 +19,8 @@ public interface UserRegisterInterfaceService {
     public String confirmToken(int  token) ;
 
     public void enable(String email) ;
+
+    public int registerProfessor(ProfessorRegister request) ;
 
 
 

@@ -32,6 +32,20 @@
 
     let isScanning = true;
 
+    // Génération ou récupération de l'identifiant de l'appareil
+    function getDeviceUUID() {
+
+        let deviceUUID = localStorage.getItem("device_uuid");
+
+        if (!deviceUUID) {
+            deviceUUID = crypto.randomUUID();
+
+            localStorage.setItem("device_uuid", deviceUUID);
+        }
+
+        return deviceUUID;
+    }
+
     function onScanSuccess(decodedText) {
 
         if (!isScanning) return;
@@ -39,14 +53,29 @@
 
         html5QrCode.stop().then(() => {
 
-            window.location.href =
-                "/api/qr/scan?code=" + encodeURIComponent(
-    decodedText.replace("https://172.20.96.216:8082/api/qr/scan?code=", "")
-);
+            const deviceUUID = getDeviceUUID();
+
+            const url = new URL("/api/qr/scan", window.location.origin);
+
+            url.searchParams.set("code",
+                decodedText.replace(
+                    "https://172.20.96.216:8082/api/qr/scan?code=",
+                    ""
+                )
+            );
+
+            url.searchParams.set("deviceUuid", deviceUUID);
+
+            window.location.href = url.toString();
+
+        }).catch(error => {
+            console.error("Erreur lors de l'arrêt du scanner :", error);
+            isScanning = true;
         });
     }
 
     Html5Qrcode.getCameras().then(devices => {
+
         if (!devices || devices.length === 0) {
             console.error("Aucune caméra détectée");
             return;
@@ -57,6 +86,9 @@
             { fps: 10, qrbox: 250 },
             onScanSuccess
         );
+
+    }).catch(error => {
+        console.error("Impossible d'accéder à la caméra :", error);
     });
 </script>
 

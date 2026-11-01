@@ -17,13 +17,13 @@
     <a class="register" th:href="@{/firstlogin}">Nouveau ici ? </a>
 
 </header>
-<form class="login-box" method="post" th:action="@{/login}">
+<form class="login-box" method="post" th:action="@{/perform_login}">
 
     <section class="left-block">
         <div class="presentation">
             <h2>Bienvenue sur Votre Plateforme</h2>
             <h3>Enseignant/Administration</h3>
-
+            <input type="hidden" name="loginType" value="professor">
         </div>
         <div class="inputs">
             <div class="input">
@@ -215,8 +215,6 @@ body::before
     }
 }
 </style>
-
-
 
 </body>
 </html>
