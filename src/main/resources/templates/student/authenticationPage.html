@@ -5,97 +5,141 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Identification Étudiant</title>
+  <title>Identification étudiant</title>
 
   <link rel="stylesheet"
-        th:href="@{/css/style-student/style-room-scan.css}">
+        th:href="@{/css/style-student/style-validation.css}">
 
   <link rel="stylesheet"
-        href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
 
+<div class="container">
 
-<main class="center-wrapper">
+  <div class="form-card">
 
-  <h2 class="separator">Validation de présence</h2>
+    <div class="form-header">
+      <div class="icon-container">
+        <i class="fas fa-user-graduate"></i>
+      </div>
 
-  <section class="result-scanner">
-
-    <!-- Icône -->
-    <div class="check-circle">
-      <i class="fi fi-ss-building"></i>
-    </div>
-
-    <!-- Message -->
-    <h3 class="success-title">
-      QR Code de la salle scanné
-    </h3>
-
-    <p class="scan-message">
-      Vous avez scanné le code QR de cette salle.
-    </p>
-
-    <!-- Informations de la salle -->
-    <div class="validation-details">
+      <h1>Identification</h1>
 
       <p>
-        <strong>Salle :</strong>
-        <span th:text="${code}"></span>
+        Veuillez saisir votre identifiant étudiant
+        pour valider votre présence.
       </p>
-
-
     </div>
 
-    <!-- Identification étudiant -->
     <form th:action="@{/api/qr/scan/authenticated}"
           method="post"
-          class="student-form">
+          class="student-form"
+          id="studentForm">
 
+      <!-- Code du QR -->
       <input type="hidden"
              name="code"
              th:value="${code}">
 
-      <!-- Identifiant unique de l'appareil -->
+      <!-- UUID de l'appareil / navigateur -->
       <input type="hidden"
-             id="deviceUuid"
-             name="deviceUuid">
+             id="deviceUUID"
+             name="deviceUUID">
 
-      <label for="studentId">
-        Identifiant étudiant
-      </label>
+      <div class="form-group">
 
-      <input
-              type="text"
-              id="studentId"
-              name="userId"
-              placeholder="Entrez votre identifiant"
-              required
-              minlength="8"
-              maxlength="8"
-              autocomplete="off"
-      >
+        <label for="studentId">
+          Identifiant étudiant
+        </label>
 
-      <button type="submit">
-        <i class="fi fi-ss-check"></i>
+        <div class="input-wrapper">
+          <i class="fas fa-id-card"></i>
+
+          <input type="text"
+                 id="studentId"
+                 name="userId"
+                 placeholder="Exemple : 12345678"
+                 autocomplete="off"
+                 required>
+        </div>
+
+      </div>
+
+      <button type="submit" id="submitButton">
+
+        <i class="fas fa-check-circle"></i>
+
         Valider ma présence
+
       </button>
 
     </form>
-  </section>
 
-</main>
+    <div class="form-footer">
+      <p>
+        <i class="fas fa-shield-alt"></i>
+        Vos informations sont utilisées uniquement
+        pour la validation de votre présence.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
 <script>
+
   document.addEventListener("DOMContentLoaded", function () {
 
+      const deviceUUIDInput = document.getElementById("deviceUUID");
+      const studentForm = document.getElementById("studentForm");
+      const submitButton = document.getElementById("submitButton");
+
+      /**
+       * Génère un UUID compatible avec les navigateurs modernes.
+       */
+      function generateUUID() {
+
+          if (window.crypto && typeof window.crypto.randomUUID === "function") {
+              return window.crypto.randomUUID();
+          }
+
+          if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+
+              const bytes = new Uint8Array(16);
+              window.crypto.getRandomValues(bytes);
+
+              bytes[6] = (bytes[6] & 0x0f) | 0x40;
+              bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+              const hex = Array.from(bytes, byte =>
+                  byte.toString(16).padStart(2, "0")
+              );
+
+              return [
+                  hex.slice(0, 4).join(""),
+                  hex.slice(4, 6).join(""),
+                  hex.slice(6, 8).join(""),
+                  hex.slice(8, 10).join(""),
+                  hex.slice(10, 16).join("")
+              ].join("-");
+          }
+
+          throw new Error("Impossible de générer un identifiant pour cet appareil.");
+      }
+
+      /**
+       * Récupère l'UUID existant ou en génère un nouveau.
+       */
       function getDeviceUUID() {
 
           let deviceUUID = localStorage.getItem("device_uuid");
 
           if (!deviceUUID) {
 
-              deviceUUID = crypto.randomUUID();
+              deviceUUID = generateUUID();
 
               localStorage.setItem("device_uuid", deviceUUID);
           }
@@ -103,13 +147,44 @@
           return deviceUUID;
       }
 
-      // Récupération de l'identifiant persistant
-      const deviceUUID = getDeviceUUID();
+      try {
 
-      // Transmission au formulaire
-      document.getElementById("deviceUuid").value = deviceUUID;
+          const deviceUUID = getDeviceUUID();
+
+          deviceUUIDInput.value = deviceUUID;
+
+      } catch (error) {
+
+          console.error("Erreur lors de la génération de l'UUID :", error);
+
+          submitButton.disabled = true;
+
+          alert("Impossible d'identifier votre navigateur. Veuillez vérifier votre connexion sécurisée et réessayer.");
+
+      }
+
+      /**
+       * Vérifie que l'UUID est présent avant l'envoi.
+       */
+      studentForm.addEventListener("submit", function (event) {
+
+          if (!deviceUUIDInput.value) {
+
+              event.preventDefault();
+
+              alert("L'identifiant de votre appareil n'a pas pu être récupéré. Veuillez actualiser la page.");
+
+              return;
+          }
+
+          submitButton.disabled = true;
+          submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Validation en cours...';
+
+      });
 
   });
+
 </script>
+
 </body>
 </html>

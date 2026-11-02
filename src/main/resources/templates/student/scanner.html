@@ -1,44 +1,85 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Scanner QR</title>
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/style-admin/style-admin-dashboard.css}">
+
     <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+
+<input type="checkbox" id="toggle-sidebar"/>
+
 <header>
     <div class="head-box">
-        <!-- Checkbox caché -->
+
         <label for="toggle-sidebar">
-            <div  id="menu">
-                <img th:src="@{/images/menu-burger.png}">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Menu">
             </div>
         </label>
-        <h2>Scanner Code Qr</h2>
+
+        <h2>Scanner Code QR</h2>
+
     </div>
 </header>
-<section th:replace="student/student-dashboard :: sidebar">
-</section>
+
+<section th:replace="student/student-dashboard :: sidebar"></section>
+
 <main class="center-wrapper">
-<div id="reader"></div>
-<p id="result"></p>
+
+    <div id="reader"></div>
+
+    <p id="result"></p>
+
 </main>
 
 <script>
+
     const html5QrCode = new Html5Qrcode("reader");
 
     let isScanning = true;
 
-    // Génération ou récupération de l'identifiant de l'appareil
+    /**
+     * Récupération ou génération de l'identifiant du navigateur.
+     */
     function getDeviceUUID() {
 
         let deviceUUID = localStorage.getItem("device_uuid");
 
         if (!deviceUUID) {
-            deviceUUID = crypto.randomUUID();
+
+            if (window.crypto && typeof window.crypto.randomUUID === "function") {
+
+                deviceUUID = window.crypto.randomUUID();
+
+            } else {
+
+                const bytes = new Uint8Array(16);
+                window.crypto.getRandomValues(bytes);
+
+                bytes[6] = (bytes[6] & 0x0f) | 0x40;
+                bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+                const hex = Array.from(bytes, byte =>
+                    byte.toString(16).padStart(2, "0")
+                );
+
+                deviceUUID = [
+                    hex.slice(0, 4).join(""),
+                    hex.slice(4, 6).join(""),
+                    hex.slice(6, 8).join(""),
+                    hex.slice(8, 10).join(""),
+                    hex.slice(10, 16).join("")
+                ].join("-");
+            }
 
             localStorage.setItem("device_uuid", deviceUUID);
         }
@@ -46,50 +87,116 @@
         return deviceUUID;
     }
 
+    /**
+     * Traitement après détection du QR Code.
+     */
     function onScanSuccess(decodedText) {
 
-        if (!isScanning) return;
+        if (!isScanning) {
+            return;
+        }
+
         isScanning = false;
 
         html5QrCode.stop().then(() => {
 
-            const deviceUUID = getDeviceUUID();
+            try {
 
-            const url = new URL("/api/qr/scan", window.location.origin);
+                // Récupération du code présent dans le QR Code
+                let code;
 
-            url.searchParams.set("code",
-                decodedText.replace(
-                    "https://172.20.96.216:8082/api/qr/scan?code=",
-                    ""
-                )
-            );
+                try {
 
-            url.searchParams.set("deviceUuid", deviceUUID);
+                    const qrUrl = new URL(decodedText);
 
-            window.location.href = url.toString();
+                    code = qrUrl.searchParams.get("code");
+
+                } catch (error) {
+
+                    // Si le QR Code contient directement le code
+                    code = decodedText;
+
+                }
+
+                if (!code) {
+
+                    throw new Error("Code QR invalide ou manquant.");
+
+                }
+
+                // Récupération de l'identifiant du navigateur
+                const deviceUUID = getDeviceUUID();
+
+                // Construction de l'URL de validation
+                const url = new URL(
+                    "/api/qr/scan",
+                    window.location.origin
+                );
+
+                url.searchParams.set("code", code);
+
+                // IMPORTANT : respecter exactement le nom attendu par Spring
+                url.searchParams.set("deviceUUID", deviceUUID);
+
+                console.log("Code QR :", code);
+                console.log("Device UUID :", deviceUUID);
+                console.log("URL de redirection :", url.toString());
+
+                // Redirection vers le contrôleur Spring Boot
+                window.location.href = url.toString();
+
+            } catch (error) {
+
+                console.error("Erreur lors du traitement du QR Code :", error);
+
+                document.getElementById("result").textContent =
+                    "Impossible de traiter ce QR Code. Veuillez réessayer.";
+
+                isScanning = true;
+
+            }
 
         }).catch(error => {
+
             console.error("Erreur lors de l'arrêt du scanner :", error);
+
             isScanning = true;
+
         });
+
     }
 
+    /**
+     * Initialisation de la caméra.
+     */
     Html5Qrcode.getCameras().then(devices => {
 
         if (!devices || devices.length === 0) {
-            console.error("Aucune caméra détectée");
+
+            document.getElementById("result").textContent =
+                "Aucune caméra détectée.";
+
             return;
         }
 
         html5QrCode.start(
             { facingMode: "environment" },
-            { fps: 10, qrbox: 250 },
+            {
+                fps: 10,
+                qrbox: 250
+            },
             onScanSuccess
         );
 
     }).catch(error => {
+
         console.error("Impossible d'accéder à la caméra :", error);
+
+        document.getElementById("result").textContent =
+            "Impossible d'accéder à la caméra. Vérifiez les autorisations.";
+
     });
+
 </script>
 
 </body>

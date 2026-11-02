@@ -54,8 +54,13 @@ public class QrController {
 
         log.info("Utilisateur Non Authentifie.Debut Demande Identifiant Pour Verification");
 
-        return "redirect:/api/qr/authentify"+
-                "?code=" + code;
+        return "redirect:" + UriComponentsBuilder
+                .fromPath("/api/qr/authentify")
+                .queryParam("code", code)
+                .queryParam("deviceUUID", deviceUUID)
+                .build()
+                .encode()
+                .toUriString();
     }
     @PostMapping("/change/salle")
     public String changeSalle(Authentication authentication , @RequestParam String code , @RequestParam(required = false) String userId,
@@ -92,11 +97,17 @@ public class QrController {
     }
 
     @GetMapping("/authentify")
-    public String authentifyForScanningCodeQr(@RequestParam String code , Model model)
-    {
-        log.info("Appel de la page de Demande Identifiant");
+    public String authentifyForScanningCodeQr(
+            @RequestParam String code,
+            @RequestParam String deviceUUID,
+            Model model) {
+
+        log.info("Appel de la page de demande d'identification");
+
         model.addAttribute("code", code);
-        return  "student/authenticationPage";
+        model.addAttribute("deviceUUID", deviceUUID);
+
+        return "student/authenticationPage";
     }
 
 
