@@ -25,16 +25,22 @@ import java.util.Map;
 public class QrController {
     private final PresenceService presenceService;
     @GetMapping("/scan")
-    public String scanQr(@RequestParam String code,
-                         @RequestParam String deviceUUID,
-                         Authentication authentication) {
+    public String scanQr(
+            @RequestParam String code,
+            @RequestParam(required = false) String deviceUUID,
+            Authentication authentication) {
 
-        if (authentication!=null&& authentication.isAuthenticated()) {
-            log.info("Utlisateur Authentifié Pour le Scannage");
+        if (authentication != null && authentication.isAuthenticated()
+                && !(authentication instanceof org.springframework.security.authentication.AnonymousAuthenticationToken)) {
+
+            log.info("Utilisateur authentifié pour le scan");
+
             PresenceValidationDto dto = presenceService.createPresence(
                     authentication.getName(),
-                    code,deviceUUID
+                    code,
+                    deviceUUID
             );
+
             String url = UriComponentsBuilder
                     .fromPath("/student/validation")
                     .queryParam("intitule", dto.getIntitule())
@@ -43,8 +49,8 @@ public class QrController {
                     .queryParam("date", dto.getDate().format(DateTimeFormatter.ISO_DATE))
                     .queryParam("time", dto.getTime().format(DateTimeFormatter.ofPattern("HH:mm")))
                     .queryParam("day", dto.getDay())
-                    .queryParam("nom",dto.getNom())
-                    .queryParam("prenom",dto.getPrenom())
+                    .queryParam("nom", dto.getNom())
+                    .queryParam("prenom", dto.getPrenom())
                     .build()
                     .encode(StandardCharsets.UTF_8)
                     .toUriString();
@@ -52,12 +58,12 @@ public class QrController {
             return "redirect:" + url;
         }
 
-        log.info("Utilisateur Non Authentifie.Debut Demande Identifiant Pour Verification");
+        log.info("Utilisateur non authentifié : demande d'identification");
 
         return "redirect:" + UriComponentsBuilder
                 .fromPath("/api/qr/authentify")
                 .queryParam("code", code)
-                .queryParam("deviceUUID", deviceUUID)
+                .queryParamIfPresent("deviceUUID", java.util.Optional.ofNullable(deviceUUID))
                 .build()
                 .encode()
                 .toUriString();
@@ -99,10 +105,8 @@ public class QrController {
     @GetMapping("/authentify")
     public String authentifyForScanningCodeQr(
             @RequestParam String code,
-            @RequestParam String deviceUUID,
+            @RequestParam(required = false) String deviceUUID,
             Model model) {
-
-        log.info("Appel de la page de demande d'identification");
 
         model.addAttribute("code", code);
         model.addAttribute("deviceUUID", deviceUUID);
