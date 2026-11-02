@@ -46,7 +46,8 @@
       <!-- UUID de l'appareil / navigateur -->
       <input type="hidden"
              id="deviceUUID"
-             name="deviceUUID">
+             name="deviceUUID"
+             th:value="${deviceUUID}">
 
       <div class="form-group">
 
@@ -97,88 +98,58 @@
       const studentForm = document.getElementById("studentForm");
       const submitButton = document.getElementById("submitButton");
 
-      /**
-       * Génère un UUID compatible avec les navigateurs modernes.
-       */
-      function generateUUID() {
-
-          if (window.crypto && typeof window.crypto.randomUUID === "function") {
-              return window.crypto.randomUUID();
-          }
-
-          if (window.crypto && typeof window.crypto.getRandomValues === "function") {
-
-              const bytes = new Uint8Array(16);
-              window.crypto.getRandomValues(bytes);
-
-              bytes[6] = (bytes[6] & 0x0f) | 0x40;
-              bytes[8] = (bytes[8] & 0x3f) | 0x80;
-
-              const hex = Array.from(bytes, byte =>
-                  byte.toString(16).padStart(2, "0")
-              );
-
-              return [
-                  hex.slice(0, 4).join(""),
-                  hex.slice(4, 6).join(""),
-                  hex.slice(6, 8).join(""),
-                  hex.slice(8, 10).join(""),
-                  hex.slice(10, 16).join("")
-              ].join("-");
-          }
-
-          throw new Error("Impossible de générer un identifiant pour cet appareil.");
-      }
-
-      /**
-       * Récupère l'UUID existant ou en génère un nouveau.
-       */
-      function getDeviceUUID() {
-
-          let deviceUUID = localStorage.getItem("device_uuid");
-
-          if (!deviceUUID) {
-
-              deviceUUID = generateUUID();
-
-              localStorage.setItem("device_uuid", deviceUUID);
-          }
-
-          return deviceUUID;
-      }
-
       try {
 
-          const deviceUUID = getDeviceUUID();
+          // On récupère prioritairement l'UUID transmis par Spring
+          let deviceUUID = deviceUUIDInput.value;
 
+          // Si absent, on consulte le localStorage
+          if (!deviceUUID) {
+
+              deviceUUID = localStorage.getItem("device_uuid");
+          }
+
+          // Si toujours absent, on génère un nouvel UUID
+          if (!deviceUUID) {
+
+              deviceUUID = crypto.randomUUID();
+          }
+
+          // Conservation de l'UUID
+          localStorage.setItem("device_uuid", deviceUUID);
+
+          // Injection dans le formulaire
           deviceUUIDInput.value = deviceUUID;
+
+          console.log("Device UUID utilisé :", deviceUUID);
 
       } catch (error) {
 
-          console.error("Erreur lors de la génération de l'UUID :", error);
+          console.error("Erreur UUID :", error);
 
           submitButton.disabled = true;
 
-          alert("Impossible d'identifier votre navigateur. Veuillez vérifier votre connexion sécurisée et réessayer.");
+          alert("Impossible d'identifier votre navigateur.");
 
       }
 
-      /**
-       * Vérifie que l'UUID est présent avant l'envoi.
-       */
       studentForm.addEventListener("submit", function (event) {
 
           if (!deviceUUIDInput.value) {
 
               event.preventDefault();
 
-              alert("L'identifiant de votre appareil n'a pas pu être récupéré. Veuillez actualiser la page.");
+              alert("Identifiant de l'appareil introuvable.");
 
               return;
           }
 
+          console.log("UUID transmis :", deviceUUIDInput.value);
+
           submitButton.disabled = true;
-          submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Validation en cours...';
+
+          submitButton.innerHTML =
+              '<i class="fas fa-spinner fa-spin"></i> Validation en cours...';
 
       });
 

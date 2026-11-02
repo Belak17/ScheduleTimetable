@@ -142,7 +142,9 @@
 
         // Génération si inexistant
         if (!deviceUUID) {
+
             deviceUUID = crypto.randomUUID();
+
             localStorage.setItem("device_uuid", deviceUUID);
         }
 
@@ -151,7 +153,8 @@
 
         const url = new URL(retryLink.href);
 
-        url.searchParams.set("deviceUuid", deviceUUID);
+        // Respecter exactement le nom attendu par Spring
+        url.searchParams.set("deviceUUID", deviceUUID);
 
         retryLink.href = url.toString();
 

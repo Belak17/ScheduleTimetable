@@ -63,8 +63,9 @@
              th:value="${userId}">
 
       <input type="hidden"
-             name="deviceUuid"
-             id="deviceUuid">
+             name="deviceUUID"
+             id="deviceUUID"
+             th:value="${deviceUUID}">
 
       <button type="submit" class="btn-room-change">
         J'ai changé de salle
@@ -90,7 +91,7 @@
           localStorage.setItem("device_uuid", deviceUUID);
       }
 
-      document.getElementById("deviceUuid").value = deviceUUID;
+      document.getElementById("deviceUUID").value = deviceUUID;
 
   });
 </script>
