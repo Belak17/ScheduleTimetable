@@ -901,30 +901,31 @@ footer a:hover {
 }
 
 @media (max-width: 480px) {
+
     .right-block {
         display: block;
 
-        width: 120px;
-        height: 90px;
-
-        flex: 0 0 90px;
+        flex: none;
         order: -1;
 
+        width: 100%;
+        height: 110px;
+
         margin: 18px auto 0;
-        align-self: center;
 
         background-image: url("/images/logo_fsg.jpg");
-        background-position: center center;
+        background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
 
-        border-radius: 7px;
-        overflow: hidden;
+        border: none;
+        border-radius: 0;
     }
 
     .right-block::after {
         display: none;
     }
+
 }
 
 /* Connexion professeur */
