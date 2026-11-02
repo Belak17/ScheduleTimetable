@@ -30,11 +30,11 @@
             passe qui vous permettra de choisir un nouveau.
         </div>
         <div class="inputs">
-        <div class="input-email input">
-            <img th:src="@{/images/user.png}">
-            <input type="email" autocomplete="off"
-                   placeholder="Adresse email" required name="email">
-        </div>
+            <div class="input-email input">
+                <img th:src="@{/images/user.png}">
+                <input type="email" autocomplete="off"
+                       placeholder="Adresse email" required name="email">
+            </div>
         </div>
         <div class="others">
             <button class="connect">Envoyer</button>
@@ -53,138 +53,107 @@
     <a href="mailto:fsg.rnu.tn">fsg.rnu.tn</a>
 </footer>
 <style>
-    .right-block
-    {
+    /* Image décorative sur ordinateur */
+    .right-block {
         width: 45%;
-
-        background: url(/images/login_box_bg.png) center/cover no-repeat;
+        background: url("/images/login_box_bg.png") center / cover no-repeat;
     }
-body::before
-{
-    content: "";
-    position: fixed;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
 
-    background-image: url(/images/faculte-des-Sciences-de-Gabes.jpeg);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+    /* Arrière-plan flouté */
+    body::before {
+        content: "";
+        position: fixed;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
 
-    filter: blur(3px);
+        background-image: url("/images/faculte-des-Sciences-de-Gabes.jpeg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
 
-    z-index: -1;
-}
-        @media screen and (max-width: 768px)
-    {
+        filter: blur(3px);
+        z-index: -1;
+    }
 
-        .login-box
-        {
+    /* Tablettes et téléphones */
+    @media screen and (max-width: 768px) {
+
+        .login-box {
             flex-direction: column;
-             min-height: auto;
-
+            min-height: auto;
         }
 
-        .right-block
-        {
-            background-image: url(/images/logo_fsg.jpg);
-            width: 50%;
-            height: 120px;
+        .right-block {
+            display: block;
+            width: 100%;
+            height: 65px;
+            min-height: 0;
+
+            flex: none;
             order: -1;
-            margin-top: 20px;
-            transform: translateX(50%);
+
+            margin: 5px auto 0;
+
+            background-image: url("/images/logo_fsg.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: auto 55px;
+
+            transform: none;
         }
 
-        .left-block
-        {
-            padding: 30px 20px;
-            margin-top: -30px;
+        .left-block {
+            padding: 25px 20px;
+            margin-top: 0;
         }
-        .others
-        {
-            transform: translateX(5%);
+
+        .others {
+            transform: none;
         }
-        .connect , .register
-        {
-            width: 90%;
+
+        .connect {
+            width: 100%;
         }
-        .others .forgot-link
-        {
-            text-align: center;
-        }
-        header img
-        {
+
+        header img {
             width: 60%;
         }
-        footer div img
-        {
-            display: none;
-        }
-        footer div h3
-    {
-        display: none;
-    }
-            footer
-        {
+
+        footer {
             display: none;
         }
     }
-    @media (max-width: 480px)
-{
-    .left-block
-    {
-        padding: 20px 15px;
-    }
 
-    h1
-    {
-        font-size: 1.5rem;
-    }
+    /* Petits téléphones */
+    @media screen and (max-width: 480px) {
 
-    .input
-    {
-        padding: 10px;
-    }
+        .right-block {
+            height: 55px;
+            margin: 3px auto 0;
+            background-size: auto 48px;
+        }
 
-    .connect , .register
-    {
-        font-size: 0.95rem;
+        .left-block {
+            padding: 20px 15px;
+        }
 
-    }
+        .connect {
+            width: 100%;
+            font-size: 0.95rem;
+        }
 
-    header h2
-    {
-        display: none;
-    }
-    header button
-    {
-        transform: translateX(-0%);
-        border: none;
+        .register {
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin: 0;
+        }
 
+        header img {
+            width: 60%;
+        }
     }
-    .register
-    {
-        font-size: medium;
-        font-weight: bold;
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-    header img
-    {
-        width: 60%;
-    }
-        .right-block
-    {
-        background-image: url(/images/logo_fsg.jpg);
-        width: 50%;
-        height: 120px;
-        order: -1;
-        margin-top: 20px;
-        transform: translateX(50%);
-    }
-}
 </style>
 
 </body>

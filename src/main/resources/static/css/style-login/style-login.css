@@ -74,13 +74,13 @@ body::before {
     inset: -8px;
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(15, 23, 42, 0.72),
-            rgba(30, 64, 175, 0.45)
-        ),
-        url("/images/faculte-des-Sciences-de-Gabes.jpeg")
-        center / cover no-repeat;
+            linear-gradient(
+                    135deg,
+                    rgba(15, 23, 42, 0.72),
+                    rgba(30, 64, 175, 0.45)
+            ),
+            url("/images/faculte-des-Sciences-de-Gabes.jpeg")
+            center / cover no-repeat;
 
     filter: blur(3px);
     transform: scale(1.02);
@@ -164,8 +164,8 @@ header img {
     cursor: pointer;
 
     transition:
-        background var(--transition),
-        border-color var(--transition);
+            background var(--transition),
+            border-color var(--transition);
 }
 
 .register:hover {
@@ -206,7 +206,7 @@ header img {
     animation: login-appear 0.35s ease both;
 }
 
-/* Animation discrète */
+/* Animation */
 
 @keyframes login-appear {
     from {
@@ -239,8 +239,6 @@ header img {
 
     position: relative;
     z-index: 2;
-
-
 }
 
 /* =========================================
@@ -318,19 +316,15 @@ h3 {
     border-radius: 7px;
 
     transition:
-        background var(--transition),
-        border-color var(--transition),
-        box-shadow var(--transition);
+            background var(--transition),
+            border-color var(--transition),
+            box-shadow var(--transition);
 }
-
-/* Survol */
 
 .input:hover {
     background: #ffffff;
     border-color: #b8c8dc;
 }
-
-/* Focus */
 
 .input:focus-within {
     background: #ffffff;
@@ -415,11 +409,9 @@ h3 {
 
     cursor: pointer;
 
-    box-shadow: none;
-
     transition:
-        background var(--transition),
-        border-color var(--transition);
+            background var(--transition),
+            border-color var(--transition);
 }
 
 .connect:hover {
@@ -481,61 +473,13 @@ h3 {
    10. MESSAGES D'ALERTE
 ========================================= */
 
-.alert {
-    width: 100%;
-
-    padding: 10px 12px;
-
-    color: #991b1b;
-    background: #fef2f2;
-
-    border: 1px solid #fecaca;
-    border-left: 3px solid var(--danger);
-
-    border-radius: 5px;
-
-    font-size: 0.8rem;
-    font-weight: 400;
-
-    line-height: 1.5;
-    text-align: left;
-
-    overflow-wrap: anywhere;
-}
-
-.success {
-    width: 100%;
-
-    padding: 10px 12px;
-
-    color: #166534;
-    background: #f0fdf4;
-
-    border: 1px solid #bbf7d0;
-    border-left: 3px solid var(--success);
-
-    border-radius: 5px;
-
-    font-size: 0.8rem;
-    font-weight: 400;
-
-    line-height: 1.5;
-    text-align: left;
-
-    overflow-wrap: anywhere;
-}
-
+.alert,
+.success,
 .pending {
     width: 100%;
 
     padding: 10px 12px;
 
-    color: #374151;
-    background: #f3f4f6;
-
-    border: 1px solid #d1d5db;
-    border-left: 3px solid #6b7280;
-
     border-radius: 5px;
 
     font-size: 0.8rem;
@@ -546,12 +490,33 @@ h3 {
 
     overflow-wrap: anywhere;
 }
-/* =========================================
-   11. PARTIE DROITE
-========================================= */
+
+.alert {
+    color: #991b1b;
+    background: #fef2f2;
+
+    border: 1px solid #fecaca;
+    border-left: 3px solid var(--danger);
+}
+
+.success {
+    color: #166534;
+    background: #f0fdf4;
+
+    border: 1px solid #bbf7d0;
+    border-left: 3px solid var(--success);
+}
+
+.pending {
+    color: #374151;
+    background: #f3f4f6;
+
+    border: 1px solid #d1d5db;
+    border-left: 3px solid #6b7280;
+}
 
 /* =========================================
-   11. PARTIE DROITE
+   11. PARTIE DROITE - IMAGE PRINCIPALE
 ========================================= */
 
 .right-block {
@@ -660,6 +625,7 @@ footer a:hover {
 ========================================= */
 
 @media (max-width: 768px) {
+
     body {
         padding: 90px 20px 82px;
     }
@@ -689,9 +655,9 @@ footer a:hover {
 ========================================= */
 
 @media (max-width: 480px) {
+
     body {
         align-items: center;
-
         padding: 80px 14px 20px;
     }
 
@@ -734,7 +700,7 @@ footer a:hover {
         border-radius: 10px;
     }
 
-    /* Le logo apparaît au-dessus du formulaire */
+    /* Logo de la faculté */
 
     .right-block {
         display: block;
@@ -742,16 +708,20 @@ footer a:hover {
         flex: none;
         order: -1;
 
-        width: 120px;
-        height: 90px;
+        width: 100%;
+        height: 65px;
 
-        margin: 18px auto 0;
+        min-height: 0;
 
-        border-radius: 7px;
-        overflow: hidden;
+        margin: 5px auto 0;
 
-        background: url("/images/logo_fsg.jpg")
-                    center / contain no-repeat;
+        background-image: url("/images/logo_fsg.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: auto 55px;
+
+        border: none;
+        border-radius: 0;
     }
 
     .right-block::after {
@@ -761,9 +731,9 @@ footer a:hover {
     .left-block {
         width: 100%;
 
-        padding: 24px 20px;
+        padding: 15px 20px 22px;
 
-        gap: 18px;
+        gap: 16px;
     }
 
     .presentation h2 {
@@ -791,8 +761,6 @@ footer a:hover {
 
     .input input {
         min-height: 42px;
-
-        /* Évite le zoom automatique sur iPhone */
         font-size: 16px;
     }
 
@@ -809,7 +777,9 @@ footer a:hover {
         text-align: center;
     }
 
-    .alert {
+    .alert,
+    .success,
+    .pending {
         padding: 10px;
         font-size: 0.78rem;
     }
@@ -824,6 +794,7 @@ footer a:hover {
 ========================================= */
 
 @media (max-width: 360px) {
+
     body {
         padding-right: 10px;
         padding-left: 10px;
@@ -845,13 +816,13 @@ footer a:hover {
     }
 
     .right-block {
-        width: 105px;
-        height: 78px;
+        height: 55px;
+        background-size: auto 48px;
     }
 
     .left-block {
-        padding: 22px 15px;
-        gap: 16px;
+        padding: 12px 15px 18px;
+        gap: 14px;
     }
 
     .presentation h2 {
@@ -868,6 +839,7 @@ footer a:hover {
 ========================================= */
 
 @media (max-height: 650px) and (min-width: 481px) {
+
     body {
         align-items: flex-start;
 
@@ -891,6 +863,7 @@ footer a:hover {
 ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
@@ -900,41 +873,18 @@ footer a:hover {
     }
 }
 
-@media (max-width: 480px) {
-
-    .right-block {
-        display: block;
-
-        flex: none;
-        order: -1;
-
-        width: 100%;
-        height: 110px;
-
-        margin: 18px auto 0;
-
-        background-image: url("/images/logo_fsg.jpg");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-
-        border: none;
-        border-radius: 0;
-    }
-
-    .right-block::after {
-        display: none;
-    }
-
-}
-
-/* Connexion professeur */
+/* =========================================
+   18. CONNEXION PROFESSEUR
+========================================= */
 
 .login-separator {
     display: flex;
     align-items: center;
+
     gap: 12px;
+
     color: #94a3b8;
+
     font-size: 0.75rem;
     font-weight: 500;
 }
@@ -942,8 +892,11 @@ footer a:hover {
 .login-separator::before,
 .login-separator::after {
     content: "";
+
     flex: 1;
+
     height: 1px;
+
     background: #e2e8f0;
 }
 
@@ -951,6 +904,7 @@ footer a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+
     gap: 10px;
 
     width: 100%;
