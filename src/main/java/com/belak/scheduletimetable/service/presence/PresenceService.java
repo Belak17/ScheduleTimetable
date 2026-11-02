@@ -119,7 +119,7 @@ public class PresenceService {
         DeviceAttendance deviceAttendance = new DeviceAttendance();
         deviceAttendance.setDeviceUuid(deviceUUID);
         deviceAttendance.setStudent(theStudent);
-        deviceAttendance.setScannedAt(LocalDateTime.from(time));
+        deviceAttendance.setScannedAt(LocalDateTime.now());
         deviceAttendance.setSeance(theSeance);
         seanceRepository.save(theSeance);
         attendanceRepository.save(deviceAttendance);
