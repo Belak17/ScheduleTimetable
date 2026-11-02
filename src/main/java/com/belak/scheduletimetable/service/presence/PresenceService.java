@@ -41,10 +41,11 @@ public class PresenceService {
     @Transactional
     public PresenceValidationDto createPresence(String userId , String code,String deviceUUID)
     {
+
         LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
         LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
         String finalCode = code;
-        Student theStudent = studentService.findStudentByUserId(userId)
+        Student theStudent = studentService.findStudentByUserId(userId.trim())
                 .orElseThrow(() -> new StudentNotFoundException(
                         "Aucun étudiant trouvé pour l'utilisateur : " + userId,userId,
                         finalCode
@@ -130,7 +131,7 @@ public class PresenceService {
     {
         Pageable pageable = PageRequest.of(page, size);
         Student student = studentRepository
-                .findByUserId(userId)
+                .findByUserId(userId.trim())
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Etudiant non trouvé pour userId : " + userId)
                 );
@@ -141,7 +142,7 @@ public class PresenceService {
     {
         LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
         LocalTime now = LocalTime.now(ZoneId.of("Africa/Tunis"));
-        Optional<Student> student = studentRepository.findByUserId(userId);
+        Optional<Student> student = studentRepository.findByUserId(userId.trim());
         String todayDay = today
                 .getDayOfWeek()
                 .getDisplayName(TextStyle.FULL, Locale.FRANCE);

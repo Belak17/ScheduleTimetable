@@ -23,21 +23,29 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UtilsService {
+
     public String getCellValue(Cell cell) {
         if (cell == null) return null;
 
         return switch (cell.getCellType()) {
-            case STRING -> cell.getStringCellValue();
+            case STRING -> {
+                String value = cell.getStringCellValue();
+                yield value != null ? value.trim() : null;
+            }
+
             case NUMERIC -> {
                 if (DateUtil.isCellDateFormatted(cell)) {
-                    yield cell.getLocalDateTimeCellValue().toLocalDate().toString();
+                    yield cell.getLocalDateTimeCellValue().toLocalDate().toString().trim();
                 }
-                yield String.valueOf((long) cell.getNumericCellValue());
+                yield String.valueOf((long) cell.getNumericCellValue()).trim();
             }
-            case BOOLEAN -> String.valueOf(cell.getBooleanCellValue());
+
+            case BOOLEAN -> String.valueOf(cell.getBooleanCellValue()).trim();
+
             default -> null;
         };
     }
+
     public LocalDate parseDate(Cell cell) {
         if (cell == null) return null;
 
@@ -46,7 +54,13 @@ public class UtilsService {
                 return cell.getLocalDateTimeCellValue().toLocalDate();
             }
 
-            String value = cell.getStringCellValue().trim();
+            String value = cell.getStringCellValue();
+
+            if (value == null || value.trim().isEmpty()) {
+                return null;
+            }
+
+            value = value.trim();
 
             DateTimeFormatter[] formats = {
                     DateTimeFormatter.ofPattern("yyyy-MM-dd"),
@@ -55,7 +69,7 @@ public class UtilsService {
 
             for (DateTimeFormatter format : formats) {
                 try {
-                    return LocalDate.parse(value, format);
+                    return LocalDate.parse(value.trim(), format);
                 } catch (Exception ignored) {}
             }
 
@@ -72,7 +86,13 @@ public class UtilsService {
                 return (int) cell.getNumericCellValue();
             }
 
-            return Integer.parseInt(cell.getStringCellValue().trim());
+            String value = cell.getStringCellValue();
+
+            if (value == null || value.trim().isEmpty()) {
+                return null;
+            }
+
+            return Integer.parseInt(value.trim());
 
         } catch (Exception e) {
             return null;
@@ -81,14 +101,20 @@ public class UtilsService {
 
     public Nationalite parseNationalite(Cell cell) {
         String value = getCellValue(cell);
-        if (value == null) return null;
 
-        return Nationalite.fromNationalite(value);
+        if (value == null || value.trim().isEmpty()) {
+            return null;
+        }
+
+        return Nationalite.fromNationalite(value.trim());
     }
 
     public TypeDiplome parseTypeDiplome(Cell cell) {
         String value = getCellValue(cell);
-        if (value == null) return null;
+
+        if (value == null || value.trim().isEmpty()) {
+            return null;
+        }
 
         try {
             return TypeDiplome.valueOf(value.trim().toUpperCase());
@@ -98,12 +124,15 @@ public class UtilsService {
     }
 
     public void validateFile(MultipartFile file) {
-        if (file.isEmpty()) {
+
+        if (file == null || file.isEmpty()) {
             throw new EmptyFileException("Le fichier Excel est vide");
         }
+
         String name = file.getOriginalFilename();
-        if (name == null || !name.endsWith(".xlsx")) {
-            log.info("Le fichier recu est invalide : Mauvais format de fichier");
+
+        if (name == null || !name.trim().toLowerCase().endsWith(".xlsx")) {
+            log.info("Le fichier reçu est invalide : Mauvais format de fichier");
             throw new RuntimeException("Format invalide (.xlsx requis)");
         }
     }
@@ -117,7 +146,7 @@ public class UtilsService {
     private List<String> parseSpecialites(Cell cell) {
         String value = getCellValue(cell);
 
-        if (value == null || value.isEmpty()) {
+        if (value == null || value.trim().isEmpty()) {
             return new ArrayList<>();
         }
 
