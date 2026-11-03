@@ -42,10 +42,22 @@ WHERE s.userId = :userId
     SELECT s
     FROM Student s
     WHERE LOWER(
-        FUNCTION('REGEXP_REPLACE', s.group, '[[:space:]]+', '', 'g')
+        FUNCTION(
+            'REGEXP_REPLACE',
+            REPLACE(s.group, ' ', ''),
+            '[[:space:]]+',
+            '',
+            'g'
+        )
     ) =
     LOWER(
-        FUNCTION('REGEXP_REPLACE', :group, '[[:space:]]+', '', 'g')
+        FUNCTION(
+            'REGEXP_REPLACE',
+            REPLACE(:group, ' ', ''),
+            '[[:space:]]+',
+            '',
+            'g'
+        )
     )
 """)
     List<Student> findByGroup(@Param("group") String group);
