@@ -40,6 +40,7 @@ html {
 
 body {
     min-height: 100vh;
+    min-width: 320px;
 
     font-family: "Inter", sans-serif;
 
@@ -85,6 +86,8 @@ body {
     align-items: center;
     justify-content: center;
 
+    flex-shrink: 0;
+
     width: 42px;
     height: 42px;
 
@@ -121,12 +124,18 @@ body {
 }
 
 .text-title {
+    min-width: 0;
+
     font-size: 1.25rem;
     font-weight: 700;
 
     color: var(--text);
 
     letter-spacing: -0.02em;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
@@ -147,7 +156,9 @@ body {
     align-items: center;
 
     width: 260px;
+    max-width: 85vw;
     height: 100vh;
+    height: 100dvh;
 
     padding-top: 72px;
 
@@ -156,6 +167,9 @@ body {
     border-right: 1px solid var(--border);
 
     box-shadow: var(--shadow-lg);
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
 
     transition: left 0.25s ease;
 }
@@ -199,6 +213,7 @@ body {
     gap: 13px;
 
     width: 100%;
+    min-height: 46px;
 
     padding: 12px 20px;
 
@@ -245,6 +260,7 @@ body {
 
 .center-wrapper {
     width: min(1400px, calc(100% - 40px));
+    min-width: 0;
 
     margin: 96px auto 40px;
     padding: 28px;
@@ -266,6 +282,8 @@ body {
 
     font-size: 1.4rem;
     font-weight: 700;
+
+    overflow-wrap: anywhere;
 }
 
 
@@ -291,6 +309,7 @@ body {
     content: "";
 
     flex: 1;
+    min-width: 10px;
 
     height: 1px;
 
@@ -307,7 +326,7 @@ body {
 
     grid-template-columns: repeat(
         auto-fit,
-        minmax(190px, 1fr)
+        minmax(min(190px, 100%), 1fr)
     );
 
     gap: 20px;
@@ -326,6 +345,7 @@ body {
     align-items: center;
 
     width: 100%;
+    min-width: 0;
     min-height: 170px;
 
     padding: 24px 18px;
@@ -403,6 +423,8 @@ body {
 
     font-size: 0.95rem;
     font-weight: 600;
+
+    overflow-wrap: anywhere;
 }
 
 
@@ -415,6 +437,7 @@ body {
     z-index: 1;
 
     width: 100%;
+    min-width: 0;
 
     max-height: 0;
 
@@ -475,6 +498,8 @@ body {
 
     text-transform: uppercase;
     letter-spacing: 0.03em;
+
+    white-space: nowrap;
 }
 
 .styled-table td {
@@ -567,8 +592,13 @@ body {
     position: relative;
 
     width: min(500px, 100%);
+    max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
 
     padding: 28px;
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
 
     background: var(--surface);
 
@@ -589,8 +619,8 @@ body {
     align-items: center;
     justify-content: center;
 
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 38px;
 
     color: var(--text-secondary);
 
@@ -623,6 +653,7 @@ body {
     align-items: center;
 
     width: 100%;
+    min-width: 0;
 
     margin-top: 28px;
     padding: 24px;
@@ -635,6 +666,7 @@ body {
 
 #reader {
     width: min(350px, 100%);
+    max-width: 100%;
 
     overflow: hidden;
 
@@ -645,17 +677,21 @@ body {
     border-radius: var(--radius-md);
 }
 
+#reader video,
+#reader canvas {
+    max-width: 100%;
+}
+
 
 /* =========================================================
-   RESPONSIVE
+   RESPONSIVE : PETITS ORDINATEURS
    ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
 
     .center-wrapper {
         width: calc(100% - 30px);
-
-        padding: 22px;
+        padding: 24px;
     }
 
     .grid {
@@ -669,6 +705,10 @@ body {
 }
 
 
+/* =========================================================
+   RESPONSIVE : TABLETTES
+   ========================================================= */
+
 @media (max-width: 768px) {
 
     .head-box {
@@ -680,8 +720,13 @@ body {
     }
 
     .head-box #menu {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
+    }
+
+    .head-box #menu img {
+        width: 22px;
+        height: 22px;
     }
 
     .text-title {
@@ -689,8 +734,16 @@ body {
     }
 
     .icons {
-        width: 240px;
+        width: 250px;
+        max-width: 85vw;
+
         padding-top: 64px;
+    }
+
+    .icon-container a,
+    .icon-container label {
+        min-height: 48px;
+        padding: 12px 18px;
     }
 
     .center-wrapper {
@@ -698,10 +751,11 @@ body {
 
         margin: 82px auto 24px;
 
-        padding: 18px;
+        padding: 20px;
     }
 
     .center-wrapper h2 {
+        padding-bottom: 18px;
         font-size: 1.2rem;
     }
 
@@ -726,48 +780,68 @@ body {
         font-size: 0.88rem;
     }
 
-    /*
-     * Sur mobile, on évite les effets basés
-     * uniquement sur hover.
-     */
-    .option:hover {
-        transform: none;
-    }
-
-    .styled-table {
-        display: block;
-
-        overflow-x: auto;
-
-        white-space: nowrap;
-    }
-
+    /* Les effets hover sont désactivés sur les écrans tactiles. */
     .styled-table tbody tr:hover::after {
         display: none;
+    }
+
+    .modal {
+        padding: 16px;
+    }
+
+    .modal-content {
+        padding: 24px;
     }
 }
 
 
+/* =========================================================
+   RESPONSIVE : MOBILES
+   ========================================================= */
+
 @media (max-width: 480px) {
+
+    .head-box {
+        height: 60px;
+        padding: 0 10px;
+    }
+
+    .head-box #menu {
+        width: 40px;
+        height: 40px;
+    }
+
+    .text-title {
+        font-size: 0.98rem;
+    }
+
+    .icons {
+        padding-top: 60px;
+    }
 
     .center-wrapper {
         width: calc(100% - 14px);
 
-        margin-top: 76px;
+        margin-top: 74px;
 
         padding: 14px;
 
         border-radius: var(--radius-md);
     }
 
+    .center-wrapper h2 {
+        font-size: 1.1rem;
+        padding-bottom: 16px;
+    }
+
     .grid {
         grid-template-columns: 1fr;
-
         gap: 12px;
     }
 
     .option {
         min-height: 125px;
+        padding: 16px 12px;
     }
 
     .option img {
@@ -777,22 +851,121 @@ body {
 
     .option p {
         margin-top: 10px;
-
         font-size: 0.86rem;
     }
 
     .separator {
         gap: 8px;
+        margin: 8px 0 18px;
 
         font-size: 0.9rem;
     }
 
+    .styled-table th {
+        padding: 11px 12px;
+        font-size: 0.72rem;
+    }
+
+    .styled-table td {
+        padding: 12px;
+        font-size: 0.84rem;
+    }
+
     #scanner-container {
-        padding: 16px;
+        margin-top: 20px;
+        padding: 14px;
+    }
+
+    #reader {
+        width: 100%;
+    }
+
+    .modal {
+        align-items: center;
+        padding: 12px;
     }
 
     .modal-content {
-        padding: 22px 18px;
+        width: 100%;
+        max-height: calc(100dvh - 24px);
+
+        padding: 22px 16px;
+
+        border-radius: var(--radius-md);
+    }
+
+    .close {
+        top: 8px;
+        right: 10px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE : TRÈ PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .head-box {
+        gap: 7px;
+        padding: 0 8px;
+    }
+
+    .text-title {
+        font-size: 0.9rem;
+    }
+
+    .center-wrapper {
+        width: calc(100% - 10px);
+        padding: 11px;
+    }
+
+    .center-wrapper h2 {
+        font-size: 1rem;
+    }
+
+    .option {
+        min-height: 115px;
+        padding: 14px 10px;
+    }
+
+    .option p {
+        font-size: 0.82rem;
+    }
+
+    .separator {
+        font-size: 0.82rem;
+    }
+
+    .modal-content {
+        padding: 20px 13px;
+    }
+}
+
+
+/* =========================================================
+   GRANDS ÉCRANS
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    .center-wrapper {
+        width: min(1500px, calc(100% - 60px));
+        padding: 32px;
+    }
+
+    .grid {
+        gap: 24px;
+    }
+
+    .option {
+        min-height: 185px;
+    }
+
+    .option img {
+        max-width: 70px;
+        max-height: 70px;
     }
 }
 

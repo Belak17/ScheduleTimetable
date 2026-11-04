@@ -1,62 +1,87 @@
 /* =========================================================
-   NAVIGATION DES DÉPARTEMENTS ET DES GROUPES
+   1. NAVIGATION DES DÉPARTEMENTS ET DES GROUPES
    ========================================================= */
 
 .content {
-    padding: 1rem 1.5rem;
-    color: var(--text);
+    width: 100%;
     min-width: 0;
+
+    padding: 1rem 1.5rem;
+
+    color: var(--text);
 }
 
+
 /* =========================================================
-   LISTE DES GROUPES
+   2. LISTE DES GROUPES
    ========================================================= */
 
 .groups {
     list-style: none;
+
+    width: 100%;
+
     padding: 0.4rem 0 0.4rem 0.75rem;
     margin: 0;
 }
 
 .groups li {
+    min-width: 0;
+
     margin-bottom: 0.25rem;
     padding: 0;
+
     border-radius: var(--radius-sm);
+
     transition: background-color var(--transition);
 }
+
 
 /* Liens des groupes */
 
 .groups a {
     display: flex;
     align-items: center;
+
     gap: 0.7rem;
+
     width: 100%;
-    min-height: 42px;
-    padding: 0.6rem 0.85rem;
+    min-width: 0;
+    min-height: 44px;
+
+    padding: 0.65rem 0.85rem;
 
     color: var(--text-secondary);
+
     font-size: 0.92rem;
     font-weight: 500;
+
     line-height: 1.45;
+
     text-decoration: none;
 
     border-radius: var(--radius-sm);
+
+    overflow-wrap: anywhere;
 
     transition:
         color var(--transition),
         background-color var(--transition);
 }
 
+
 /* Indicateur des groupes */
 
 .groups a::before {
     content: "";
+
     flex: 0 0 6px;
+
     width: 6px;
     height: 6px;
 
     border-radius: 50%;
+
     background-color: var(--text-muted);
 
     transition:
@@ -64,7 +89,8 @@
         transform var(--transition);
 }
 
-/* Survol d'un groupe */
+
+/* Survol */
 
 .groups li:hover {
     background-color: var(--primary-light);
@@ -79,24 +105,33 @@
     transform: scale(1.2);
 }
 
+
 /* =========================================================
-   NAVIGATION DES DÉPARTEMENTS
+   3. NAVIGATION DES DÉPARTEMENTS
    ========================================================= */
 
 .departement {
     display: flex;
     align-items: center;
+
     width: 100%;
-    min-height: 44px;
+    min-width: 0;
+    min-height: 46px;
+
     padding: 0.7rem 1rem;
 
     color: var(--text);
+
     font-size: 0.95rem;
     font-weight: 600;
+
     line-height: 1.45;
+
     text-decoration: none;
 
     border-radius: var(--radius-sm);
+
+    overflow-wrap: anywhere;
 
     transition:
         color var(--transition),
@@ -108,8 +143,9 @@
     background-color: var(--primary-light);
 }
 
+
 /* =========================================================
-   ACCESSIBILITÉ : NAVIGATION AU CLAVIER
+   4. ACCESSIBILITÉ
    ========================================================= */
 
 .groups a:focus-visible,
@@ -118,65 +154,151 @@
     outline-offset: 2px;
 }
 
+
 /* =========================================================
-   RESPONSIVE : TABLETTES ET PETITS ÉCRANS
+   5. TABLETTES
    ========================================================= */
 
 @media (max-width: 768px) {
 
     .content {
-        padding: 0.75rem 1rem;
+        padding: 0.85rem 1rem;
     }
 
     .groups {
-        padding-left: 0.5rem;
+        padding: 0.35rem 0 0.35rem 0.5rem;
+    }
+
+    .groups li {
+        margin-bottom: 0.3rem;
     }
 
     .groups a {
-        min-height: 42px;
-        padding: 0.65rem 0.75rem;
-        font-size: 0.9rem;
+        min-height: 46px;
+
+        padding: 0.7rem 0.8rem;
+
+        gap: 0.65rem;
+
+        font-size: 0.92rem;
     }
 
     .departement {
-        min-height: 42px;
-        padding: 0.65rem 0.8rem;
-        font-size: 0.93rem;
+        min-height: 46px;
+
+        padding: 0.75rem 0.85rem;
+
+        font-size: 0.95rem;
     }
 }
 
+
 /* =========================================================
-   RESPONSIVE : SMARTPHONES
+   6. SMARTPHONES
    ========================================================= */
 
 @media (max-width: 480px) {
 
     .content {
-        padding: 0.65rem 0.75rem;
+        padding: 0.7rem 0.65rem;
     }
 
+    /* Groupes */
+
     .groups {
-        padding-left: 0.25rem;
+        padding: 0.3rem 0 0.3rem 0.3rem;
     }
 
     .groups li {
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.25rem;
+
+        border-radius: 7px;
     }
 
     .groups a {
-        gap: 0.55rem;
-        padding: 0.65rem 0.7rem;
-        font-size: 0.88rem;
+        display: flex;
+        align-items: center;
+
+        gap: 0.65rem;
+
+        min-height: 48px;
+
+        padding: 0.75rem 0.8rem;
+
+        font-size: 0.9rem;
+
+        line-height: 1.4;
+
+        border-radius: 7px;
     }
 
+    .groups a::before {
+        flex-basis: 7px;
+
+        width: 7px;
+        height: 7px;
+    }
+
+
+    /* Départements */
+
     .departement {
-        padding: 0.7rem 0.75rem;
-        font-size: 0.9rem;
+        min-height: 48px;
+
+        padding: 0.8rem 0.85rem;
+
+        font-size: 0.93rem;
+
+        line-height: 1.4;
+
+        border-radius: 7px;
     }
 }
 
+
 /* =========================================================
-   GRANDS ÉCRANS
+   7. TRÈS PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .content {
+        padding: 0.6rem 0.5rem;
+    }
+
+    .groups {
+        padding-left: 0.2rem;
+    }
+
+    .groups a {
+        min-height: 46px;
+
+        padding: 0.7rem 0.65rem;
+
+        gap: 0.55rem;
+
+        font-size: 0.85rem;
+    }
+
+    .groups a::before {
+        flex-basis: 6px;
+
+        width: 6px;
+        height: 6px;
+    }
+
+    .departement {
+        min-height: 46px;
+
+        padding: 0.7rem 0.7rem;
+
+        font-size: 0.88rem;
+    }
+}
+
+
+/* =========================================================
+   8. GRANDS ÉCRANS
    ========================================================= */
 
 @media (min-width: 1600px) {
@@ -196,19 +318,24 @@
 
     .groups a {
         min-height: 44px;
+
         padding: 0.7rem 0.9rem;
+
         font-size: 0.96rem;
     }
 
     .departement {
         min-height: 46px;
+
         padding: 0.8rem 1rem;
+
         font-size: 0.98rem;
     }
 }
 
+
 /* =========================================================
-   TRÈS GRANDS ÉCRANS
+   9. TRÈS GRANDS ÉCRANS
    ========================================================= */
 
 @media (min-width: 1920px) {
@@ -224,19 +351,57 @@
 
     .groups a {
         min-height: 46px;
+
         padding: 0.75rem 1rem;
+
         font-size: 1rem;
     }
 
     .departement {
         min-height: 48px;
+
         padding: 0.85rem 1.1rem;
+
         font-size: 1.02rem;
     }
 }
 
+
 /* =========================================================
-   PRÉFÉRENCE : RÉDUCTION DES ANIMATIONS
+   10. APPAREILS TACTILES
+   ========================================================= */
+
+@media (hover: none) {
+
+    .groups li:hover {
+        background-color: transparent;
+    }
+
+    .groups li:hover a {
+        color: var(--text-secondary);
+    }
+
+    .groups li:hover a::before {
+        background-color: var(--text-muted);
+        transform: none;
+    }
+
+    .departement:hover {
+        color: var(--text);
+        background-color: transparent;
+    }
+
+    .groups a:active,
+    .departement:active {
+        color: var(--primary);
+
+        background-color: var(--primary-light);
+    }
+}
+
+
+/* =========================================================
+   11. RÉDUCTION DES ANIMATIONS
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {

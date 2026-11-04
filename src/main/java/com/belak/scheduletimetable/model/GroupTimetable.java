@@ -17,7 +17,15 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "group_timetable")
+@Table(
+        name = "group_timetable",
+        indexes = {
+                @Index(
+                        name = "idx_group_timetable_search",
+                        columnList = "filiere, niveau, semester"
+                )
+        }
+)
 public class GroupTimetable {
 
     @Id
@@ -61,7 +69,19 @@ public class GroupTimetable {
     @JoinTable(
             name = "student_timetable",
             joinColumns = @JoinColumn(name = "timetable_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
+            inverseJoinColumns = @JoinColumn(name = "student_id"),
+            uniqueConstraints = {
+                    @UniqueConstraint(
+                            name = "uk_student_timetable",
+                            columnNames = {"timetable_id", "student_id"}
+                    )
+            },
+            indexes = {
+                    @Index(
+                            name = "idx_student_timetable_student",
+                            columnList = "student_id"
+                    )
+            }
     )
     @Builder.Default
     private Set<Student> students = new HashSet<>();

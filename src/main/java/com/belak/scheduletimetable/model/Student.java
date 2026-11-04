@@ -16,7 +16,14 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "student")
+@Table(
+        name = "student",
+        indexes = {
+                @Index(name = "idx_student_group", columnList = "student_group"),
+                @Index(name = "idx_student_numero_inscription", columnList = "numero_inscription"),
+                @Index(name = "idx_student_field_year", columnList = "student_field, student_year")
+        }
+)
 @Getter
 @Setter
 @NoArgsConstructor

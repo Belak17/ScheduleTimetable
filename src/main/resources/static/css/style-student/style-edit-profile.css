@@ -13,6 +13,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 
@@ -34,12 +35,16 @@
     font-size: 1rem;
     font-weight: 600;
 
-
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
 }
 
 .title-bloc img {
+    flex-shrink: 0;
+
     width: 23px;
     height: 23px;
+
     object-fit: contain;
 }
 
@@ -54,6 +59,9 @@
     gap: 24px;
 
     padding: 24px;
+
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 .param-options {
@@ -62,6 +70,7 @@
 
     width: 260px;
     min-width: 240px;
+    flex-shrink: 0;
 
     background: var(--surface);
 
@@ -69,6 +78,7 @@
     border-radius: 5px;
 
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .param-option {
@@ -91,6 +101,8 @@
     transition:
         background-color var(--transition),
         color var(--transition);
+
+    box-sizing: border-box;
 }
 
 .param-option:first-child {
@@ -105,6 +117,8 @@
 .param-option img {
     width: 19px;
     height: 19px;
+
+    flex-shrink: 0;
 
     object-fit: contain;
 }
@@ -129,6 +143,7 @@
     overflow: hidden;
 
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+
     box-sizing: border-box;
 }
 
@@ -151,6 +166,8 @@
     color: var(--text);
     font-size: 0.85rem;
     font-weight: 600;
+
+    overflow-wrap: anywhere;
 }
 
 
@@ -165,6 +182,7 @@
     width: 100%;
     gap: 24px;
 
+    min-width: 0;
     box-sizing: border-box;
 }
 
@@ -175,10 +193,14 @@
 .academical-info {
     display: grid;
 
-    grid-template-columns:
-        repeat(3, minmax(180px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    width: 100%;
+    min-width: 0;
 
     gap: 18px;
+
+    box-sizing: border-box;
 }
 
 .generals-info {
@@ -197,6 +219,7 @@
     flex-direction: column;
 
     min-width: 0;
+    max-width: 100%;
 }
 
 .generals-info label,
@@ -205,6 +228,8 @@
 
     font-size: 0.82rem;
     font-weight: 600;
+
+    overflow-wrap: anywhere;
 }
 
 .label-ext {
@@ -227,6 +252,8 @@
     color: var(--text);
     font-size: 1rem;
     font-weight: 700;
+
+    overflow-wrap: anywhere;
 }
 
 .title-container::after {
@@ -267,6 +294,8 @@
 
 .option-clicked input {
     width: 100%;
+    min-width: 0;
+
     box-sizing: border-box;
 
     margin: 0;
@@ -302,24 +331,29 @@
     color: var(--text-muted);
 }
 
-.old-pass , .old-mail
-{
-    margin-bottom:40px;
+.old-pass,
+.old-mail {
+    margin-bottom: 40px;
 }
 
-.inputs-photo
-{
-display:flex;
-flex-direction:column;
-gap:40px;
+.inputs-photo {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    min-width: 0;
 }
+
 
 /* =========================================================
    FICHIER
    ========================================================= */
 
 .option-clicked input[type="file"] {
+    max-width: 100%;
     padding: 7px;
+
+    font-size: 0.85rem;
 }
 
 .option-clicked input[type="file"]::file-selector-button {
@@ -358,6 +392,7 @@ gap:40px;
     align-items: center;
 
     width: fit-content;
+    max-width: 100%;
 
     padding: 5px 9px;
 
@@ -369,6 +404,8 @@ gap:40px;
 
     font-size: 0.82rem;
     font-weight: 700;
+
+    overflow-wrap: anywhere;
 }
 
 
@@ -381,6 +418,7 @@ gap:40px;
 
     width: 180px;
     height: 180px;
+    max-width: 100%;
 
     object-fit: cover;
 
@@ -401,6 +439,8 @@ gap:40px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
+
     gap: 12px;
 
     margin-top: 24px;
@@ -411,7 +451,7 @@ gap:40px;
 
 button {
     min-width: 110px;
-    min-height: 40px;
+    min-height: 42px;
 
     padding: 9px 16px;
 
@@ -429,6 +469,8 @@ button {
         background-color var(--transition),
         border-color var(--transition),
         box-shadow var(--transition);
+
+    box-sizing: border-box;
 }
 
 button:hover {
@@ -456,9 +498,8 @@ button:focus-visible {
 }
 
 .reset:hover {
- background: #fee2e2;
-
- border-color: #fca5a5;
+    background: #fee2e2;
+    border-color: #fca5a5;
 }
 
 
@@ -503,17 +544,21 @@ a {
     border-radius: var(--radius-sm);
 
     font-size: 0.9rem;
+
+    overflow-wrap: anywhere;
+    box-sizing: border-box;
 }
 
 
 /* =========================================================
-   RESPONSIVE
+   RESPONSIVE : TABLETTES
    ========================================================= */
 
 @media (max-width: 1000px) {
 
     .content-container {
         flex-direction: column;
+        align-items: stretch;
     }
 
     .param-options {
@@ -523,6 +568,7 @@ a {
 
     .all-info {
         flex-direction: column;
+        gap: 18px;
     }
 
     .generals-info,
@@ -530,19 +576,36 @@ a {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         width: 100%;
     }
+
+    .option-clicked {
+        width: 100%;
+    }
 }
 
+
+/* =========================================================
+   RESPONSIVE : MOBILES
+   ========================================================= */
 
 @media (max-width: 768px) {
 
     .center-wrapper {
         width: calc(100% - 20px);
         margin: 80px auto 20px;
+
+        border-radius: var(--radius-md);
     }
 
     .content-container {
         padding: 16px;
         gap: 16px;
+    }
+
+    .title-bloc {
+        min-height: 52px;
+        padding: 12px 16px;
+
+        font-size: 0.95rem;
     }
 
     .option-clicked {
@@ -555,12 +618,20 @@ a {
 
     .generals-info,
     .academical-info {
-        grid-template-columns: 1fr;
-        gap: 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
     }
 
-    .title-bloc {
-        padding: 12px 16px;
+    .all-info {
+        gap: 16px;
+    }
+
+    .info-input {
+        gap: 2px;
+    }
+
+    .option-clicked input {
+        min-height: 42px;
     }
 
     #img-user {
@@ -568,16 +639,37 @@ a {
         height: 150px;
     }
 
+    .inputs-photo {
+        gap: 24px;
+    }
+
+    .old-pass,
+    .old-mail {
+        margin-bottom: 24px;
+    }
+
     .buttons {
         flex-direction: column-reverse;
+        align-items: stretch;
+
         width: 100%;
+        gap: 10px;
     }
 
     button {
         width: 100%;
+        min-height: 46px;
+    }
+
+    .alert {
+        margin: 12px 16px;
     }
 }
 
+
+/* =========================================================
+   RESPONSIVE : PETITS MOBILES
+   ========================================================= */
 
 @media (max-width: 480px) {
 
@@ -590,6 +682,19 @@ a {
 
     .content-container {
         padding: 12px;
+        gap: 12px;
+    }
+
+    .title-bloc {
+        gap: 9px;
+        padding: 11px 13px;
+
+        font-size: 0.9rem;
+    }
+
+    .title-bloc img {
+        width: 20px;
+        height: 20px;
     }
 
     .option-clicked {
@@ -604,6 +709,61 @@ a {
     .param-option {
         min-height: 48px;
         padding: 10px 12px;
+
+        font-size: 0.85rem;
+    }
+
+    .param-option img {
+        width: 17px;
+        height: 17px;
+    }
+
+    .generals-info,
+    .academical-info {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .title-container {
+        margin: 6px 0 16px;
+        padding-bottom: 9px;
+
+        font-size: 0.95rem;
+    }
+
+    .generals-info,
+    .academical-info {
+        padding-bottom: 14px;
+    }
+
+    .generals-info label,
+    .label-ext {
+        font-size: 0.8rem;
+    }
+
+    .option-clicked label {
+        font-size: 0.82rem;
+    }
+
+    .option-clicked input {
+        min-height: 44px;
+        padding: 10px;
+
+        font-size: 16px;
+    }
+
+    .option-clicked input[type="file"] {
+        min-height: auto;
+        padding: 6px;
+
+        font-size: 14px;
+    }
+
+    .option-clicked input[type="file"]::file-selector-button {
+        padding: 7px 9px;
+        margin-right: 6px;
+
+        font-size: 0.8rem;
     }
 
     #img-user {
@@ -611,8 +771,102 @@ a {
         height: 120px;
     }
 
-    .option-clicked input {
-        font-size: 0.88rem;
+    .inputs-photo {
+        gap: 20px;
+    }
+
+    .old-pass,
+    .old-mail {
+        margin-bottom: 20px;
+    }
+
+    .buttons {
+        margin-top: 18px;
+        padding-top: 16px;
+    }
+
+    .alert {
+        margin: 10px 12px;
+        padding: 11px;
+        font-size: 0.85rem;
+    }
+
+    #group {
+        font-size: 0.78rem;
+    }
+}
+
+
+/* =========================================================
+   TRÈ PETITS ÉCRANS
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .center-wrapper {
+        width: calc(100% - 12px);
+        margin-top: 72px;
+    }
+
+    .content-container {
+        padding: 9px;
+    }
+
+    .option-clicked {
+        padding: 12px;
+    }
+
+    .option-clicked .title-bloc {
+        margin: -12px -12px 14px;
+        padding: 11px;
+    }
+
+    .param-option {
+        padding: 10px;
+        font-size: 0.82rem;
+    }
+
+    .title-bloc {
+        font-size: 0.85rem;
+    }
+
+    #img-user {
+        width: 105px;
+        height: 105px;
+    }
+}
+
+
+/* =========================================================
+   GRANDS ÉCRANS
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    .center-wrapper {
+        width: min(1350px, calc(100% - 60px));
+    }
+
+    .content-container {
+        gap: 28px;
+        padding: 30px;
+    }
+
+    .param-options {
+        width: 280px;
+    }
+
+    .option-clicked {
+        padding: 30px;
+    }
+
+    .option-clicked .title-bloc {
+        margin: -30px -30px 30px;
+    }
+
+    .generals-info,
+    .academical-info {
+        gap: 22px;
     }
 }
 

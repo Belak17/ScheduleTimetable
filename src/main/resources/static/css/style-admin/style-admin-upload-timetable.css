@@ -52,6 +52,7 @@ html {
 
 body {
     min-height: 100vh;
+    min-height: 100dvh;
     overflow-x: hidden;
 
     font-family: "Inter", Arial, sans-serif;
@@ -74,6 +75,7 @@ textarea {
 
 button {
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
 button:disabled {
@@ -84,6 +86,7 @@ button:disabled {
 a {
     color: inherit;
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 img,
@@ -130,6 +133,7 @@ svg {
 
     width: 42px;
     height: 42px;
+    flex-shrink: 0;
 
     color: var(--text);
     background: transparent;
@@ -193,6 +197,7 @@ svg {
 
     overflow-x: hidden;
     overflow-y: auto;
+    overscroll-behavior: contain;
 
     background: var(--surface);
     border-right: 1px solid var(--border);
@@ -207,12 +212,6 @@ svg {
         visibility 0.25s ease;
 }
 
-/*
- * Conserve le mécanisme d'ouverture du menu par checkbox.
- * Si la checkbox et le menu sont frères dans le HTML,
- * cette règle ouvre la barre latérale lorsque la checkbox
- * est cochée.
- */
 #toggle-sidebar:checked ~ .icons {
     transform: translateX(0);
     visibility: visible;
@@ -348,6 +347,7 @@ svg {
 
     gap: 24px;
     width: 100%;
+    min-width: 0;
 }
 
 .form-upload {
@@ -398,6 +398,7 @@ svg {
     gap: 14px;
 
     width: 100%;
+    min-width: 0;
     min-height: 110px;
     padding: 20px;
 
@@ -416,11 +417,6 @@ svg {
     border-color: var(--primary);
 }
 
-/*
- * L'input reste masqué visuellement, mais il n'est pas
- * supprimé du document. Le bouton personnalisé doit rester
- * associé à cet input dans le HTML.
- */
 .custom-file input[type="file"] {
     position: absolute;
 
@@ -574,6 +570,7 @@ svg {
     gap: 10px;
 
     width: 100%;
+    min-width: 0;
     padding: 14px 16px;
 
     border: 1px solid transparent;
@@ -617,6 +614,7 @@ svg {
    ========================================================= */
 
 @media (max-width: 900px) {
+
     .head-box {
         padding: 0 20px;
     }
@@ -637,9 +635,10 @@ svg {
    ========================================================= */
 
 @media (max-width: 768px) {
+
     :root {
         --header-height: 64px;
-        --sidebar-width: 240px;
+        --sidebar-width: min(280px, 85vw);
     }
 
     .head-box {
@@ -648,6 +647,10 @@ svg {
 
     .icons {
         padding: 16px 10px;
+    }
+
+    .icon-container {
+        min-height: 48px;
     }
 
     .center-wrapper {
@@ -685,18 +688,21 @@ svg {
    ========================================================= */
 
 @media (max-width: 480px) {
+
     .head-box {
         padding: 0 12px;
     }
 
     #menu {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
     }
 
     .center-wrapper {
         width: calc(100% - 20px);
         margin-top: calc(var(--header-height) + 14px);
+        margin-bottom: 16px;
+
         padding: 14px;
         border-radius: var(--radius-md);
     }
@@ -704,6 +710,10 @@ svg {
     .form-upload {
         gap: 16px;
         padding: 16px;
+    }
+
+    .form-upload label {
+        font-size: 13px;
     }
 
     .custom-file {
@@ -719,24 +729,62 @@ svg {
     .clearFileBtn,
     .button-upload {
         width: 100%;
-        min-height: 44px;
+        min-height: 46px;
     }
 
     .file-name {
         text-align: center;
+        font-size: 12px;
     }
 
     .alert {
+        gap: 8px;
         padding: 12px;
+        font-size: 12px;
     }
 }
 
 
 /* =========================================================
-   13. GRANDS ÉCRANS
+   13. TRÈS PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .center-wrapper {
+        width: calc(100% - 14px);
+        margin-top: calc(var(--header-height) + 10px);
+        padding: 10px;
+    }
+
+    .form-upload {
+        gap: 14px;
+        padding: 13px;
+    }
+
+    .custom-file {
+        padding: 13px 10px;
+    }
+
+    .file-btn,
+    .clearFileBtn,
+    .button-upload {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .alert {
+        font-size: 11px;
+    }
+}
+
+
+/* =========================================================
+   14. GRANDS ÉCRANS
    ========================================================= */
 
 @media (min-width: 1600px) {
+
     :root {
         --header-height: 78px;
         --sidebar-width: 270px;
@@ -759,6 +807,7 @@ svg {
 }
 
 @media (min-width: 1920px) {
+
     .center-wrapper {
         max-width: 1400px;
         padding: 40px;
@@ -776,10 +825,11 @@ svg {
 
 
 /* =========================================================
-   14. APPAREILS SANS SURVOL
+   15. APPAREILS SANS SURVOL
    ========================================================= */
 
 @media (hover: none) {
+
     .form-upload:hover {
         border-color: var(--border);
         box-shadow: var(--shadow-sm);
@@ -795,14 +845,20 @@ svg {
         color: var(--text-secondary);
         background: transparent;
     }
+
+    .icon-container:active {
+        color: var(--primary);
+        background: var(--primary-light);
+    }
 }
 
 
 /* =========================================================
-   15. PRÉFÉRENCES DE MOUVEMENT
+   16. PRÉFÉRENCES DE MOUVEMENT
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {

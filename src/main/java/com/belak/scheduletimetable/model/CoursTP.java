@@ -9,7 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "cours_TP")
+@Table(
+        name = "cours_TP",
+        indexes = {
+                @Index(name = "idx_courstp_group", columnList = "grouptimetable_id"),
+                @Index(name = "idx_courstp_professor", columnList = "professor_id"),
+                @Index(name = "idx_courstp_salle", columnList = "salle_id"),
+                @Index(name = "idx_courstp_dependency", columnList = "depends_on_cours_id")
+        }
+)
 @Getter
 @Setter
 @NoArgsConstructor

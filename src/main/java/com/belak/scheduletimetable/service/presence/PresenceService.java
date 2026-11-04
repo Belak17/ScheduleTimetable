@@ -85,18 +85,21 @@ public class PresenceService {
             throw new ElementNotFoundException("Seance Non disponible ");
         }
         Seance theSeance = optionalSeance.get();
-        boolean exists = presenceRepository.existsBySeanceIdAndStudentId(
-                theSeance.getId(),
-                theStudent.getId()
-        );
-        if (exists) {
-            Presence presence = presenceRepository.findBySeanceIdAndStudentId(theSeance.getId(), theStudent.getId()).get();
-            log.info("Presence Deje Enregistre avec ID {} pour etudiant {}",presence.getId(),theStudent.getUserId());
-            throw new PresenceAlreadyExistsException("Présence déjà enregistrée",presence.getSeance()
-                    .getCoursTP().getIntitule(),
+        Optional<Presence> existingPresence =
+                presenceRepository.findBySeanceIdAndStudentId(
+                        theSeance.getId(),
+                        theStudent.getId()
+                );
+
+        if (existingPresence.isPresent()) {
+            Presence presence = existingPresence.get();
+
+            throw new PresenceAlreadyExistsException(
+                    "Présence déjà enregistrée",
+                    presence.getSeance().getCoursTP().getIntitule(),
                     presence.getSeance().getDate(),
                     presence.getSeance().getCoursTP().getDayOfWeek(),
-                    presence.getLocalTime() ,
+                    presence.getLocalTime(),
                     presence.getSeance().getCoursTP().getSalle().getCode(),
                     presence.getStudent().getNom(),
                     presence.getStudent().getPrenom()
@@ -120,7 +123,9 @@ public class PresenceService {
         DeviceAttendance deviceAttendance = new DeviceAttendance();
         deviceAttendance.setDeviceUuid(deviceUUID);
         deviceAttendance.setStudent(theStudent);
-        deviceAttendance.setScannedAt(LocalDateTime.now());
+        deviceAttendance.setScannedAt(
+                LocalDateTime.now(ZoneId.of("Africa/Tunis"))
+        );
         deviceAttendance.setSeance(theSeance);
         seanceRepository.save(theSeance);
         attendanceRepository.save(deviceAttendance);
@@ -174,18 +179,21 @@ public class PresenceService {
             throw new ElementNotFoundException("Seance Non disponible");
         }
         Seance theSeance = optionalSeance.get();
-        boolean exists = presenceRepository.existsBySeanceIdAndStudentId(
-                theSeance.getId(),
-                theStudent.getId()
-        );
-        if (exists) {
-            Presence presence = presenceRepository.findBySeanceIdAndStudentId(theSeance.getId(), theStudent.getId()).get();
-            log.info("Presence Deja Enregistre");
-            throw new PresenceAlreadyExistsException("Présence déjà enregistrée",presence.getSeance()
-                    .getCoursTP().getIntitule(),
+        Optional<Presence> existingPresence =
+                presenceRepository.findBySeanceIdAndStudentId(
+                        theSeance.getId(),
+                        theStudent.getId()
+                );
+
+        if (existingPresence.isPresent()) {
+            Presence presence = existingPresence.get();
+
+            throw new PresenceAlreadyExistsException(
+                    "Présence déjà enregistrée",
+                    presence.getSeance().getCoursTP().getIntitule(),
                     presence.getSeance().getDate(),
                     presence.getSeance().getCoursTP().getDayOfWeek(),
-                    presence.getLocalTime() ,
+                    presence.getLocalTime(),
                     presence.getSeance().getCoursTP().getSalle().getCode(),
                     presence.getStudent().getNom(),
                     presence.getStudent().getPrenom()
@@ -207,7 +215,7 @@ public class PresenceService {
         deviceAttendance.setDeviceUuid(deviceUUID);
         deviceAttendance.setStudent(theStudent);
         deviceAttendance.setScannedAt(
-                LocalDateTime.now()
+                LocalDateTime.now(ZoneId.of("Africa/Tunis"))
         );
         deviceAttendance.setSeance(theSeance);
         seanceRepository.save(theSeance);

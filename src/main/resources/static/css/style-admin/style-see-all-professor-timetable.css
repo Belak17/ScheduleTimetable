@@ -1,6 +1,6 @@
 /* =========================================================
    PAGE : LISTE / TABLEAU DES DÉPARTEMENTS
-   CSS responsive et cohérent avec le design system
+   Design responsive — Desktop, Tablette et Mobile
    ========================================================= */
 
 
@@ -22,11 +22,12 @@
     border: 1px solid var(--border, #e5e7eb);
     border-radius: 16px;
 
-    box-shadow:
-        var(--shadow-md, 0 4px 16px rgb(15 23 42 / 6%));
+    box-shadow: var(--shadow-md, 0 4px 16px rgb(15 23 42 / 6%));
 
     box-sizing: border-box;
     min-width: 0;
+
+    overflow: hidden;
 }
 
 .center-container *,
@@ -61,8 +62,7 @@ a {
     border: 1px solid var(--border, #e5e7eb);
     border-radius: 12px;
 
-    box-shadow:
-        var(--shadow-sm, 0 1px 3px rgb(15 23 42 / 5%));
+    box-shadow: var(--shadow-sm, 0 1px 3px rgb(15 23 42 / 5%));
 
     max-height: calc(100vh - 130px);
     max-height: calc(100dvh - 130px);
@@ -70,14 +70,11 @@ a {
     overflow-x: hidden;
     overflow-y: auto;
 
-    overscroll-behavior-y: contain;
+    overscroll-behavior: contain;
 
     scrollbar-width: thin;
     scrollbar-color: #cbd5e1 transparent;
 }
-
-
-/* Barre de défilement */
 
 .list-department::-webkit-scrollbar {
     width: 6px;
@@ -127,6 +124,7 @@ a {
     gap: 4px;
 
     width: 100%;
+    min-width: 0;
 }
 
 
@@ -158,7 +156,7 @@ a {
 }
 
 
-/* En-tête du département */
+/* En-tête */
 
 .dep-header {
     display: flex;
@@ -186,7 +184,7 @@ a {
 }
 
 
-/* Input radio ou checkbox masqué */
+/* Input masqué */
 
 .departement input {
     position: absolute;
@@ -200,7 +198,7 @@ a {
 }
 
 
-/* Nom du département */
+/* Nom */
 
 .departement h3 {
     min-width: 0;
@@ -222,7 +220,6 @@ a {
 
 .departement:hover {
     background: var(--primary-light, #eff6ff);
-
     border-left-color: var(--primary, #2563eb);
 
     transform: translateX(2px);
@@ -237,7 +234,7 @@ a {
 }
 
 
-/* Focus clavier sur un département */
+/* Focus */
 
 .departement:focus-within {
     outline: 2px solid var(--primary, #2563eb);
@@ -245,7 +242,7 @@ a {
 }
 
 
-/* État sélectionné lorsque l'input est coché */
+/* Sélection */
 
 .departement:has(input:checked) {
     background: var(--primary-light, #eff6ff);
@@ -294,11 +291,13 @@ a {
 
 .table-content {
     flex: 1 1 0;
+
+    width: 100%;
     min-width: 0;
     max-width: 100%;
 
     overflow-x: auto;
-    overflow-y: visible;
+    overflow-y: hidden;
 
     overscroll-behavior-x: contain;
 
@@ -307,9 +306,6 @@ a {
 
     -webkit-overflow-scrolling: touch;
 }
-
-
-/* Barre de défilement du tableau */
 
 .table-content::-webkit-scrollbar {
     height: 7px;
@@ -348,8 +344,7 @@ a {
 
     font-family: inherit;
 
-    box-shadow:
-        var(--shadow-sm, 0 1px 3px rgb(15 23 42 / 5%));
+    box-shadow: var(--shadow-sm, 0 1px 3px rgb(15 23 42 / 5%));
 }
 
 
@@ -396,35 +391,26 @@ a {
 }
 
 
-/* Alternance des lignes */
+/* Alternance */
 
 .styled-table tbody tr:nth-child(even) {
     background: #fafbfc;
 }
 
-
-/* Transition */
-
 .styled-table tbody tr {
     transition: background-color 0.18s ease;
 }
 
-
-/* Survol des lignes */
-
 .styled-table tbody tr:hover {
     background: var(--primary-light, #eff6ff);
 }
-
-
-/* Dernière ligne */
 
 .styled-table tbody tr:last-child td {
     border-bottom: none;
 }
 
 
-/* Liens dans le tableau */
+/* Liens */
 
 .styled-table td a {
     color: inherit;
@@ -459,7 +445,7 @@ a {
     justify-content: center;
 
     width: 100%;
-    height: 100%;
+    height: 100vh;
     height: 100dvh;
 
     padding: 20px;
@@ -470,10 +456,9 @@ a {
     backdrop-filter: blur(3px);
 
     overflow-y: auto;
+
+    overscroll-behavior: contain;
 }
-
-
-/* Contenu de la modale */
 
 .modal-content {
     position: relative;
@@ -496,6 +481,8 @@ a {
 
     overflow-y: auto;
 
+    overscroll-behavior: contain;
+
     animation: modalAppear 0.2s ease;
 }
 
@@ -515,7 +502,7 @@ a {
 }
 
 
-/* Bouton de fermeture */
+/* Fermeture */
 
 .close {
     position: absolute;
@@ -526,8 +513,8 @@ a {
     align-items: center;
     justify-content: center;
 
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
 
     padding: 0;
 
@@ -570,7 +557,7 @@ a.button {
     gap: 8px;
 
     min-width: 100px;
-    min-height: 38px;
+    min-height: 40px;
 
     padding: 8px 14px;
 
@@ -603,8 +590,7 @@ a.button:hover {
     background: #f1f5f9;
     border-color: #d1d5db;
 
-    box-shadow:
-        var(--shadow-sm, 0 1px 3px rgb(15 23 42 / 5%));
+    box-shadow: var(--shadow-sm, 0 1px 3px rgb(15 23 42 / 5%));
 }
 
 button:active,
@@ -631,6 +617,7 @@ button:disabled {
    ========================================================= */
 
 @media (max-width: 900px) {
+
     .center-container {
         width: calc(100% - 24px);
 
@@ -641,9 +628,10 @@ button:disabled {
     }
 
     .list-department {
-        flex-basis: 230px;
+        flex: 0 0 230px;
         width: 230px;
     }
+
 }
 
 
@@ -652,26 +640,35 @@ button:disabled {
    ========================================================= */
 
 @media (max-width: 768px) {
+
     .center-container {
         flex-direction: column;
         align-items: stretch;
 
         width: calc(100% - 20px);
 
-        margin: 80px 10px 20px;
+        margin: 80px auto 20px;
         padding: 14px;
 
         gap: 16px;
+
+        overflow: visible;
     }
+
+    /* Sidebar */
 
     .list-department {
-        flex: 0 1 auto;
+        flex: none;
 
         width: 100%;
-        max-height: 260px;
+        max-height: 240px;
 
         padding: 14px;
+
+        border-radius: 10px;
     }
+
+    /* Départements en grille */
 
     .departments {
         display: grid;
@@ -681,21 +678,37 @@ button:disabled {
             minmax(min(180px, 100%), 1fr)
         );
 
-        gap: 5px;
+        gap: 6px;
     }
 
     .departement {
         min-width: 0;
+        padding: 10px;
     }
 
+    .dep-header {
+        gap: 8px;
+    }
+
+    /* Tableau */
+
     .table-content {
+        display: block;
+
         width: 100%;
         min-width: 0;
+        max-width: 100%;
+
+        overflow-x: auto;
+        overflow-y: hidden;
     }
 
     .styled-table {
+        width: 100%;
         min-width: 650px;
     }
+
+    /* Message vide */
 
     .empty-message {
         min-height: 220px;
@@ -704,6 +717,8 @@ button:disabled {
         font-size: 16px;
     }
 
+    /* Modale */
+
     .modal {
         padding: 14px;
     }
@@ -711,8 +726,10 @@ button:disabled {
     .modal-content {
         width: 100%;
         max-height: calc(100dvh - 28px);
+
         padding: 24px;
     }
+
 }
 
 
@@ -721,21 +738,35 @@ button:disabled {
    ========================================================= */
 
 @media (max-width: 480px) {
+
     .center-container {
         width: calc(100% - 16px);
 
-        margin: 76px 8px 16px;
+        margin: 76px auto 16px;
         padding: 10px;
+
+        gap: 12px;
 
         border-radius: 12px;
     }
 
+    /* Sidebar */
+
     .list-department {
+        max-height: 220px;
         padding: 12px;
     }
 
     .departement-title {
+        margin-bottom: 10px;
+        padding-bottom: 12px;
+
         font-size: 14px;
+    }
+
+    .departments {
+        grid-template-columns: 1fr;
+        gap: 4px;
     }
 
     .departement {
@@ -753,14 +784,30 @@ button:disabled {
         height: 18px;
     }
 
-    .departments {
-        grid-template-columns: 1fr;
+    /* Tableau */
+
+    .table-content {
+        border-radius: 8px;
+    }
+
+    .styled-table {
+        min-width: 620px;
     }
 
     .styled-table th,
     .styled-table td {
-        padding: 12px;
+        padding: 11px 12px;
     }
+
+    .styled-table th {
+        font-size: 11px;
+    }
+
+    .styled-table td {
+        font-size: 13px;
+    }
+
+    /* Message vide */
 
     .empty-message {
         min-height: 180px;
@@ -769,22 +816,88 @@ button:disabled {
         font-size: 14px;
     }
 
+    /* Boutons */
+
+    button,
+    a.button {
+        min-height: 42px;
+        padding: 9px 12px;
+
+        font-size: 13px;
+    }
+
+    /* Modale */
+
     .modal {
         padding: 10px;
     }
 
     .modal-content {
         max-height: calc(100dvh - 20px);
+
         padding: 20px;
+
+        border-radius: 12px;
     }
+
+    .close {
+        top: 10px;
+        right: 10px;
+
+        width: 34px;
+        height: 34px;
+    }
+
 }
 
 
 /* =========================================================
-   14. APPAREILS TACTILES
+   14. TRÈS PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .center-container {
+        width: calc(100% - 12px);
+
+        margin: 72px auto 12px;
+        padding: 8px;
+    }
+
+    .list-department {
+        padding: 10px;
+    }
+
+    .departement {
+        padding: 9px;
+    }
+
+    .departement h3 {
+        font-size: 12px;
+    }
+
+    .dep-header {
+        gap: 7px;
+    }
+
+    .styled-table {
+        min-width: 580px;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 10px;
+    }
+
+}
+
+
+/* =========================================================
+   15. APPAREILS TACTILES
    ========================================================= */
 
 @media (hover: none) {
+
     .departement:hover {
         transform: none;
     }
@@ -801,30 +914,36 @@ button:disabled {
     a.button:hover {
         box-shadow: none;
     }
+
 }
 
 
 /* =========================================================
-   15. ACCESSIBILITÉ
+   16. ACCESSIBILITÉ
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
         scroll-behavior: auto !important;
+
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
+
         transition-duration: 0.01ms !important;
     }
+
 }
 
 
 /* =========================================================
-   16. GRANDS ÉCRANS
+   17. GRANDS ÉCRANS
    ========================================================= */
 
 @media (min-width: 1600px) {
+
     .center-container {
         width: calc(100% - 80px);
         max-width: 1700px;
@@ -913,14 +1032,16 @@ button:disabled {
 
         padding: 9px 16px;
     }
+
 }
 
 
 /* =========================================================
-   17. TRÈS GRANDS ÉCRANS
+   18. TRÈS GRANDS ÉCRANS
    ========================================================= */
 
 @media (min-width: 1920px) {
+
     .center-container {
         max-width: 1850px;
 
@@ -976,4 +1097,5 @@ button:disabled {
         width: min(560px, 100%);
         padding: 36px;
     }
+
 }

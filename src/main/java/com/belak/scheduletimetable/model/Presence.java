@@ -13,6 +13,9 @@ import java.time.LocalTime;
                         name = "uk_presence_student_seance",
                         columnNames = {"student_id", "seance_id"}
                 )
+        },
+        indexes = {
+                @Index(name = "idx_presence_seance", columnList = "seance_id")
         }
 )
 @Getter

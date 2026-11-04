@@ -34,12 +34,12 @@ public class ProfessorExcelService {
         return new XSSFWorkbook(file.getInputStream());
     }
     public  void processSheet(MultipartFile file) throws IOException {
-        Map<String, CoursTP> coursTPMap = tpRepository.findAll()
-                .stream()
-                .collect(Collectors.toMap(
-                        CoursTP::getIntitule,
-                        Function.identity()
-                ));
+//        Map<String, CoursTP> coursTPMap = tpRepository.findAll()
+//                .stream()
+//                .collect(Collectors.toMap(
+//                        CoursTP::getIntitule,
+//                        Function.identity()
+//                ));
 
         List<Professor> professors = new ArrayList<>();
         try {
@@ -68,7 +68,8 @@ public class ProfessorExcelService {
                         professor.getGrade()
                 );
 
-                professors.add(assignCoursTPToProfessor(professor, coursTPMap));            }
+                //professors.add(assignCoursTPToProfessor(professor, coursTPMap));
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -92,7 +93,7 @@ public class ProfessorExcelService {
 //        String password = utilsService.getCellValue(row.getCell(6));
 //        dto.setPassword(password != null ? passwordEncoder.encode(password) : null);
 //
-          dto.setEmail(utilsService.getCellValue(row.getCell(3)));
+        dto.setEmail(utilsService.getCellValue(row.getCell(3)));
 //        dto.setTelephone(utilsService.getCellValue(row.getCell(8)));
 //        dto.setSexe(utilsService.getCellValue(row.getCell(9)));
 //

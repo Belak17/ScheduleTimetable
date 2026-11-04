@@ -273,7 +273,7 @@ public class UserRegisterService implements UserRegisterInterfaceService {
 
     public int signup(User appUser)
     {
-        User theUserExists = userRepository.findByEmail(appUser.getEmail()).get() ;
+        User theUserExists = userRepository.findByEmail(appUser.getEmail()).get();
         if (theUserExists.isEnabled())
         {
             log.info("Le compte client {} est deja active.Veuillez vous connecter",theUserExists.getEmail());
