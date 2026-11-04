@@ -104,6 +104,28 @@ public class GlobalExceptionHandler {
         return "login/firstlogin";
     }
 
+    @ExceptionHandler(AccountAlreadyActivated.class)
+    public String handleAccountAlreadyActivated(
+            InformationNotFoundException ex,
+            Model model) {
+
+        model.addAttribute("errorMessage", ex.getMessage());
+        if (ex.getRole().equals(User.Role.PROFESSOR))
+        {
+            return "login/login-professor";
+        }
+        return "login/login";
+    }
+
+    @ExceptionHandler(AccountNotFound.class)
+    public String handleAccountAlreadyActivated(
+            AccountNotFound ex,
+            Model model) {
+
+        model.addAttribute("errorMessage", ex.getMessage());
+        return "login/login";
+    }
+
     @ExceptionHandler(ResetNotPossibleAccountNotActivatedException.class)
     public String handleResetNotPossibleAccountNotActivated(
             AccountNotActivatedException ex,

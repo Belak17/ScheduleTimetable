@@ -1,5 +1,7 @@
 package com.belak.scheduletimetable.service.user;
 
+import com.belak.scheduletimetable.exception.AccountAlreadyActivated;
+import com.belak.scheduletimetable.exception.AccountNotFound;
 import com.belak.scheduletimetable.exception.InformationNotFoundException;
 import com.belak.scheduletimetable.model.ConfirmationToken;
 import com.belak.scheduletimetable.model.User;
@@ -108,7 +110,7 @@ public class UserRegisterService implements UserRegisterInterfaceService {
         {
             throw new InformationNotFoundException("Informations introuvables." +
                     "Veuillez rééssayer ou vous connecter en tant qu'étudiant si vous en êtes un "
-                    , request.getEmail(),User.Role.PROFESSOR);
+                    , request.getEmail(),User.Role.STUDENT);
         }
         //String link = "http://localhost:8082/confirm?token=" + token;
         emailSender.sendEmail(
@@ -271,36 +273,57 @@ public class UserRegisterService implements UserRegisterInterfaceService {
         """.formatted(name, token);
     }
 
-    public int signup(User appUser)
-    {
-        User theUserExists = userRepository.findByEmail(appUser.getEmail()).get();
-        if (theUserExists.isEnabled())
-        {
-            log.info("Le compte client {} est deja active.Veuillez vous connecter",theUserExists.getEmail());
-            // TODO check of attributes are the same and
-            // TODO if email not confirmed send confirmation email
+    @Transactional
+    public int signup(User appUser) {
 
-            throw  new IllegalArgumentException("account already activated ");
+        String email = appUser.getEmail().trim();
+
+        User theUserExists = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new AccountNotFound(
+                                "Aucun compte associé à cet email"
+                        )
+                );
+
+        if (theUserExists.isEnabled()) {
+
+            log.info(
+                    "Le compte client {} est déjà activé. Veuillez vous connecter.",
+                    theUserExists.getEmail()
+            );
+
+            throw new AccountAlreadyActivated("Votre compte a déjà été activé",appUser.getRole());
         }
-        String encodedPassword = passwordEncoder
-                .encode(appUser.getPassword());
+
+        if (appUser.getPassword() == null || appUser.getPassword().isBlank()) {
+            throw new IllegalArgumentException("Le mot de passe est obligatoire");
+        }
+
+        String encodedPassword = passwordEncoder.encode(appUser.getPassword());
 
         theUserExists.setPassword(encodedPassword);
+
         userRepository.save(theUserExists);
+
+        // Invalider les anciens tokens
+        confirmationTokenService.deletePreviousTokens(theUserExists);
+
         SecureRandom random = new SecureRandom();
 
         int token = 100000 + random.nextInt(900000);
-        // TODO : SEND CONFIRMATION TOKEN
+
         ConfirmationToken confirmationToken = new ConfirmationToken(
-                token ,
-                LocalDateTime.now() ,
+                token,
+                LocalDateTime.now(),
                 LocalDateTime.now().plusMinutes(5),
                 theUserExists
-
         );
+
         confirmationTokenService.saveConfirmationToken(confirmationToken);
-        // TODO : SEND EMAIL
-        return  token ;
+
+        // TODO : envoyer le code de confirmation
+
+        return token;
     }
 
     @Transactional

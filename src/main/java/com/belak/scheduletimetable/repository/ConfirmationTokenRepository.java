@@ -14,4 +14,9 @@ import java.util.Optional;
 public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken,Long> {
     Optional<ConfirmationToken> findByToken(int confirmationToken);
     void deleteByAppUser(User user);
+
+
+
+
+
 }
