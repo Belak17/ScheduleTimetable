@@ -22,24 +22,13 @@
         <label for="telephone">Téléphone</label>
         <input id="telephone" class="input" name="telephone" type="text" th:value="${professor.telephone}" required>
       </div>
-      <div class="info-input">
-        <label for="address">Adresse Postale</label>
-        <input id="address" class="input" name="address" type="text" th:value="${professor.adresse}" required>
-      </div>
-      <div class="info-input">
-        <label for="code">Code Postale</label>
-        <input id="code" class="input" name="code"  type="text" th:value="${professor.codePostale}" required>
-      </div>
+
     </div>
     <span class="title-container">Informations Academiques</span>
     <div class="academical-info">
       <div class="info-input">
         <label for="field">Departement</label>
         <span id="field" th:text="${professor.department}"></span>
-      </div>
-      <div class="info-input">
-        <label for="level">Specialite</label>
-        <span id="level" th:text="${professor.specialite}"></span>
       </div>
       <div class="info-input">
         <label for="group">Grade</label>

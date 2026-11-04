@@ -28,7 +28,7 @@
     <section class="all-info">
         <div class="summary">
             <div class="photo">
-                <img th:src="@{/images/self.jpg}">
+                <img th:src="@{/images/user-profile.png}">
             </div>
             <span class="name" th:text="${professor.prenom+' '+professor.nom}">
 
@@ -47,12 +47,7 @@
                 <span id="group" th:text="${professor.grade}"></span>
                     </span>
                 </span>
-                <span class="other">
-                     <img th:src="@{/images/hierarchical-structure.png}">
-                     <span class="summary-infos">
-                    <span class="summary-info">Specialite :</span>
-                <span th:text="${professor.specialite}"> </span> </span>
-                </span>
+
                 <span class="other">
                     <img th:src="@{/images/department.png}">
                     <span class="summary-infos">
@@ -86,49 +81,17 @@
                 </span>
             </span>
                 <span class="info">
-                <img th:src="@{/images/building.png}">
-                <span class="content">
-                    <span class="label">CIN/Passeport :</span>
-                <span class="value" th:text="${professor.cin}"></span>
-                </span>
-            </span>
-                <span class="info">
                  <img th:src="@{/images/united-nations.png}">
                  <span class="content">
                 <span class="label">Nationalité :</span>
                 <span class="value" th:text="${professor.nationalite}"></span>
                 </span>
              </span>
-                <span class="info"><img th:src="@{/images/building.png}">
-                <span class="content">
-                <span class="label">Ville Naissance :</span>
-                <span class="value" th:text="${professor.villeNaissance}"></span>
-                </span>
-            </span>
             </div>
             <span class="title-container">Informations de Localisation</span>
             <div class="container">
-               <span class="info">
-                <img th:src="@{/images/building.png}">
-                <span class="content">
-                <span class="label">Ville:</span>
-                <span class="value" th:text="${professor.ville}"></span>
-                </span>
-               </span>
-                <span class="info">
-                <img th:src="@{/images/address.png}">
-                <span class="content">
-                <span class="label">Adresse Postale :</span>
-                <span class="value" th:text="${professor.adresse}"></span>
-                </span>
-                </span>
-                <span class="info">
-                <img th:src="@{/images/internet.png}">
-                <span class="content">
-                                <span class="label">Code Postale :</span>
-                <span class="value" th:text="${professor.codePostale}"></span>
-                </span>
-            </span>
+
+
             </div>
             <span class="title-container">Informations de Contact</span>
             <div class="container">

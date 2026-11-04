@@ -68,7 +68,10 @@ public class ProfessorExcelService {
                         professor.getGrade()
                 );
 
-                //professors.add(assignCoursTPToProfessor(professor, coursTPMap));
+                professors.add(
+                        professor
+                // assignCoursTPToProfessor(professor, coursTPMap)
+                );
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

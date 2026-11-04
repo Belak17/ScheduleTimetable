@@ -10,11 +10,22 @@ import org.springframework.stereotype.Component;
 public class StudentProfileMapper {
     public StudentProfileDto convertToStudentProfileDto(Student student)
     {
-        return new StudentProfileDto(student.getUserId() , student.getNom(), student.getPrenom(), student.getPassword(),
-                student.getEmail(),student.getTelephone(),
-                student.getSexe(),
-                student.getNationalite().getLibelleNationalite().toString() , student.getTimetables().iterator().next().getDepartement().getLibelle() , student.getFiliere().getLibelle() ,
-                student.getNiveau() , student.getGroup()
-        ) ;
+        return new StudentProfileDto(
+                student.getUserId() != null ? student.getUserId() : "",
+                student.getNom() != null ? student.getNom() : "",
+                student.getPrenom() != null ? student.getPrenom() : "",
+                student.getPassword() != null ? student.getPassword() : "",
+                student.getEmail() != null ? student.getEmail() : "",
+                student.getTelephone() != null ? student.getTelephone() : "",
+                student.getSexe() != null ? student.getSexe() : "",
+                student.getNationalite() != null
+                        ? student.getNationalite().getLibelleNationalite() : "",
+                student.getTimetables() != null && !student.getTimetables().isEmpty()
+                        && student.getTimetables().iterator().next().getDepartement() != null
+                        ? student.getTimetables().iterator().next().getDepartement().getLibelle() : "",
+                student.getFiliere() != null ? student.getFiliere().getLibelle() : "",
+                student.getNiveau() != null ? student.getNiveau() : "",
+                student.getGroup() != null ? student.getGroup() : ""
+        );
     }
 }
