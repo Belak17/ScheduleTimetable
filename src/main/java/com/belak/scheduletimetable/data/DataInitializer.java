@@ -51,15 +51,15 @@ public class DataInitializer implements CommandLineRunner
             System.out.println("Admin créé avec succès !");
         }
 
-        if (userRepository.findByEmail("mahmoud.benamara@ipeit.rnu.tn").isPresent())
-        {
-            User professor = userRepository.findByEmail("mahmoud.benamara@ipeit.rnu.tn").get();
-            professor.setEnabled(true);
-            professor.setPassword(passwordEncoder.encode("mahmoudbenamara"));
-            userRepository.save(professor);
-            System.out.println("Utilisateur profeseur fait");
-
-        }
+//        if (userRepository.findByEmail("mahmoud.benamara@ipeit.rnu.tn").isPresent())
+//        {
+//            User professor = userRepository.findByEmail("mahmoud.benamara@ipeit.rnu.tn").get();
+//            professor.setEnabled(true);
+//            professor.setPassword(passwordEncoder.encode("mahmoudbenamara"));
+//            userRepository.save(professor);
+//            System.out.println("Utilisateur profeseur fait");
+//
+//        }
 
 //        if (userRepository.findByUserId("BJ340005").isEmpty())
 //        {
