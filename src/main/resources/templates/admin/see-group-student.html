@@ -1,105 +1,333 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Group Timetable </title>
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Détails des étudiants | ScheduleTimetable</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin/see-group-student.css}"/>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+
+<input id="toggle-sidebar" type="checkbox"/>
+
 <header>
     <div class="head-box">
-        <!-- Checkbox caché -->
 
-        <label for="toggle-sidebar">
-            <div  id="menu">
-
-                <img th:src="@{/images/menu-burger.png}">
-
-
+        <label for="toggle-sidebar" class="menu-trigger">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Menu"/>
             </div>
         </label>
-        <h2 class="text-title">Details Etudiants  </h2>
+
+        <div class="header-title">
+            <h2 class="text-title">Détails des étudiants</h2>
+            <span>Administration / Gestion des groupes / Étudiants</span>
+        </div>
+
     </div>
 </header>
+
+
 <main class="center-wrapper">
-    <table bgcolor="lightgray" border="1" rules="all" class="styled-table">
-        <thead>
-        <tr>
-            <th>Filiere</th>
-            <th>Groupe</th>
-            <th>Annee</th>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Email</th>
-            <th>Identfiant</th>
-        </tr>
-        </thead>
-        <tr th:each="student : ${students.content}">
-            <td th:text="${student.field}"></td>
-            <td th:text="${student.group}"></td>
-            <td th:text="${student.year}"></td>
-            <td th:text="${student.nom}"></td>
-            <td th:text="${student.prenom}"></td>
-            <td th:text="${student.email}"></td>
-            <td th:text="${student.userId}"></td>
-        </tr>
 
-    </table>
-    <div class="pagination" style="margin-top: 20px;">
+    <!-- EN-TÊTE DE LA PAGE -->
+    <section class="page-intro">
 
-        <!-- Bouton Précédent -->
-        <a th:if="${students.hasPrevious()}"
-           th:href="${group != null}
-           ? @{/students/{field}/{year}/{group}/details(
-                field=${field},
-                year=${year},
-                group=${group},
-                page=${students.number - 1},
-                size=${students.size})}
-           : @{/students/{field}/{year}/details(
-                field=${field},
-                year=${year},
-                page=${students.number - 1},
-                size=${students.size})}"
-           class="button">
-            ← Précédent
-        </a>
+        <div class="intro-content">
 
-        <!-- Numéro de page -->
-        <span th:if="${students.totalPages > 0}">
-        Page
-        <span th:text="${students.number + 1}"></span>
-        sur
-        <span th:text="${students.totalPages}"></span>
-    </span>
+            <div class="intro-icon">
+                <i class="fi fi-rr-users"></i>
+            </div>
 
-        <!-- Bouton Suivant -->
-        <a th:if="${students.hasNext()}"
-           th:href="${group != null}
-           ? @{/students/{field}/{year}/{group}/details(
-                field=${field},
-                year=${year},
-                group=${group},
-                page=${students.number + 1},
-                size=${students.size})}
-           : @{/students/{field}/{year}/details(
-                field=${field},
-                year=${year},
-                page=${students.number + 1},
-                size=${students.size})}"
-           class="button">
-            Suivant →
-        </a>
+            <div>
+                <h1>Liste des étudiants</h1>
 
-    </div>
+                <p>
+                    Consultez les informations des étudiants appartenant
+                    à cette filière et à ce groupe.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="student-counter"
+             th:if="${students != null}">
+
+            <span class="counter-label">Total des étudiants</span>
+
+            <div class="counter-value">
+                <i class="fi fi-rr-user"></i>
+                <strong th:text="${students.totalElements}">0</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- INFORMATIONS DU GROUPE -->
+    <section class="group-info">
+
+        <div class="info-item">
+
+            <span class="info-label">Filière</span>
+
+            <strong th:text="${field}">Informatique</strong>
+
+        </div>
+
+        <div class="info-divider"></div>
+
+        <div class="info-item">
+
+            <span class="info-label">Année</span>
+
+            <strong th:text="${year}">L3</strong>
+
+        </div>
+
+        <div class="info-divider" th:if="${group != null}"></div>
+
+        <div class="info-item" th:if="${group != null}">
+
+            <span class="info-label">Groupe</span>
+
+            <strong class="group-badge" th:text="${group}">A</strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- TABLEAU DES ÉTUDIANTS -->
+    <section class="students-section">
+
+        <div class="section-heading">
+
+            <div>
+                <h2>Étudiants inscrits</h2>
+
+                <p>
+                    Retrouvez les informations académiques et personnelles
+                    des étudiants.
+                </p>
+            </div>
+
+            <span class="results-badge"
+                  th:text="${students.totalElements} + ' étudiant(s)'">
+                0 étudiant(s)
+            </span>
+
+        </div>
+
+
+        <!-- TABLEAU -->
+        <div class="table-responsive"
+             th:if="${students != null and !students.isEmpty()}">
+
+            <table class="styled-table">
+
+                <thead>
+                <tr>
+                    <th class="number-column">#</th>
+                    <th>Étudiant</th>
+                    <th>Filière</th>
+                    <th>Groupe</th>
+                    <th>Année</th>
+                    <th>Email</th>
+                    <th>Identifiant</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="student, stat : ${students.content}">
+
+                    <td class="number-cell"
+                        th:text="${students.number * students.size + stat.count}">
+                        1
+                    </td>
+
+                    <td>
+                        <div class="student-name">
+
+                            <div class="student-avatar"
+                                 th:text="${#strings.substring(student.prenom, 0, 1) + #strings.substring(student.nom, 0, 1)}">
+                                JD
+                            </div>
+
+                            <div class="student-identity">
+
+                                <strong th:text="${student.prenom + ' ' + student.nom}">
+                                    John Doe
+                                </strong>
+
+                                <span>Étudiant</span>
+
+                            </div>
+
+                        </div>
+                    </td>
+
+                    <td>
+                        <span class="field-text"
+                              th:text="${student.field}">
+                            Informatique
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="group-cell"
+                              th:text="${student.group}">
+                            A
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="year-badge"
+                              th:text="${student.year}">
+                            L3
+                        </span>
+                    </td>
+
+                    <td>
+                        <a class="email-link"
+                           th:href="'mailto:' + ${student.email}"
+                           th:text="${student.email}">
+                            student@email.com
+                        </a>
+                    </td>
+
+                    <td>
+                        <span class="student-id"
+                              th:text="${student.userId}">
+                            123456
+                        </span>
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- ÉTAT VIDE -->
+        <div class="empty-state"
+             th:if="${students == null or students.isEmpty()}">
+
+            <div class="empty-icon">
+                <i class="fi fi-rr-users-alt"></i>
+            </div>
+
+            <h3>Aucun étudiant trouvé</h3>
+
+            <p>
+                Aucun étudiant n'est actuellement associé à ce groupe.
+            </p>
+
+        </div>
+
+
+        <!-- PAGINATION -->
+        <div class="pagination-container"
+             th:if="${students != null and students.totalPages > 0}">
+
+            <div class="pagination-info">
+
+                Affichage de
+
+                <strong th:text="${students.number * students.size + 1}">1</strong>
+
+                à
+
+                <strong th:text="${students.number * students.size + students.numberOfElements}">
+                    10
+                </strong>
+
+                sur
+
+                <strong th:text="${students.totalElements}">100</strong>
+
+                étudiants
+
+            </div>
+
+
+            <div class="pagination">
+
+                <!-- PRÉCÉDENT -->
+                <a class="pagination-button"
+                   th:href="${group != null}
+                       ? @{/students/{field}/{year}/{group}/details(
+                            field=${field},
+                            year=${year},
+                            group=${group},
+                            page=${students.number - 1},
+                            size=${students.size})}
+                       : @{/students/{field}/{year}/details(
+                            field=${field},
+                            year=${year},
+                            page=${students.number - 1},
+                            size=${students.size})}"
+                   th:if="${students.hasPrevious()}">
+
+                    <i class="fi fi-rr-angle-left"></i>
+                    <span>Précédent</span>
+
+                </a>
+
+
+                <span class="current-page">
+
+                    Page
+
+                    <strong th:text="${students.number + 1}">1</strong>
+
+                    sur
+
+                    <strong th:text="${students.totalPages}">10</strong>
+
+                </span>
+
+
+                <!-- SUIVANT -->
+                <a class="pagination-button primary-button"
+                   th:href="${group != null}
+                       ? @{/students/{field}/{year}/{group}/details(
+                            field=${field},
+                            year=${year},
+                            group=${group},
+                            page=${students.number + 1},
+                            size=${students.size})}
+                       : @{/students/{field}/{year}/details(
+                            field=${field},
+                            year=${year},
+                            page=${students.number + 1},
+                            size=${students.size})}"
+                   th:if="${students.hasNext()}">
+
+                    <span>Suivant</span>
+                    <i class="fi fi-rr-angle-right"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
 </main>
-<section th:replace="admin/admin-dashboard :: sidebar">
 
-</section>
-<style>
-</style>
+
+<section th:replace="admin/admin-dashboard :: sidebar"></section>
+
 </body>
 </html>

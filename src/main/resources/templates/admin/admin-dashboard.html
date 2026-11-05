@@ -1,163 +1,244 @@
 <!DOCTYPE html>
-<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Tableau de bord administrateur</title>
+
     <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+          th:href="@{/css/pages/dashboard.css}"/>
+
+    <link href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css"
+          rel="stylesheet"/>
 </head>
+
 <body>
 
-<input type="checkbox" id="toggle-sidebar" />
+<input id="toggle-sidebar" type="checkbox"/>
+
+
+<!-- HEADER -->
+
 <header>
     <div class="head-box">
-        <!-- Checkbox caché -->
 
-        <label for="toggle-sidebar">
-            <div  id="menu">
-
-                <img th:src="@{/images/menu-burger.png}">
-
-
+        <label for="toggle-sidebar" class="menu-toggle">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Ouvrir le menu"/>
             </div>
         </label>
-        <h2 th:text="'Bienvenue cher Admin ' + ${fullname}"></h2>
+
+        <h2 th:text="'Bienvenue cher Admin ' + ${fullname}">
+        </h2>
+
     </div>
 </header>
 
 
-<main class="center-wrapper">
-    <h2 class="separator">Gestion Academique</h2>
-    <section class="grid">
+<!-- SIDEBAR -->
 
-        <div class="option" style="background: linear-gradient(135deg, #4f8cff, #6ea8fe);">
-            <a th:href="@{/admin/timetable}">
+<section class="icons" th:fragment="sidebar">
 
-            <img th:src="@{/images/academic-years.png}">
-                <p>Televerser Emploi du temps</p>
-            </a>
-        </div>
-        <div class="option" style="background: linear-gradient(135deg, #7b61ff, #9b8cff);">
-            <a th:href="@{/timetables/group/timetable}">
-
-                <img th:src="@{/images/graduated (1).png}">
-                <p> Emploi du temps des Etudiants</p>
-            </a>
-        </div>
-        <div class="option" style="background: linear-gradient(135deg, #38bdf8, #67e8f9);">
-            <a th:href="@{/professors/professor/timetable}">
-
-                <img th:src="@{/images/teacher (1).png}">
-                <p>Emploi du temps des Professeurs</p>
-            </a>
-        </div>
-        <div class="option" style="background: linear-gradient(135deg, #fb923c, #fdba74);">
-            <a th:href="@{/admin/import/professors}">
-
-            <img th:src="@{/images/study-plans.png}">
-                <p>Importer des Professeurs</p>
-            </a>
-        </div>
-        <div class="option" style="background: linear-gradient(135deg, #fb923c, #fdba74);">
-            <a th:href="@{/admin/import/students}">
-
-                <img th:src="@{/images/study-plans.png}">
-                <p>Importer des Etudiants</p>
-            </a>
-        </div>
-    </section>
-    <h2 class="separator">Gestion Administrative </h2>
-    <section class="grid">
-
-        <div class="option" style="background: linear-gradient(135deg, #f87171, #fca5a5);">
-            <a th:href="@{/admin/profile}">
-
-            <img th:src="@{/images/user-profile.png}">
-                <p>Profil </p>
-            </a>
-        </div>
-        <div class="option" style="background-color: rgba(22, 123, 205, 0.532);">
-            <a th:href="@{/admin/absences/department}">
-
-            <img th:src="@{/images/absences.png}">
-                <p>Voir la liste des absences </p>
-            </a>
-        </div>
-        <div class="option" style="background: linear-gradient(135deg, #7b61ff, #9b8cff);">
-            <img th:src="@{/images/administrator.png}">
-
-            <p>Gestion des administateurs </p>
-        </div>
-        <div class="option" style="background: linear-gradient(135deg, #4f8cff, #6ea8fe);">
-            <a th:href="@{/logout}">
-
-            <img th:src="@{/images/power-off.png}">
-                <p>Deconnexion </p>
-            </a>
-        </div>
-    </section>
-
-</main>
-<section class="icons" th:fragment="sidebar" >
     <div class="text-menu">
-        <h2>
-            Menu
-        </h2>
+        <h2>Menu</h2>
     </div>
-    <div class="icons-option">
+
+    <nav class="icons-option">
+
         <div class="icon-container">
             <a th:href="@{/admin/dashboard}">
-                <img th:src="@{/images/home.png}" width="20">
-
+                <img th:src="@{/images/home.png}" alt=""/>
                 <span class="tooltip">Dashboard</span>
             </a>
         </div>
+
         <div class="icon-container">
             <a th:href="@{/admin/profile}">
-                <img th:src="@{/images/user (1).png}" width="20">
-
+                <img th:src="@{/images/user (1).png}" alt=""/>
                 <span class="tooltip">Profil</span>
             </a>
         </div>
+
         <div class="icon-container">
             <a th:href="@{/admin/timetable}">
-                <img th:src="@{/images/folder-upload.png}" width="20">
-
-                <span class="tooltip">Emploi du temps </span>
+                <img th:src="@{/images/folder-upload.png}" alt=""/>
+                <span class="tooltip">Emploi du temps</span>
             </a>
         </div>
+
         <div class="icon-container">
             <a th:href="@{/admin/import}">
-                <img th:src="@{/images/user (1).png}" width="20">
-
-
-                <span class="tooltip">Upload user </span>
+                <img th:src="@{/images/user (1).png}" alt=""/>
+                <span class="tooltip">Upload utilisateur</span>
             </a>
         </div>
+
         <div class="icon-container">
             <a th:href="@{/timetables/group/timetable}">
-                <img th:src="@{/images/users-class.png}" width="20">
-
-
-                <span class="tooltip">Emploi du temps des Etudiant </span>
+                <img th:src="@{/images/users-class.png}" alt=""/>
+                <span class="tooltip">Emploi du temps des étudiants</span>
             </a>
         </div>
+
         <div class="icon-container">
             <a th:href="@{/professors/professor/timetable}">
-                <img th:src="@{/images/workshop.png}" width="20">
-
-
-                <span class="tooltip">Emploi du temps des Professeurs </span>
+                <img th:src="@{/images/workshop.png}" alt=""/>
+                <span class="tooltip">Emploi du temps des professeurs</span>
             </a>
         </div>
 
-    </div>
-</section>
-<script>
+    </nav>
 
-</script>
+</section>
+
+
+<!-- CONTENU PRINCIPAL -->
+
+<main class="center-wrapper">
+
+    <!-- GESTION ACADÉMIQUE -->
+
+    <section class="dashboard-section">
+
+        <h2 class="separator">Gestion académique</h2>
+
+        <div class="grid">
+
+            <article class="option">
+                <a th:href="@{/admin/timetable}">
+
+                    <div class="option-icon">
+                        <img th:src="@{/images/academic-years.png}"
+                             alt="Téléverser un emploi du temps"/>
+                    </div>
+
+                    <p>Téléverser un emploi du temps</p>
+
+                </a>
+            </article>
+
+            <article class="option">
+                <a th:href="@{/timetables/group/timetable}">
+
+                    <div class="option-icon">
+                        <img th:src="@{/images/graduated (1).png}"
+                             alt="Emploi du temps des étudiants"/>
+                    </div>
+
+                    <p>Emploi du temps des étudiants</p>
+
+                </a>
+            </article>
+
+            <article class="option">
+                <a th:href="@{/professors/professor/timetable}">
+
+                    <div class="option-icon">
+                        <img th:src="@{/images/teacher (1).png}"
+                             alt="Emploi du temps des professeurs"/>
+                    </div>
+
+                    <p>Emploi du temps des professeurs</p>
+
+                </a>
+            </article>
+
+            <article class="option">
+                <a th:href="@{/admin/import/professors}">
+
+                    <div class="option-icon">
+                        <img th:src="@{/images/study-plans.png}"
+                             alt="Importer des professeurs"/>
+                    </div>
+
+                    <p>Importer des professeurs</p>
+
+                </a>
+            </article>
+
+            <article class="option">
+                <a th:href="@{/admin/import/students}">
+
+                    <div class="option-icon">
+                        <img th:src="@{/images/study-plans.png}"
+                             alt="Importer des étudiants"/>
+                    </div>
+
+                    <p>Importer des étudiants</p>
+
+                </a>
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- GESTION ADMINISTRATIVE -->
+
+    <section class="dashboard-section">
+
+        <h2 class="separator">Gestion administrative</h2>
+
+        <div class="grid">
+
+            <article class="option">
+                <a th:href="@{/admin/profile}">
+
+                    <div class="option-icon">
+                        <img th:src="@{/images/user-profile.png}"
+                             alt="Profil"/>
+                    </div>
+
+                    <p>Profil</p>
+
+                </a>
+            </article>
+
+            <article class="option">
+                <a th:href="@{/admin/absences/department}">
+
+                    <div class="option-icon">
+                        <img th:src="@{/images/absences.png}"
+                             alt="Absences"/>
+                    </div>
+
+                    <p>Voir la liste des absences</p>
+
+                </a>
+            </article>
+
+            <article class="option">
+
+                <div class="option-icon">
+                    <img th:src="@{/images/administrator.png}"
+                         alt="Gestion des administrateurs"/>
+                </div>
+
+                <p>Gestion des administrateurs</p>
+
+            </article>
+
+            <article class="option">
+                <a th:href="@{/logout}">
+
+                    <div class="option-icon">
+                        <img th:src="@{/images/power-off.png}"
+                             alt="Déconnexion"/>
+                    </div>
+
+                    <p>Déconnexion</p>
+
+                </a>
+            </article>
+
+        </div>
+
+    </section>
+
+</main>
 
 </body>
 </html>

@@ -1,47 +1,149 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validation Page</title>
-    <link rel="stylesheet" th:href="@{/css/style-student/style-validation.css}">
-    <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Validation échouée</title>
+
+    <link rel="stylesheet" th:href="@{/css/pages/errorpage.css}"/>
+
+    <link
+            href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css"
+            rel="stylesheet"/>
 </head>
 
 <body>
 
+<main class="page-container">
 
-<main class="center-wrapper">
+    <section class="error-card">
 
-    <h2 class="separator error">Validation échouée</h2>
+        <!-- En-tête de l'erreur -->
+        <header class="page-header">
 
-    <section class="result-scanner error">
+            <div class="status-icon">
+                <span>✕</span>
+            </div>
 
-        <div class="check-circle error">
-            ✕
-        </div>
+            <div class="header-content">
 
-        <h3 class="error-title">
-            Présence non enregistrée
-        </h3>
+                <span class="eyebrow">VALIDATION DE PRÉSENCE</span>
 
-        <div class="validation-details">
-            <p><strong>Cause :</strong>
-                <span th:text="${errorMessage}"></span>
-            </p>
-            <p><strong>Action :</strong> Réessayez ou contactez l’enseignant</p>
+                <h1>Validation échouée</h1>
+
+                <p>
+                    Votre présence n'a pas pu être enregistrée.
+                    Consultez les informations ci-dessous.
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <!-- Contenu de l'erreur -->
+        <section class="error-content">
+
+            <div class="section-heading">
+
+                <div class="heading-icon">
+                    <i class="fi fi-ss-info"></i>
+                </div>
+
+                <div>
+                    <h2>Présence non enregistrée</h2>
+
+                    <p>
+                        Une erreur est survenue lors de la validation
+                        de votre présence.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Détails de la validation -->
+            <div class="validation-details">
+
+                <div class="detail-row">
+
+                    <span class="detail-label">Cause</span>
+
+                    <span class="detail-value error-message"
+                          th:text="${errorMessage}">
+                    </span>
+
+                </div>
+
+                <div class="detail-row">
+
+                    <span class="detail-label">Action</span>
+
+                    <span class="detail-value">
+                        Réessayez ou contactez votre enseignant
+                        si le problème persiste.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Information complémentaire -->
+            <div class="information-box">
+
+                <div class="information-icon">
+                    <i class="fi fi-ss-shield-exclamation"></i>
+                </div>
+
+                <div class="information-content">
+
+                    <h3>Besoin d'assistance ?</h3>
+
+                    <p>
+                        Si vous pensez qu'il s'agit d'une erreur,
+                        veuillez contacter votre enseignant afin
+                        de vérifier votre situation.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Pied de carte -->
+        <div class="card-footer">
+
+            <i class="fi fi-ss-shield-check"></i>
+
+            <span>
+                La validation des présences est soumise aux règles
+                de sécurité de l'établissement.
+            </span>
+
         </div>
 
     </section>
-    <!-- Bouton de retour à la connexion -->
+
+
+    <!-- Retour à la connexion -->
+    <div class="login-button-container">
+
+        <a class="login-btn" th:href="@{/login}">
+
+            <i class="fi fi-ss-sign-in-alt"></i>
+
+            <span>Retour à la connexion</span>
+
+        </a>
+
+    </div>
 
 </main>
-<div class="login-button-container">
-    <a th:href="@{/login}" class="login-btn">
-        <i class="fi fi-ss-sign-in-alt"></i>
-        Retour à la connexion
-    </a>
-</div>
+
 </body>
 </html>

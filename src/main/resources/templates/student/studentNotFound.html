@@ -2,140 +2,175 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <title>Étudiant introuvable</title>
 
-    <link rel="stylesheet"
-          th:href="@{/css/style-student/style-validation.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/studentnotfound.css}"/>
 
-    <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
-
-    <style>
-        .error-icon {
-            font-size: 2.5rem;
-            color: #dc2626;
-        }
-
-        .error-title {
-            color: #b91c1c;
-            margin-bottom: 12px;
-        }
-
-        .validation-details {
-            margin-top: 20px;
-            text-align: left;
-        }
-
-        .validation-details p {
-            margin: 12px 0;
-            line-height: 1.6;
-            overflow-wrap: anywhere;
-        }
-
-        .user-id {
-            display: inline-block;
-            padding: 4px 10px;
-            background: #f1f5f9;
-            border-radius: 5px;
-            color: #334155;
-            font-family: monospace;
-        }
-
-        .action-message {
-            margin-top: 18px;
-            padding: 12px 14px;
-            background: #f8fafc;
-            border-left: 3px solid #64748b;
-            border-radius: 5px;
-            color: #475569;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 24px;
-            padding: 11px 20px;
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: background 0.2s ease;
-        }
-
-        .back-link:hover {
-            background: #1d4ed8;
-        }
-    </style>
+    <link
+            href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css"
+            rel="stylesheet"/>
 </head>
 
 <body>
 
-<main class="center-wrapper">
+<main class="page-container">
 
-    <h2 class="separator error">
-        Étudiant introuvable
-    </h2>
+    <section class="error-card">
 
-    <section class="result-scanner error">
+        <!-- En-tête de l'erreur -->
+        <header class="page-header">
 
-        <!-- Icône d'erreur -->
-        <div class="check-circle error">
-            ✕
-<!--            <i class="fi fi-ss-user-slash error-icon"></i>-->
+            <div class="status-icon">
+                <span>✕</span>
+            </div>
+
+            <div class="header-content">
+
+                <span class="eyebrow">IDENTIFICATION DE L'ÉTUDIANT</span>
+
+                <h1>Étudiant introuvable</h1>
+
+                <p>
+                    Aucun profil étudiant n'a pu être associé
+                    à votre compte. Consultez les informations ci-dessous.
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <!-- Contenu de l'erreur -->
+        <section class="error-content">
+
+            <div class="section-heading">
+
+                <div class="heading-icon">
+                    <i class="fi fi-ss-user"></i>
+                </div>
+
+                <div>
+                    <h2>Aucun étudiant associé à cet utilisateur</h2>
+
+                    <p>
+                        Votre compte ne possède pas de profil étudiant
+                        correspondant.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Détails de l'erreur -->
+            <div class="validation-details">
+
+                <div class="detail-row">
+
+                    <span class="detail-label">Cause</span>
+
+                    <span class="detail-value error-message"
+                          th:text="${errorMessage}">
+                    </span>
+
+                </div>
+
+                <div class="detail-row" th:if="${userId != null}">
+
+                    <span class="detail-label">Identifiant</span>
+
+                    <span class="detail-value">
+
+                        <span class="user-id"
+                              th:text="${userId}">
+                        </span>
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Information complémentaire -->
+            <div class="information-box">
+
+                <div class="information-icon">
+                    <i class="fi fi-ss-shield-exclamation"></i>
+                </div>
+
+                <div class="information-content">
+
+                    <h3>Que faire ?</h3>
+
+                    <p>
+                        Vérifiez que votre compte est correctement associé
+                        à un profil étudiant. Si le problème persiste,
+                        contactez l'administration de la faculté.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Réessayer -->
+            <div class="retry-container">
+
+                <a class="retry-btn"
+                   id="retryLink"
+                   th:href="@{/api/qr/scan(code=${code})}">
+
+                    <i class="fi fi-ss-refresh"></i>
+
+                    <span>Réessayer la validation</span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- Pied de carte -->
+        <div class="card-footer">
+
+            <i class="fi fi-ss-shield-check"></i>
+
+            <span>
+                L'identification des étudiants est soumise
+                aux règles de sécurité de l'établissement.
+            </span>
+
         </div>
-
-        <!-- Titre -->
-        <h3 class="error-title">
-            Aucun étudiant associé à cet utilisateur
-        </h3>
-
-        <!-- Informations sur l'erreur -->
-        <div class="validation-details">
-
-            <p>
-                <strong>Cause :</strong>
-                <span th:text="${errorMessage}">
-                </span>
-            </p>
-
-            <p th:if="${userId != null}">
-                <strong>Identifiant utilisateur :</strong>
-                <span class="user-id" th:text="${userId}"></span>
-            </p>
-
-        </div>
-
-        <!-- Recommandation -->
-        <div class="action-message">
-            <strong>Que faire ?</strong><br>
-            Vérifiez que votre compte est correctement associé à un
-            profil étudiant. Si le problème persiste, contactez
-            l'administration de la faculté.
-        </div>
-
-        <!-- Retour -->
-        <a th:href="@{/api/qr/scan(code=${code})}"
-           id="retryLink"
-           class="back-link">
-            Veuillez réessayer
-        </a>
 
     </section>
 
+
+    <!-- Retour à la connexion -->
+    <div class="login-button-container">
+
+        <a class="login-btn" th:href="@{/login}">
+
+            <i class="fi fi-ss-sign-in-alt"></i>
+
+            <span>Retour à la connexion</span>
+
+        </a>
+
+    </div>
+
 </main>
 
-<div class="login-button-container">
-    <a th:href="@{/login}" class="login-btn">
-        <i class="fi fi-ss-sign-in-alt"></i>
-        Retour à la connexion
-    </a>
-</div>
+
+<!-- =====================================================
+     DEVICE UUID
+     ===================================================== -->
+
 <script>
+
     document.addEventListener("DOMContentLoaded", function () {
 
         // Récupération de l'identifiant de l'appareil
@@ -160,6 +195,8 @@
         retryLink.href = url.toString();
 
     });
+
 </script>
+
 </body>
 </html>

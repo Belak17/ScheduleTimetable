@@ -1,85 +1,69 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login form</title>
-    <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
-    <link rel="stylesheet" th:href="@{/css/style-login/style-login.css}">
-    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-brands/css/uicons-brands.css">
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login form</title>
+<link href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css" rel="stylesheet"/>
+<link rel="stylesheet" th:href="@{/css/login/login-professor.css}"/>
+<link href="https://cdn-uicons.flaticon.com/uicons-brands/css/uicons-brands.css" rel="stylesheet"/>
 </head>
 <body>
 <header>
-    <img th:src="@{/images/logo_header-hb5kR36g.svg}">
-    <!--<h2>Bienvenue sur votre Plateforme  </h2> -->
-    <a class="register" th:href="@{/firstlogin}">Nouveau ici ? </a>
-
+<img th:src="@{/images/logo_header-hb5kR36g.svg}"/>
+<!--<h2>Bienvenue sur votre Plateforme  </h2> -->
+<a class="register" th:href="@{/firstlogin}">Nouveau ici ? </a>
 </header>
 <form class="login-box" method="post" th:action="@{/perform_login}">
-
-    <section class="left-block">
-        <div class="presentation">
-            <h2>Bienvenue sur Votre Plateforme</h2>
-            <h3>Enseignant/Administration</h3>
-            <input type="hidden" name="loginType" value="professor">
-        </div>
-        <div class="inputs">
-            <div class="input">
-                <img th:src="@{/images/user.png}">
-                <input type="email"
-                       autocomplete="email"
-                       name="userId"
-                       placeholder="Adresse e-mail"
-                       required/>
-            </div>
-            <div class="input">
-                <img th:src="@{/images/lock.png}">
-                <input type="password" autocomplete="off" name="password"
-                       placeholder="Mot de passe" required />
-
-            </div>
-        </div>
-        <div th:if="${error == 'account_disabled'}" class="alert">
+<section class="left-block">
+<div class="presentation">
+<h2>Bienvenue sur Votre Plateforme</h2>
+<h3>Enseignant/Administration</h3>
+<input name="loginType" type="hidden" value="professor"/>
+</div>
+<div class="inputs">
+<div class="input">
+<img th:src="@{/images/user.png}"/>
+<input autocomplete="email" name="userId" placeholder="Adresse e-mail" required="" type="email">
+</input></div>
+<div class="input">
+<img th:src="@{/images/lock.png}"/>
+<input autocomplete="off" name="password" placeholder="Mot de passe" required="" type="password"/>
+</div>
+</div>
+<div class="alert" th:if="${error == 'account_disabled'}">
             Compte désactivé. Veuillez activer votre compte.
         </div>
-
-        <div th:if="${error == 'bad_credentials'}" class="alert">
+<div class="alert" th:if="${error == 'bad_credentials'}">
             Identifiants incorrects.
         </div>
-
-        <div th:if="${error == 'user_not_found'}" class="alert">
+<div class="alert" th:if="${error == 'user_not_found'}">
             Utilisateur introuvable.
         </div>
-        <div th:if="${message}" th:text="${message}" class="success">
-        </div>
-        <div class="others">
-
-            <!--            <div class="forgot-link">-->
-            <!--                <a th:href="@{/forgot}">Mot de passe oublié ?</a>-->
-            <!--            </div>-->
-
-            <button type="submit" class="connect">
+<div class="success" th:if="${message}" th:text="${message}">
+</div>
+    <div class="alert" th:if="${errorMessage}" th:text="${errorMessage}">
+    </div>
+<div class="others">
+<!--            <div class="forgot-link">-->
+<!--                <a th:href="@{/forgot}">Mot de passe oublié ?</a>-->
+<!--            </div>-->
+<button class="connect" type="submit">
                 Se connecter
             </button>
-
-
-        </div>
-    </section>
-
-    <section class="right-block">
-
-    </section>
-
+</div>
+</section>
+<section class="right-block">
+</section>
 </form>
 <footer>
-    <div>
-        <img th:src="@{/images/flag-BfSDlfLV.png}">
-        <h3>République Tunisienne </h3>
-    </div>
-    <p> &copy; Faculté des Sciences de Gabès -Tous droits réservés</p>
-    <a href="mailto:fsg.rnu.tn">fsg.rnu.tn</a>
+<div>
+<img th:src="@{/images/flag-BfSDlfLV.png}"/>
+<h3>République Tunisienne </h3>
+</div>
+<p> © Faculté des Sciences de Gabès -Tous droits réservés</p>
+<a href="mailto:fsg.rnu.tn">fsg.rnu.tn</a>
 </footer>
 <style>
     /* Image décorative sur ordinateur */
@@ -184,6 +168,5 @@
         }
     }
 </style>
-
 </body>
 </html>

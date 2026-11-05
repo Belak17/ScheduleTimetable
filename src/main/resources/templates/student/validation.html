@@ -1,79 +1,217 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validation Page</title>
-    <link rel="stylesheet" th:href="@{/css/style-student/style-validation.css}">
-    <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Présence enregistrée</title>
+
+    <link rel="stylesheet" th:href="@{/css/pages/validation.css}"/>
+
+    <link
+            href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css"
+            rel="stylesheet"
+    />
 </head>
+
 <body>
 
-<main class="center-wrapper">
+<main class="page-container">
 
-    <h2 class="separator">Présence Enregistrée</h2>
+    <section class="success-card">
 
-    <section class="result-scanner">
+        <!-- En-tête -->
+        <header class="page-header">
 
-        <div class="check-circle">✓</div>
+            <div class="status-icon">
+                <i class="fi fi-ss-check"></i>
+            </div>
 
-        <h3 class="success-title">
-            Présence validée avec succès
-        </h3>
+            <div class="header-content">
 
-        <div class="validation-details">
+                <span class="eyebrow">
+                    VALIDATION DE PRÉSENCE
+                </span>
 
-            <p>
-                <strong>Nom de l'Etudiant :</strong>
-                <span th:text="${validation.nom}"></span>
-            </p>
+                <h1>Présence enregistrée</h1>
 
-            <p>
-                <strong>Prenom de l'Etudiant :</strong>
-                <span th:text="${validation.prenom}"></span>
-            </p>
+                <p>
+                    Votre présence a été enregistrée avec succès.
+                    Retrouvez ci-dessous le récapitulatif de votre validation.
+                </p>
 
-            <p>
-                <strong>Cours :</strong>
-                <span th:text="${validation.intitule}"></span>
-            </p>
+            </div>
 
-            <p>
-                <strong>Groupe :</strong>
-                <span th:text="${validation.group}"></span>
-            </p>
+        </header>
 
-            <p>
-                <strong>Code :</strong>
-                <span th:text="${validation.code}"></span>
-            </p>
 
-            <p>
-                <strong>Date :</strong>
-                <span th:text="${validation.date}"></span>
-            </p>
+        <!-- Contenu principal -->
+        <div class="success-content">
 
-            <p>
-                <strong>Heure :</strong>
-                <span th:text="${validation.time}"></span>
-            </p>
+            <!-- Titre de section -->
+            <div class="section-heading">
 
-            <p>
-                <strong>Jour :</strong>
-                <span th:text="${validation.day}"></span>
-            </p>
+                <div class="heading-icon">
+                    <i class="fi fi-ss-clipboard-list"></i>
+                </div>
+
+                <div>
+                    <h2>Présence validée avec succès</h2>
+
+                    <p>
+                        Les informations relatives à votre séance ont été confirmées.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Informations de validation -->
+            <div class="validation-details">
+
+                <div class="detail-row">
+                    <span class="detail-label">
+                        Nom de l'étudiant
+                    </span>
+
+                    <span class="detail-value"
+                          th:text="${validation.nom}">
+                    </span>
+                </div>
+
+
+                <div class="detail-row">
+                    <span class="detail-label">
+                        Prénom de l'étudiant
+                    </span>
+
+                    <span class="detail-value"
+                          th:text="${validation.prenom}">
+                    </span>
+                </div>
+
+
+                <div class="detail-row">
+                    <span class="detail-label">
+                        Cours
+                    </span>
+
+                    <span class="detail-value"
+                          th:text="${validation.intitule}">
+                    </span>
+                </div>
+
+
+                <div class="detail-row">
+                    <span class="detail-label">
+                        Groupe
+                    </span>
+
+                    <span class="detail-value"
+                          th:text="${validation.group}">
+                    </span>
+                </div>
+
+
+                <div class="detail-row">
+                    <span class="detail-label">
+                        Code
+                    </span>
+
+                    <span class="detail-value code-value"
+                          th:text="${validation.code}">
+                    </span>
+                </div>
+
+
+                <div class="detail-row">
+                    <span class="detail-label">
+                        Date
+                    </span>
+
+                    <span class="detail-value"
+                          th:text="${validation.date}">
+                    </span>
+                </div>
+
+
+                <div class="detail-row">
+                    <span class="detail-label">
+                        Heure
+                    </span>
+
+                    <span class="detail-value"
+                          th:text="${validation.time}">
+                    </span>
+                </div>
+
+
+                <div class="detail-row">
+                    <span class="detail-label">
+                        Jour
+                    </span>
+
+                    <span class="detail-value"
+                          th:text="${validation.day}">
+                    </span>
+                </div>
+
+            </div>
+
+
+            <!-- Message de confirmation -->
+            <div class="information-box">
+
+                <div class="information-icon">
+                    <i class="fi fi-ss-shield-check"></i>
+                </div>
+
+                <div class="information-content">
+
+                    <strong>Confirmation de présence</strong>
+
+                    <p>
+                        Votre présence a bien été prise en compte
+                        dans le système de gestion des absences.
+                        Vous pouvez conserver ces informations comme preuve de validation.
+                    </p>
+
+                </div>
+
+            </div>
 
         </div>
 
+
+        <!-- Pied de carte -->
+        <footer class="card-footer">
+
+            <i class="fi fi-ss-lock"></i>
+
+            <span>
+                Validation enregistrée par le système de présence de la faculté.
+            </span>
+
+        </footer>
+
     </section>
-    <!-- Bouton de retour à la connexion -->
+
+
+    <!-- Retour à la connexion -->
     <div class="login-button-container">
-        <a th:href="@{/login}" class="login-btn">
+
+        <a class="login-btn" th:href="@{/login}">
+
             <i class="fi fi-ss-sign-in-alt"></i>
-            Retour à la connexion
+
+            <span>Retour à la connexion</span>
+
         </a>
+
     </div>
+
 </main>
+
 </body>
 </html>

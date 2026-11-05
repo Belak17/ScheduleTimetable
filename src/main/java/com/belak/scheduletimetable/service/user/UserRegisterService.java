@@ -370,4 +370,7 @@ public class UserRegisterService implements UserRegisterInterfaceService {
             log.info("Le compte du CLient {} a ete active",appUser.getEmail());
         }
     }
+
+
+
 }

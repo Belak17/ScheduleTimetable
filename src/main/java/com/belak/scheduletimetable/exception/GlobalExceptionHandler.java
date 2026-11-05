@@ -106,7 +106,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccountAlreadyActivated.class)
     public String handleAccountAlreadyActivated(
-            InformationNotFoundException ex,
+            AccountAlreadyActivated ex,
             Model model) {
 
         model.addAttribute("errorMessage", ex.getMessage());
@@ -128,7 +128,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResetNotPossibleAccountNotActivatedException.class)
     public String handleResetNotPossibleAccountNotActivated(
-            AccountNotActivatedException ex,
+            ResetNotPossibleAccountNotActivatedException ex,
             Model model) {
 
         model.addAttribute("errorMessage", ex.getMessage());

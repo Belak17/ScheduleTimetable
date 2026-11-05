@@ -1,0 +1,1260 @@
+/* =========================================================
+   PAGE : DÉTAILS DES ÉTUDIANTS
+   ScheduleTimetable — Administration
+   ========================================================= */
+
+
+/* =========================================================
+   1. CONFIGURATION GLOBALE
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+
+    --text: #111827;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+
+    --background: #f4f6f9;
+    --surface: #ffffff;
+    --surface-hover: #f8fafc;
+
+    --border: #e5e7eb;
+    --border-light: #f1f3f5;
+
+    --success: #16a34a;
+    --success-light: #f0fdf4;
+
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+
+    --radius-sm: 7px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+
+    --header-height: 70px;
+    --sidebar-width: 250px;
+
+    --transition: 0.2s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    overflow-x: hidden;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: var(--text);
+    background: var(--background);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   2. HEADER
+   ========================================================= */
+
+#toggle-sidebar {
+    display: none;
+}
+
+.head-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    width: 100%;
+    height: var(--header-height);
+
+    padding: 0 24px;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.menu-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: var(--radius-md);
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.menu-trigger:hover {
+    background: var(--primary-light);
+}
+
+#menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+}
+
+#menu img {
+    width: 21px;
+    height: 21px;
+
+    object-fit: contain;
+
+    transition: transform var(--transition);
+}
+
+#toggle-sidebar:checked ~ header #menu img {
+    transform: rotate(90deg);
+}
+
+.header-title {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    min-width: 0;
+}
+
+.text-title {
+    color: var(--text);
+
+    font-size: 18px;
+    font-weight: 650;
+
+    line-height: 1.3;
+    letter-spacing: -0.3px;
+}
+
+.header-title > span {
+    color: var(--text-muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   3. SIDEBAR
+   ========================================================= */
+
+.icons {
+    position: fixed;
+    top: 0;
+    left: calc(-1 * var(--sidebar-width));
+
+    z-index: 90;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: var(--sidebar-width);
+
+    height: 100vh;
+    height: 100dvh;
+
+    padding-top: var(--header-height);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background: var(--surface);
+
+    border-right: 1px solid var(--border);
+
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.09);
+
+    transition: left 0.25s ease;
+
+    overscroll-behavior: contain;
+}
+
+#toggle-sidebar:checked ~ .icons {
+    left: 0;
+}
+
+.icons .text-menu {
+    width: 100%;
+
+    padding: 20px;
+
+    background: #fafbfc;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.icons .text-menu h2 {
+    color: var(--text-muted);
+
+    font-size: 12px;
+    font-weight: 650;
+
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+.icons-option {
+    width: 100%;
+    margin-top: 10px;
+    padding-bottom: 20px;
+}
+
+.icon-container {
+    width: 100%;
+}
+
+.icon-container a,
+.icon-container label {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    width: calc(100% - 20px);
+    min-height: 46px;
+
+    margin: 3px 10px;
+    padding: 11px 13px;
+
+    color: var(--text-secondary);
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+
+    font-size: 13.5px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.icon-container a:hover,
+.icon-container label:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+    border-color: #e4edff;
+}
+
+.icon-container img {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.tooltip {
+    min-width: 0;
+    font-size: 13.5px;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   4. CONTENEUR PRINCIPAL
+   ========================================================= */
+
+.center-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    width: calc(100% - 48px);
+    max-width: 1500px;
+
+    margin: calc(var(--header-height) + 26px) auto 30px;
+    padding: 28px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   5. INTRODUCTION DE LA PAGE
+   ========================================================= */
+
+.page-intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-bottom: 22px;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.intro-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    min-width: 0;
+}
+
+.intro-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 52px;
+    height: 52px;
+
+    color: var(--primary);
+
+    background: var(--primary-light);
+
+    border-radius: 13px;
+
+    font-size: 22px;
+}
+
+.intro-content h1 {
+    margin-bottom: 5px;
+
+    color: var(--text);
+
+    font-size: 21px;
+    font-weight: 700;
+
+    letter-spacing: -0.4px;
+}
+
+.intro-content p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* Compteur */
+
+.student-counter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+
+    flex-shrink: 0;
+
+    padding: 12px 18px;
+
+    background: #f8fafc;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+.counter-label {
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.counter-value {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: var(--primary);
+
+    font-size: 21px;
+}
+
+.counter-value strong {
+    color: var(--text);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   6. INFORMATIONS DU GROUPE
+   ========================================================= */
+
+.group-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 24px;
+
+    padding: 17px 20px;
+
+    background: #f8fafc;
+
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info-label {
+    color: var(--text-muted);
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-item > strong {
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.group-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 30px;
+
+    padding: 3px 9px;
+
+    color: var(--primary);
+
+    background: var(--primary-light);
+
+    border: 1px solid #dbeafe;
+    border-radius: 6px;
+}
+
+.info-divider {
+    width: 1px;
+    height: 35px;
+
+    background: var(--border);
+}
+
+
+/* =========================================================
+   7. SECTION DES ÉTUDIANTS
+   ========================================================= */
+
+.students-section {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    min-width: 0;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.section-heading h2 {
+    margin-bottom: 4px;
+
+    color: var(--text);
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.section-heading p {
+    color: var(--text-secondary);
+    font-size: 12.5px;
+}
+
+.results-badge {
+    flex-shrink: 0;
+
+    padding: 6px 11px;
+
+    color: #475569;
+    background: #f1f5f9;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   8. TABLEAU RESPONSIVE
+   ========================================================= */
+
+.table-responsive {
+    width: 100%;
+    max-width: 100%;
+
+    overflow-x: auto;
+
+    border: 1px solid var(--border);
+    border-radius: 11px;
+
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+}
+
+.table-responsive::-webkit-scrollbar {
+    height: 7px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.styled-table {
+    width: 100%;
+    min-width: 900px;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    color: var(--text);
+    background: var(--surface);
+
+    font-family: inherit;
+}
+
+
+/* En-tête */
+
+.styled-table thead {
+    background: #f8fafc;
+}
+
+.styled-table th {
+    padding: 15px 17px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.045em;
+
+    white-space: nowrap;
+
+    border-bottom: 1px solid var(--border);
+}
+
+
+/* Cellules */
+
+.styled-table td {
+    padding: 14px 17px;
+
+    color: var(--text);
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    vertical-align: middle;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.styled-table tbody tr {
+    transition: background var(--transition);
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background: #fafbfc;
+}
+
+.styled-table tbody tr:hover {
+    background: var(--primary-light);
+}
+
+.styled-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.number-column,
+.number-cell {
+    width: 55px;
+    text-align: center !important;
+}
+
+.number-cell {
+    color: var(--text-muted) !important;
+    font-size: 12px !important;
+}
+
+
+/* =========================================================
+   9. IDENTITÉ ÉTUDIANT
+   ========================================================= */
+
+.student-name {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    min-width: 170px;
+}
+
+.student-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 35px;
+    height: 35px;
+
+    color: var(--primary);
+
+    background: #eaf1ff;
+
+    border: 1px solid #dbeafe;
+    border-radius: 50%;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+.student-identity {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.student-identity strong {
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.student-identity span {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   10. INFORMATIONS DU TABLEAU
+   ========================================================= */
+
+.field-text {
+    font-weight: 500;
+}
+
+.group-cell {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 28px;
+
+    padding: 4px 8px;
+
+    color: #475569;
+    background: #f1f5f9;
+
+    border-radius: 5px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.year-badge {
+    display: inline-flex;
+
+    padding: 4px 9px;
+
+    color: #0369a1;
+    background: #f0f9ff;
+
+    border: 1px solid #e0f2fe;
+    border-radius: 5px;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.email-link {
+    color: #475569;
+
+    font-size: 12.5px;
+
+    transition: color var(--transition);
+}
+
+.email-link:hover {
+    color: var(--primary);
+}
+
+.student-id {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    color: #475569;
+    background: #f8fafc;
+
+    border: 1px solid var(--border);
+    border-radius: 5px;
+
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   11. ÉTAT VIDE
+   ========================================================= */
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    min-height: 280px;
+    padding: 35px 20px;
+
+    text-align: center;
+
+    background: #fafbfc;
+
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+}
+
+.empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+
+    color: var(--text-muted);
+    background: #f1f5f9;
+
+    border-radius: 50%;
+
+    font-size: 23px;
+}
+
+.empty-state h3 {
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 650;
+}
+
+.empty-state p {
+    max-width: 380px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   12. PAGINATION
+   ========================================================= */
+
+.pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+    gap: 15px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid var(--border-light);
+}
+
+.pagination-info {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.pagination-info strong {
+    color: var(--text);
+    font-weight: 650;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pagination-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 38px;
+
+    padding: 8px 13px;
+
+    color: #475569;
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    transition: var(--transition);
+}
+
+.pagination-button:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+    border-color: #bfdbfe;
+}
+
+.primary-button {
+    color: white;
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.primary-button:hover {
+    color: white;
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.current-page {
+    color: var(--text-secondary);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.current-page strong {
+    color: var(--text);
+}
+
+
+/* =========================================================
+   13. TABLETTES
+   ========================================================= */
+
+@media (max-width: 1024px) {
+
+    .center-wrapper {
+        width: calc(100% - 32px);
+        padding: 24px;
+    }
+
+    .styled-table {
+        min-width: 850px;
+    }
+
+}
+
+
+/* =========================================================
+   14. MOBILES
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    :root {
+        --header-height: 62px;
+        --sidebar-width: min(280px, 85vw);
+    }
+
+    .head-box {
+        gap: 10px;
+        padding: 0 14px;
+    }
+
+    .text-title {
+        font-size: 16px;
+    }
+
+    .header-title > span {
+        display: none;
+    }
+
+    .icons {
+        padding-top: calc(var(--header-height) + env(safe-area-inset-top));
+    }
+
+    .center-wrapper {
+        width: calc(100% - 24px);
+
+        margin-top: calc(var(--header-height) + 15px);
+        margin-bottom: 18px;
+
+        padding: 19px;
+
+        gap: 20px;
+    }
+
+    .page-intro {
+        align-items: flex-start;
+    }
+
+    .intro-content {
+        gap: 12px;
+    }
+
+    .intro-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 19px;
+    }
+
+    .intro-content h1 {
+        font-size: 18px;
+    }
+
+    .intro-content p {
+        font-size: 12px;
+    }
+
+    .student-counter {
+        padding: 10px 12px;
+    }
+
+    .counter-label {
+        font-size: 10px;
+    }
+
+    .counter-value,
+    .counter-value strong {
+        font-size: 19px;
+    }
+
+    .group-info {
+        gap: 17px;
+        padding: 15px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+    }
+
+    .styled-table {
+        min-width: 820px;
+    }
+
+    .pagination-container {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .pagination {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+}
+
+
+/* =========================================================
+   15. PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .head-box {
+        padding: 0 11px;
+    }
+
+    .text-title {
+        font-size: 15px;
+    }
+
+    .center-wrapper {
+        width: calc(100% - 20px);
+
+        margin-top: calc(var(--header-height) + 12px);
+
+        padding: 15px;
+
+        gap: 18px;
+
+        border-radius: 11px;
+    }
+
+    .page-intro {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .intro-content {
+        width: 100%;
+    }
+
+    .student-counter {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        width: 100%;
+    }
+
+    .counter-value {
+        gap: 7px;
+    }
+
+    .group-info {
+        gap: 12px;
+        padding: 13px;
+    }
+
+    .info-divider {
+        height: 30px;
+    }
+
+    .info-item > strong {
+        font-size: 12px;
+    }
+
+    .section-heading {
+        flex-direction: column;
+        gap: 9px;
+    }
+
+    .section-heading h2 {
+        font-size: 15px;
+    }
+
+    .results-badge {
+        align-self: flex-start;
+    }
+
+    .empty-state {
+        min-height: 220px;
+        padding: 24px 15px;
+    }
+
+    .pagination-info {
+        font-size: 11px;
+    }
+
+    .pagination {
+        gap: 6px;
+    }
+
+    .pagination-button {
+        min-height: 37px;
+        padding: 8px 10px;
+        font-size: 11px;
+    }
+
+    .current-page {
+        font-size: 11px;
+    }
+
+}
+
+
+/* =========================================================
+   16. TRÈS PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    :root {
+        --header-height: 58px;
+    }
+
+    .head-box {
+        padding: 0 9px;
+    }
+
+    .center-wrapper {
+        width: calc(100% - 16px);
+        padding: 12px;
+        gap: 16px;
+    }
+
+    .intro-content h1 {
+        font-size: 16px;
+    }
+
+    .intro-content p {
+        font-size: 11px;
+    }
+
+    .group-info {
+        gap: 9px;
+    }
+
+    .info-label {
+        font-size: 9px;
+    }
+
+    .info-divider {
+        height: 25px;
+    }
+
+    .pagination-button {
+        gap: 5px;
+        padding: 7px 8px;
+    }
+
+}
+
+
+/* =========================================================
+   17. GRANDS ÉCRANS
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    :root {
+        --sidebar-width: 280px;
+    }
+
+    .head-box {
+        padding: 0 32px;
+    }
+
+    .center-wrapper {
+        width: calc(100% - 80px);
+        max-width: 1700px;
+
+        margin-top: calc(var(--header-height) + 30px);
+
+        padding: 34px;
+
+        gap: 28px;
+    }
+
+    .intro-content h1 {
+        font-size: 23px;
+    }
+
+    .styled-table th {
+        padding: 17px 20px;
+        font-size: 12px;
+    }
+
+    .styled-table td {
+        padding: 16px 20px;
+        font-size: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   18. ACCESSIBILITÉ ET INTERACTIONS
+   ========================================================= */
+
+.menu-trigger:focus-visible,
+.pagination-button:focus-visible,
+.email-link:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+@media (hover: none) {
+
+    .menu-trigger:hover {
+        background: transparent;
+    }
+
+    .styled-table tbody tr:hover {
+        background: inherit;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
+}

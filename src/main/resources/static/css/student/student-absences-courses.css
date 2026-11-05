@@ -1,0 +1,588 @@
+/* =========================================================
+   1. RESET & VARIABLES
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #2563eb;
+    --primary-light: #eff6ff;
+
+    --text: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+
+    --background: #f8fafc;
+    --surface: #ffffff;
+
+    --border: #e2e8f0;
+    --border-light: #f1f5f9;
+
+    --success: #15803d;
+    --success-light: #f0fdf4;
+    --success-border: #bbf7d0;
+
+    --danger: #dc2626;
+    --danger-light: #fef2f2;
+    --danger-border: #fecaca;
+
+    --radius: 8px;
+    --radius-lg: 12px;
+
+    --header-height: 68px;
+    --sidebar-width: 250px;
+
+    --transition: 0.2s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: var(--text);
+    background: var(--background);
+}
+
+
+/* =========================================================
+   2. HEADER
+   ========================================================= */
+
+.head-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: 100%;
+    height: var(--header-height);
+
+    padding: 0 24px;
+
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+}
+
+.head-box h2 {
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.head-box label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    cursor: pointer;
+    border-radius: var(--radius);
+
+    transition: background-color var(--transition);
+}
+
+#menu:hover {
+    background: var(--primary-light);
+}
+
+#menu img {
+    width: 21px;
+    height: 21px;
+    object-fit: contain;
+}
+
+#toggle-sidebar {
+    display: none;
+}
+
+#toggle-sidebar:checked ~ header #menu img {
+    transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   3. SIDEBAR
+   ========================================================= */
+
+.icons {
+    position: fixed;
+    top: 0;
+    left: calc(-1 * var(--sidebar-width));
+
+    z-index: 90;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: var(--sidebar-width);
+    height: 100vh;
+
+    padding-top: var(--header-height);
+
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+
+    transition: left 0.25s ease;
+}
+
+#toggle-sidebar:checked ~ .icons {
+    left: 0;
+}
+
+.icons .text-menu {
+    width: 100%;
+    padding: 20px;
+
+    text-align: center;
+
+    background: #fafbfc;
+    border-bottom: 1px solid var(--border);
+}
+
+.icons .text-menu h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.icons-option,
+.icon-container {
+    width: 100%;
+}
+
+.icons-option {
+    margin-top: 10px;
+}
+
+.icon-container a,
+.icon-container label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    padding: 12px 20px;
+
+    color: var(--text-secondary);
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition),
+        color var(--transition);
+}
+
+.icon-container a:hover,
+.icon-container label:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.icon-container a img,
+.icon-container label img {
+    width: 19px;
+    height: 19px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   4. CONTENU PRINCIPAL
+   ========================================================= */
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    width: min(1150px, calc(100% - 48px));
+
+    margin: calc(var(--header-height) + 32px) auto 40px;
+}
+
+
+/* =========================================================
+   5. EN-TÊTE DE PAGE
+   ========================================================= */
+
+.page-heading h1 {
+    margin-bottom: 5px;
+
+    font-size: 23px;
+    font-weight: 650;
+    letter-spacing: -0.4px;
+
+    color: var(--text);
+}
+
+.page-heading p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   6. CARTE
+   ========================================================= */
+
+.absence-card {
+    width: 100%;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 20px 24px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.card-header h2 {
+    margin-bottom: 3px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    color: var(--text);
+}
+
+.card-header p {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   7. TABLEAU
+   ========================================================= */
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+
+.table-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.styled-table {
+    width: 100%;
+    min-width: 450px;
+
+    border-collapse: collapse;
+
+    color: var(--text);
+    background: var(--surface);
+}
+
+
+/* En-tête */
+
+.styled-table thead {
+    background: #f8fafc;
+}
+
+.styled-table th {
+    padding: 15px 24px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-align: left;
+    white-space: nowrap;
+
+    border-bottom: 1px solid var(--border);
+}
+
+
+/* Cellules */
+
+.styled-table td {
+    padding: 16px 24px;
+
+    font-size: 14px;
+    color: var(--text);
+
+    vertical-align: middle;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.styled-table tbody tr {
+    transition: background-color var(--transition);
+}
+
+.styled-table tbody tr:hover {
+    background: #fafcff;
+}
+
+.styled-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* Date */
+
+.date-cell {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   8. STATUT DE PRÉSENCE
+   ========================================================= */
+
+.presence-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 95px;
+    min-height: 28px;
+
+    padding: 4px 10px;
+
+    border: 1px solid transparent;
+    border-radius: 6px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.status-present {
+    color: var(--success);
+    background: var(--success-light);
+    border-color: var(--success-border);
+}
+
+.status-absent {
+    color: var(--danger);
+    background: var(--danger-light);
+    border-color: var(--danger-border);
+}
+
+
+/* =========================================================
+   9. ÉTAT VIDE
+   ========================================================= */
+
+.empty-state {
+    height: 140px;
+
+    color: var(--text-secondary) !important;
+
+    font-size: 14px !important;
+    text-align: center;
+}
+
+
+/* =========================================================
+   10. PIED DE CARTE
+   ========================================================= */
+
+.card-footer {
+    padding: 14px 24px;
+
+    background: #fafbfc;
+    border-top: 1px solid var(--border-light);
+}
+
+.card-footer p {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   11. ACCESSIBILITÉ
+   ========================================================= */
+
+:focus-visible {
+    outline: 3px solid rgb(37 99 235 / 25%);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   12. TABLETTE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    :root {
+        --header-height: 64px;
+        --sidebar-width: 240px;
+    }
+
+    .head-box {
+        padding: 0 14px;
+        gap: 10px;
+    }
+
+    .head-box h2 {
+        font-size: 17px;
+    }
+
+    .page-content {
+        width: calc(100% - 28px);
+        margin-top: calc(var(--header-height) + 24px);
+        gap: 20px;
+    }
+
+    .page-heading h1 {
+        font-size: 21px;
+    }
+
+    .card-header {
+        padding: 17px 18px;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 14px 18px;
+    }
+
+    .card-footer {
+        padding: 13px 18px;
+    }
+}
+
+
+/* =========================================================
+   13. MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .head-box {
+        padding: 0 10px;
+    }
+
+    .head-box h2 {
+        font-size: 15px;
+    }
+
+    #menu {
+        width: 36px;
+        height: 36px;
+    }
+
+    .page-content {
+        width: calc(100% - 20px);
+        margin-top: calc(var(--header-height) + 20px);
+        gap: 16px;
+    }
+
+    .page-heading h1 {
+        font-size: 19px;
+    }
+
+    .page-heading p {
+        font-size: 13px;
+    }
+
+    .absence-card {
+        border-radius: 9px;
+    }
+
+    .card-header {
+        padding: 15px;
+    }
+
+    .styled-table {
+        min-width: 400px;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 12px;
+    }
+
+    .styled-table th {
+        font-size: 11px;
+    }
+
+    .styled-table td {
+        font-size: 13px;
+    }
+
+    .presence-status {
+        min-width: 85px;
+        font-size: 11px;
+    }
+
+    .card-footer {
+        padding: 12px 15px;
+    }
+
+    .card-footer p {
+        font-size: 11px;
+    }
+}
+
+
+/* =========================================================
+   14. RÉDUCTION DES ANIMATIONS
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

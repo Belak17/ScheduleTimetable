@@ -1,34 +1,79 @@
 <!DOCTYPE html>
-<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Timetable</title>
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+
+    <title>Mon emploi du temps | ScheduleTimetable</title>
+
+    <link rel="stylesheet" th:href="@{/css/pages/student-timetable.css}">
+
     <link rel="stylesheet"
           href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+
+<input type="checkbox" id="toggle-sidebar">
+
 <header>
     <div class="head-box">
-        <!-- Checkbox caché -->
 
         <label for="toggle-sidebar">
-            <div  id="menu">
-                <img th:src="@{/images/menu-burger.png}">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Menu">
             </div>
         </label>
-        <h2>Emploi du temps</h2>
+
+        <h1>Emploi du temps</h1>
+
     </div>
 </header>
-<section th:replace="student/student-dashboard :: sidebar">
-</section>
-<main class="center-wrapper">
-    <!--<iframe th:src="@{'/openSchedule/' + ${timetableId}}"
-     width="80%" height="80%"></iframe> -->
-    <img th:src="@{/student/timetable/preview}"
-         style="border:1px solid transparent;"  class="zoom-image responsive-image"/>
+
+<section th:replace="student/student-dashboard :: sidebar"></section>
+
+<main class="page-content">
+
+    <div class="page-heading">
+        <div>
+            <h2>Mon planning</h2>
+            <p>Consultez votre emploi du temps universitaire.</p>
+        </div>
+    </div>
+
+    <section class="timetable-card">
+
+        <div class="card-header">
+            <div>
+                <h3>Emploi du temps</h3>
+                <span>Votre planning de cours</span>
+            </div>
+
+            <span class="status-badge">
+                <span></span>
+                Disponible
+            </span>
+        </div>
+
+        <div class="timetable-container">
+
+            <img
+                    class="timetable-image"
+                    th:src="@{/student/timetable/preview}"
+                    alt="Mon emploi du temps"
+            >
+
+        </div>
+
+        <div class="card-footer">
+            <i class="fi fi-ss-info"></i>
+            <span>Vous pouvez agrandir l'image pour consulter les détails.</span>
+        </div>
+
+    </section>
+
 </main>
+
 </body>
 </html>

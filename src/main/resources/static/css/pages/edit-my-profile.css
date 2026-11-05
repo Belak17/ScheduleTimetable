@@ -1,0 +1,1169 @@
+/* =========================================================
+   1. DESIGN SYSTEM & RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+
+    --text: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+
+    --background: #f8fafc;
+    --surface: #ffffff;
+
+    --border: #e2e8f0;
+    --border-light: #f1f5f9;
+
+    --success: #16a34a;
+    --danger: #dc2626;
+    --danger-light: #fef2f2;
+
+    --header-height: 68px;
+    --sidebar-width: 250px;
+
+    --radius: 8px;
+    --radius-lg: 12px;
+
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.04);
+
+    --transition: 0.2s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+    min-width: 320px;
+
+    overflow-x: hidden;
+
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", Roboto, Arial, sans-serif;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: var(--text);
+    background: var(--background);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+
+/* =========================================================
+   2. HEADER
+   ========================================================= */
+
+.head-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: 100%;
+    height: var(--header-height);
+
+    padding: 0 24px;
+
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.head-box label {
+    display: flex;
+    cursor: pointer;
+}
+
+.head-box #menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: var(--radius);
+
+    transition: background var(--transition);
+}
+
+.head-box #menu:hover {
+    background: var(--primary-light);
+}
+
+.head-box #menu img {
+    width: 21px;
+    height: 21px;
+
+    object-fit: contain;
+
+    transition: transform var(--transition);
+}
+
+#toggle-sidebar {
+    display: none;
+}
+
+#toggle-sidebar:checked ~ header #menu img {
+    transform: rotate(90deg);
+}
+
+.text-title {
+    min-width: 0;
+
+    color: var(--text);
+
+    font-size: 19px;
+    font-weight: 650;
+
+    line-height: 1.3;
+    letter-spacing: -0.25px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   3. SIDEBAR
+   ========================================================= */
+
+.icons {
+    position: fixed;
+    top: 0;
+    left: calc(-1 * var(--sidebar-width));
+
+    z-index: 90;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: var(--sidebar-width);
+    height: 100vh;
+    height: 100dvh;
+
+    padding-top: var(--header-height);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+
+    transition: left 0.25s ease;
+    overscroll-behavior: contain;
+}
+
+#toggle-sidebar:checked ~ .icons {
+    left: 0;
+}
+
+.icons .text-menu {
+    width: 100%;
+    padding: 20px;
+
+    background: #fafbfc;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.icons .text-menu h2 {
+    color: var(--text-muted);
+
+    font-size: 12px;
+    font-weight: 650;
+
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+.icons-option {
+    width: 100%;
+    margin-top: 10px;
+    padding-bottom: 20px;
+}
+
+.icon-container {
+    width: 100%;
+}
+
+.icon-container a,
+.icon-container label {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    width: calc(100% - 20px);
+    min-height: 46px;
+
+    margin: 3px 10px;
+    padding: 11px 13px;
+
+    color: var(--text-secondary);
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-lg);
+
+    font-size: 13.5px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.icon-container a:hover,
+.icon-container label:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+    border-color: #e4edff;
+}
+
+.icon-container img {
+    flex-shrink: 0;
+
+    width: 20px;
+    height: 20px;
+
+    object-fit: contain;
+}
+
+.tooltip {
+    display: inline-block;
+    min-width: 0;
+
+    font-size: 13.5px;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   4. MAIN CONTENT
+   ========================================================= */
+
+.center-wrapper {
+    width: calc(100% - 40px);
+    max-width: 1200px;
+
+    margin: calc(var(--header-height) + 24px) auto 30px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+
+    overflow: hidden;
+}
+
+.all-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 26px;
+}
+
+
+/* =========================================================
+   5. PROFILE OPTIONS
+   ========================================================= */
+
+.param-options {
+    display: flex;
+    flex-direction: column;
+
+    flex: 0 0 270px;
+    min-width: 0;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    overflow: hidden;
+}
+
+
+/* Options heading */
+
+.title-bloc {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    min-height: 58px;
+
+    padding: 14px 17px;
+
+    color: var(--text);
+
+    background: #fafbfc;
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 15px;
+    font-weight: 650;
+
+    overflow-wrap: anywhere;
+}
+
+.title-bloc img {
+    flex-shrink: 0;
+
+    width: 21px;
+    height: 21px;
+
+    object-fit: contain;
+}
+
+
+/* Navigation */
+
+.params-option {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    padding: 7px;
+}
+
+.params-option > a {
+    display: block;
+    width: 100%;
+
+    border-radius: var(--radius);
+
+    transition:
+        background var(--transition),
+        color var(--transition);
+}
+
+.param-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    width: 100%;
+    min-height: 50px;
+
+    padding: 11px 12px;
+
+    color: var(--text-secondary);
+
+    border-radius: var(--radius);
+
+    font-size: 13px;
+    font-weight: 500;
+
+    line-height: 1.45;
+
+    transition:
+        background var(--transition),
+        color var(--transition);
+}
+
+.param-option:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.param-option img {
+    flex-shrink: 0;
+
+    width: 18px;
+    height: 18px;
+
+    object-fit: contain;
+
+    opacity: 0.8;
+}
+
+
+/* =========================================================
+   6. SELECTED OPTION / FORM
+   ========================================================= */
+
+.option-clicked {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+
+    padding: 25px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+
+    overflow: hidden;
+}
+
+
+/* Heading inside selected form */
+
+.option-clicked .title-bloc {
+    margin: -25px -25px 25px;
+
+    padding: 14px 20px;
+
+    color: var(--primary);
+    background: var(--primary-light);
+
+    border-bottom: 1px solid #dbeafe;
+
+    font-size: 14px;
+}
+
+
+/* Labels */
+
+.option-clicked label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   7. FORM SECTIONS
+   ========================================================= */
+
+.generals-info,
+.academical-info {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    width: 100%;
+    min-width: 0;
+
+    gap: 18px;
+
+    padding-bottom: 20px;
+}
+
+.info-input {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    max-width: 100%;
+}
+
+.generals-info label,
+.label-ext {
+    color: var(--text-secondary);
+
+    font-size: 13px;
+    font-weight: 500;
+
+    overflow-wrap: anywhere;
+}
+
+.label-ext {
+    padding-top: 4px;
+}
+
+
+/* Section title */
+
+.title-container {
+    position: relative;
+
+    display: block;
+
+    margin: 8px 0 20px;
+    padding-bottom: 10px;
+
+    color: var(--text);
+
+    font-size: 15px;
+    font-weight: 650;
+
+    overflow-wrap: anywhere;
+}
+
+.title-container::after {
+    content: "";
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    height: 1px;
+
+    background: var(--border);
+}
+
+.title-container::before {
+    content: "";
+
+    display: inline-block;
+
+    width: 3px;
+    height: 15px;
+
+    margin-right: 9px;
+
+    vertical-align: -2px;
+
+    border-radius: 3px;
+
+    background: var(--primary);
+}
+
+
+/* =========================================================
+   8. FORM INPUTS
+   ========================================================= */
+
+.option-clicked input,
+.option-clicked select,
+.option-clicked textarea {
+    width: 100%;
+    min-width: 0;
+
+    margin: 0;
+    padding: 10px 12px;
+
+    color: var(--text);
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    font-family: inherit;
+    font-size: 14px;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.option-clicked input:hover,
+.option-clicked select:hover,
+.option-clicked textarea:hover {
+    border-color: #cbd5e1;
+}
+
+.option-clicked input:focus,
+.option-clicked select:focus,
+.option-clicked textarea:focus {
+    outline: none;
+
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.option-clicked input::placeholder,
+.option-clicked textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.option-clicked textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.old-pass,
+.old-mail {
+    margin-bottom: 32px;
+}
+
+.inputs-photo {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   9. FILE INPUT
+   ========================================================= */
+
+.option-clicked input[type="file"] {
+    max-width: 100%;
+    padding: 7px;
+
+    font-size: 13px;
+}
+
+.option-clicked input[type="file"]::file-selector-button {
+    margin-right: 10px;
+    padding: 7px 12px;
+
+    color: var(--primary);
+    background: var(--primary-light);
+
+    border: 1px solid #dbeafe;
+    border-radius: 5px;
+
+    font-family: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        color var(--transition);
+}
+
+.option-clicked input[type="file"]::file-selector-button:hover {
+    color: #ffffff;
+    background: var(--primary);
+}
+
+
+/* =========================================================
+   10. GROUP
+   ========================================================= */
+
+#group {
+    display: inline-flex;
+    align-items: center;
+
+    width: fit-content;
+    max-width: 100%;
+
+    padding: 5px 9px;
+
+    color: var(--primary);
+    background: var(--primary-light);
+
+    border: 1px solid #dbeafe;
+    border-radius: 5px;
+
+    font-size: 13px;
+    font-weight: 650;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   11. PROFILE IMAGE
+   ========================================================= */
+
+#img-user {
+    display: block;
+
+    width: 160px;
+    height: 160px;
+    max-width: 100%;
+
+    object-fit: cover;
+
+    background: var(--background);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+
+/* =========================================================
+   12. BUTTONS
+   ========================================================= */
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 24px;
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border-light);
+}
+
+button {
+    min-width: 110px;
+    min-height: 40px;
+
+    padding: 9px 16px;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        border-color var(--transition),
+        color var(--transition),
+        box-shadow var(--transition);
+}
+
+button:focus-visible {
+    outline: 3px solid rgba(37, 99, 235, 0.16);
+    outline-offset: 2px;
+}
+
+
+/* Reset */
+
+.reset {
+    color: var(--danger);
+    background: var(--danger-light);
+
+    border-color: #fecaca;
+}
+
+.reset:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+}
+
+
+/* Submit */
+
+.submit {
+    color: #ffffff;
+    background: var(--primary);
+
+    border-color: var(--primary);
+}
+
+.submit:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+
+/* =========================================================
+   13. ALERTS
+   ========================================================= */
+
+.alert {
+    margin: 16px 0;
+    padding: 12px 14px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    font-size: 13px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   14. TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .center-wrapper {
+        width: calc(100% - 30px);
+    }
+
+    .all-info {
+        flex-direction: column;
+        gap: 20px;
+
+        padding: 22px;
+    }
+
+    .param-options {
+        flex: none;
+        width: 100%;
+    }
+
+    .params-option {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 5px;
+    }
+
+    .option-clicked {
+        width: 100%;
+    }
+
+    .generals-info,
+    .academical-info {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================================================
+   15. MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    :root {
+        --header-height: 62px;
+        --sidebar-width: min(280px, 85vw);
+    }
+
+    .head-box {
+        gap: 10px;
+        padding: 0 14px;
+    }
+
+    .head-box #menu {
+        width: 40px;
+        height: 40px;
+    }
+
+    .head-box #menu img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .text-title {
+        font-size: 16px;
+    }
+
+    .icons {
+        padding-top: var(--header-height);
+    }
+
+    .center-wrapper {
+        width: calc(100% - 24px);
+
+        margin-top: calc(var(--header-height) + 14px);
+        margin-bottom: 18px;
+    }
+
+    .all-info {
+        gap: 16px;
+        padding: 16px;
+    }
+
+    .title-bloc {
+        min-height: 52px;
+        padding: 12px 16px;
+    }
+
+    .option-clicked {
+        padding: 20px;
+    }
+
+    .option-clicked .title-bloc {
+        margin: -20px -20px 20px;
+    }
+
+    .generals-info,
+    .academical-info {
+        gap: 15px;
+    }
+
+    .option-clicked input,
+    .option-clicked select {
+        min-height: 42px;
+    }
+
+    #img-user {
+        width: 140px;
+        height: 140px;
+    }
+
+    .inputs-photo {
+        gap: 22px;
+    }
+
+    .old-pass,
+    .old-mail {
+        margin-bottom: 22px;
+    }
+
+    .buttons {
+        justify-content: stretch;
+    }
+
+    .alert {
+        margin: 12px 0;
+    }
+}
+
+
+/* =========================================================
+   16. SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .text-title {
+        font-size: 15px;
+    }
+
+    .center-wrapper {
+        width: calc(100% - 16px);
+    }
+
+    .all-info {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .title-bloc {
+        gap: 9px;
+        padding: 11px 13px;
+
+        font-size: 14px;
+    }
+
+    .title-bloc img {
+        width: 19px;
+        height: 19px;
+    }
+
+    .params-option {
+        grid-template-columns: 1fr;
+    }
+
+    .param-option {
+        min-height: 46px;
+        padding: 10px 12px;
+
+        font-size: 13px;
+    }
+
+    .param-option img {
+        width: 17px;
+        height: 17px;
+    }
+
+    .option-clicked {
+        padding: 16px;
+    }
+
+    .option-clicked .title-bloc {
+        margin: -16px -16px 16px;
+        padding: 12px 14px;
+    }
+
+    .generals-info,
+    .academical-info {
+        grid-template-columns: 1fr;
+        gap: 13px;
+
+        padding-bottom: 14px;
+    }
+
+    .title-container {
+        margin: 6px 0 16px;
+        padding-bottom: 9px;
+
+        font-size: 14px;
+    }
+
+    .generals-info label,
+    .label-ext,
+    .option-clicked label {
+        font-size: 12px;
+    }
+
+    .option-clicked input,
+    .option-clicked select,
+    .option-clicked textarea {
+        min-height: 44px;
+        padding: 10px;
+
+        font-size: 16px;
+    }
+
+    .option-clicked input[type="file"] {
+        min-height: auto;
+        padding: 6px;
+
+        font-size: 14px;
+    }
+
+    .option-clicked input[type="file"]::file-selector-button {
+        padding: 7px 9px;
+        margin-right: 6px;
+
+        font-size: 12px;
+    }
+
+    #img-user {
+        width: 120px;
+        height: 120px;
+    }
+
+    .inputs-photo {
+        gap: 18px;
+    }
+
+    .old-pass,
+    .old-mail {
+        margin-bottom: 18px;
+    }
+
+    .buttons {
+        flex-direction: column-reverse;
+        align-items: stretch;
+
+        margin-top: 18px;
+        padding-top: 16px;
+    }
+
+    button {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .alert {
+        padding: 10px;
+        font-size: 12px;
+    }
+}
+
+
+/* =========================================================
+   17. VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .all-info {
+        padding: 9px;
+    }
+
+    .option-clicked {
+        padding: 12px;
+    }
+
+    .option-clicked .title-bloc {
+        margin: -12px -12px 14px;
+        padding: 11px;
+    }
+
+    .param-option {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .title-bloc {
+        font-size: 13px;
+    }
+
+    #img-user {
+        width: 105px;
+        height: 105px;
+    }
+}
+
+
+/* =========================================================
+   18. LARGE SCREENS
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    .center-wrapper {
+        max-width: 1350px;
+    }
+
+    .all-info {
+        gap: 28px;
+        padding: 30px;
+    }
+
+    .param-options {
+        flex-basis: 290px;
+    }
+
+    .option-clicked {
+        padding: 30px;
+    }
+
+    .option-clicked .title-bloc {
+        margin: -30px -30px 30px;
+    }
+
+    .generals-info,
+    .academical-info {
+        gap: 22px;
+    }
+}
+
+
+/* =========================================================
+   19. ACCESSIBILITY
+   ========================================================= */
+
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
+    }
+}

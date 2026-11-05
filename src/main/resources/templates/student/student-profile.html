@@ -1,161 +1,217 @@
 <!DOCTYPE html>
-<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Profile</title>
-    <link rel="stylesheet" th:href="@{/css/style-student/style-student-profile.css}">
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
-    <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Ma fiche étudiante</title>
+
+    <link rel="stylesheet" th:href="@{/css/pages/profile.css}"/>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+
+<input id="toggle-sidebar" type="checkbox"/>
+
 <header>
     <div class="head-box">
-        <!-- Checkbox caché -->
         <label for="toggle-sidebar">
-            <div  id="menu">
-                <img th:src="@{/images/menu-burger.png}">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Menu"/>
             </div>
         </label>
-        <h2 class="title-page">Ma fiche Etudiante</h2>
+
+        <h2 class="text-title">Ma fiche étudiante</h2>
     </div>
 </header>
-<section th:replace="student/student-dashboard :: sidebar">
-</section>
+
+<section th:replace="student/student-dashboard :: sidebar"></section>
+
 <main class="center-wrapper">
+
     <section class="all-info">
-        <div class="summary">
+
+        <!-- =========================
+             PROFIL / RÉSUMÉ
+        ========================== -->
+
+        <aside class="summary">
+
             <div class="photo">
-                <img th:src="@{/images/user-profile.png}">
+                <img th:src="@{/images/user-profile.png}" alt="Photo de profil"/>
             </div>
-            <span class="name" th:text="${student.prenom+' '+student.nom}">
 
-                 </span>
-            <span class="summary-container">
-               <img th:src="@{/images/power.png}">
-               <span class="activity">
-                 Etudiant Actif
-               </span>
-               </span>
+            <span class="name"
+                  th:text="${student.prenom+' '+student.nom}">
+            </span>
+
+            <div class="summary-container">
+                <img th:src="@{/images/power.png}" alt=""/>
+                <span class="activity">Étudiant actif</span>
+            </div>
+
             <div class="others">
-                <span class="other">
-                    <img th:src="@{/images/multiple-users-silhouette.png}">
-                    <span class="summary-infos">
-                    <span class="summary-info">Groupe :</span>
-                <span id="group" th:text="${student.group}"></span>
-                    </span>
-                </span>
-                <span class="other">
-                     <img th:src="@{/images/hierarchical-structure.png}">
-                     <span class="summary-infos">
-                    <span class="summary-info">Niveau :</span>
-                <span th:text="${student.niveau}"> </span> </span>
-                </span>
-                <span class="other">
-                    <img th:src="@{/images/graduation-hat.png}">
-                    <span class="summary-infos">
-                    <span class="summary-info" >Filiere:</span>
-                <span class="value field" th:text="${student.field}"></span> </span>
-                </span>
-                <span class="other">
-                    <img th:src="@{/images/department.png}">
-                    <span class="summary-infos">
-                    <span class="summary-info" >Departement:</span>
-                <span class="value" th:text="${student.department}"></span> </span>
-                </span>
-            </div>
-            <span class="other summary-container" id="parameter">
-                <a th:href="@{/student/edit-my-profile}">
-                    <img th:src="@{/images/preferences.png}">
-                    <span>
-                    Paramètres du Compte </span>
-                </a>
-                </span>
-        </div>
-        <div class="generals">
-            <span class="title-container">Informations Generales</span>
-            <div class="container">
-             <span class="info">
-                <img th:src="@{/images/id-card.png}">
-                <span class="content">
-                <span class="label">Nom&Prenom :</span>
-                <span class="value" th:text="${student.prenom+' '+student.nom}"></span>
-                </span>
-            </span>
-                <span class="info">
-                <img th:src="@{/images/gender.png}">
-                <span class="content">
-                <span class="label">Sexe :</span>
-                <span th:text="${student.sexe}"></span>
-                </span>
-            </span>
-                <span class="info">
-                <img th:src="@{/images/building.png}">
-                <span class="content">
-                    <span class="label">CIN/Passeport :</span>
-                <span class="value" th:text="${student.userId}"></span>
-                </span>
-            </span>
-                <span class="info">
-                 <img th:src="@{/images/united-nations.png}">
-                 <span class="content">
-                <span class="label">Nationalité :</span>
-                <span class="value" th:text="${student.nationalite}"></span>
-                </span>
-             </span>
-<!--                <span class="info"><img th:src="@{/images/building.png}">-->
-<!--                <span class="content">-->
-<!--                <span class="label">Ville Naissance :</span>-->
-<!--                <span class="value" th:text="${student.villeNaissance}"></span>-->
-<!--                </span>-->
-<!--            </span>-->
-            </div>
-            <span class="title-container">Informations de Localisation</span>
-            <div class="container">
-               <span class="info">
-                <img th:src="@{/images/building.png}">
-                <span class="content">
-                <span class="label">Ville:</span>
-                <span class="value">Gabès</span>
-                </span>
-               </span>
-<!--                <span class="info">-->
-<!--                <img th:src="@{/images/address.png}">-->
-<!--                <span class="content">-->
-<!--                <span class="label">Adresse Postale :</span>-->
-<!--                <span class="value" th:text="${student.adresse}"></span>-->
-<!--                </span>-->
-<!--                </span>-->
-                <span class="info">
-                <img th:src="@{/images/internet.png}">
-                <span class="content">
-                                <span class="label">Code Postale :</span>
-                <span class="value">6033</span>
-                </span>
-            </span>
-            </div>
-            <span class="title-container">Informations de Contact</span>
-            <div class="container">
-               <span class="info">
-                <img th:src="@{/images/mail.png}">
-                <span class="content">
-                 <span class="label">Email :</span>
-                <span class="value" th:text="${student.email}"></span>
-                </span>
-            </span>
-                <span class="info">
-                <img th:src="@{/images/smartphone-call.png}">
-                <span class="content">
-                    <span class="label">Téléphone :</span>
-                <span class="value" th:text="${student.telephone}"></span>
-                </span>
-            </span>
-            </div>
-        </div>
-    </section>
-</main>
-</body>
 
+                <div class="other">
+                    <img th:src="@{/images/multiple-users-silhouette.png}" alt=""/>
+                    <div class="summary-infos">
+                        <span class="summary-info">Groupe :</span>
+                        <span id="group" th:text="${student.group}"></span>
+                    </div>
+                </div>
+
+                <div class="other">
+                    <img th:src="@{/images/hierarchical-structure.png}" alt=""/>
+                    <div class="summary-infos">
+                        <span class="summary-info">Niveau :</span>
+                        <span class="value" th:text="${student.niveau}"></span>
+                    </div>
+                </div>
+
+                <div class="other">
+                    <img th:src="@{/images/graduation-hat.png}" alt=""/>
+                    <div class="summary-infos">
+                        <span class="summary-info">Filière :</span>
+                        <span class="value" th:text="${student.field}"></span>
+                    </div>
+                </div>
+
+                <div class="other">
+                    <img th:src="@{/images/department.png}" alt=""/>
+                    <div class="summary-infos">
+                        <span class="summary-info">Département :</span>
+                        <span class="value" th:text="${student.department}"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="account-settings">
+                <a th:href="@{/student/edit-my-profile}">
+                    <img th:src="@{/images/preferences.png}" alt=""/>
+                    <span>Paramètres du compte</span>
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- =========================
+             INFORMATIONS DÉTAILLÉES
+        ========================== -->
+
+        <div class="generals">
+
+            <!-- Informations générales -->
+
+            <section class="information-section">
+
+                <h3 class="title-container">Informations générales</h3>
+
+                <div class="container">
+
+                    <div class="info">
+                        <img th:src="@{/images/id-card.png}" alt=""/>
+                        <div class="content">
+                            <span class="label">Nom et prénom :</span>
+                            <span class="value"
+                                  th:text="${student.prenom+' '+student.nom}">
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="info">
+                        <img th:src="@{/images/gender.png}" alt=""/>
+                        <div class="content">
+                            <span class="label">Sexe :</span>
+                            <span class="value" th:text="${student.sexe}"></span>
+                        </div>
+                    </div>
+
+                    <div class="info">
+                        <img th:src="@{/images/building.png}" alt=""/>
+                        <div class="content">
+                            <span class="label">CIN / Passeport :</span>
+                            <span class="value" th:text="${student.userId}"></span>
+                        </div>
+                    </div>
+
+                    <div class="info">
+                        <img th:src="@{/images/united-nations.png}" alt=""/>
+                        <div class="content">
+                            <span class="label">Nationalité :</span>
+                            <span class="value" th:text="${student.nationalite}"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Informations de localisation -->
+
+            <section class="information-section">
+
+                <h3 class="title-container">Informations de localisation</h3>
+
+                <div class="container">
+
+                    <div class="info">
+                        <img th:src="@{/images/building.png}" alt=""/>
+                        <div class="content">
+                            <span class="label">Ville :</span>
+                            <span class="value">Gabès</span>
+                        </div>
+                    </div>
+
+                    <div class="info">
+                        <img th:src="@{/images/internet.png}" alt=""/>
+                        <div class="content">
+                            <span class="label">Code postal :</span>
+                            <span class="value">6033</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Informations de contact -->
+
+            <section class="information-section">
+
+                <h3 class="title-container">Informations de contact</h3>
+
+                <div class="container">
+
+                    <div class="info">
+                        <img th:src="@{/images/mail.png}" alt=""/>
+                        <div class="content">
+                            <span class="label">Email :</span>
+                            <span class="value" th:text="${student.email}"></span>
+                        </div>
+                    </div>
+
+                    <div class="info">
+                        <img th:src="@{/images/smartphone-call.png}" alt=""/>
+                        <div class="content">
+                            <span class="label">Téléphone :</span>
+                            <span class="value" th:text="${student.telephone}"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
 </html>

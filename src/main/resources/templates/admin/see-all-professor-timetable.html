@@ -1,197 +1,332 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professor Timetable</title>
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Emploi du temps des professeurs</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/admin/see-all-professor-timetable.css}"/>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+
+<input id="toggle-sidebar" type="checkbox"/>
+
 <header>
     <div class="head-box">
-        <!-- Checkbox caché -->
 
         <label for="toggle-sidebar">
-            <div  id="menu">
-
-                <img th:src="@{/images/menu-burger.png}">
-
-
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Menu"/>
             </div>
         </label>
-        <h2 class="text-title">Emploi Du Temps Des Professeurs  </h2>
+
+        <h2 class="text-title">Emploi Du Temps Des Professeurs</h2>
+
     </div>
 </header>
+
+
 <main class="center-container">
-    <section class="list-department">
-        <div class="departement-title">
-            <h3>DEPARTEMENTS</h3>
+
+    <!-- Titre de la page -->
+    <div class="page-heading">
+        <div>
+            <h1>Emplois du temps des professeurs</h1>
+            <p>
+                Sélectionnez une spécialité pour consulter les professeurs
+                et leurs emplois du temps.
+            </p>
         </div>
-        <div class="departments">
+    </div>
 
-            <div class="departement" th:each="specialite : ${specialites}">
 
-                <a th:href="@{/professors/professor/timetable/{specialite}(specialite=${specialite})}">
+    <div class="content-layout">
+
+        <!-- Liste des spécialités -->
+        <section class="list-department">
+
+            <div class="departement-title">
+                <h3>SPÉCIALITÉS</h3>
+            </div>
+
+            <div class="departments">
+
+                <a class="departement"
+                   th:each="specialite : ${specialites}"
+                   th:href="@{/professors/professor/timetable/{specialite}(specialite=${specialite})}"
+                   th:classappend="${selectedDepartment != null and selectedDepartment == specialite} ? ' active' : ''">
 
                     <div class="dep-header">
-                        <img th:src="@{/images/inline-right-svgrepo-com.svg}" alt="">
+
+                        <img alt=""
+                             th:src="@{/images/inline-right-svgrepo-com.svg}"/>
 
                         <h3 th:text="${specialite}"></h3>
+
                     </div>
 
                 </a>
 
             </div>
 
-        </div>
-    </section>
-    <div class="table-content">
-        <!-- Message si aucun professeur -->
-        <div class="empty-message"
-             th:if="${Professors == null or Professors.content.isEmpty()}">
-            Veuillez sélectionner un département
-        </div>
-        <!-- Tableau -->
-        <table th:if="${Professors != null and !Professors.content.isEmpty()}"
-               bgcolor="lightgray"
-               border="1"
-               rules="all" class="styled-table">
-            <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Spécialité</th>
-                <th>Grade</th>
-                <th>Email</th>
-                <th>Option</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr th:each="professor : ${Professors.content}">
-                <td th:text="${professor.nom != null
-        ? professor.nom + ' ' + professor.prenom
-        : 'Non assigné'}">
-                </td>
-
-                <td th:text="${selectedDepartment}"></td>
-                <td th:text="${professor.grade}"></td>
-                <td th:text="${professor.userId}"></td>
+        </section>
 
 
-                <td>
-                    <a class="button clickable-row"
-                       th:data-image="@{/professors/preview/{userId}(userId=${professor.userId})}">
-                        Emploi du Temps
-                    </a>
-                    <a class="button clickable-row"
-                       th:data-image="@{/professors/preview/{userId}(userId=${professor.userId})}">
-                        Information
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <div class="pagination"
-             style="margin-top: 20px;"
-             th:if="${Professors != null}">
+        <!-- Tableau des professeurs -->
+        <section class="table-content">
 
-            <!-- Bouton Précédent -->
-            <a th:if="${Professors.hasPrevious()}"
-               th:href="@{/professors/professor/timetable/{departement}(
-           departement=${selectedDepartment},
-           page=${Professors.number - 1},
-           size=${Professors.size}
-       )}"
-               class="button">
-                ← Précédent
-            </a>
+            <div class="table-heading">
 
-            <!-- Numéro de page -->
-            <span th:if="${Professors.totalPages > 0}">
-        Page
-        <span th:text="${Professors.number + 1}"></span>
-        sur
-        <span th:text="${Professors.totalPages}"></span>
-    </span>
+                <div>
+                    <h3>Liste des professeurs</h3>
+                    <p>Consultez les informations et les emplois du temps.</p>
+                </div>
 
-            <!-- Bouton Suivant -->
-            <a th:if="${Professors.hasNext()}"
-               th:href="@{/professors/professor/timetable/{departement}(
-           departement=${selectedDepartment},
-           page=${Professors.number + 1},
-           size=${Professors.size}
-       )}"
-               class="button">
-                Suivant →
-            </a>
+                <span class="results-count"
+                      th:if="${Professors != null}"
+                      th:text="${Professors.totalElements + ' professeur(s)'}">
+                </span>
 
-        </div>
+            </div>
+
+
+            <!-- Aucun département sélectionné -->
+            <div class="empty-message"
+                 th:if="${Professors == null}">
+
+                <h3>Veuillez sélectionner une spécialité</h3>
+
+                <p>
+                    Sélectionnez une spécialité pour afficher les professeurs.
+                </p>
+
+            </div>
+
+
+            <!-- Aucun professeur -->
+            <div class="empty-message"
+                 th:if="${Professors != null and Professors.content.isEmpty()}">
+
+                <h3>Aucun professeur trouvé</h3>
+
+                <p>
+                    Aucun professeur n'est associé à cette spécialité.
+                </p>
+
+            </div>
+
+
+            <!-- Tableau -->
+            <div class="table-scroll"
+                 th:if="${Professors != null and !Professors.content.isEmpty()}">
+
+                <table class="styled-table">
+
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Spécialité</th>
+                        <th>Grade</th>
+                        <th>Email</th>
+                        <th>Option</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="professor : ${Professors.content}">
+
+                        <td th:text="${professor.nom != null
+                            ? professor.nom + ' ' + professor.prenom
+                            : 'Non assigné'}">
+                        </td>
+
+                        <td th:text="${selectedDepartment}"></td>
+
+                        <td th:text="${professor.grade != null
+                            ? professor.grade
+                            : 'Non renseigné'}">
+                        </td>
+
+                        <td th:text="${professor.userId}"></td>
+
+                        <td>
+                            <div class="actions-cell">
+
+                                <a class="button clickable-row"
+                                   href="#"
+                                   th:href="@{/professors/preview/{userId}(userId=${professor.userId})}"
+                                   th:data-image="@{/professors/preview/{userId}(userId=${professor.userId})}">
+
+                                    Emploi du Temps
+
+                                </a>
+
+                                <a class="button"
+                                   th:href="@{/professors/{userId}/details(userId=${professor.userId})}">
+
+                                    Information
+
+                                </a>
+
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- Pagination -->
+            <div class="pagination"
+                 th:if="${Professors != null and Professors.totalPages > 0}">
+
+                <a class="button"
+                   th:if="${Professors.hasPrevious()}"
+                   th:href="@{/professors/professor/timetable/{departement}(
+                       departement=${selectedDepartment},
+                       page=${Professors.number - 1},
+                       size=${Professors.size}
+                   )}">
+
+                    ← Précédent
+
+                </a>
+
+
+                <span class="pagination-info">
+
+                    Page
+                    <strong th:text="${Professors.number + 1}"></strong>
+                    sur
+                    <strong th:text="${Professors.totalPages}"></strong>
+
+                </span>
+
+
+                <a class="button"
+                   th:if="${Professors.hasNext()}"
+                   th:href="@{/professors/professor/timetable/{departement}(
+                       departement=${selectedDepartment},
+                       page=${Professors.number + 1},
+                       size=${Professors.size}
+                   )}">
+
+                    Suivant →
+
+                </a>
+
+            </div>
+
+        </section>
+
     </div>
+
 </main>
 
-<section th:replace="admin/admin-dashboard :: sidebar">
 
-</section>
-<div id="timetableModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-    background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
-    <span id="closeModal" style="position:absolute; top:20px; right:30px; color:white; cursor:pointer; font-size:30px;">&times;</span>
-    <img id="modalImage" src="" style="max-width:80%; max-height:80%; border:2px solid white;">
+<!-- Sidebar -->
+<section th:replace="admin/admin-dashboard :: sidebar"></section>
+
+
+<!-- Modal aperçu -->
+<div id="timetableModal"
+     class="preview-modal"
+     aria-hidden="true">
+
+    <div class="preview-modal-content">
+
+        <button id="closeModal"
+                class="close-modal"
+                type="button"
+                aria-label="Fermer">
+            ×
+        </button>
+
+        <img id="modalImage"
+             src=""
+             alt="Aperçu de l'emploi du temps"/>
+
+    </div>
+
 </div>
+
+
 <script>
-    document.querySelectorAll('.clickable-row').forEach(row => {
-        row.addEventListener('click', () => {
-            const imageUrl = row.dataset.image; // ex: /preview/123
-            const modal = document.getElementById('timetableModal');
-            const modalImg = document.getElementById('modalImage');
 
-            modalImg.src = imageUrl; // Spring renverra le byte[] comme image
-            modal.style.display = 'flex';
+    document.addEventListener("DOMContentLoaded", () => {
+
+        const modal = document.getElementById("timetableModal");
+        const modalImage = document.getElementById("modalImage");
+        const closeModal = document.getElementById("closeModal");
+
+        document.querySelectorAll(".clickable-row").forEach(link => {
+
+            link.addEventListener("click", event => {
+
+                event.preventDefault();
+
+                const imageUrl = link.dataset.image;
+
+                if (!imageUrl) {
+                    return;
+                }
+
+                modalImage.src = imageUrl;
+
+                modal.classList.add("active");
+                modal.setAttribute("aria-hidden", "false");
+
+                document.body.classList.add("modal-open");
+
+            });
+
         });
-    });
 
-    // Fermer le modal
-    document.getElementById('closeModal').addEventListener('click', () => {
-        document.getElementById('timetableModal').style.display = 'none';
-    });
 
-    // Fermer en cliquant en dehors de l'image
-    document.getElementById('timetableModal').addEventListener('click', (e) => {
-        if (e.target.id === 'timetableModal') {
-            document.getElementById('timetableModal').style.display = 'none';
+        function hideModal() {
+
+            modal.classList.remove("active");
+            modal.setAttribute("aria-hidden", "true");
+
+            document.body.classList.remove("modal-open");
+
+            modalImage.src = "";
+
         }
+
+
+        closeModal.addEventListener("click", hideModal);
+
+
+        modal.addEventListener("click", event => {
+
+            if (event.target === modal) {
+                hideModal();
+            }
+
+        });
+
+
+        document.addEventListener("keydown", event => {
+
+            if (event.key === "Escape" && modal.classList.contains("active")) {
+                hideModal();
+            }
+
+        });
+
     });
+
 </script>
-<style>
-    @media (max-width: 768px) {
-    .head-box {
-        gap: 10px;
-        padding: 10px;
-    }
 
-    .text-title {
-        font-size: 20px;
-    }
-
-    .center-container {
-        margin: 80px 10px 20px 10px;
-        padding: 15px;
-    }
-
-    .icons {
-        width: 220px;
-    }
-
-    .center-container
-    {
-        display: flex;
-        flex-direction: column-reverse;
-        width: fit-content;
-    }
-}
-</style>
 </body>
 </html>

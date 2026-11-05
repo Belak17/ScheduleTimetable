@@ -1,126 +1,190 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
     <title>Liste Cours TP</title>
 
-    <link rel="stylesheet" th:href="@{/css/style-admin/admin-see-cours.css}">
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
+    <link rel="stylesheet"
+          th:href="@{/css/admin/see-attendance-final.css}"/>
 </head>
 
 <body>
 
-<input type="checkbox" id="toggle-sidebar"/>
+<input id="toggle-sidebar" type="checkbox"/>
 
 <header>
     <div class="head-box">
-        <label for="toggle-sidebar">
+
+        <label for="toggle-sidebar" class="menu-toggle">
             <div id="menu">
-                <img th:src="@{/images/menu-burger.png}" alt="Menu">
+                <img alt="Menu"
+                     th:src="@{/images/menu-burger.png}"/>
             </div>
         </label>
 
         <h2 class="text-title">Liste Cours TP</h2>
+
     </div>
 </header>
 
 <main class="center-container">
+
+    <!-- En-tête de la page -->
+    <div class="page-heading">
+
+        <h1>Liste des présences</h1>
+
+        <p>
+            Consultez les présences des étudiants et accédez à leur historique d'absences.
+        </p>
+
+    </div>
+
     <div class="table-content">
 
-        <!-- Informations générales -->
-        <div class="table-info">
-            <span>
-                Nombre total d'étudiants :
-                <strong th:text="${attendancePage.totalStudents}">0</strong>
+        <!-- En-tête du tableau -->
+        <div class="table-heading">
+
+            <div class="table-heading-info">
+
+                <h3>Suivi des présences</h3>
+
+                <p>
+                    Présences enregistrées pour les étudiants du cours.
+                </p>
+
+            </div>
+
+            <span class="results-count">
+                <span th:text="${attendancePage.totalStudents}">0</span>
+                étudiants
             </span>
+
         </div>
 
         <!-- Tableau des présences -->
-        <table class="styled-table" bgcolor="lightgray" border="1" rules="all">
+        <div class="table-responsive">
 
-            <thead>
-            <tr>
-                <th>Nom &amp; Prénom</th>
+            <table class="styled-table">
 
-                <!-- Dates des séances -->
-                <th th:each="date : ${attendancePage.attendanceTable.dates}"
-                    th:text="${date}">
-                </th>
+                <thead>
+                <tr>
 
-                <th>Option</th>
-            </tr>
-            </thead>
+                    <th class="student-column">
+                        Nom &amp; Prénom
+                    </th>
 
-            <tbody>
+                    <th th:each="date : ${attendancePage.attendanceTable.dates}"
+                        th:text="${date}">
+                    </th>
 
-            <!-- Étudiants -->
-            <tr th:each="row : ${attendancePage.attendanceTable.rows}">
+                    <th class="option-column">
+                        Option
+                    </th>
 
-                <td>
-                    <span th:text="${row.studentName}"></span>
-                </td>
+                </tr>
+                </thead>
 
-                <!-- Statuts de présence -->
-                <td th:each="status : ${row.statuses}"
-                    th:text="${status}">
-                </td>
+                <tbody>
 
-                <td>
-                    <a class="button clickable-row"
-                       th:href="@{/absence/admin/{id}(id=${row.id})}">
-                        Historique des absences
-                    </a>
-                </td>
+                <!-- Étudiants -->
+                <tr th:each="row : ${attendancePage.attendanceTable.rows}">
 
-            </tr>
+                    <td class="student-name">
+                        <span th:text="${row.studentName}"></span>
+                    </td>
 
-            <!-- Aucun étudiant -->
-            <tr th:if="${#lists.isEmpty(attendancePage.attendanceTable.rows)}">
-                <td th:colspan="${attendancePage.attendanceTable.dates.size() + 2}"
-                    style="text-align: center;">
-                    Aucun étudiant à afficher.
-                </td>
-            </tr>
+                    <!-- Statuts de présence -->
+                    <td th:each="status : ${row.statuses}"
+                        class="attendance-status"
+                        th:text="${status}">
+                    </td>
 
-            </tbody>
-        </table>
+                    <!-- Action -->
+                    <td class="action-cell">
+
+                        <a class="button"
+                           th:href="@{/absence/admin/{id}(id=${row.id})}">
+
+                            Historique des absences
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                <!-- Aucun étudiant -->
+                <tr th:if="${#lists.isEmpty(attendancePage.attendanceTable.rows)}">
+
+                    <td class="empty-state"
+                        th:colspan="${attendancePage.attendanceTable.dates.size() + 2}">
+
+                        <div class="empty-content">
+
+                            <span class="empty-icon">📋</span>
+
+                            <strong>Aucun étudiant à afficher</strong>
+
+                            <p>
+                                Les données de présence ne sont pas disponibles.
+                            </p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
 
         <!-- Pagination -->
-        <div class="pagination" style="margin-top: 20px;"
+        <div class="pagination"
              th:if="${attendancePage.totalPages > 0}">
 
-            <!-- Précédent -->
-            <a th:if="${attendancePage.currentPage > 0}"
+            <a class="button pagination-button"
                th:href="@{/absence/courses/{id}(
                    id=${id},
                    page=${attendancePage.currentPage - 1},
                    size=${attendancePage.pageSize}
                )}"
-               class="button">
+               th:if="${attendancePage.currentPage > 0}">
+
                 ← Précédent
+
             </a>
 
-            <!-- Informations -->
-            <span th:text="'Page ' + (${attendancePage.currentPage + 1})
-                + ' sur ' + ${attendancePage.totalPages}">
+            <span class="pagination-info"
+                  th:text="'Page ' + (${attendancePage.currentPage + 1})
+                  + ' sur ' + ${attendancePage.totalPages}">
+
                 Page 1 sur 2
+
             </span>
 
-            <!-- Suivant -->
-            <a th:if="${attendancePage.currentPage + 1 < attendancePage.totalPages}"
+            <a class="button pagination-button"
                th:href="@{/absence/courses/{id}(
                    id=${id},
                    page=${attendancePage.currentPage + 1},
                    size=${attendancePage.pageSize}
                )}"
-               class="button">
+               th:if="${attendancePage.currentPage + 1 < attendancePage.totalPages}">
+
                 Suivant →
+
             </a>
 
         </div>
 
     </div>
+
 </main>
 
 <section th:replace="admin/admin-dashboard :: sidebar"></section>

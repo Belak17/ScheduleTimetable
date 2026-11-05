@@ -1,67 +1,96 @@
 <!DOCTYPE html>
-<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professeur Profile</title>
-    <link rel="stylesheet" th:href="@{/css/style-student/style-edit-profile.css}">
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
-    <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Paramètres du compte</title>
+
+    <link rel="stylesheet" th:href="@{/css/pages/edit-my-profile.css}"/>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+
+<input id="toggle-sidebar" type="checkbox"/>
+
 <header>
     <div class="head-box">
-        <!-- Checkbox caché -->
+
         <label for="toggle-sidebar">
-            <div  id="menu">
-                <img th:src="@{/images/menu-burger.png}">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Menu"/>
             </div>
         </label>
-        <h2 class="title-page">Ma fiche Professeur</h2>
+
+        <h2 class="text-title">Paramètres du compte</h2>
+
     </div>
 </header>
-<section th:replace="professor/professor-app :: sidebar">
-</section>
+
+<section th:replace="student/student-app :: sidebar"></section>
+
 <main class="center-wrapper">
+
     <section class="all-info">
-        <section class="param-options">
+
+        <!-- =========================
+             OPTIONS DU PROFIL
+        ========================== -->
+
+        <aside class="param-options">
+
             <div class="title-bloc">
-                <img th:src="@{/images/user (5).png}">
-                <span>Mon Profil</span>
+                <img th:src="@{/images/user (5).png}" alt=""/>
+                <span>Mon profil</span>
             </div>
-            <div class="params-option">
+
+            <nav class="params-option">
+
                 <a th:href="@{/professor/edit-my-profile(tab='info')}">
                     <div class="param-option">
                         <span>Modifier les informations du profil</span>
-                        <img th:src="@{/images/information-button.png}">
+                        <img th:src="@{/images/information-button.png}" alt=""/>
                     </div>
                 </a>
+
                 <a th:href="@{/professor/edit-my-profile(tab='photo')}">
                     <div class="param-option">
                         <span>Changer la photo de profil</span>
-                        <img th:src="@{/images/profile-picture.png}">
+                        <img th:src="@{/images/profile-picture.png}" alt=""/>
                     </div>
                 </a>
+
                 <a th:href="@{/professor/edit-my-profile(tab='email')}">
                     <div class="param-option">
-                        <span>Changer l'email</span>
-                        <img th:src="@{/images/arroba.png}">
+                        <span>Changer l'adresse email</span>
+                        <img th:src="@{/images/arroba.png}" alt=""/>
                     </div>
                 </a>
+
                 <a th:href="@{/professor/edit-my-profile(tab='password')}">
                     <div class="param-option">
                         <span>Changer le mot de passe</span>
-                        <img th:src="@{/images/password-manager.png}">
+                        <img th:src="@{/images/password-manager.png}" alt=""/>
                     </div>
                 </a>
-            </div>
-        </section>
-        <section th:replace="${fragmentName} :: option-clicked">
-        </section>
-    </section>
-</main>
-</body>
 
+            </nav>
+
+        </aside>
+
+
+        <!-- =========================
+             FORMULAIRE SÉLECTIONNÉ
+        ========================== -->
+
+        <section class="option-clicked"
+                 th:replace="${fragmentName} :: option-clicked">
+        </section>
+
+    </section>
+
+</main>
+
+</body>
 </html>

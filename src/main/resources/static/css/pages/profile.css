@@ -1,0 +1,943 @@
+/* =========================================================
+   1. DESIGN SYSTEM & RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #2563eb;
+    --primary-light: #eff6ff;
+
+    --text: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+
+    --background: #f8fafc;
+    --surface: #ffffff;
+
+    --border: #e2e8f0;
+    --border-light: #f1f5f9;
+
+    --success: #16a34a;
+    --success-light: #f0fdf4;
+
+    --header-height: 68px;
+    --sidebar-width: 250px;
+
+    --radius: 8px;
+    --radius-lg: 12px;
+
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.04);
+
+    --transition: 0.2s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+    min-width: 320px;
+
+    overflow-x: hidden;
+
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", Roboto, Arial, sans-serif;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: var(--text);
+    background: var(--background);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+
+/* =========================================================
+   2. HEADER
+   ========================================================= */
+
+.head-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: 100%;
+    height: var(--header-height);
+
+    padding: 0 24px;
+
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.head-box label {
+    display: flex;
+    cursor: pointer;
+}
+
+.head-box #menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: var(--radius);
+
+    transition: background var(--transition);
+}
+
+.head-box #menu:hover {
+    background: var(--primary-light);
+}
+
+.head-box #menu img {
+    width: 21px;
+    height: 21px;
+
+    object-fit: contain;
+
+    transition: transform var(--transition);
+}
+
+#toggle-sidebar {
+    display: none;
+}
+
+#toggle-sidebar:checked ~ header #menu img {
+    transform: rotate(90deg);
+}
+
+.text-title {
+    min-width: 0;
+
+    color: var(--text);
+
+    font-size: 19px;
+    font-weight: 650;
+
+    line-height: 1.3;
+    letter-spacing: -0.25px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   3. SIDEBAR
+   ========================================================= */
+
+.icons {
+    position: fixed;
+    top: 0;
+    left: calc(-1 * var(--sidebar-width));
+
+    z-index: 90;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: var(--sidebar-width);
+    height: 100vh;
+    height: 100dvh;
+
+    padding-top: var(--header-height);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+
+    transition: left 0.25s ease;
+    overscroll-behavior: contain;
+}
+
+#toggle-sidebar:checked ~ .icons {
+    left: 0;
+}
+
+.icons .text-menu {
+    width: 100%;
+    padding: 20px;
+
+    background: #fafbfc;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.icons .text-menu h2 {
+    color: var(--text-muted);
+
+    font-size: 12px;
+    font-weight: 650;
+
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+.icons-option {
+    width: 100%;
+    margin-top: 10px;
+    padding-bottom: 20px;
+}
+
+.icon-container {
+    width: 100%;
+}
+
+.icon-container a,
+.icon-container label {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    width: calc(100% - 20px);
+    min-height: 46px;
+
+    margin: 3px 10px;
+    padding: 11px 13px;
+
+    color: var(--text-secondary);
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-lg);
+
+    font-size: 13.5px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.icon-container a:hover,
+.icon-container label:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+    border-color: #e4edff;
+}
+
+.icon-container img {
+    flex-shrink: 0;
+
+    width: 20px;
+    height: 20px;
+
+    object-fit: contain;
+}
+
+.tooltip {
+    display: inline-block;
+    min-width: 0;
+
+    font-size: 13.5px;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   4. MAIN CONTENT
+   ========================================================= */
+
+.center-wrapper {
+    width: calc(100% - 40px);
+    max-width: 1200px;
+
+    margin: calc(var(--header-height) + 24px) auto 30px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+
+    overflow: hidden;
+}
+
+.all-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+
+    width: 100%;
+    padding: 28px;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   5. PROFILE SUMMARY
+   ========================================================= */
+
+.summary {
+    flex: 0 0 290px;
+    min-width: 0;
+
+    padding: 24px;
+
+    background: #fafbfc;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+
+/* Profile photo */
+
+.photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 16px;
+}
+
+.photo img {
+    width: 120px;
+    height: 120px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+    border: 3px solid var(--surface);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* Student name */
+
+.name {
+    display: block;
+
+    max-width: 100%;
+
+    margin-bottom: 12px;
+
+    color: var(--text);
+
+    font-size: 20px;
+    font-weight: 650;
+
+    line-height: 1.4;
+    text-align: center;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* Active status */
+
+.summary-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    color: var(--success);
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.summary-container img {
+    width: 17px;
+    height: 17px;
+
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+
+/* Summary details */
+
+.others {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+
+    margin-top: 28px;
+}
+
+.other {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+
+    width: 100%;
+    min-width: 0;
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.other > img {
+    flex-shrink: 0;
+
+    width: 19px;
+    height: 19px;
+
+    margin-top: 2px;
+
+    object-fit: contain;
+}
+
+.summary-infos {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    min-width: 0;
+    max-width: 100%;
+
+    overflow-wrap: anywhere;
+}
+
+.summary-info,
+.label {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.value {
+    min-width: 0;
+
+    color: var(--text);
+    font-weight: 500;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+
+/* Group */
+
+#group {
+    display: inline-block;
+
+    max-width: 100%;
+    padding: 3px 8px;
+
+    color: #475569;
+    background: #f1f5f9;
+
+    border: 1px solid var(--border);
+    border-radius: 5px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   6. ACCOUNT SETTINGS
+   ========================================================= */
+
+.account-settings {
+    margin-top: 26px;
+    padding-top: 17px;
+
+    border-top: 1px solid var(--border);
+}
+
+.account-settings a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-height: 42px;
+    padding: 8px;
+
+    color: var(--text-secondary);
+
+    border-radius: var(--radius);
+
+    font-size: 13px;
+    font-weight: 500;
+
+    text-align: center;
+
+    transition:
+        background var(--transition),
+        color var(--transition);
+}
+
+.account-settings a:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.account-settings img {
+    flex-shrink: 0;
+
+    width: 18px;
+    height: 18px;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   7. GENERAL INFORMATION
+   ========================================================= */
+
+.generals {
+    flex: 1;
+    min-width: 0;
+}
+
+.information-section + .information-section {
+    margin-top: 28px;
+}
+
+
+/* Section title */
+
+.title-container {
+    position: relative;
+
+    display: block;
+
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+
+    color: var(--text);
+
+    font-size: 17px;
+    font-weight: 650;
+
+    line-height: 1.4;
+}
+
+.title-container::after {
+    content: "";
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background: var(--border);
+}
+
+
+/* Information list */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* Individual information */
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+
+    padding: 10px 13px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    transition:
+        border-color var(--transition),
+        background var(--transition);
+}
+
+.info:hover {
+    background: #fafcff;
+    border-color: #cbd5e1;
+}
+
+.info > img {
+    flex-shrink: 0;
+
+    width: 19px;
+    height: 19px;
+
+    object-fit: contain;
+}
+
+
+/* Information text */
+
+.content {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    min-width: 0;
+    max-width: 100%;
+
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+.content .label {
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.content .value {
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   8. TABLETS
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .center-wrapper {
+        width: calc(100% - 30px);
+    }
+
+    .all-info {
+        gap: 20px;
+        padding: 22px;
+    }
+
+    .summary {
+        flex-basis: 250px;
+        padding: 20px;
+    }
+
+    .photo img {
+        width: 110px;
+        height: 110px;
+    }
+
+    .title-container {
+        font-size: 16px;
+    }
+}
+
+
+/* =========================================================
+   9. MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    :root {
+        --header-height: 62px;
+        --sidebar-width: min(280px, 85vw);
+    }
+
+    .head-box {
+        gap: 10px;
+        padding: 0 14px;
+    }
+
+    .head-box #menu {
+        width: 40px;
+        height: 40px;
+    }
+
+    .head-box #menu img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .text-title {
+        font-size: 16px;
+    }
+
+    .icons {
+        padding-top: var(--header-height);
+    }
+
+    .center-wrapper {
+        width: calc(100% - 24px);
+
+        margin-top: calc(var(--header-height) + 14px);
+        margin-bottom: 18px;
+
+        border-radius: var(--radius-lg);
+    }
+
+    .all-info {
+        flex-direction: column;
+        gap: 22px;
+
+        padding: 18px;
+    }
+
+    .summary {
+        flex: none;
+
+        width: 100%;
+        padding: 22px;
+    }
+
+    .generals {
+        width: 100%;
+    }
+
+    .information-section + .information-section {
+        margin-top: 24px;
+    }
+
+    .info {
+        min-height: 48px;
+    }
+}
+
+
+/* =========================================================
+   10. SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .head-box {
+        padding: 0 10px;
+    }
+
+    .text-title {
+        font-size: 15px;
+    }
+
+    .center-wrapper {
+        width: calc(100% - 16px);
+
+        margin-top: calc(var(--header-height) + 10px);
+
+        border-radius: var(--radius);
+    }
+
+    .all-info {
+        gap: 18px;
+        padding: 12px;
+    }
+
+    .summary {
+        padding: 18px;
+    }
+
+    .photo img {
+        width: 105px;
+        height: 105px;
+    }
+
+    .name {
+        font-size: 18px;
+    }
+
+    .others {
+        gap: 14px;
+        margin-top: 22px;
+    }
+
+    .other {
+        gap: 9px;
+        font-size: 13px;
+    }
+
+    .other > img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .account-settings {
+        margin-top: 22px;
+        padding-top: 14px;
+    }
+
+    .title-container {
+        margin-bottom: 13px;
+        font-size: 15px;
+    }
+
+    .information-section + .information-section {
+        margin-top: 22px;
+    }
+
+    .info {
+        align-items: flex-start;
+        gap: 10px;
+
+        padding: 11px 10px;
+    }
+
+    .info > img {
+        width: 18px;
+        height: 18px;
+
+        margin-top: 2px;
+    }
+
+    .content {
+        gap: 4px;
+    }
+
+    .content .label {
+        font-size: 12px;
+    }
+
+    .content .value {
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   11. VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .all-info {
+        padding: 9px;
+    }
+
+    .summary {
+        padding: 15px;
+    }
+
+    .name {
+        font-size: 17px;
+    }
+
+    .other {
+        font-size: 12px;
+    }
+
+    .info {
+        gap: 8px;
+        padding: 10px 8px;
+    }
+
+    .content .label {
+        font-size: 11px;
+    }
+
+    .content .value {
+        font-size: 12px;
+    }
+}
+
+
+/* =========================================================
+   12. LARGE SCREENS
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    .center-wrapper {
+        max-width: 1350px;
+    }
+
+    .all-info {
+        gap: 34px;
+        padding: 34px;
+    }
+
+    .summary {
+        flex-basis: 320px;
+        padding: 28px;
+    }
+
+    .photo img {
+        width: 135px;
+        height: 135px;
+    }
+
+    .title-container {
+        font-size: 18px;
+    }
+
+    .info {
+        padding: 12px 15px;
+    }
+}
+
+
+/* =========================================================
+   13. ACCESSIBILITY
+   ========================================================= */
+
+.head-box #menu:focus-visible,
+a:focus-visible,
+.icon-container a:focus-visible,
+.icon-container label:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
+    }
+}

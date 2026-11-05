@@ -1,243 +1,418 @@
 <!DOCTYPE html>
-<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire Professeur</title>
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-upload-user.css}">
-    <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Importation des étudiants</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin/upload-students.css}"/>
+    <link href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css"
+          rel="stylesheet"/>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+
+<input id="toggle-sidebar" type="checkbox"/>
+
 <header>
     <div class="head-box">
-        <!-- Checkbox caché -->
 
-        <label for="toggle-sidebar">
-            <div  id="menu">
-
-                <img th:src="@{/images/menu-burger.png}">
-
-
+        <label for="toggle-sidebar" id="menu-toggle" aria-label="Ouvrir ou fermer le menu">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Menu"/>
             </div>
         </label>
-        <h2>Importation des Etudiants  </h2>
+
+        <div class="header-title">
+            <h2 class="text-title">Importation des étudiants</h2>
+            <span>Gestion des inscriptions étudiantes</span>
+        </div>
+
     </div>
 </header>
 
-<section th:replace="admin/admin-dashboard :: sidebar">
+<section th:replace="admin/admin-dashboard :: sidebar"></section>
 
-</section>
 <main class="center-wrappers">
-    <form th:action="@{/students/student/import}" th:object="${student}" method="post">
 
-        <!-- ===================== INFORMATIONS PERSONNELLES ===================== -->
-        <fieldset>
-            <legend>Informations personnelles</legend>
-
-
-            <div class="info-input">
-                <label>Numéro Inscription</label>
-                <input type="text" th:field="*{numeroInscription}" required>
-            </div>
-
-            <div class="info-input">
-                <label>User ID</label>
-                <input type="text" th:field="*{userId}" required>
-            </div>
-
-            <div class="info-input">
-                <label>Nom</label>
-                <input type="text" th:field="*{nom}">
-            </div>
-
-            <div class="info-input">
-                <label>Prénom</label>
-                <input type="text" th:field="*{prenom}">
-            </div>
-
-            <div class="info-input">
-                <label>Email</label>
-                <input type="email" th:field="*{email}" required>
-            </div>
-
-            <div class="info-input">
-                <label>Téléphone</label>
-                <input type="text" th:field="*{telephone}">
-            </div>
-
-            <div class="info-input">
-                <label>Sexe</label>
-                <select th:field="*{sexe}">
-                    <option value="">--Choisir--</option>
-                    <option value="M">Homme</option>
-                    <option value="F">Femme</option>
-                </select>
-            </div>
-
-            <div class="info-input">
-                <label>Date de naissance</label>
-                <input type="date" th:field="*{dateNaissance}">
-            </div>
-
-            <div class="info-input">
-                <label>Nationalité</label>
-                <select th:field="*{nationalite}">
-                    <option value="">--Choisir--</option>
-                    <option th:each="n : ${nationalites}"
-                            th:value="${n}"
-                            th:text="${n}">
-                    </option>
-                </select>
-            </div>
-
-        </fieldset>
-
-        <!-- ===================== INFORMATIONS PROFESSIONNELLES ===================== -->
-        <fieldset>
-            <legend>Informations académiques</legend>
-            <div class="info-input">
-                <label>Département</label>
-                <select th:field="*{departement}">
-                    <option value="">--Choisir--</option>
-                    <option th:each="d : ${departments}"
-                            th:value="${d}"
-                            th:text="${d}">
-                    </option>
-                </select>
-            </div>
-            <div class="info-input">
-                <label>Niveau</label>
-                <input type="text" th:field="*{niveau}">
-            </div>
-            <div class="info-input">
-                <label>Filiere</label>
-                <select th:field="*{filiere}">
-                    <option value="">--Choisir--</option>
-                    <option th:each="g : ${filieres}"
-                            th:value="${g}"
-                            th:text="${g}">
-                    </option>
-                </select>
-            </div>
-            <div class="info-input">
-                <label>Diplome</label>
-                <select th:field="*{typeDiplome}">
-                    <option value="">--Choisir--</option>
-                    <option th:each="s : ${typeDiplome}"
-                            th:value="${s}"
-                            th:text="${s}">
-                    </option>
-                </select>
-            </div>
-        </fieldset>
-        <!-- ===================== INFORMATIONS COMPLÉMENTAIRES ===================== -->
-        <fieldset>
-            <legend>Informations complémentaires</legend>
-
-            <div class="info-input">
-                <label>Groupe</label>
-                <input type="text" th:field="*{group}">
-            </div>
-        </fieldset>
-        <div class="buttons">
-            <button type="reset" class="reset">Annuler</button>
-            <button type="submit" class="submit">Enregistrer</button>
+    <!-- INTRODUCTION -->
+    <div class="page-intro">
+        <div class="intro-icon">
+            <i class="fi fi-ss-users"></i>
         </div>
-    </form>
 
-    <!-- ===================== IMPORT XLSX ===================== -->
-    <fieldset class="import-box">
-        <legend>Importation en masse (XLSX)</legend>
+        <div class="intro-content">
+            <h1>Gestion des étudiants</h1>
+            <p>
+                Enregistrez un nouvel étudiant ou importez plusieurs étudiants
+                simultanément à partir d'un fichier Excel.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- FORMULAIRE D'AJOUT D'UN ÉTUDIANT -->
+    <section class="form-card">
+
+        <div class="card-heading">
+            <div class="heading-icon">
+                <i class="fi fi-ss-user-add"></i>
+            </div>
+
+            <div>
+                <h2>Nouvel étudiant</h2>
+                <p>Renseignez les informations nécessaires à son inscription.</p>
+            </div>
+        </div>
+
+        <form method="post"
+              th:action="@{/students/student/import}"
+              th:object="${student}">
+
+            <div class="form-sections">
+
+                <!-- INFORMATIONS PERSONNELLES -->
+                <fieldset class="form-section">
+
+                    <legend>
+                        <i class="fi fi-ss-user"></i>
+                        Informations personnelles
+                    </legend>
+
+                    <div class="fields-grid">
+
+                        <div class="info-input">
+                            <label for="numeroInscription">
+                                Numéro d'inscription <span class="required">*</span>
+                            </label>
+                            <input id="numeroInscription"
+                                   required
+                                   th:field="*{numeroInscription}"
+                                   type="text"
+                                   placeholder="Ex : 2026XXXX"/>
+                        </div>
+
+                        <div class="info-input">
+                            <label for="userId">
+                                User ID <span class="required">*</span>
+                            </label>
+                            <input id="userId"
+                                   required
+                                   th:field="*{userId}"
+                                   type="text"
+                                   placeholder="Identifiant étudiant"/>
+                        </div>
+
+                        <div class="info-input">
+                            <label for="nom">Nom</label>
+                            <input id="nom"
+                                   th:field="*{nom}"
+                                   type="text"
+                                   placeholder="Nom de famille"/>
+                        </div>
+
+                        <div class="info-input">
+                            <label for="prenom">Prénom</label>
+                            <input id="prenom"
+                                   th:field="*{prenom}"
+                                   type="text"
+                                   placeholder="Prénom"/>
+                        </div>
+
+                        <div class="info-input">
+                            <label for="email">
+                                Adresse e-mail <span class="required">*</span>
+                            </label>
+                            <input id="email"
+                                   required
+                                   th:field="*{email}"
+                                   type="email"
+                                   placeholder="exemple@email.com"/>
+                        </div>
+
+                        <div class="info-input">
+                            <label for="telephone">Téléphone</label>
+                            <input id="telephone"
+                                   th:field="*{telephone}"
+                                   type="text"
+                                   placeholder="Numéro de téléphone"/>
+                        </div>
+
+                        <div class="info-input">
+                            <label for="sexe">Sexe</label>
+                            <select id="sexe" th:field="*{sexe}">
+                                <option value="">-- Choisir --</option>
+                                <option value="M">Homme</option>
+                                <option value="F">Femme</option>
+                            </select>
+                        </div>
+
+                        <div class="info-input">
+                            <label for="dateNaissance">Date de naissance</label>
+                            <input id="dateNaissance"
+                                   th:field="*{dateNaissance}"
+                                   type="date"/>
+                        </div>
+
+                        <div class="info-input">
+                            <label for="nationalite">Nationalité</label>
+                            <select id="nationalite" th:field="*{nationalite}">
+                                <option value="">-- Choisir --</option>
+                                <option th:each="n : ${nationalites}"
+                                        th:text="${n}"
+                                        th:value="${n}">
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+
+                <!-- INFORMATIONS ACADÉMIQUES -->
+                <fieldset class="form-section">
+
+                    <legend>
+                        <i class="fi fi-ss-graduation-cap"></i>
+                        Informations académiques
+                    </legend>
+
+                    <div class="fields-grid">
+
+                        <div class="info-input">
+                            <label for="departement">Département</label>
+                            <select id="departement" th:field="*{departement}">
+                                <option value="">-- Choisir --</option>
+                                <option th:each="d : ${departments}"
+                                        th:text="${d}"
+                                        th:value="${d}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="info-input">
+                            <label for="niveau">Niveau</label>
+                            <input id="niveau"
+                                   th:field="*{niveau}"
+                                   type="text"
+                                   placeholder="Ex : L1, L2, L3"/>
+                        </div>
+
+                        <div class="info-input">
+                            <label for="filiere">Filière</label>
+                            <select id="filiere" th:field="*{filiere}">
+                                <option value="">-- Choisir --</option>
+                                <option th:each="g : ${filieres}"
+                                        th:text="${g}"
+                                        th:value="${g}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="info-input">
+                            <label for="typeDiplome">Diplôme</label>
+                            <select id="typeDiplome" th:field="*{typeDiplome}">
+                                <option value="">-- Choisir --</option>
+                                <option th:each="s : ${typeDiplome}"
+                                        th:text="${s}"
+                                        th:value="${s}">
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+
+                <!-- INFORMATIONS COMPLÉMENTAIRES -->
+                <fieldset class="form-section">
+
+                    <legend>
+                        <i class="fi fi-ss-users-alt"></i>
+                        Informations complémentaires
+                    </legend>
+
+                    <div class="fields-grid fields-grid-single">
+
+                        <div class="info-input">
+                            <label for="group">Groupe</label>
+                            <input id="group"
+                                   th:field="*{group}"
+                                   type="text"
+                                   placeholder="Ex : GL1, GL2, TD1..."/>
+                            <small>Groupe pédagogique de l'étudiant.</small>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+            <div class="form-actions">
+
+                <button class="reset" type="reset">
+                    <i class="fi fi-ss-refresh"></i>
+                    Réinitialiser
+                </button>
+
+                <button class="submit" type="submit">
+                    <i class="fi fi-ss-disk"></i>
+                    Enregistrer l'étudiant
+                </button>
+
+            </div>
+
+        </form>
+    </section>
+
+
+    <!-- IMPORTATION EXCEL -->
+    <section class="import-card">
+
+        <div class="card-heading">
+            <div class="heading-icon excel-icon">
+                <i class="fi fi-ss-file-excel"></i>
+            </div>
+
+            <div>
+                <h2>Importation en masse</h2>
+                <p>Ajoutez plusieurs étudiants à partir d'un fichier Excel.</p>
+            </div>
+        </div>
+
 
         <form class="form-upload"
-              th:action="@{/students/import}"
+              enctype="multipart/form-data"
               method="post"
-              enctype="multipart/form-data">
+              th:action="@{/students/import}">
 
-            <div class="info-input full">
-                <label>Fichier Excel (.xlsx)</label>
+            <div class="upload-area">
 
-                <input type="file"
-                       name="excelFile"
-                       accept=".xls,.xlsx"
-                       class="excelFileInput"
-                       required>
+                <div class="upload-icon">
+                    <i class="fi fi-ss-cloud-upload-alt"></i>
+                </div>
 
-                <!--  AJOUT IMPORTANT -->
-                <div class="file-name" style="display: none;">Aucun fichier sélectionné</div>
+                <h3>Importer un fichier Excel</h3>
+
+                <p>
+                    Sélectionnez votre fichier contenant les informations
+                    des étudiants.
+                </p>
+
+                <div class="file-input-wrapper">
+
+                    <label for="excelFile" class="file-select-button">
+                        <i class="fi fi-ss-folder-open"></i>
+                        Choisir un fichier
+                    </label>
+
+                    <input id="excelFile"
+                           accept=".xlsx,.xls"
+                           class="excelFileInput"
+                           name="excelFile"
+                           required
+                           type="file"/>
+
+                </div>
+
+                <div class="file-name" aria-live="polite">
+                    <i class="fi fi-ss-document"></i>
+                    <span>Aucun fichier sélectionné</span>
+                </div>
+
+                <small class="file-help">
+                    Formats acceptés : .xlsx et .xls
+                </small>
+
             </div>
 
-            <div class="buttons">
-                <button type="button" class="clearFileBtn">
+
+            <div class="upload-actions">
+
+                <button class="clearFileBtn" type="button" disabled>
+                    <i class="fi fi-ss-trash"></i>
                     Supprimer
                 </button>
 
-                <button type="submit" class="submit button-upload">
-                    Importer
+                <button class="submit button-upload" type="submit">
+                    <i class="fi fi-ss-upload"></i>
+                    Importer les étudiants
                 </button>
 
-                <input type="hidden" name="id" th:value="${id}" />
+                <input name="id" th:value="${id}" type="hidden"/>
+
             </div>
 
-            <span class="upload-message alert alert-success" style="display:none;">
-            Fichier chargé avec succès !
-        </span>
+            <div class="upload-message" role="status" aria-live="polite">
+                <i class="fi fi-ss-check-circle"></i>
+                Fichier sélectionné avec succès.
+            </div>
 
-            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
-            <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+            <div class="alert alert-danger"
+                 th:if="${error}"
+                 th:text="${error}">
+            </div>
+
+            <div class="alert alert-success"
+                 th:if="${success}"
+                 th:text="${success}">
+            </div>
 
         </form>
-    </fieldset>
+
+    </section>
 
 </main>
-<style>
-    .upload-message {
-        display: none; /* caché par défaut */
-        position: absolute;
-        left: 60%;  /* à côté du formulaire */
-        top: 60%;
-        transform: translateY(-50%);
-        background-color: #4CAF50;
-        color: white;
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-size: 0.9rem;
-        box-shadow: 0 0 5px #0003;
-    }
-</style>
+
+
 <script>
     document.querySelectorAll('.form-upload').forEach(form => {
 
-    const input = form.querySelector('.excelFileInput');
-    const display = form.querySelector('.file-name');
-    const clearBtn = form.querySelector('.clearFileBtn');
-    const message = form.querySelector('.upload-message');
+        const input = form.querySelector('.excelFileInput');
+        const display = form.querySelector('.file-name span');
+        const clearBtn = form.querySelector('.clearFileBtn');
+        const message = form.querySelector('.upload-message');
 
-    input.addEventListener('change', function () {
-        if (this.files.length > 0) {
-            display.textContent = this.files[0].name;
+        if (!input || !display || !clearBtn || !message) return;
 
-            message.style.display = 'inline';
-            setTimeout(() => {
-                message.style.display = 'none';
-            }, 3000);
-        } else {
-            display.textContent = "Aucun fichier";
-        }
+        input.addEventListener('change', function () {
+
+            if (this.files && this.files.length > 0) {
+
+                display.textContent = this.files[0].name;
+                clearBtn.disabled = false;
+
+                message.classList.add('visible');
+
+                setTimeout(() => {
+                    message.classList.remove('visible');
+                }, 3000);
+
+            } else {
+
+                display.textContent = 'Aucun fichier sélectionné';
+                clearBtn.disabled = true;
+                message.classList.remove('visible');
+
+            }
+        });
+
+        clearBtn.addEventListener('click', function () {
+
+            input.value = '';
+            display.textContent = 'Aucun fichier sélectionné';
+
+            clearBtn.disabled = true;
+            message.classList.remove('visible');
+
+        });
+
     });
-
-    clearBtn.addEventListener('click', function () {
-        input.value = "";
-        display.textContent = "Aucun fichier";
-        message.style.display = 'none';
-    });
-
-  });
 </script>
-
 
 </body>
 </html>

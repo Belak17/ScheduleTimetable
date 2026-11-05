@@ -5,51 +5,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Scanner QR</title>
+    <title>Scanner QR | ScheduleTimetable</title>
+
+    <link rel="stylesheet" th:href="@{/css/pages/scanner.css}"/>
 
     <link rel="stylesheet"
-          th:href="@{/css/style-admin/style-admin-dashboard.css}">
+          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
 
     <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 
 <body>
 
-<input type="checkbox" id="toggle-sidebar"/>
+<input id="toggle-sidebar" type="checkbox"/>
 
 <header>
     <div class="head-box">
 
         <label for="toggle-sidebar">
             <div id="menu">
-                <img th:src="@{/images/menu-burger.png}" alt="Menu">
+                <img alt="Menu" th:src="@{/images/menu-burger.png}"/>
             </div>
         </label>
 
-        <h2>Scanner Code QR</h2>
+        <h1>Scanner QR</h1>
 
     </div>
 </header>
 
 <section th:replace="student/student-dashboard :: sidebar"></section>
 
-<main class="center-wrapper">
+<main class="page-content">
 
-    <div id="reader"></div>
+    <div class="page-heading">
+        <h2>Scanner un code QR</h2>
+        <p>Scannez le code QR de votre salle pour enregistrer votre présence.</p>
+    </div>
 
-    <p id="result"></p>
+    <section class="scanner-card">
+
+        <div class="scanner-header">
+            <div>
+                <h3>Lecteur QR</h3>
+                <p>Placez le code QR devant votre caméra.</p>
+            </div>
+
+            <span class="scanner-status">
+                <span class="status-dot"></span>
+                Scanner prêt
+            </span>
+        </div>
+
+        <div class="scanner-content">
+
+            <div class="scanner-frame">
+                <div id="reader"></div>
+            </div>
+
+            <div class="scanner-instructions">
+                <i class="fi fi-ss-info"></i>
+                <p>
+                    Assurez-vous que le code QR est entièrement visible
+                    dans la zone de lecture et que votre caméra est autorisée.
+                </p>
+            </div>
+
+            <p id="result" class="scanner-result" role="status" aria-live="polite"></p>
+
+        </div>
+
+    </section>
 
 </main>
 
 <script>
-
     const html5QrCode = new Html5Qrcode("reader");
 
     let isScanning = true;
 
-    /**
-     * Récupération ou génération de l'identifiant du navigateur.
-     */
     function getDeviceUUID() {
 
         let deviceUUID = localStorage.getItem("device_uuid");
@@ -87,9 +120,15 @@
         return deviceUUID;
     }
 
-    /**
-     * Traitement après détection du QR Code.
-     */
+    function showResult(message, type = "error") {
+
+        const result = document.getElementById("result");
+
+        result.textContent = message;
+        result.className = `scanner-result ${type}`;
+
+    }
+
     function onScanSuccess(decodedText) {
 
         if (!isScanning) {
@@ -102,55 +141,42 @@
 
             try {
 
-                // Récupération du code présent dans le QR Code
                 let code;
 
                 try {
 
                     const qrUrl = new URL(decodedText);
-
                     code = qrUrl.searchParams.get("code");
 
                 } catch (error) {
 
-                    // Si le QR Code contient directement le code
                     code = decodedText;
 
                 }
 
                 if (!code) {
-
                     throw new Error("Code QR invalide ou manquant.");
-
                 }
 
-                // Récupération de l'identifiant du navigateur
                 const deviceUUID = getDeviceUUID();
 
-                // Construction de l'URL de validation
                 const url = new URL(
                     "/api/qr/scan",
                     window.location.origin
                 );
 
                 url.searchParams.set("code", code);
-
-                // IMPORTANT : respecter exactement le nom attendu par Spring
                 url.searchParams.set("deviceUUID", deviceUUID);
 
-                console.log("Code QR :", code);
-                console.log("Device UUID :", deviceUUID);
-                console.log("URL de redirection :", url.toString());
-
-                // Redirection vers le contrôleur Spring Boot
                 window.location.href = url.toString();
 
             } catch (error) {
 
-                console.error("Erreur lors du traitement du QR Code :", error);
+                console.error("Erreur QR :", error);
 
-                document.getElementById("result").textContent =
-                    "Impossible de traiter ce QR Code. Veuillez réessayer.";
+                showResult(
+                    "Impossible de traiter ce QR Code. Veuillez réessayer."
+                );
 
                 isScanning = true;
 
@@ -158,7 +184,9 @@
 
         }).catch(error => {
 
-            console.error("Erreur lors de l'arrêt du scanner :", error);
+            console.error("Erreur arrêt scanner :", error);
+
+            showResult("Une erreur est survenue lors de l'arrêt du scanner.");
 
             isScanning = true;
 
@@ -166,15 +194,11 @@
 
     }
 
-    /**
-     * Initialisation de la caméra.
-     */
     Html5Qrcode.getCameras().then(devices => {
 
         if (!devices || devices.length === 0) {
 
-            document.getElementById("result").textContent =
-                "Aucune caméra détectée.";
+            showResult("Aucune caméra détectée sur cet appareil.");
 
             return;
         }
@@ -190,10 +214,11 @@
 
     }).catch(error => {
 
-        console.error("Impossible d'accéder à la caméra :", error);
+        console.error("Erreur caméra :", error);
 
-        document.getElementById("result").textContent =
-            "Impossible d'accéder à la caméra. Vérifiez les autorisations.";
+        showResult(
+            "Impossible d'accéder à la caméra. Vérifiez les autorisations."
+        );
 
     });
 
@@ -201,4 +226,3 @@
 
 </body>
 </html>
-

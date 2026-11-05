@@ -1,137 +1,161 @@
 <!DOCTYPE html>
-<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
     <title>Admin Upload Timetable</title>
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-upload-user.css}">
-    <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+
+    <link rel="stylesheet" th:href="@{/css/admin/upload-timetable.css}"/>
+    <link href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css"
+          rel="stylesheet"/>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+
+<input id="toggle-sidebar" type="checkbox"/>
+
 <header>
     <div class="head-box">
-        <!-- Checkbox caché -->
-        <label for="toggle-sidebar">
-            <div  id="menu">
-                <img th:src="@{/images/menu-burger.png}">
 
+        <label for="toggle-sidebar">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Menu"/>
             </div>
         </label>
-        <h2>Envoi des emploi du temps </h2>
+
+        <h2>Envoi des emplois du temps</h2>
+
     </div>
 </header>
 
-<section th:replace="admin/admin-dashboard :: sidebar">
+<section th:replace="admin/admin-dashboard :: sidebar"></section>
 
-</section>
 <main class="center-wrappers">
-        <!-- ===================== IMPORT XLSX ===================== -->
-        <fieldset class="import-box">
-            <legend>Importation en masse (XLSX) Professeurs </legend>
 
-            <form class="form-upload"
-                  th:action="@{/timetables/upload/professortimetable}"
-                  method="post"
-                  enctype="multipart/form-data">
-
-                <div class="info-input full">
-                    <label>Fichier Excel (.xlsx)</label>
-
-                    <input type="file"
-                           name="excelFile"
-                           accept=".xls,.xlsx"
-                           class="excelFileInput"
-                           required>
-
-                    <!--  AJOUT IMPORTANT -->
-                    <div class="file-name" style="display: none;">Aucun fichier sélectionné</div>
-                </div>
-                <div class="buttons">
-                    <button type="button" class="clearFileBtn">
-                        Supprimer
-                    </button>
-
-                    <button type="submit" class="submit button-upload">
-                        Importer
-                    </button>
-
-                    <input type="hidden" name="id" th:value="${id}" />
-                </div>
-
-                <span class="upload-message alert alert-success" style="display:none;">
-            Fichier chargé avec succès !
-        </span>
-
-                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
-                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
-
-            </form>
-        </fieldset>
-
+    <!-- IMPORT PROFESSEURS -->
     <fieldset class="import-box">
-        <legend>Importation en masse (XLSX) Etudiants</legend>
+
+        <legend>Importation en masse (XLSX) Professeurs</legend>
 
         <form class="form-upload"
-              th:action="@{/timetables/upload/grouptimetable}"
+              enctype="multipart/form-data"
               method="post"
-              enctype="multipart/form-data">
+              th:action="@{/timetables/upload/professortimetable}">
 
             <div class="info-input full">
+
                 <label>Fichier Excel (.xlsx)</label>
 
-                <input type="file"
-                       name="excelFile"
-                       accept=".xls,.xlsx"
+                <input accept=".xls,.xlsx"
                        class="excelFileInput"
-                       required>
+                       name="excelFile"
+                       required
+                       type="file"/>
 
-                <!--  AJOUT IMPORTANT -->
-                <div class="file-name" style="display: none;">Aucun fichier sélectionné</div>
+                <div class="file-name" style="display: none;">
+                    Aucun fichier sélectionné
+                </div>
+
             </div>
 
             <div class="buttons">
-                <button type="button" class="clearFileBtn">
+
+                <button class="clearFileBtn" type="button">
                     Supprimer
                 </button>
 
-                <button type="submit" class="submit button-upload">
+                <button class="submit button-upload" type="submit">
                     Importer
                 </button>
 
-                <input type="hidden" name="id" th:value="${id}" />
+                <input name="id" th:value="${id}" type="hidden"/>
+
             </div>
 
             <span class="upload-message alert alert-success" style="display:none;">
-            Fichier chargé avec succès !
-        </span>
+                Fichier chargé avec succès !
+            </span>
 
-            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
-            <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+            <div class="alert alert-danger"
+                 th:if="${error}"
+                 th:text="${error}">
+            </div>
+
+            <div class="alert alert-success"
+                 th:if="${success}"
+                 th:text="${success}">
+            </div>
 
         </form>
+
+    </fieldset>
+
+
+    <!-- IMPORT ÉTUDIANTS -->
+    <fieldset class="import-box">
+
+        <legend>Importation en masse (XLSX) Étudiants</legend>
+
+        <form class="form-upload"
+              enctype="multipart/form-data"
+              method="post"
+              th:action="@{/timetables/upload/grouptimetable}">
+
+            <div class="info-input full">
+
+                <label>Fichier Excel (.xlsx)</label>
+
+                <input accept=".xls,.xlsx"
+                       class="excelFileInput"
+                       name="excelFile"
+                       required
+                       type="file"/>
+
+                <div class="file-name" style="display: none;">
+                    Aucun fichier sélectionné
+                </div>
+
+            </div>
+
+            <div class="buttons">
+
+                <button class="clearFileBtn" type="button">
+                    Supprimer
+                </button>
+
+                <button class="submit button-upload" type="submit">
+                    Importer
+                </button>
+
+                <input name="id" th:value="${id}" type="hidden"/>
+
+            </div>
+
+            <span class="upload-message alert alert-success" style="display:none;">
+                Fichier chargé avec succès !
+            </span>
+
+            <div class="alert alert-danger"
+                 th:if="${error}"
+                 th:text="${error}">
+            </div>
+
+            <div class="alert alert-success"
+                 th:if="${success}"
+                 th:text="${success}">
+            </div>
+
+        </form>
+
     </fieldset>
 
 </main>
-<style>
-    .upload-message {
-        display: none; /* caché par défaut */
-        position: absolute;
-        left: 60%;  /* à côté du formulaire */
-        top: 60%;
-        transform: translateY(-50%);
-        background-color: #4CAF50;
-        color: white;
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-size: 0.9rem;
-        box-shadow: 0 0 5px #0003;
-    }
-</style>
+
 
 <script>
+
     document.querySelectorAll('.form-upload').forEach(form => {
 
         const input = form.querySelector('.excelFileInput');
@@ -140,25 +164,41 @@
         const message = form.querySelector('.upload-message');
 
         input.addEventListener('change', function() {
-            if(this.files.length > 0){
-                display.textContent = this.files[0].name;
 
-                message.style.display = 'inline';
+            if (this.files.length > 0) {
+
+                display.textContent = this.files[0].name;
+                display.style.display = 'block';
+
+                message.style.display = 'inline-flex';
+
                 setTimeout(() => {
                     message.style.display = 'none';
                 }, 3000);
+
             } else {
+
                 display.textContent = "Aucun fichier";
+                display.style.display = 'none';
+
             }
+
         });
 
         clearBtn.addEventListener('click', function() {
+
             input.value = "";
+
             display.textContent = "Aucun fichier";
+            display.style.display = 'none';
+
             message.style.display = 'none';
+
         });
 
     });
+
 </script>
+
 </body>
 </html>

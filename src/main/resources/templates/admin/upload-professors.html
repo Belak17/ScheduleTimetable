@@ -1,230 +1,505 @@
 <!DOCTYPE html>
-<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulaire Professeur</title>
-  <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
-  <link rel="stylesheet" th:href="@{/css/style-admin/style-upload-user.css}">
-  <link rel="stylesheet"
-        href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Importation des Professeurs</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin/upload-professors.css}"/>
+
+    <link href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css"
+          rel="stylesheet"/>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+
+<input id="toggle-sidebar" type="checkbox"/>
+
+<!-- ================= HEADER ================= -->
+
 <header>
-  <div class="head-box">
-    <!-- Checkbox caché -->
+    <div class="head-box">
 
-    <label for="toggle-sidebar">
-      <div  id="menu">
+        <label for="toggle-sidebar" class="menu-trigger">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Menu"/>
+            </div>
+        </label>
 
-        <img th:src="@{/images/menu-burger.png}">
+        <div class="header-title">
+            <span class="header-icon">
+                <i class="fi fi-ss-user-add"></i>
+            </span>
 
+            <div>
+                <h2>Importation des Professeurs</h2>
+                <p>Gestion et enregistrement du personnel enseignant</p>
+            </div>
+        </div>
 
-      </div>
-    </label>
-    <h2>Importation des Professeurs  </h2>
-  </div>
+    </div>
 </header>
 
-<section th:replace="admin/admin-dashboard :: sidebar">
+<!-- ================= SIDEBAR ================= -->
 
-</section>
+<section th:replace="admin/admin-dashboard :: sidebar"></section>
+
+
+<!-- ================= MAIN ================= -->
+
 <main class="center-wrappers">
-  <form th:action="@{/professors/professor/import}" th:object="${professor}" method="post">
 
-    <!-- ===================== INFORMATIONS PERSONNELLES ===================== -->
-    <fieldset>
-      <legend>Informations personnelles</legend>
+    <!-- INTRODUCTION -->
 
-      <div class="info-input">
-        <label>User ID</label>
-        <input type="text" th:field="*{userId}" required>
-      </div>
-      <div class="info-input">
-        <label>Nom</label>
-        <input type="text" th:field="*{nom}">
-      </div>
+    <div class="page-intro">
 
-      <div class="info-input">
-        <label>Prénom</label>
-        <input type="text" th:field="*{prenom}">
-      </div>
+        <div>
+            <span class="page-badge">
+                <i class="fi fi-ss-users"></i>
+                Administration
+            </span>
 
-      <div class="info-input">
-        <label>Email</label>
-        <input type="email" th:field="*{email}" required>
-      </div>
+            <h1>Gestion des professeurs</h1>
 
-      <div class="info-input">
-        <label>Téléphone</label>
-        <input type="text" th:field="*{telephone}">
-      </div>
+            <p>
+                Ajoutez un professeur individuellement ou importez plusieurs
+                professeurs simultanément à partir d'un fichier Excel.
+            </p>
+        </div>
 
-      <div class="info-input">
-        <label>Sexe</label>
-        <select th:field="*{sexe}">
-          <option value="">--Choisir--</option>
-          <option value="M">Homme</option>
-          <option value="F">Femme</option>
-        </select>
-      </div>
-
-
-      <div class="info-input">
-        <label>Nationalité</label>
-        <select th:field="*{nationalite}">
-          <option value="">--Choisir--</option>
-          <option th:each="n : ${nationalites}"
-                  th:value="${n}"
-                  th:text="${n}">
-          </option>
-        </select>
-      </div>
-
-
-    </fieldset>
-
-    <!-- ===================== INFORMATIONS PROFESSIONNELLES ===================== -->
-    <fieldset>
-      <legend>Informations professionnelles</legend>
-      <div class="info-input">
-        <label>Département</label>
-        <select th:field="*{departement}">
-          <option value="">--Choisir--</option>
-          <option th:each="d : ${departments}"
-                  th:value="${d}"
-                  th:text="${d}">
-          </option>
-        </select>
-      </div>
-<!--      <div class="info-input">-->
-<!--        <label>Spécialité</label>-->
-<!--        <input type="text" th:field="*{specialite}">-->
-<!--      </div>-->
-      <div class="info-input">
-        <label>Grade</label>
-        <select th:field="*{grade}">
-          <option value="">--Choisir--</option>
-          <option th:each="g : ${grades}"
-                  th:value="${g}"
-                  th:text="${g}">
-          </option>
-        </select>
-      </div>
-    </fieldset>
-    <!-- ===================== INFORMATIONS COMPLÉMENTAIRES ===================== -->
-<!--    <fieldset>-->
-<!--      <legend>Informations complémentaires</legend>-->
-<!--      <div class="info-input">-->
-<!--        <label>RIB</label>-->
-<!--        <input type="text" th:field="*{rib}">-->
-<!--      </div>-->
-<!--      <div class="info-input">-->
-<!--        <label>Établissement origine</label>-->
-<!--        <input type="text" th:field="*{etablissement_origine}">-->
-<!--      </div>-->
-<!--      <div class="info-input">-->
-<!--        <label>Application tiers</label>-->
-<!--        <input type="text" th:field="*{application_tiers}">-->
-<!--      </div>-->
-<!--    </fieldset>-->
-    <div class="buttons">
-      <button type="reset" class="reset">Annuler</button>
-      <button type="submit" class="submit">Enregistrer</button>
     </div>
-  </form>
 
-  <!-- ===================== IMPORT XLSX ===================== -->
-  <fieldset class="import-box">
-    <legend>Importation en masse (XLSX)</legend>
 
-    <form class="form-upload"
-          th:action="@{/professors/import}"
-          method="post"
-          enctype="multipart/form-data">
+    <!-- ================= FORMULAIRE INDIVIDUEL ================= -->
 
-      <div class="info-input full">
-        <label>Fichier Excel (.xlsx)</label>
+    <section class="content-card">
 
-        <input type="file"
-               name="excelFile"
-               accept=".xls,.xlsx"
-               class="excelFileInput"
-               required>
+        <div class="card-heading">
 
-        <!--  AJOUT IMPORTANT -->
-        <div class="file-name" style="display: none;">Aucun fichier sélectionné</div>
-      </div>
+            <div class="heading-icon blue-icon">
+                <i class="fi fi-ss-user-add"></i>
+            </div>
 
-      <div class="buttons">
-        <button type="button" class="clearFileBtn">
-          Supprimer
-        </button>
+            <div>
+                <h2>Enregistrement individuel</h2>
+                <p>Renseignez les informations du professeur.</p>
+            </div>
 
-        <button type="submit" class="submit button-upload">
-          Importer
-        </button>
+        </div>
 
-        <input type="hidden" name="id" th:value="${id}" />
-      </div>
 
-      <span class="upload-message alert alert-success" style="display:none;">
-            Fichier chargé avec succès !
-        </span>
+        <form method="post"
+              th:action="@{/professors/professor/import}"
+              th:object="${professor}"
+              class="professor-form">
 
-      <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
-      <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+            <!-- INFORMATIONS PERSONNELLES -->
 
-    </form>
-  </fieldset>
+            <fieldset class="form-section">
+
+                <legend>
+                    <span class="section-number">01</span>
+                    Informations personnelles
+                </legend>
+
+                <div class="form-grid">
+
+                    <div class="info-input">
+                        <label for="userId">
+                            User ID <span class="required">*</span>
+                        </label>
+
+                        <input id="userId"
+                               type="text"
+                               th:field="*{userId}"
+                               placeholder="Identifiant du professeur"
+                               required/>
+                    </div>
+
+
+                    <div class="info-input">
+                        <label for="nom">Nom</label>
+
+                        <input id="nom"
+                               type="text"
+                               th:field="*{nom}"
+                               placeholder="Nom de famille"/>
+                    </div>
+
+
+                    <div class="info-input">
+                        <label for="prenom">Prénom</label>
+
+                        <input id="prenom"
+                               type="text"
+                               th:field="*{prenom}"
+                               placeholder="Prénom"/>
+                    </div>
+
+
+                    <div class="info-input">
+                        <label for="email">
+                            Adresse email <span class="required">*</span>
+                        </label>
+
+                        <input id="email"
+                               type="email"
+                               th:field="*{email}"
+                               placeholder="exemple@universite.tn"
+                               required/>
+                    </div>
+
+
+                    <div class="info-input">
+                        <label for="telephone">Téléphone</label>
+
+                        <input id="telephone"
+                               type="text"
+                               th:field="*{telephone}"
+                               placeholder="Numéro de téléphone"/>
+                    </div>
+
+
+                    <div class="info-input">
+                        <label for="sexe">Sexe</label>
+
+                        <select id="sexe" th:field="*{sexe}">
+                            <option value="">-- Choisir --</option>
+                            <option value="M">Homme</option>
+                            <option value="F">Femme</option>
+                        </select>
+                    </div>
+
+
+                    <div class="info-input">
+                        <label for="nationalite">Nationalité</label>
+
+                        <select id="nationalite" th:field="*{nationalite}">
+                            <option value="">-- Choisir --</option>
+
+                            <option th:each="n : ${nationalites}"
+                                    th:text="${n}"
+                                    th:value="${n}">
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </fieldset>
+
+
+            <!-- INFORMATIONS PROFESSIONNELLES -->
+
+            <fieldset class="form-section">
+
+                <legend>
+                    <span class="section-number">02</span>
+                    Informations professionnelles
+                </legend>
+
+                <div class="form-grid">
+
+                    <div class="info-input">
+                        <label for="departement">Département</label>
+
+                        <select id="departement" th:field="*{departement}">
+                            <option value="">-- Choisir un département --</option>
+
+                            <option th:each="d : ${departments}"
+                                    th:text="${d}"
+                                    th:value="${d}">
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <div class="info-input">
+                        <label for="grade">Grade</label>
+
+                        <select id="grade" th:field="*{grade}">
+                            <option value="">-- Choisir un grade --</option>
+
+                            <option th:each="g : ${grades}"
+                                    th:text="${g}"
+                                    th:value="${g}">
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </fieldset>
+
+
+            <!-- ACTIONS -->
+
+            <div class="form-actions">
+
+                <button class="btn btn-secondary" type="reset">
+                    <i class="fi fi-ss-rotate-left"></i>
+                    Réinitialiser
+                </button>
+
+                <button class="btn btn-primary" type="submit">
+                    <i class="fi fi-ss-disk"></i>
+                    Enregistrer le professeur
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+
+    <!-- ================= IMPORTATION EXCEL ================= -->
+
+    <section class="content-card import-card">
+
+        <div class="card-heading">
+
+            <div class="heading-icon green-icon">
+                <i class="fi fi-ss-file-excel"></i>
+            </div>
+
+            <div>
+                <h2>Importation en masse</h2>
+                <p>Ajoutez plusieurs professeurs à partir d'un fichier Excel.</p>
+            </div>
+
+            <span class="format-badge">XLSX</span>
+
+        </div>
+
+
+        <form class="form-upload"
+              enctype="multipart/form-data"
+              method="post"
+              th:action="@{/professors/import}">
+
+            <input type="hidden" name="id" th:value="${id}"/>
+
+
+            <!-- MESSAGES -->
+
+            <div class="alert alert-danger"
+                 th:if="${error}"
+                 th:text="${error}">
+            </div>
+
+            <div class="alert alert-success"
+                 th:if="${success}"
+                 th:text="${success}">
+            </div>
+
+
+            <!-- ZONE DE DÉPÔT -->
+
+            <div class="upload-zone" id="uploadZone">
+
+                <input type="file"
+                       id="excelFile"
+                       accept=".xlsx,.xls"
+                       class="excelFileInput"
+                       name="excelFile"
+                       required
+                       hidden/>
+
+                <div class="upload-content" id="uploadContent">
+
+                    <div class="upload-icon">
+                        <i class="fi fi-ss-file-excel"></i>
+                    </div>
+
+                    <h3>Importer votre fichier Excel</h3>
+
+                    <p>
+                        Glissez votre fichier ici ou
+                        <label for="excelFile" class="browse-link">
+                            parcourez vos fichiers
+                        </label>
+                    </p>
+
+                    <div class="upload-formats">
+                        <span><i class="fi fi-ss-check-circle"></i> XLSX</span>
+                        <span><i class="fi fi-ss-check-circle"></i> XLS</span>
+                        <span>Taille selon les limites du serveur</span>
+                    </div>
+
+                </div>
+
+
+                <!-- FICHIER SÉLECTIONNÉ -->
+
+                <div class="selected-file" id="selectedFile" hidden>
+
+                    <div class="selected-file-icon">
+                        <i class="fi fi-ss-file-excel"></i>
+                    </div>
+
+                    <div class="selected-file-info">
+                        <strong class="file-name">Aucun fichier sélectionné</strong>
+                        <span class="file-size"></span>
+                    </div>
+
+                    <button type="button"
+                            class="clearFileBtn"
+                            aria-label="Supprimer le fichier">
+                        <i class="fi fi-ss-trash"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTION IMPORT -->
+
+            <div class="upload-footer">
+
+                <div class="upload-hint">
+                    <i class="fi fi-ss-info"></i>
+                    Vérifiez que votre fichier respecte le modèle attendu.
+                </div>
+
+                <button type="submit"
+                        class="btn btn-success button-upload">
+                    <i class="fi fi-ss-cloud-upload"></i>
+                    Importer les professeurs
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
 
 </main>
-<style>
-  .upload-message {
-      display: none; /* caché par défaut */
-      position: absolute;
-      left: 60%;  /* à côté du formulaire */
-      top: 60%;
-      transform: translateY(-50%);
-      background-color: #4CAF50;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 0.9rem;
-      box-shadow: 0 0 5px #0003;
-  }
-</style>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
 <script>
-  document.querySelectorAll('.form-upload').forEach(form => {
 
-  const input = form.querySelector('.excelFileInput');
-  const display = form.querySelector('.file-name');
-  const clearBtn = form.querySelector('.clearFileBtn');
-  const message = form.querySelector('.upload-message');
+    document.addEventListener("DOMContentLoaded", function () {
 
-  input.addEventListener('change', function () {
-      if (this.files.length > 0) {
-          display.textContent = this.files[0].name;
+        const form = document.querySelector(".form-upload");
 
-          message.style.display = 'inline';
-          setTimeout(() => {
-              message.style.display = 'none';
-          }, 3000);
-      } else {
-          display.textContent = "Aucun fichier";
-      }
-  });
+        if (!form) return;
 
-  clearBtn.addEventListener('click', function () {
-      input.value = "";
-      display.textContent = "Aucun fichier";
-      message.style.display = 'none';
-  });
+        const input = form.querySelector(".excelFileInput");
+        const uploadZone = form.querySelector("#uploadZone");
+        const uploadContent = form.querySelector("#uploadContent");
+        const selectedFile = form.querySelector("#selectedFile");
 
-});
+        const fileName = form.querySelector(".file-name");
+        const fileSize = form.querySelector(".file-size");
+        const clearBtn = form.querySelector(".clearFileBtn");
+
+        function formatFileSize(bytes) {
+
+            if (bytes < 1024) return bytes + " B";
+
+            if (bytes < 1024 * 1024)
+                return (bytes / 1024).toFixed(1) + " KB";
+
+            return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+        }
+
+
+        function displayFile(file) {
+
+            if (!file) return;
+
+            const extension = file.name.split(".").pop().toLowerCase();
+
+            if (!["xlsx", "xls"].includes(extension)) {
+
+                input.value = "";
+
+                alert("Veuillez sélectionner un fichier Excel (.xls ou .xlsx).");
+
+                return;
+            }
+
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+
+            uploadContent.hidden = true;
+            selectedFile.hidden = false;
+
+            uploadZone.classList.add("has-file");
+        }
+
+
+        input.addEventListener("change", function () {
+
+            if (this.files.length > 0) {
+                displayFile(this.files[0]);
+            }
+
+        });
+
+
+        clearBtn.addEventListener("click", function () {
+
+            input.value = "";
+
+            selectedFile.hidden = true;
+            uploadContent.hidden = false;
+
+            uploadZone.classList.remove("has-file");
+
+        });
+
+
+        uploadZone.addEventListener("dragover", function (event) {
+
+            event.preventDefault();
+
+            uploadZone.classList.add("dragging");
+
+        });
+
+
+        uploadZone.addEventListener("dragleave", function (event) {
+
+            if (!uploadZone.contains(event.relatedTarget)) {
+                uploadZone.classList.remove("dragging");
+            }
+
+        });
+
+
+        uploadZone.addEventListener("drop", function (event) {
+
+            event.preventDefault();
+
+            uploadZone.classList.remove("dragging");
+
+            const files = event.dataTransfer.files;
+
+            if (files.length > 0) {
+
+                const dataTransfer = new DataTransfer();
+
+                dataTransfer.items.add(files[0]);
+
+                input.files = dataTransfer.files;
+
+                displayFile(files[0]);
+
+            }
+
+        });
+
+    });
+
 </script>
-
 
 </body>
 </html>

@@ -1,0 +1,885 @@
+/* =========================================================
+   1. VARIABLES & RESET
+   ========================================================= */
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+
+    --text: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+
+    --background: #f4f6f9;
+    --surface: #ffffff;
+    --surface-hover: #f8fafc;
+
+    --border: #e5e7eb;
+    --border-light: #f1f3f5;
+
+    --shadow-sm: 0 1px 3px rgb(15 23 42 / 5%);
+    --shadow-md: 0 4px 16px rgb(15 23 42 / 6%);
+    --shadow-lg: 0 10px 24px rgb(15 23 42 / 9%);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    --header-height: 70px;
+    --sidebar-width: 250px;
+
+    --transition: 0.2s ease;
+}
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: var(--text);
+    background: var(--background);
+
+    overflow-x: hidden;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   2. HEADER
+   ========================================================= */
+
+.head-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+
+    width: 100%;
+    height: var(--header-height);
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 0 20px;
+
+    background: rgb(255 255 255 / 97%);
+    border-bottom: 1px solid var(--border);
+
+    box-shadow: var(--shadow-sm);
+
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+
+.menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    cursor: pointer;
+}
+
+
+.head-box #menu {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+
+    transition: var(--transition);
+}
+
+
+.head-box #menu:hover {
+    background: var(--primary-light);
+}
+
+
+.head-box #menu img {
+    width: 22px;
+    height: 22px;
+
+    object-fit: contain;
+
+    transition: transform 0.25s ease;
+}
+
+
+#toggle-sidebar {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+
+#toggle-sidebar:checked ~ header #menu img {
+    transform: rotate(90deg);
+}
+
+
+#toggle-sidebar:focus-visible ~ header #menu {
+    outline: 3px solid rgb(37 99 235 / 35%);
+    outline-offset: 3px;
+}
+
+
+.text-title {
+    min-width: 0;
+
+    color: var(--text);
+
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.3;
+
+    letter-spacing: -0.02em;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   3. SIDEBAR
+   ========================================================= */
+
+.icons {
+    position: fixed;
+    top: 0;
+    left: calc(-1 * var(--sidebar-width));
+    z-index: 90;
+
+    width: var(--sidebar-width);
+    height: 100vh;
+    height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: var(--header-height);
+
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+
+    box-shadow: 8px 0 24px rgb(15 23 42 / 6%);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    transition: left 0.25s ease;
+}
+
+
+#toggle-sidebar:checked ~ .icons {
+    left: 0;
+}
+
+
+.icons .text-menu {
+    flex-shrink: 0;
+
+    width: 100%;
+    padding: 20px;
+
+    background: var(--surface-hover);
+    border-bottom: 1px solid var(--border);
+
+    text-align: center;
+}
+
+
+.icons .text-menu h2 {
+    color: var(--text);
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+
+.icons-option {
+    width: 100%;
+
+    margin-top: 10px;
+    padding: 0 8px;
+}
+
+
+.icon-container {
+    width: 100%;
+}
+
+
+.icon-container a,
+.icon-container label {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    width: 100%;
+    min-height: 44px;
+
+    padding: 11px 14px;
+    margin-bottom: 3px;
+
+    color: var(--text-secondary);
+
+    font-size: 14px;
+    font-weight: 500;
+
+    border-radius: var(--radius-sm);
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition),
+        color var(--transition),
+        transform var(--transition);
+}
+
+
+.icon-container a:hover,
+.icon-container label:hover {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+
+    transform: translateX(2px);
+}
+
+
+.icon-container a.active,
+.icon-container label.active {
+    color: var(--primary-dark);
+    background: var(--primary-light);
+
+    font-weight: 600;
+}
+
+
+.icon-container a img,
+.icon-container label img {
+    flex-shrink: 0;
+
+    width: 20px;
+    height: 20px;
+
+    object-fit: contain;
+}
+
+
+.tooltip {
+    display: inline-block;
+
+    min-width: 0;
+    margin-left: 2px;
+
+    font-size: 14px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   4. CONTENEUR PRINCIPAL
+   ========================================================= */
+
+.center-container {
+    width: min(1400px, calc(100% - 40px));
+    min-width: 0;
+
+    margin: 92px auto 30px;
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-md);
+}
+
+
+/* =========================================================
+   5. EN-TÊTE DE PAGE
+   ========================================================= */
+
+.page-heading {
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+
+.page-heading h1 {
+    color: var(--text);
+
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+
+    letter-spacing: -0.02em;
+}
+
+
+.page-heading p {
+    margin-top: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   6. SECTION DES DÉPARTEMENTS
+   ========================================================= */
+
+.department-section {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+
+.section-heading h2 {
+    color: var(--text);
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+
+.section-heading p {
+    margin-top: 3px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+
+.department-count {
+    flex-shrink: 0;
+
+    padding: 6px 11px;
+
+    color: var(--primary-dark);
+    background: var(--primary-light);
+
+    border: 1px solid #dbeafe;
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   7. GRILLE DES DÉPARTEMENTS
+   ========================================================= */
+
+.department-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 20px;
+
+    align-items: stretch;
+}
+
+
+/* =========================================================
+   8. CARTES DES DÉPARTEMENTS
+   ========================================================= */
+
+.department-card {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition);
+}
+
+
+.department-card:hover {
+    border-color: #bfdbfe;
+
+    box-shadow: var(--shadow-md);
+
+    transform: translateY(-3px);
+}
+
+
+.department-card:focus-visible {
+    outline: 3px solid rgb(37 99 235 / 35%);
+    outline-offset: 3px;
+}
+
+
+/* Image */
+
+.department-card__image {
+    position: relative;
+
+    width: 100%;
+    height: 190px;
+
+    overflow: hidden;
+
+    background: var(--surface-hover);
+}
+
+
+.department-card__image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: transform 0.3s ease;
+}
+
+
+.department-card:hover .department-card__image img {
+    transform: scale(1.04);
+}
+
+
+/* Informations */
+
+.department-card__content {
+    min-height: 82px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 14px 16px;
+
+    background: var(--surface);
+}
+
+
+.department-card__info {
+    min-width: 0;
+}
+
+
+.department-card__category {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+
+.department-card__content h3 {
+    color: var(--text);
+
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* Flèche */
+
+.department-card__arrow {
+    flex-shrink: 0;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--primary-dark);
+    background: var(--primary-light);
+
+    border: 1px solid #dbeafe;
+    border-radius: var(--radius-sm);
+
+    font-size: 13px;
+
+    transition:
+        color var(--transition),
+        background-color var(--transition),
+        border-color var(--transition),
+        transform var(--transition);
+}
+
+
+.department-card:hover .department-card__arrow {
+    color: #ffffff;
+    background: var(--primary);
+    border-color: var(--primary);
+
+    transform: translate(2px, -2px);
+}
+
+
+/* =========================================================
+   9. RESPONSIVE : GRANDS ÉCRANS
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    .center-container {
+        width: min(1500px, calc(100% - 60px));
+    }
+
+    .department-grid {
+        gap: 24px;
+    }
+
+    .department-card__image {
+        height: 210px;
+    }
+
+}
+
+
+/* =========================================================
+   10. RESPONSIVE : TABLETTES
+   ========================================================= */
+
+@media (max-width: 1024px) {
+
+    .department-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .department-card__image {
+        height: 180px;
+    }
+
+}
+
+
+/* =========================================================
+   11. RESPONSIVE : MOBILES
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    :root {
+        --header-height: 62px;
+        --sidebar-width: min(280px, 85vw);
+    }
+
+    .head-box {
+        height: var(--header-height);
+
+        gap: 10px;
+        padding: 0 12px;
+    }
+
+    .head-box #menu {
+        width: 42px;
+        height: 42px;
+    }
+
+    .head-box #menu img {
+        width: 21px;
+        height: 21px;
+    }
+
+    .text-title {
+        font-size: 17px;
+    }
+
+
+    /* Sidebar */
+
+    .icons {
+        width: var(--sidebar-width);
+        left: calc(-1 * var(--sidebar-width));
+
+        padding-top: var(--header-height);
+    }
+
+    .icons .text-menu {
+        padding: 18px 14px;
+    }
+
+    .icons .text-menu h2 {
+        font-size: 16px;
+    }
+
+    .icons-option {
+        padding: 0 10px;
+    }
+
+    .icon-container a,
+    .icon-container label {
+        min-height: 48px;
+        padding: 12px;
+    }
+
+
+    /* Contenu */
+
+    .center-container {
+        width: calc(100% - 24px);
+
+        margin: 78px auto 20px;
+        padding: 18px;
+
+        gap: 20px;
+
+        border-radius: var(--radius-md);
+    }
+
+    .page-heading {
+        padding-bottom: 16px;
+    }
+
+    .page-heading h1 {
+        font-size: 19px;
+    }
+
+    .department-section {
+        gap: 18px;
+    }
+
+    .section-heading h2 {
+        font-size: 16px;
+    }
+
+    .department-grid {
+        gap: 16px;
+    }
+
+    .department-card__image {
+        height: 165px;
+    }
+
+    .department-card__content {
+        min-height: 76px;
+        padding: 12px;
+    }
+
+    .department-card__content h3 {
+        font-size: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   12. PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .head-box {
+        gap: 8px;
+        padding: 0 9px;
+    }
+
+    .text-title {
+        font-size: 16px;
+    }
+
+
+    .center-container {
+        width: calc(100% - 16px);
+
+        margin-top: 74px;
+        padding: 14px;
+    }
+
+    .page-heading h1 {
+        font-size: 18px;
+    }
+
+    .page-heading p {
+        font-size: 12px;
+    }
+
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 9px;
+    }
+
+    .department-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .department-card__image {
+        height: 190px;
+    }
+
+    .department-card__content {
+        min-height: 76px;
+        padding: 13px 15px;
+    }
+
+}
+
+
+/* =========================================================
+   13. TRÈS PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .center-container {
+        width: calc(100% - 12px);
+        padding: 11px;
+    }
+
+    .page-heading h1 {
+        font-size: 17px;
+    }
+
+    .department-card__image {
+        height: 165px;
+    }
+
+}
+
+
+/* =========================================================
+   14. APPAREILS TACTILES
+   ========================================================= */
+
+@media (hover: none) {
+
+    .department-card:hover {
+        transform: none;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .department-card:hover .department-card__image img {
+        transform: none;
+    }
+
+    .department-card:hover .department-card__arrow {
+        transform: none;
+    }
+
+}
+
+
+/* =========================================================
+   15. ACCESSIBILITÉ
+   ========================================================= */
+
+:focus-visible {
+    outline: 3px solid rgb(37 99 235 / 35%);
+    outline-offset: 3px;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}

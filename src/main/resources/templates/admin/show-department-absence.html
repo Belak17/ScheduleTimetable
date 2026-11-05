@@ -1,82 +1,251 @@
 <!DOCTYPE html>
-<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absences par Departement</title>
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-departement-absence.css}">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Absences par département</title>
+
     <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+          th:href="@{/css/admin/show-department-absence.css}"/>
+
+    <link rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css"/>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
-<header>
-    <div class="head-box">
-        <!-- Checkbox caché -->
 
-        <label for="toggle-sidebar">
-            <div  id="menu">
-
-                <img th:src="@{/images/menu-burger.png}">
+<input id="toggle-sidebar"
+       type="checkbox"
+       aria-label="Afficher ou masquer le menu"/>
 
 
-            </div>
-        </label>
-        <h2>Consultation des Absences  </h2>
-    </div>
+<!-- HEADER -->
+<header class="head-box">
+
+    <label for="toggle-sidebar" class="menu-toggle">
+        <div id="menu">
+            <img th:src="@{/images/menu-burger.png}" alt="Menu"/>
+        </div>
+    </label>
+
+    <h1 class="text-title">Consultation des absences</h1>
+
 </header>
 
-<section th:replace="admin/admin-dashboard :: sidebar">
 
-</section>
-<main class="center-wrapper">
-    <h2 class="separator">Absences par Departement</h2>
-    <section class="grid">
+<!-- CONTENU PRINCIPAL -->
+<main class="center-container">
 
-        <div class="option">
-            <a th:href="@{/filieres/departements/MAT}">
-            <p>Mathématiques</p>
-            <img th:src="@{/images/mathématiques.jpg}">
-            </a>
-        </div>
-        <div class="option" >
-            <a th:href="@{/filieres/departements/INF}">
-            <p> Informatique</p>
-            <img th:src="@{/images/informatique.jpg}">
-            </a>
-        </div>
-        <div class="option" >
-            <a th:href="@{/filieres/departements/SV}">
-            <p>Biologie </p>
-            <img th:src="@{/images/sciencedelavie.jpg}">
-            </a>
-        </div>
-        <div class="option">
-            <a th:href="@{/filieres/departements/CHI}">
-            <p>Chimie</p>
-            <img th:src="@{/images/chimie.jpg}">
-            </a>
-        </div>
-        <div class="option">
-            <a th:href="@{/filieres/departements/PHY}">
-            <p>Physique</p>
-            <img th:src="@{/images/physique.jpg}">
-            </a>
-        </div>
-        <div class="option">
-            <a th:href="@{/filieres/departements/ST}">
-            <p>Geologie </p>
-            <img th:src="@{/images/sciencedelaterre.jpg}">
-            </a>
-        </div>
+    <!-- EN-TÊTE DE PAGE -->
+    <section class="page-heading">
+
+        <h1>Absences par département</h1>
+
+        <p>
+            Sélectionnez un département pour consulter
+            les absences de ses étudiants.
+        </p>
+
     </section>
-    <h2 class="separator">Absences par Departement </h2>
-    <section class="grid">
+
+
+    <!-- SECTION DES DÉPARTEMENTS -->
+    <section class="department-section">
+
+        <div class="section-heading">
+
+            <div>
+                <h2>Départements</h2>
+                <p>Choisissez le département à consulter.</p>
+            </div>
+
+            <span class="department-count">6 départements</span>
+
+        </div>
+
+
+        <!-- GRILLE DES DÉPARTEMENTS -->
+        <div class="department-grid">
+
+            <!-- MATHÉMATIQUES -->
+            <a class="department-card"
+               th:href="@{/filieres/departements/MAT}">
+
+                <div class="department-card__image">
+                    <img th:src="@{/images/mathematiques.jpg}"
+                         alt="Mathématiques"/>
+                </div>
+
+                <div class="department-card__content">
+
+                    <div class="department-card__info">
+                        <span class="department-card__category">
+                            Département
+                        </span>
+
+                        <h3>Mathématiques</h3>
+                    </div>
+
+                    <span class="department-card__arrow">
+                        <i class="fi fi-ss-arrow-up-right"></i>
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- INFORMATIQUE -->
+            <a class="department-card"
+               th:href="@{/filieres/departements/INF}">
+
+                <div class="department-card__image">
+                    <img th:src="@{/images/informatique.jpg}"
+                         alt="Informatique"/>
+                </div>
+
+                <div class="department-card__content">
+
+                    <div class="department-card__info">
+                        <span class="department-card__category">
+                            Département
+                        </span>
+
+                        <h3>Informatique</h3>
+                    </div>
+
+                    <span class="department-card__arrow">
+                        <i class="fi fi-ss-arrow-up-right"></i>
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- BIOLOGIE -->
+            <a class="department-card"
+               th:href="@{/filieres/departements/SV}">
+
+                <div class="department-card__image">
+                    <img th:src="@{/images/sciencedelavie.jpg}"
+                         alt="Biologie"/>
+                </div>
+
+                <div class="department-card__content">
+
+                    <div class="department-card__info">
+                        <span class="department-card__category">
+                            Département
+                        </span>
+
+                        <h3>Biologie</h3>
+                    </div>
+
+                    <span class="department-card__arrow">
+                        <i class="fi fi-ss-arrow-up-right"></i>
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- CHIMIE -->
+            <a class="department-card"
+               th:href="@{/filieres/departements/CHI}">
+
+                <div class="department-card__image">
+                    <img th:src="@{/images/chimie.jpg}"
+                         alt="Chimie"/>
+                </div>
+
+                <div class="department-card__content">
+
+                    <div class="department-card__info">
+                        <span class="department-card__category">
+                            Département
+                        </span>
+
+                        <h3>Chimie</h3>
+                    </div>
+
+                    <span class="department-card__arrow">
+                        <i class="fi fi-ss-arrow-up-right"></i>
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- PHYSIQUE -->
+            <a class="department-card"
+               th:href="@{/filieres/departements/PHY}">
+
+                <div class="department-card__image">
+                    <img th:src="@{/images/physique.jpg}"
+                         alt="Physique"/>
+                </div>
+
+                <div class="department-card__content">
+
+                    <div class="department-card__info">
+                        <span class="department-card__category">
+                            Département
+                        </span>
+
+                        <h3>Physique</h3>
+                    </div>
+
+                    <span class="department-card__arrow">
+                        <i class="fi fi-ss-arrow-up-right"></i>
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- GÉOLOGIE -->
+            <a class="department-card"
+               th:href="@{/filieres/departements/ST}">
+
+                <div class="department-card__image">
+                    <img th:src="@{/images/sciencedelaterre.jpg}"
+                         alt="Géologie"/>
+                </div>
+
+                <div class="department-card__content">
+
+                    <div class="department-card__info">
+                        <span class="department-card__category">
+                            Département
+                        </span>
+
+                        <h3>Géologie</h3>
+                    </div>
+
+                    <span class="department-card__arrow">
+                        <i class="fi fi-ss-arrow-up-right"></i>
+                    </span>
+
+                </div>
+
+            </a>
+
+        </div>
+
     </section>
+
 </main>
-<script>
 
-</script>
+
+<!-- SIDEBAR -->
+<section th:replace="admin/admin-dashboard :: sidebar"></section>
+
 
 </body>
 </html>

@@ -1,127 +1,312 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Liste Cours TP</title>
-  <link rel="stylesheet" th:href="@{/css/style-admin/admin-see-cours.css}">
-  <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
-  <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Liste des cours TP</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin/see-absence-final.css}"/>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+
+<input id="toggle-sidebar" type="checkbox"/>
+
 <header>
-  <div class="head-box">
-    <!-- Checkbox caché -->
-    <label for="toggle-sidebar">
-      <div  id="menu">
-        <img th:src="@{/images/menu-burger.png}">
-      </div>
-    </label>
-    <h2 class="text-title">Liste Cours TP</h2>
-  </div>
+    <div class="head-box">
+
+        <label for="toggle-sidebar" class="menu-toggle">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Menu"/>
+            </div>
+        </label>
+
+        <h2 class="text-title">Liste des cours TP</h2>
+
+    </div>
 </header>
+
+
 <main class="center-container">
-  <section class="list-department">
-    <div class="departement-title">
-      <h3>INFORMATIQUE</h3>
-      <h4>Licence 1</h4>
-    </div>
-    <div class="departments" th:each="group : ${groups}">
-      <a class="departement "
-         th:href="@{/absence/{departement}/{filiere}/{niveau}/{group}(
-            departement=${selectedDepartment},
-            filiere=${selectedField},
-            niveau=${selectedNiveau},
-            group=${group})}">
-        <div class="dep-header">
-          <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-          <span th:text="'Groupe ' + ${group}"></span>
+
+    <!-- TITRE DE LA PAGE -->
+    <div class="page-heading">
+
+        <div>
+            <h1>Liste des cours TP</h1>
+
+            <p>
+                Consultez les cours et les séances associés
+                aux différents groupes de votre département.
+            </p>
         </div>
-      </a>
-    </div>
-  </section>
-  <div class="table-content">
-    <!-- Message si aucun professeur -->
-    <div class="empty-message"
-         th:if="${courses== null or courses.content.isEmpty()}">
-      Veuillez sélectionner un groupe
-    </div>
-    <!-- Tableau -->
-    <table th:if="${courses != null and !courses.content.isEmpty()}"
-           bgcolor="lightgray"
-           border="1"
-           rules="all" class="styled-table">
-      <thead>
-      <tr>
-        <th>Intitule</th>
-        <th>Jour</th>
-        <th>Début</th>
-        <th>Fin</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="course : ${courses.content}">
-        <td>
-          <a th:href="@{/absence/courses/{id}(id=${course.id})}"
-             th:text="${course.intitule}">
-          </a>
-        </td>
-        <td th:text="${course.dayOfWeek}"></td>
-        <td th:text="${course.debut}"></td>
-        <td th:text="${course.fin}"></td>
-
-      </tr>
-      </tbody>
-    </table>
-
-    <div class="pagination"
-         style="margin-top: 20px;"
-         th:if="${courses != null}">
-
-      <!-- Bouton Précédent -->
-      <a th:if="${courses.hasPrevious()}"
-         th:href="@{/absence/{departement}/{filiere}/{niveau}/{group}(
-           departement=${selectedDepartment},
-           filiere=${selectedField},
-           niveau=${selectedNiveau},
-           group=${selectedGroup},
-           page=${courses.number - 1},
-           size=${courses.size}
-       )}"
-         class="button">
-        ← Précédent
-      </a>
-
-      <!-- Numéro de page -->
-      <span th:if="${courses.totalPages > 0}">
-        Page
-        <span th:text="${courses.number + 1}"></span>
-        sur
-        <span th:text="${courses.totalPages}"></span>
-    </span>
-
-      <!-- Bouton Suivant -->
-      <a th:if="${courses.hasNext()}"
-         th:href="@{/absence/{departement}/{filiere}/{niveau}/{group}(
-           departement=${selectedDepartment},
-           filiere=${selectedField},
-           niveau=${selectedNiveau},
-           group=${selectedGroup},
-           page=${courses.number + 1},
-           size=${courses.size}
-       )}"
-         class="button">
-        Suivant →
-      </a>
 
     </div>
-  </div>
+
+
+    <!-- DISPOSITION PRINCIPALE -->
+    <div class="content-layout">
+
+        <!-- NAVIGATION DES GROUPES -->
+        <aside class="list-department">
+
+            <div class="departement-title">
+
+                <h3>GROUPES</h3>
+
+            </div>
+
+
+            <div class="department-info">
+
+                <div class="department-info-icon">
+<!--                    <i class="fi fi-rr-building"></i>-->
+                </div>
+
+                <div>
+                    <h3>INFORMATIQUE</h3>
+                    <p>Licence 1</p>
+                </div>
+
+            </div>
+
+
+            <div class="departments">
+
+                <a
+                        class="departement"
+                        th:each="group : ${groups}"
+                        th:classappend="${selectedGroup == group} ? ' active' : ''"
+                        th:href="@{/absence/{departement}/{filiere}/{niveau}/{group}(
+                            departement=${selectedDepartment},
+                            filiere=${selectedField},
+                            niveau=${selectedNiveau},
+                            group=${group}
+                        )}"
+                >
+
+                    <div class="dep-header">
+
+                        <span class="department-icon">
+<!--                            <i class="fi fi-rr-users"></i>-->
+                        </span>
+
+                        <h3 th:text="'Groupe ' + ${group}"></h3>
+
+                        <i class="fi fi-rr-angle-small-right department-arrow"></i>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- CONTENU DES COURS -->
+        <section class="table-content">
+
+            <div class="table-heading">
+
+                <div>
+                    <h3>Cours du groupe</h3>
+
+                    <p>
+                        Consultez les enseignements et accédez
+                        au suivi des absences.
+                    </p>
+                </div>
+
+
+                <span
+                        class="results-count"
+                        th:if="${courses != null}"
+                        th:text="${courses.totalElements + ' cours'}">
+                </span>
+
+            </div>
+
+
+            <!-- GROUPE NON SÉLECTIONNÉ -->
+            <div
+                    class="empty-message"
+                    th:if="${courses == null}"
+            >
+
+                <div class="empty-icon">
+                    <i class="fi fi-rr-hand-pointer"></i>
+                </div>
+
+                <h3>Aucun groupe sélectionné</h3>
+
+                <p>
+                    Veuillez sélectionner un groupe dans le panneau
+                    de navigation pour afficher les cours disponibles.
+                </p>
+
+            </div>
+
+
+            <!-- AUCUN COURS -->
+            <div
+                    class="empty-message"
+                    th:if="${courses != null and courses.content.isEmpty()}"
+            >
+
+                <div class="empty-icon">
+                    <i class="fi fi-rr-book"></i>
+                </div>
+
+                <h3>Aucun cours disponible</h3>
+
+                <p>
+                    Aucun cours n'est actuellement associé à ce groupe.
+                </p>
+
+            </div>
+
+
+            <!-- TABLEAU DES COURS -->
+            <div
+                    class="table-scroll"
+                    th:if="${courses != null and !courses.content.isEmpty()}"
+            >
+
+                <table
+                        class="styled-table"
+                        aria-label="Liste des cours du groupe sélectionné"
+                >
+
+                    <thead>
+                    <tr>
+                        <th scope="col">Intitulé du cours</th>
+                        <th scope="col">Jour</th>
+                        <th scope="col">Heure de début</th>
+                        <th scope="col">Heure de fin</th>
+                    </tr>
+                    </thead>
+
+
+                    <tbody>
+
+                    <tr th:each="course : ${courses.content}">
+
+                        <td class="course-cell">
+
+                            <a
+                                    th:href="@{/absence/courses/{id}(id=${course.id})}"
+                                    th:text="${course.intitule}"
+                            ></a>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    class="day-text"
+                                    th:text="${course.dayOfWeek}"
+                            ></span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    class="time-badge"
+                                    th:text="${course.debut}"
+                            ></span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span
+                                    class="time-badge"
+                                    th:text="${course.fin}"
+                            ></span>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- PAGINATION -->
+            <div
+                    class="pagination"
+                    th:if="${courses != null and courses.totalPages > 1}"
+            >
+
+                <a
+                        class="button"
+                        th:href="@{/absence/{departement}/{filiere}/{niveau}/{group}(
+                            departement=${selectedDepartment},
+                            filiere=${selectedField},
+                            niveau=${selectedNiveau},
+                            group=${selectedGroup},
+                            page=${courses.number - 1},
+                            size=${courses.size}
+                        )}"
+                        th:if="${courses.hasPrevious()}"
+                >
+
+                    ← Précédent
+
+                </a>
+
+
+                <span class="pagination-info">
+
+                    Page
+
+                    <strong th:text="${courses.number + 1}"></strong>
+
+                    sur
+
+                    <strong th:text="${courses.totalPages}"></strong>
+
+                </span>
+
+
+                <a
+                        class="button"
+                        th:href="@{/absence/{departement}/{filiere}/{niveau}/{group}(
+                            departement=${selectedDepartment},
+                            filiere=${selectedField},
+                            niveau=${selectedNiveau},
+                            group=${selectedGroup},
+                            page=${courses.number + 1},
+                            size=${courses.size}
+                        )}"
+                        th:if="${courses.hasNext()}"
+                >
+
+                    Suivant →
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </div>
+
 </main>
-<section th:replace="admin/admin-dashboard :: sidebar"></section>
-<script>
 
-</script>
+
+<!-- SIDEBAR ADMINISTRATEUR -->
+<section th:replace="admin/admin-dashboard :: sidebar"></section>
 
 </body>
 </html>

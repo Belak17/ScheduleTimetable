@@ -1,104 +1,161 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Professor Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-dashboard.css}">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Tableau de bord professeur</title>
+
     <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+          th:href="@{/css/pages/dashboard.css}"/>
+
+    <link href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css"
+          rel="stylesheet"/>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+
+<input id="toggle-sidebar" type="checkbox"/>
+
+
+<!-- HEADER -->
+
 <header>
     <div class="head-box">
-        <!-- Checkbox caché -->
 
-        <label for="toggle-sidebar">
-            <div  id="menu">
-
-                <img th:src="@{/images/menu-burger.png}">
-
-
+        <label for="toggle-sidebar" class="menu-toggle">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Ouvrir le menu"/>
             </div>
         </label>
-        <h2 th:text="'Bienvenue cher Professeur ' + ${fullname}"></h2>
+
+        <h2 th:text="'Bienvenue cher Professeur ' + ${fullname}">
+        </h2>
+
     </div>
 </header>
+
+
+<!-- SIDEBAR -->
+
 <section class="icons" th:fragment="sidebar">
+
     <div class="text-menu">
-        <h2>
-            Menu
-        </h2>
+        <h2>Menu</h2>
     </div>
 
-    <div class="icons-option">
+    <nav class="icons-option">
+
         <div class="icon-container">
             <a th:href="@{/professor/dashboard}">
-                <img th:src="@{/images/home.png}" width="20">
-
+                <img th:src="@{/images/home.png}" alt=""/>
                 <span class="tooltip">Dashboard</span>
             </a>
         </div>
+
         <div class="icon-container">
             <a th:href="@{/professor/profile}">
-                <img th:src="@{/images/user (1).png}" width="20">
-
+                <img th:src="@{/images/user (1).png}" alt=""/>
                 <span class="tooltip">Profil</span>
             </a>
         </div>
+
         <div class="icon-container">
             <a th:href="@{/professor/timetable}">
-                <img th:src="@{/images/calendar-clock (1).png}" width="20">
-                <span class="tooltip">Emploi du temps </span>
+                <img th:src="@{/images/calendar-clock (1).png}" alt=""/>
+                <span class="tooltip">Emploi du temps</span>
             </a>
         </div>
-        <div class="icon-container">
-            <label for="toggle-sidebar" class="close-btn">
-                <img th:src="@{/images/grid.png}" width="20">
 
-                <span class="tooltip">Espace </span>
+        <div class="icon-container">
+            <label class="close-btn" for="toggle-sidebar">
+                <img th:src="@{/images/grid.png}" alt=""/>
+                <span class="tooltip">Espace</span>
             </label>
         </div>
+
         <div class="icon-container">
-
-            <label for="toggle-sidebar" class="close-btn">
-                <img th:src="@{/images/cross-small.png}" width="20">
-
-                <span class="tooltip">Fermer </span>
+            <label class="close-btn" for="toggle-sidebar">
+                <img th:src="@{/images/cross-small.png}" alt=""/>
+                <span class="tooltip">Fermer</span>
             </label>
         </div>
-    </div>
+
+    </nav>
+
 </section>
+
+
+<!-- CONTENU PRINCIPAL -->
+
 <main class="center-wrapper">
-    <h2 class="separator">Menu Professeur</h2>
-    <section class="grid">
 
-        <div class="option" style="background: linear-gradient(135deg, #4f8cff, #6ea8fe);">
-            <a th:href="@{/professor/timetable}">
+    <!-- MENU PROFESSEUR -->
 
-                <img th:src="@{/images/academic-years.png}">
-                <p> Emploi du temps</p>
-            </a>
+    <section class="dashboard-section">
+
+        <h2 class="separator">Menu professeur</h2>
+
+        <div class="grid">
+
+            <article class="option">
+                <a th:href="@{/professor/timetable}">
+
+                    <div class="option-icon">
+                        <img th:src="@{/images/academic-years.png}"
+                             alt="Emploi du temps"/>
+                    </div>
+
+                    <p>Emploi du temps</p>
+
+                </a>
+            </article>
+
         </div>
+
     </section>
-    <h2 class="separator">Menu Admnistratif</h2>
-    <section class="grid">
-        <div class="option" style="background-color: rgb(113, 113, 230);">
-            <a th:href="@{/professor/profile}">
 
-                <img th:src="@{/images/user-profile.png}" alt="Profil">
-                <p>Profil </p>
-            </a>
-        </div>
-        <div class="option" style="background: linear-gradient(135deg, #4f8cff, #6ea8fe);">
-            <a th:href="@{/logout}">
 
-                <img th:src="@{/images/power-off.png}" alt="Deconnexion">
-                <p>Deconnexion </p>
-            </a>
+    <!-- MENU ADMINISTRATIF -->
+
+    <section class="dashboard-section">
+
+        <h2 class="separator">Menu administratif</h2>
+
+        <div class="grid">
+
+            <article class="option">
+                <a th:href="@{/professor/profile}">
+
+                    <div class="option-icon">
+                        <img th:src="@{/images/user-profile.png}"
+                             alt="Profil"/>
+                    </div>
+
+                    <p>Profil</p>
+
+                </a>
+            </article>
+
+            <article class="option">
+                <a th:href="@{/logout}">
+
+                    <div class="option-icon">
+                        <img th:src="@{/images/power-off.png}"
+                             alt="Déconnexion"/>
+                    </div>
+
+                    <p>Déconnexion</p>
+
+                </a>
+            </article>
+
         </div>
+
     </section>
 
 </main>
+
 </body>
 </html>

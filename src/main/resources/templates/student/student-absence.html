@@ -1,87 +1,131 @@
 <!DOCTYPE html>
-<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style-student/style-student-dashboard.css}">
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
-    <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Récapitulatif des absences | ScheduleTimetable</title>
+
+    <link rel="stylesheet" th:href="@{/css/student/student-absence.css}"/>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+
+<input id="toggle-sidebar" type="checkbox"/>
+
 <header>
     <div class="head-box">
-        <!-- Checkbox caché -->
 
         <label for="toggle-sidebar">
-            <div  id="menu">
-
-                <img th:src="@{/images/menu-burger.png}">
-
-
+            <div id="menu">
+                <img alt="Menu" th:src="@{/images/menu-burger.png}"/>
             </div>
         </label>
-        <h2>Récapituatif des Absences </h2>
+
+        <h2>Récapitulatif des absences</h2>
+
     </div>
 </header>
-<section th:replace="student/student-dashboard :: sidebar">
-</section>
-<main class="center-wrapper">
-    <table class="styled-table" border="1" rules="all">
-        <thead>
-        <tr>
-            <th>
-                Intitulé
-            </th>
-            <th>
-                Nombres de Séances
-            </th>
-            <th>
-                Nombres Absences
-            </th>
 
-            <th>
-                Taux de Présence
-            </th>
-            <th>
-                Option
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="course : ${courses}">
-            <td>
-                <a
-                   th:text="${course.title}"></a>
-            </td>
-            <td th:text="${course.totalSeances}"></td>
-            <td th:text="${course.absences}"></td>
-            <td th:text="${course.presenceRate}"></td>
-            <td>
-                <a th:href="@{/student/absences/{id}(id=${course.id})}" class="button clickable-row">
-                    Détails
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<section th:replace="student/student-dashboard :: sidebar"></section>
+
+<main class="page-content">
+
+    <div class="page-heading">
+        <div>
+            <h1>Mes absences</h1>
+            <p>
+                Consultez votre taux de présence et le détail de vos absences par cours.
+            </p>
+        </div>
+    </div>
+
+    <section class="absence-card">
+
+        <div class="card-header">
+            <div>
+                <h2>Récapitulatif par cours</h2>
+                <p>Suivi de votre assiduité</p>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+
+            <table class="styled-table">
+
+                <thead>
+                <tr>
+                    <th>Intitulé</th>
+                    <th>Nombre de séances</th>
+                    <th>Nombre d'absences</th>
+                    <th>Taux de présence</th>
+                    <th>Option</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="course : ${courses}">
+
+                    <td class="course-title">
+                        <span th:text="${course.title}"></span>
+                    </td>
+
+                    <td th:text="${course.totalSeances}"></td>
+
+                    <td>
+                            <span class="absence-count"
+                                  th:text="${course.absences}">
+                            </span>
+                    </td>
+
+                    <td>
+                            <span class="presence-rate"
+                                  th:text="${course.presenceRate}">
+                            </span>
+                    </td>
+
+                    <td>
+                        <a class="details-button"
+                           th:href="@{/student/absences/{id}(id=${course.id})}">
+                            Détails
+                        </a>
+                    </td>
+
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(courses)}">
+                    <td colspan="5" class="empty-state">
+                        Aucun cours à afficher pour le moment.
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="card-footer">
+            <p>
+                Les détails permettent de consulter les séances concernées par vos absences.
+            </p>
+        </div>
+
+    </section>
+
 </main>
-<script>
 
-    function openModal()
-    {
+<script>
+    function openModal() {
         document.getElementById("modal").style.display = "flex";
     }
 
-    function closeModal()
-    {
+    function closeModal() {
         document.getElementById("modal").style.display = "none";
     }
-
 </script>
+
 </body>
-
-
 </html>

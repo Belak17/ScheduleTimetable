@@ -1,174 +1,376 @@
 <!DOCTYPE html>
-<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absences par Departement</title>
-    <link rel="stylesheet"
-          th:href="@{/css/style-admin/style-admin-dashboard.css}">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Filières par département</title>
 
     <link rel="stylesheet"
-          th:href="@{/css/style-admin/show-filiere.css}">
+          th:href="@{/css/admin/show-filiere-by-department.css}"/>
+
     <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css"/>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
-<header>
-    <div class="head-box">
-        <!-- Checkbox caché -->
 
-        <label for="toggle-sidebar">
-            <div  id="menu">
+<input id="toggle-sidebar"
+       type="checkbox"
+       aria-label="Afficher ou masquer le menu"/>
 
-                <img th:src="@{/images/menu-burger.png}">
+<!-- HEADER -->
 
+<header class="head-box">
 
-            </div>
-        </label>
-        <h2>Consultation des Absences  </h2>
-    </div>
+    <label for="toggle-sidebar" class="menu-toggle">
+        <div id="menu">
+            <img th:src="@{/images/menu-burger.png}" alt="Menu"/>
+        </div>
+    </label>
+
+    <h2 class="text-title">Consultation des absences</h2>
+
 </header>
 
-<section th:replace="admin/admin-dashboard :: sidebar">
 
-</section>
+<!-- CONTENU PRINCIPAL -->
+
 <main class="center-container">
 
-    <section class="list-department">
-        <div class="departement-title">
-            <h3>DEPARTEMENTS</h3>
-        </div>
-        <div class="departments"  th:each="department: ${departments}">
-            <div class="departement">
-                <a th:href="@{/filieres/departements/{code}(code=${department.code})}">
-                <div class="dep-header">
-                    <img th:src="@{/images/inline-right-svgrepo-com.svg}">
-                    <h3 th:text="${department.libelle}"></h3>
+    <!-- EN-TÊTE DE PAGE -->
+
+    <section class="page-heading">
+
+        <h1>Consultation par filière</h1>
+
+        <p>
+            Sélectionnez un département, puis choisissez une filière
+            et un niveau pour consulter les absences.
+        </p>
+
+    </section>
+
+
+    <!-- DISPOSITION PRINCIPALE -->
+
+    <section class="content-layout">
+
+
+        <!-- LISTE DES DÉPARTEMENTS -->
+
+        <aside class="list-department">
+
+            <div class="departement-title">
+
+                <div>
+                    <h3>Départements</h3>
+                    <p>Choisissez un département</p>
                 </div>
-                </a>
+
+                <i class="fi fi-ss-building"></i>
+
             </div>
-        </div>
+
+
+            <nav class="departments">
+
+                <div class="department-item"
+                     th:each="departmentItem : ${departments}">
+
+                    <a class="departement"
+                       th:href="@{/filieres/departements/{code}(code=${departmentItem.code})}">
+
+                        <span class="dep-header">
+
+                            <img th:src="@{/images/inline-right-svgrepo-com.svg}"
+                                 alt=""/>
+
+                            <span th:text="${departmentItem.libelle}"></span>
+
+                        </span>
+
+                        <i class="fi fi-ss-angle-small-right department-arrow"></i>
+
+                    </a>
+
+                </div>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- FILIÈRES DU DÉPARTEMENT -->
+
+        <section class="list-field">
+
+
+            <!-- EN-TÊTE DU DÉPARTEMENT -->
+
+            <div class="field-heading">
+
+                <div class="field-heading-info">
+
+                    <span class="field-label">
+                        Département sélectionné
+                    </span>
+
+                    <h3 th:text="${department.libelle}">
+                        Département
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 LICENCES
+                 ========================================= -->
+
+            <section class="field-section">
+
+                <div class="field-title">
+
+                    <div class="field-title-info">
+
+                        <h4>Licence</h4>
+
+                        <p>
+                            Choisissez une filière et son niveau.
+                        </p>
+
+                    </div>
+
+                    <span class="field-type-badge">
+                        <i class="fi fi-ss-graduation-cap"></i>
+                        Licence
+                    </span>
+
+                </div>
+
+
+                <div class="table-content">
+
+                    <table class="styled-table">
+
+                        <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Libellé</th>
+                            <th>Niveaux disponibles</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        <tr th:each="licence : ${licences}">
+
+                            <td>
+                                <span class="code-badge"
+                                      th:text="${licence.code}">
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="field-name"
+                                      th:text="${licence.libelle}">
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="level-actions">
+
+                                    <a class="level-button"
+                                       th:href="@{/absence/{code}/{filiere}/1(code=${department.code}, filiere=${licence.code})}">
+
+                                        <span>L1</span>
+
+                                    </a>
+
+
+                                    <a class="level-button"
+                                       th:href="@{/absence/{code}/{filiere}/2(code=${department.code},filiere=${licence.code})}">
+
+                                        <span>L2</span>
+
+                                    </a>
+
+
+                                    <a class="level-button"
+                                       th:href="@{/absence/{code}/{filiere}/3(code=${department.code},filiere=${licence.code})}">
+
+                                        <span>L3</span>
+
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- AUCUNE LICENCE -->
+
+                        <tr th:if="${licences == null or licences.isEmpty()}">
+
+                            <td colspan="3">
+
+                                <div class="empty-state">
+
+                                    <i class="fi fi-ss-folder-open"></i>
+
+                                    <strong>
+                                        Aucune filière Licence disponible
+                                    </strong>
+
+                                    <p>
+                                        Il n'existe actuellement aucune filière
+                                        Licence dans ce département.
+                                    </p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================================
+                 MASTERS
+                 ========================================= -->
+
+            <section class="field-section">
+
+                <div class="field-title">
+
+                    <div class="field-title-info">
+
+                        <h4>Master</h4>
+
+                        <p>
+                            Choisissez une filière et son niveau.
+                        </p>
+
+                    </div>
+
+                    <span class="field-type-badge master-badge">
+                        <i class="fi fi-ss-book-alt"></i>
+                        Master
+                    </span>
+
+                </div>
+
+
+                <div class="table-content">
+
+                    <table class="styled-table">
+
+                        <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Libellé</th>
+                            <th>Niveaux disponibles</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        <tr th:each="master : ${masters}">
+
+                            <td>
+                                <span class="code-badge"
+                                      th:text="${master.code}">
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="field-name"
+                                      th:text="${master.libelle}">
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <div class="level-actions">
+
+                                    <a class="level-button master-button"
+                                       th:href="@{/absence/{code}/{filiere}/1(code=${department.code}, filiere=${master.code})}">
+
+                                        <span>M1</span>
+
+                                    </a>
+
+
+                                    <a class="level-button master-button"
+                                       th:href="@{/absence/{code}/{filiere}/2(code=${department.code},filiere=${master.code})}">
+
+                                        <span>M2</span>
+
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- AUCUN MASTER -->
+
+                        <tr th:if="${masters == null or masters.isEmpty()}">
+
+                            <td colspan="3">
+
+                                <div class="empty-state">
+
+                                    <i class="fi fi-ss-folder-open"></i>
+
+                                    <strong>
+                                        Aucune filière Master disponible
+                                    </strong>
+
+                                    <p>
+                                        Il n'existe actuellement aucune filière
+                                        Master dans ce département.
+                                    </p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </section>
+
     </section>
-    <section class="list-field">
-        <h3 class="departement-title">
-            DEPARTEMENT INFORMATIQUE
-        </h3>
-        <div class="field-title">Licence </div>
-        <div class="table-content">
-            <!-- Tableau -->
-            <table
-                    bgcolor="lightgray"
-                    border="1"
-                    rules="all" class="styled-table">
-                <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Libelle</th>
-                    <th>Niveau</th>
-                </tr>
-                </thead>
 
-                <tbody>
-                <tr th:each="licence : ${licences}">
-                    <td th:text="${licence.code}">
-                    </td>
-                    <td th:text="${licence.libelle}" ></td>
-                    <td>
-                        <a class="button" th:href="@{/absence/{code}/{filiere}/1(code=${department.code}, filiere=${licence.code})}">
-                            Licence 1
-                        </a>
-                        <a class="button"
-                           th:href="@{/absence/{code}/{filiere}/2(code=${department.code},filiere=${licence.code})}">
-                            Licence 2
-                        </a>
-                        <a class="button"
-                           th:href="@{/absence/{code}/{filiere}/3(code=${department.code},filiere=${licence.code})}">
-                            Licence 3
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="field-title">Master</div>
-        <div class="table-content">
-            <!-- Tableau -->
-            <table
-                    bgcolor="lightgray"
-                    border="1"
-                    rules="all" class="styled-table">
-                <thead>
-                <tr>
-                    <th>Code</th>
-                    <th>Libelle</th>
-                    <th>Niveau</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr th:each="master : ${masters}">
-                    <td th:text="${master.code}">
-                    </td>
-                    <td th:text="${master.libelle}" ></td>
-                    <td>
-                        <a class="button" th:href="@{/absence/{code}/{filiere}/1(code=${department.code}, filiere=${master.code})}">
-                            Master 1
-                        </a>
-                        <a class="button"
-                           th:href="@{/absence/{code}/{filiere}/2(code=${department.code},filiere=${master.code})}">
-                            Master 2
-                        </a>
-
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
 </main>
-<script>
-    document.querySelectorAll(".field-container").forEach(container => {
 
-     const field = container.querySelector(".field");
-     const panel = container.querySelector(".level-panel");
 
-     field.addEventListener("click", (e) => {
-         e.stopPropagation();
+<!-- SIDEBAR -->
 
-         // fermer les autres
-         document.querySelectorAll(".level-panel").forEach(p => {
-             if (p !== panel) p.classList.remove("active");
-         });
+<section th:replace="admin/admin-dashboard :: sidebar"></section>
 
-         panel.classList.toggle("active");
-     });
- });
-
- // fermer si clic dehors
- document.addEventListener("click", () => {
-     document.querySelectorAll(".level-panel").forEach(p => {
-         p.classList.remove("active");
-     });
- });
-
- // groupes
- document.querySelectorAll(".level-wrapper").forEach(wrapper => {
-
-     const card = wrapper.querySelector(".level-card");
-     const panel = wrapper.querySelector(".group-panel");
-
-     card.addEventListener("click", (e) => {
-         e.stopPropagation();
-
-         document.querySelectorAll(".group-panel").forEach(p => {
-             if (p !== panel) p.classList.remove("active");
-         });
-
-         panel.classList.toggle("active");
-     });
- });
-</script>
 </body>
 </html>

@@ -1,0 +1,1170 @@
+/* =========================================================
+   UPLOAD TIMETABLE — ADMIN
+   CSS CONSOLIDÉ
+   ========================================================= */
+
+
+/* =========================================================
+   1. RESET & VARIABLES
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+
+    --success: #16a34a;
+    --success-dark: #15803d;
+
+    --danger: #dc2626;
+
+    --text: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+
+    --background: #f4f6f9;
+    --surface: #ffffff;
+    --surface-hover: #f8fafc;
+
+    --border: #e5e7eb;
+    --border-light: #f1f3f5;
+
+    --input-border: #d1d5db;
+
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+    --shadow-lg: 0 8px 24px rgba(15, 23, 42, 0.09);
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+
+    --header-height: 70px;
+    --sidebar-width: 250px;
+
+    --transition: 0.2s ease;
+}
+
+
+/* =========================================================
+   2. GLOBAL
+   ========================================================= */
+
+html {
+    min-height: 100%;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    overflow-x: hidden;
+
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: var(--text);
+    background: var(--background);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button,
+label {
+    -webkit-tap-highlight-color: transparent;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   3. HEADER
+   ========================================================= */
+
+.head-box {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    width: 100%;
+    height: var(--header-height);
+
+    padding: 0 24px;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* MENU */
+
+.head-box #menu {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+
+    background: transparent;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.head-box #menu:hover {
+
+    background: var(--primary-light);
+    border-color: #dbeafe;
+}
+
+.head-box #menu:active {
+    transform: scale(0.96);
+}
+
+.head-box #menu img {
+
+    width: 21px;
+    height: 21px;
+
+    object-fit: contain;
+
+    transition: transform var(--transition);
+}
+
+#toggle-sidebar {
+    display: none;
+}
+
+#toggle-sidebar:checked ~ header #menu img {
+    transform: rotate(90deg);
+}
+
+
+/* TITRE */
+
+.head-box h2 {
+
+    min-width: 0;
+
+    color: var(--text);
+
+    font-size: 19px;
+    font-weight: 650;
+
+    line-height: 1.3;
+    letter-spacing: -0.25px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   4. SIDEBAR
+   ========================================================= */
+
+.icons {
+
+    position: fixed;
+
+    top: 0;
+    left: calc(-1 * var(--sidebar-width));
+
+    z-index: 90;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: var(--sidebar-width);
+
+    height: 100vh;
+    height: 100dvh;
+
+    padding-top: var(--header-height);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background: var(--surface);
+
+    border-right: 1px solid var(--border);
+
+    box-shadow: var(--shadow-lg);
+
+    transition: left 0.25s ease;
+
+    overscroll-behavior: contain;
+}
+
+#toggle-sidebar:checked ~ .icons {
+    left: 0;
+}
+
+
+/* TITRE SIDEBAR */
+
+.icons .text-menu {
+
+    width: 100%;
+
+    padding: 20px;
+
+    background: #fafbfc;
+
+    border-bottom: 1px solid var(--border-light);
+
+    text-align: left;
+}
+
+.icons .text-menu h2 {
+
+    color: var(--text-muted);
+
+    font-size: 12px;
+    font-weight: 650;
+
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+
+/* NAVIGATION */
+
+.icons-option {
+
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding-bottom: 20px;
+}
+
+.icon-container {
+    width: 100%;
+}
+
+.icon-container a,
+.icon-container label {
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    width: calc(100% - 20px);
+    min-height: 46px;
+
+    margin: 3px 10px;
+    padding: 11px 13px;
+
+    color: var(--text-secondary);
+
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+
+    font-size: 13.5px;
+    font-weight: 500;
+
+    line-height: 1.4;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.icon-container a:hover,
+.icon-container label:hover {
+
+    color: var(--primary);
+
+    background: var(--primary-light);
+
+    border-color: #e4edff;
+}
+
+
+/* ICONES */
+
+.icon-container img {
+
+    flex-shrink: 0;
+
+    width: 20px;
+    height: 20px;
+
+    object-fit: contain;
+}
+
+.tooltip {
+
+    display: inline-block;
+
+    min-width: 0;
+
+    font-size: 13.5px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   5. MAIN CONTAINER
+   ========================================================= */
+
+.center-wrappers {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 26px;
+
+    width: calc(100% - 48px);
+    max-width: 1500px;
+
+    min-width: 0;
+
+    margin: calc(var(--header-height) + 24px) auto 32px;
+
+    padding: 32px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* =========================================================
+   6. IMPORT CARDS
+   ========================================================= */
+
+.import-box {
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    margin: 0;
+
+    padding: 0;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.import-box:hover {
+
+    border-color: #dbeafe;
+
+    box-shadow: var(--shadow-md);
+}
+
+.import-box:focus-within {
+
+    border-color: #bfdbfe;
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.07);
+}
+
+
+/* LEGEND */
+
+.import-box legend {
+
+    width: 100%;
+    max-width: 100%;
+
+    padding: 16px 20px;
+
+    color: var(--text);
+
+    background: #f8fafc;
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 15px;
+    font-weight: 700;
+
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+.import-box legend::before {
+
+    content: "";
+
+    display: inline-block;
+
+    width: 4px;
+    height: 18px;
+
+    margin-right: 10px;
+
+    vertical-align: -3px;
+
+    background: var(--primary);
+
+    border-radius: 4px;
+}
+
+
+/* =========================================================
+   7. UPLOAD FORM
+   ========================================================= */
+
+.form-upload {
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+
+    margin: 0;
+
+    padding: 24px;
+}
+
+.info-input {
+    width: 100%;
+    min-width: 0;
+}
+
+.info-input.full {
+    width: 100%;
+}
+
+
+/* LABEL */
+
+.form-upload label {
+
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   8. FILE INPUT
+   ========================================================= */
+
+.form-upload input[type="file"] {
+
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+
+    padding: 5px;
+
+    color: var(--text-secondary);
+
+    background: #f9fafb;
+
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-sm);
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition: border-color var(--transition);
+}
+
+.form-upload input[type="file"]:hover {
+    border-color: #9ca3af;
+}
+
+.form-upload input[type="file"]:focus-visible {
+
+    outline: 3px solid rgba(37, 99, 235, 0.18);
+    outline-offset: 2px;
+
+    border-color: var(--primary);
+}
+
+.form-upload input[type="file"]::file-selector-button {
+
+    margin-right: 10px;
+
+    padding: 9px 14px;
+
+    color: #ffffff;
+
+    background: #475569;
+
+    border: none;
+    border-radius: 7px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background var(--transition);
+}
+
+.form-upload input[type="file"]::file-selector-button:hover {
+    background: #334155;
+}
+
+
+/* NOM DU FICHIER */
+
+.file-name {
+
+    margin-top: 12px;
+
+    padding: 10px 13px;
+
+    color: var(--primary-dark);
+
+    background: var(--primary-light);
+
+    border: 1px solid #dbeafe;
+    border-radius: var(--radius-sm);
+
+    font-size: 13px;
+    font-weight: 500;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   9. BUTTONS
+   ========================================================= */
+
+.buttons {
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 24px;
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border-light);
+}
+
+.buttons button {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 120px;
+    min-height: 42px;
+
+    padding: 10px 20px;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        color var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition);
+}
+
+.buttons button:active {
+    transform: scale(0.98);
+}
+
+.buttons button:focus-visible {
+
+    outline: 3px solid rgba(37, 99, 235, 0.25);
+    outline-offset: 3px;
+}
+
+
+/* SUPPRIMER */
+
+.clearFileBtn {
+
+    color: var(--text-secondary);
+
+    background: #ffffff;
+
+    border-color: var(--input-border) !important;
+}
+
+.clearFileBtn:hover {
+
+    color: var(--danger);
+
+    background: #fef2f2;
+
+    border-color: #fecaca !important;
+}
+
+
+/* IMPORTER */
+
+.buttons button.submit {
+
+    color: #ffffff;
+
+    background: var(--success);
+
+    border-color: var(--success);
+}
+
+.buttons button.submit:hover {
+
+    background: var(--success-dark);
+
+    border-color: var(--success-dark);
+
+    box-shadow: 0 4px 10px rgba(22, 163, 74, 0.18);
+}
+
+
+/* =========================================================
+   10. ALERTS
+   ========================================================= */
+
+.form-upload .alert {
+
+    width: 100%;
+    min-width: 0;
+
+    margin-top: 16px;
+    padding: 12px 15px;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+
+    font-size: 13px;
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+}
+
+.form-upload .alert-danger {
+
+    color: #b91c1c;
+
+    background: #fef2f2;
+
+    border-color: #fecaca;
+}
+
+.form-upload .alert-success {
+
+    color: #15803d;
+
+    background: #f0fdf4;
+
+    border-color: #bbf7d0;
+}
+
+
+/* MESSAGE FICHIER CHARGÉ */
+
+.upload-message {
+
+    display: none;
+
+    position: absolute;
+
+    right: 24px;
+    top: 16px;
+
+    width: fit-content;
+
+    padding: 7px 12px;
+
+    color: #15803d;
+
+    background: #f0fdf4;
+
+    border: 1px solid #bbf7d0;
+    border-radius: var(--radius-sm);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    box-shadow: var(--shadow-sm);
+
+    z-index: 2;
+}
+
+
+/* =========================================================
+   11. RESPONSIVE — TABLETTES
+   ========================================================= */
+
+@media (max-width: 1024px) {
+
+    .center-wrappers {
+
+        width: calc(100% - 32px);
+
+        padding: 24px;
+    }
+
+}
+
+
+/* =========================================================
+   12. RESPONSIVE — MOBILES
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    :root {
+
+        --header-height: 62px;
+
+        --sidebar-width: min(280px, 85vw);
+    }
+
+
+    /* HEADER */
+
+    .head-box {
+
+        gap: 10px;
+
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+    }
+
+    .head-box h2 {
+
+        font-size: 16px;
+
+        letter-spacing: -0.15px;
+    }
+
+
+    /* SIDEBAR */
+
+    .icons {
+
+        padding-top: calc(var(--header-height) + env(safe-area-inset-top));
+    }
+
+    .icons .text-menu {
+
+        padding: 18px 18px 15px;
+    }
+
+    .icon-container a,
+    .icon-container label {
+
+        min-height: 48px;
+
+        padding: 12px 14px;
+
+        font-size: 14px;
+    }
+
+    .icon-container img {
+
+        width: 21px;
+        height: 21px;
+    }
+
+
+    /* MAIN */
+
+    .center-wrappers {
+
+        width: calc(100% - 24px);
+
+        margin: calc(var(--header-height) + 14px) auto 20px;
+
+        padding: 18px;
+
+        gap: 20px;
+    }
+
+
+    /* FORM */
+
+    .form-upload {
+        padding: 20px;
+    }
+
+    .import-box legend {
+
+        padding: 14px 16px;
+
+        font-size: 14px;
+    }
+
+
+    /* BUTTONS */
+
+    .buttons {
+
+        flex-direction: column-reverse;
+        align-items: stretch;
+
+        width: 100%;
+
+        gap: 10px;
+    }
+
+    .buttons button {
+
+        width: 100%;
+
+        min-height: 46px;
+    }
+
+    .upload-message {
+
+        position: static;
+
+        align-self: flex-start;
+
+        margin-top: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   13. PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .head-box {
+
+        gap: 9px;
+
+        padding-left: 10px;
+        padding-right: 12px;
+    }
+
+    .head-box h2 {
+        font-size: 15px;
+    }
+
+
+    .center-wrappers {
+
+        width: calc(100% - 16px);
+
+        margin-top: calc(var(--header-height) + 12px);
+
+        padding: 12px;
+
+        gap: 16px;
+
+        border-radius: 10px;
+    }
+
+
+    .import-box {
+        border-radius: 8px;
+    }
+
+    .import-box legend {
+
+        padding: 12px;
+
+        font-size: 13px;
+    }
+
+    .import-box legend::before {
+
+        height: 15px;
+
+        margin-right: 8px;
+    }
+
+
+    .form-upload {
+        padding: 14px 12px;
+    }
+
+
+    .form-upload label {
+        font-size: 12px;
+    }
+
+
+    .form-upload input[type="file"] {
+        font-size: 12px;
+    }
+
+    .form-upload input[type="file"]::file-selector-button {
+
+        margin-right: 6px;
+
+        padding: 8px 10px;
+
+        font-size: 12px;
+    }
+
+
+    .buttons {
+        margin-top: 18px;
+        padding-top: 16px;
+    }
+
+    .buttons button {
+
+        min-height: 44px;
+
+        font-size: 13px;
+    }
+
+    .form-upload .alert {
+
+        padding: 10px 11px;
+
+        font-size: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   14. TRÈS PETITS ÉCRANS
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    :root {
+        --header-height: 58px;
+    }
+
+    .head-box {
+        gap: 7px;
+        padding: 0 9px;
+    }
+
+    .head-box h2 {
+        font-size: 14px;
+    }
+
+    .center-wrappers {
+
+        width: calc(100% - 12px);
+
+        margin-top: calc(var(--header-height) + 10px);
+
+        padding: 9px;
+    }
+
+    .form-upload {
+        padding: 12px 9px;
+    }
+
+    .import-box legend {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .buttons {
+        gap: 8px;
+    }
+
+}
+
+
+/* =========================================================
+   15. GRANDS ÉCRANS
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    :root {
+        --sidebar-width: 280px;
+    }
+
+    .head-box {
+        padding: 0 32px;
+    }
+
+    .head-box h2 {
+        font-size: 21px;
+    }
+
+    .center-wrappers {
+
+        width: calc(100% - 80px);
+
+        max-width: 1700px;
+
+        margin-top: calc(var(--header-height) + 30px);
+
+        padding: 36px;
+
+        gap: 30px;
+    }
+
+    .import-box legend {
+
+        padding: 18px 22px;
+
+        font-size: 16px;
+    }
+
+    .form-upload {
+        padding: 28px;
+    }
+
+}
+
+
+/* =========================================================
+   16. TRÈS GRANDS ÉCRANS
+   ========================================================= */
+
+@media (min-width: 1920px) {
+
+    .center-wrappers {
+
+        max-width: 1800px;
+
+        padding: 40px;
+    }
+
+    .form-upload {
+        padding: 32px;
+    }
+
+}
+
+
+/* =========================================================
+   17. APPAREILS TACTILES
+   ========================================================= */
+
+@media (hover: none) {
+
+    .import-box:hover {
+
+        border-color: var(--border);
+
+        box-shadow: var(--shadow-sm);
+    }
+
+    .head-box #menu:hover {
+
+        background: transparent;
+
+        border-color: transparent;
+    }
+
+    .icon-container a:hover,
+    .icon-container label:hover {
+
+        background: transparent;
+
+        border-color: transparent;
+    }
+
+}
+
+
+/* =========================================================
+   18. ACCESSIBILITÉ
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+
+        scroll-behavior: auto !important;
+
+        transition-duration: 0.01ms !important;
+
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+    }
+
+}

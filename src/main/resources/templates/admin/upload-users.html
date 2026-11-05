@@ -1,70 +1,57 @@
 <!DOCTYPE html>
-<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Upload Timetable</title>
-    <link rel="stylesheet" th:href="@{/css/style-admin/style-admin-upload-timetable.css}">
-    <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Upload Timetable</title>
+<link rel="stylesheet" th:href="@{/css/admin/upload-users.css}"/>
+<link href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css" rel="stylesheet"/>
 </head>
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+<input id="toggle-sidebar" type="checkbox"/>
 <header>
-    <div class="head-box">
-        <!-- Checkbox caché -->
-
-        <label for="toggle-sidebar">
-            <div  id="menu">
-
-                <img th:src="@{/images/menu-burger.png}">
-
-
-            </div>
-        </label>
-        <h2>Envoi des emploi du temps </h2>
-    </div>
+<div class="head-box">
+<!-- Checkbox caché -->
+<label for="toggle-sidebar">
+<div id="menu">
+<img th:src="@{/images/menu-burger.png}"/>
+</div>
+</label>
+<h2>Envoi des emploi du temps </h2>
+</div>
 </header>
-
 <section th:replace="admin/admin-dashboard :: sidebar">
-
 </section>
 <main class="center-wrapper">
-
-
-    <div class="upload">
-
-        <form method="post" th:action="@{/professors/import}" enctype="multipart/form-data" class="form-upload">
-            <h3>Informations des Professeurs</h3>
-            <label class="custom-file">
-                <input type="file" name="excelFile" accept=".xls,.xlsx" class="excelFileInput">
-                <span class="file-btn">Choisir un fichier</span>
-                <span class="file-name">Aucun fichier</span>
-                <button type="button" class="clearFileBtn" style="margin-left: 10px;">Supprimer</button>
-                <input type="hidden" name="id" th:value="${id}" />
-            </label>
-            <button type="submit" class="button-upload">Uploader</button>
-            <span class="upload-message">Fichier chargé avec succès !</span>
-            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
-            <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
-
-        </form>
-
-        <form method="post" th:action="@{/students/import}" enctype="multipart/form-data" class="form-upload" id="group-upload">
-            <h3>Informations des Etudiants</h3>
-            <label class="custom-file">
-                <input type="file" name="excelFile" accept=".xls,.xlsx" class="excelFileInput">
-                <span class="file-btn">Choisir un fichier</span>
-                <span class="file-name">Aucun fichier</span>
-                <button type="button" class="clearFileBtn" style="margin-left: 10px;">Supprimer</button>
-                <input type="hidden" name="id" th:value="${id}" />
-            </label>
-            <button type="submit" class="button-upload">Uploader</button>
-            <span class="upload-message">Fichier chargé avec succès !</span>
-
-        </form>
-    </div>
-
+<div class="upload">
+<form class="form-upload" enctype="multipart/form-data" method="post" th:action="@{/professors/import}">
+<h3>Informations des Professeurs</h3>
+<label class="custom-file">
+<input accept=".xls,.xlsx" class="excelFileInput" name="excelFile" type="file"/>
+<span class="file-btn">Choisir un fichier</span>
+<span class="file-name">Aucun fichier</span>
+<button class="clearFileBtn" style="margin-left: 10px;" type="button">Supprimer</button>
+<input name="id" th:value="${id}" type="hidden">
+</input></label>
+<button class="button-upload" type="submit">Uploader</button>
+<span class="upload-message">Fichier chargé avec succès !</span>
+<div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+<div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+</form>
+<form class="form-upload" enctype="multipart/form-data" id="group-upload" method="post" th:action="@{/students/import}">
+<h3>Informations des Etudiants</h3>
+<label class="custom-file">
+<input accept=".xls,.xlsx" class="excelFileInput" name="excelFile" type="file"/>
+<span class="file-btn">Choisir un fichier</span>
+<span class="file-name">Aucun fichier</span>
+<button class="clearFileBtn" style="margin-left: 10px;" type="button">Supprimer</button>
+<input name="id" th:value="${id}" type="hidden">
+</input></label>
+<button class="button-upload" type="submit">Uploader</button>
+<span class="upload-message">Fichier chargé avec succès !</span>
+</form>
+</div>
 </main>
 <style>
     .upload-message {
@@ -81,7 +68,6 @@
         box-shadow: 0 0 5px #0003;
     }
 </style>
-
 <script>
     document.querySelectorAll('.form-upload').forEach(form => {
 
@@ -111,7 +97,5 @@
 
     });
 </script>
-
-
 </body>
 </html>

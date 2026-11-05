@@ -1,99 +1,185 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Validation Page</title>
-  <link rel="stylesheet" th:href="@{/css/style-student/style-validation.css}">
-  <link rel="stylesheet"
-        href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Aucune séance en cours</title>
+
+    <link rel="stylesheet" th:href="@{/css/pages/codeerror.css}"/>
+
+    <link
+            href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css"
+            rel="stylesheet"/>
 </head>
 
 <body>
 
-<main class="center-wrapper">
+<main class="page-container">
 
-  <h2 class="separator error">Aucune Séance En Cours</h2>
+    <section class="error-card">
 
-  <section class="result-scanner error">
+        <!-- En-tête -->
+        <header class="page-header">
 
-    <div class="check-circle error">
-      ✕
+            <div class="status-icon">
+                <span>✕</span>
+            </div>
+
+            <div class="header-content">
+                <span class="eyebrow">VALIDATION DE PRÉSENCE</span>
+
+                <h1>Aucune séance en cours</h1>
+
+                <p>
+                    Impossible de trouver une séance active correspondant
+                    à la salle indiquée.
+                </p>
+            </div>
+
+        </header>
+
+
+        <!-- Informations sur l'erreur -->
+        <section class="error-content">
+
+            <div class="section-heading">
+                <div class="heading-icon">
+                    <i class="fi fi-ss-info"></i>
+                </div>
+
+                <div>
+                    <h2>Détails de la situation</h2>
+                    <p>Informations relatives à votre tentative de validation.</p>
+                </div>
+            </div>
+
+
+            <div class="validation-details">
+
+                <div class="detail-row">
+                    <span class="detail-label">Cause</span>
+
+                    <span class="detail-value error-message"
+                          th:text="${errorMessage}">
+                    </span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label">Explication</span>
+
+                    <span class="detail-value">
+                        Aucun cours actif ne correspond à cette salle maintenant.
+                    </span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label">Salle</span>
+
+                    <span class="detail-value room-value"
+                          th:text="${code}">
+                    </span>
+                </div>
+
+            </div>
+
+
+            <!-- Solutions -->
+            <div class="solutions-section">
+
+                <h3>
+                    <i class="fi fi-ss-lightbulb-on"></i>
+                    Que pouvez-vous faire ?
+                </h3>
+
+                <div class="solution-item">
+                    <span class="solution-number">1</span>
+
+                    <p>
+                        Veuillez vérifier votre salle de TP.
+                    </p>
+                </div>
+
+                <div class="solution-item">
+                    <span class="solution-number">2</span>
+
+                    <p>
+                        Veuillez contacter le webmaster s'il s'agit bien
+                        de votre salle.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- Changement de salle -->
+            <form method="post"
+                  th:action="@{/api/qr/change/salle}"
+                  class="room-change-form">
+
+                <input name="code"
+                       th:value="${code}"
+                       type="hidden"/>
+
+                <input name="userId"
+                       th:value="${userId}"
+                       type="hidden"/>
+
+                <input id="deviceUUID"
+                       name="deviceUUID"
+                       th:value="${deviceUUID}"
+                       type="hidden"/>
+
+                <button class="btn-room-change" type="submit">
+                    <i class="fi fi-ss-refresh"></i>
+                    <span>J'ai changé de salle</span>
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- Pied de carte -->
+        <div class="card-footer">
+            <i class="fi fi-ss-shield-check"></i>
+
+            <span>
+                Votre tentative de validation est traitée de manière sécurisée.
+            </span>
+        </div>
+
+    </section>
+
+
+    <!-- Retour à la connexion -->
+    <div class="login-button-container">
+
+        <a class="login-btn" th:href="@{/login}">
+            <i class="fi fi-ss-sign-in-alt"></i>
+            <span>Retour à la connexion</span>
+        </a>
+
     </div>
-
-    <div class="validation-details">
-
-      <p>
-        <strong>Cause :</strong>
-        <span th:text="${errorMessage}"></span>
-      </p>
-
-      <p>
-        <strong>Explication :</strong>
-        <span>
-          Aucun cours actif ne correspond à cette salle maintenant
-        </span>
-      </p>
-
-      <p>
-        <strong>Salle :</strong>
-        <span th:text="${code}"></span>
-      </p>
-
-      <p>
-        <strong>Solution 1 :</strong>
-        <span>Veuillez vérifier votre salle de TP</span>
-      </p>
-
-      <p>
-        <strong>Solution 2 :</strong>
-        <span>Veuillez contacter le webmaster s'il s'agit de votre salle</span>
-      </p>
-
-
-    </div>
-    <form th:action="@{/api/qr/change/salle}" method="post">
-
-      <input type="hidden"
-             name="code"
-             th:value="${code}">
-
-      <input type="hidden"
-             name="userId"
-             th:value="${userId}">
-
-      <input type="hidden"
-             name="deviceUUID"
-             id="deviceUUID"
-             th:value="${deviceUUID}">
-
-      <button type="submit" class="btn-room-change">
-        J'ai changé de salle
-      </button>
-
-    </form>
-  </section>
 
 </main>
-<div class="login-button-container">
-  <a th:href="@{/login}" class="login-btn">
-    <i class="fi fi-ss-sign-in-alt"></i>
-    Retour à la connexion
-  </a>
-</div>
+
+
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
 
-      let deviceUUID = localStorage.getItem("device_uuid");
+        let deviceUUID = localStorage.getItem("device_uuid");
 
-      if (!deviceUUID) {
-          deviceUUID = crypto.randomUUID();
-          localStorage.setItem("device_uuid", deviceUUID);
-      }
+        if (!deviceUUID) {
+            deviceUUID = crypto.randomUUID();
+            localStorage.setItem("device_uuid", deviceUUID);
+        }
 
-      document.getElementById("deviceUUID").value = deviceUUID;
+        document.getElementById("deviceUUID").value = deviceUUID;
 
-  });
+    });
 </script>
+
 </body>
 </html>

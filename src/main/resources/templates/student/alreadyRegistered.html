@@ -1,84 +1,124 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validation Page</title>
-    <link rel="stylesheet" th:href="@{/css/style-student/style-validation.css}">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Présence déjà enregistrée</title>
+
     <link rel="stylesheet"
-          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+          th:href="@{/css/pages/alreadyregistered.css}"/>
+
+    <link rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css"/>
 </head>
 
 <body>
 
-
-
-<!-- CONTENU DE VALIDATION -->
 <main class="center-wrapper">
 
-    <h2 class="separator error">Présence Déjà Enregistrée</h2>
+    <!-- EN-TÊTE -->
+    <section class="page-heading">
 
-    <section class="result-scanner error">
-
-        <div class="check-circle error">
+        <div class="status-icon error">
             ✕
         </div>
 
+        <div class="page-heading__text">
+            <span class="eyebrow">VALIDATION DE PRÉSENCE</span>
+
+            <h1>Présence déjà enregistrée</h1>
+
+            <p>
+                Une présence a déjà été enregistrée pour cette séance.
+                Retrouvez ci-dessous les informations correspondantes.
+            </p>
+        </div>
+
+    </section>
+
+
+    <!-- RÉSULTAT -->
+    <section class="result-scanner error">
+
+        <div class="result-heading">
+            <h2>Informations de l'enregistrement</h2>
+
+            <span class="status-badge error">
+                <i class="fi fi-ss-exclamation"></i>
+                Déjà enregistré
+            </span>
+        </div>
+
+
+        <!-- DÉTAILS -->
         <div class="validation-details">
 
-            <p>
-                <strong>Cause :</strong>
-                <span th:text="${errorMessage}"></span>
-            </p>
+            <div class="detail-row">
+                <span class="detail-label">Cause</span>
+                <span class="detail-value"
+                      th:text="${errorMessage}"></span>
+            </div>
 
-            <p>
-                <strong>Nom :</strong>
-                <span th:text="${nom}"></span>
-            </p>
+            <div class="detail-row">
+                <span class="detail-label">Nom</span>
+                <span class="detail-value"
+                      th:text="${nom}"></span>
+            </div>
 
-            <p>
-                <strong>Prénom :</strong>
-                <span th:text="${prenom}"></span>
-            </p>
+            <div class="detail-row">
+                <span class="detail-label">Prénom</span>
+                <span class="detail-value"
+                      th:text="${prenom}"></span>
+            </div>
 
-            <p>
-                <strong>Cours :</strong>
-                <span th:text="${intitule}"></span>
-            </p>
+            <div class="detail-row">
+                <span class="detail-label">Cours</span>
+                <span class="detail-value"
+                      th:text="${intitule}"></span>
+            </div>
 
-            <p>
-                <strong>Salle :</strong>
-                <span th:text="${salle}"></span>
-            </p>
+            <div class="detail-row">
+                <span class="detail-label">Salle</span>
+                <span class="detail-value"
+                      th:text="${salle}"></span>
+            </div>
 
-            <p>
-                <strong>Date :</strong>
-                <span th:text="${date}"></span>
-            </p>
+            <div class="detail-row">
+                <span class="detail-label">Date</span>
+                <span class="detail-value"
+                      th:text="${date}"></span>
+            </div>
 
-            <p>
-                <strong>Jour :</strong>
-                <span th:text="${dayOfWeek}"></span>
-            </p>
+            <div class="detail-row">
+                <span class="detail-label">Jour</span>
+                <span class="detail-value"
+                      th:text="${dayOfWeek}"></span>
+            </div>
 
-            <p>
-                <strong>Heure d'enregistrement :</strong>
-                <span th:text="${registrationTime}"></span>
-            </p>
+            <div class="detail-row">
+                <span class="detail-label">Heure d'enregistrement</span>
+                <span class="detail-value"
+                      th:text="${registrationTime}"></span>
+            </div>
 
         </div>
 
     </section>
+
+
+    <!-- ACTION -->
     <div class="login-button-container">
-        <a th:href="@{/login}" class="login-btn">
+
+        <a class="login-btn" th:href="@{/login}">
             <i class="fi fi-ss-sign-in-alt"></i>
-            Retour à la connexion
+            <span>Retour à la connexion</span>
         </a>
+
     </div>
 
 </main>
-
-
 
 </body>
 </html>

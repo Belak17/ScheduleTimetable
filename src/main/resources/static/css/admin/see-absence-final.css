@@ -1,0 +1,1269 @@
+/* =========================================================
+   1. RESET & VARIABLES
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+
+    --text: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+
+    --background: #f4f6f9;
+    --surface: #ffffff;
+    --surface-hover: #f8fafc;
+
+    --border: #e5e7eb;
+    --border-light: #f1f3f5;
+
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+    --shadow-lg: 0 8px 24px rgba(15, 23, 42, 0.09);
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+
+    --header-height: 70px;
+    --sidebar-width: 250px;
+
+    --transition: 0.2s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    overflow-x: hidden;
+
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: var(--text);
+    background: var(--background);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   2. HEADER
+   ========================================================= */
+
+#toggle-sidebar {
+    display: none;
+}
+
+.head-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    width: 100%;
+    height: var(--header-height);
+
+    padding: 0 24px;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.menu-toggle {
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.head-box #menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+
+    background: transparent;
+
+    transition: var(--transition);
+}
+
+.head-box #menu:hover {
+    background: var(--primary-light);
+    border-color: #dbeafe;
+}
+
+.head-box #menu img {
+    width: 21px;
+    height: 21px;
+
+    object-fit: contain;
+}
+
+#toggle-sidebar:checked ~ header #menu img {
+    transform: rotate(90deg);
+}
+
+.text-title {
+    min-width: 0;
+
+    color: var(--text);
+
+    font-size: 19px;
+    font-weight: 650;
+
+    line-height: 1.3;
+    letter-spacing: -0.25px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   3. SIDEBAR ADMIN
+   ========================================================= */
+
+.icons {
+    position: fixed;
+    top: 0;
+    left: calc(-1 * var(--sidebar-width));
+
+    z-index: 90;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: var(--sidebar-width);
+
+    height: 100vh;
+    height: 100dvh;
+
+    padding-top: var(--header-height);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background: var(--surface);
+
+    border-right: 1px solid var(--border);
+
+    box-shadow: var(--shadow-lg);
+
+    transition: left 0.25s ease;
+
+    overscroll-behavior: contain;
+}
+
+#toggle-sidebar:checked ~ .icons {
+    left: 0;
+}
+
+.icons .text-menu {
+    width: 100%;
+    padding: 20px;
+
+    background: #fafbfc;
+    border-bottom: 1px solid var(--border-light);
+
+    text-align: left;
+}
+
+.icons .text-menu h2 {
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+.icons-option {
+    width: 100%;
+    margin-top: 10px;
+    padding-bottom: 20px;
+}
+
+.icon-container {
+    width: 100%;
+}
+
+.icon-container a,
+.icon-container label {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    width: calc(100% - 20px);
+    min-height: 46px;
+
+    margin: 3px 10px;
+    padding: 11px 13px;
+
+    color: var(--text-secondary);
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+
+    font-size: 13.5px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.icon-container a:hover,
+.icon-container label:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+    border-color: #e4edff;
+}
+
+.icon-container img {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.tooltip {
+    display: inline-block;
+    min-width: 0;
+    font-size: 13.5px;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   4. CONTENEUR PRINCIPAL
+   ========================================================= */
+
+.center-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    width: min(1400px, calc(100% - 40px));
+
+    margin: 92px auto 30px;
+    padding: 24px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    box-shadow: var(--shadow-md);
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   5. TITRE DE PAGE
+   ========================================================= */
+
+.page-heading {
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.page-heading h1 {
+    color: var(--text);
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.page-heading p {
+    margin-top: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   6. DISPOSITION PRINCIPALE
+   ========================================================= */
+
+.content-layout {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 24px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   7. NAVIGATION DES GROUPES
+   ========================================================= */
+
+.list-department {
+    flex: 0 0 260px;
+
+    width: 260px;
+    min-width: 0;
+
+    padding: 18px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    box-shadow: var(--shadow-sm);
+
+    max-height: calc(100vh - 130px);
+    max-height: calc(100dvh - 130px);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+
+.list-department::-webkit-scrollbar {
+    width: 6px;
+}
+
+.list-department::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.departement-title {
+    margin-bottom: 15px;
+    padding-bottom: 14px;
+
+    color: var(--text);
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.departement-title h3 {
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 0.4px;
+}
+
+
+/* Informations du département */
+
+.department-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px;
+
+    margin-bottom: 14px;
+
+    background: #f8fafc;
+
+    border: 1px solid var(--border-light);
+    border-radius: 9px;
+}
+
+.department-info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 36px;
+    height: 36px;
+
+    color: var(--primary);
+
+    background: var(--primary-light);
+
+    border: 1px solid #dbeafe;
+    border-radius: 8px;
+
+    font-size: 16px;
+}
+
+.department-info h3 {
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.department-info p {
+    margin-top: 3px;
+
+    color: var(--text-muted);
+
+    font-size: 11px;
+}
+
+
+/* Liste des groupes */
+
+.departments {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+.departement {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 10px 11px;
+
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-left: 3px solid transparent;
+    border-radius: 8px;
+
+    transition: var(--transition);
+}
+
+.dep-header {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+.department-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 29px;
+    height: 29px;
+
+    color: var(--primary);
+
+    background: var(--primary-light);
+
+    border-radius: 7px;
+
+    font-size: 13px;
+}
+
+.departement h3 {
+    flex: 1;
+
+    min-width: 0;
+
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 500;
+
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+
+    transition: color var(--transition);
+}
+
+.department-arrow {
+    flex-shrink: 0;
+
+    color: var(--text-muted);
+
+    font-size: 13px;
+
+    transition: var(--transition);
+}
+
+.departement:hover,
+.departement.active {
+    background: var(--primary-light);
+
+    border-left-color: var(--primary);
+}
+
+.departement:hover h3,
+.departement.active h3 {
+    color: var(--primary-dark);
+}
+
+.departement.active h3 {
+    font-weight: 600;
+}
+
+.departement:hover .department-arrow {
+    color: var(--primary);
+    transform: translateX(3px);
+}
+
+.departement:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   8. CONTENU DU TABLEAU
+   ========================================================= */
+
+.table-content {
+    flex: 1 1 0;
+
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    padding: 18px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    box-shadow: var(--shadow-sm);
+
+    overflow: hidden;
+}
+
+.table-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+.table-heading h3 {
+    color: var(--text);
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.table-heading p {
+    margin-top: 4px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+.results-count {
+    flex-shrink: 0;
+
+    padding: 5px 10px;
+
+    color: var(--primary-dark);
+
+    background: var(--primary-light);
+
+    border: 1px solid #dbeafe;
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   9. TABLEAU
+   ========================================================= */
+
+.table-scroll {
+    width: 100%;
+    max-width: 100%;
+
+    overflow-x: auto;
+
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+
+.table-scroll::-webkit-scrollbar {
+    height: 7px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.styled-table {
+    width: 100%;
+    min-width: 650px;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    color: var(--text);
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.styled-table thead {
+    color: var(--text-secondary);
+
+    background: #f8fafc;
+}
+
+.styled-table th {
+    padding: 14px 16px;
+
+    color: inherit;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-align: left;
+    text-transform: uppercase;
+
+    letter-spacing: 0.04em;
+
+    white-space: nowrap;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.styled-table td {
+    padding: 14px 16px;
+
+    color: var(--text);
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    vertical-align: middle;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.styled-table tbody tr {
+    transition: background-color 0.18s ease;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background: #fafbfc;
+}
+
+.styled-table tbody tr:hover {
+    background: var(--primary-light);
+}
+
+.styled-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* Intitulé du cours */
+
+.course-cell {
+    min-width: 220px;
+}
+
+.course-cell a {
+    color: var(--primary-dark);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: var(--transition);
+}
+
+.course-cell a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.course-cell a:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+
+    border-radius: 3px;
+}
+
+
+/* Jour */
+
+.day-text {
+    color: var(--text-secondary);
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+/* Horaires */
+
+.time-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 75px;
+
+    padding: 6px 10px;
+
+    color: #475569;
+
+    background: #f8fafc;
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   10. ÉTATS VIDES
+   ========================================================= */
+
+.empty-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-width: 0;
+
+    min-height: 250px;
+
+    padding: 30px;
+
+    color: var(--text-secondary);
+
+    background: #f8fafc;
+
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+
+    text-align: center;
+}
+
+.empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 58px;
+
+    margin-bottom: 16px;
+
+    color: var(--primary);
+
+    background: var(--primary-light);
+
+    border: 1px solid #dbeafe;
+    border-radius: 12px;
+
+    font-size: 23px;
+}
+
+.empty-message h3 {
+    color: var(--text);
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.empty-message p {
+    max-width: 390px;
+
+    margin-top: 6px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   11. PAGINATION
+   ========================================================= */
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-top: 20px;
+    padding-top: 15px;
+
+    border-top: 1px solid var(--border-light);
+}
+
+a.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    min-width: 100px;
+    min-height: 40px;
+
+    padding: 8px 14px;
+
+    color: var(--text);
+
+    background: #f8fafc;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    line-height: 1.4;
+    text-align: center;
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+a.button:hover {
+    color: var(--primary);
+
+    background: var(--primary-light);
+
+    border-color: #bfdbfe;
+
+    box-shadow: var(--shadow-sm);
+}
+
+a.button:focus-visible {
+    outline: 3px solid rgb(37 99 235 / 35%);
+    outline-offset: 3px;
+}
+
+.pagination-info {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+.pagination-info strong {
+    color: var(--text);
+}
+
+
+/* =========================================================
+   12. RESPONSIVE — TABLETTES
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .center-container {
+        width: calc(100% - 24px);
+
+        margin: 84px auto 24px;
+
+        padding: 18px;
+
+        gap: 18px;
+    }
+
+    .content-layout {
+        gap: 18px;
+    }
+
+    .list-department {
+        flex: 0 0 230px;
+        width: 230px;
+    }
+
+}
+
+
+/* =========================================================
+   13. RESPONSIVE — MOBILES
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    :root {
+        --header-height: 62px;
+        --sidebar-width: min(280px, 85vw);
+    }
+
+    .head-box {
+        gap: 10px;
+        padding: 0 12px;
+    }
+
+    .text-title {
+        font-size: 16px;
+    }
+
+    .icons {
+        padding-top: var(--header-height);
+    }
+
+    .center-container {
+        flex-direction: column;
+
+        width: calc(100% - 20px);
+
+        margin: 80px auto 20px;
+
+        padding: 14px;
+
+        gap: 16px;
+    }
+
+    .content-layout {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .list-department {
+        flex: none;
+
+        width: 100%;
+
+        max-height: 280px;
+
+        padding: 14px;
+    }
+
+    .departments {
+        display: grid;
+
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(min(180px, 100%), 1fr)
+        );
+
+        gap: 6px;
+    }
+
+    .departement {
+        padding: 10px;
+    }
+
+    .table-content {
+        width: 100%;
+        padding: 14px;
+    }
+
+    .styled-table {
+        min-width: 650px;
+    }
+
+    .empty-message {
+        min-height: 220px;
+        padding: 20px;
+    }
+
+}
+
+
+/* =========================================================
+   14. PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .head-box {
+        gap: 9px;
+        padding: 0 10px;
+    }
+
+    .head-box #menu {
+        width: 38px;
+        height: 38px;
+    }
+
+    .text-title {
+        font-size: 15px;
+    }
+
+    .center-container {
+        width: calc(100% - 16px);
+
+        margin: 76px auto 16px;
+
+        padding: 10px;
+
+        gap: 12px;
+    }
+
+    .page-heading h1 {
+        font-size: 17px;
+    }
+
+    .page-heading p {
+        font-size: 12px;
+    }
+
+    .list-department {
+        max-height: 250px;
+        padding: 12px;
+    }
+
+    .department-info {
+        padding: 10px;
+    }
+
+    .department-info h3 {
+        font-size: 12px;
+    }
+
+    .departments {
+        grid-template-columns: 1fr;
+    }
+
+    .departement {
+        padding: 10px;
+    }
+
+    .departement h3 {
+        font-size: 13px;
+    }
+
+    .table-content {
+        padding: 10px;
+    }
+
+    .table-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .styled-table {
+        min-width: 620px;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 11px 12px;
+    }
+
+    .styled-table th {
+        font-size: 11px;
+    }
+
+    .styled-table td {
+        font-size: 13px;
+    }
+
+    .course-cell a {
+        font-size: 13px;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .pagination-info {
+        width: 100%;
+        justify-content: center;
+        order: -1;
+    }
+
+    a.button {
+        min-height: 42px;
+        padding: 9px 12px;
+        font-size: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   15. TRÈS PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    :root {
+        --header-height: 58px;
+    }
+
+    .head-box {
+        gap: 7px;
+        padding: 0 9px;
+    }
+
+    .text-title {
+        font-size: 14px;
+    }
+
+    .center-container {
+        width: calc(100% - 12px);
+
+        margin: 72px auto 12px;
+
+        padding: 8px;
+    }
+
+    .list-department {
+        padding: 10px;
+    }
+
+    .departement {
+        padding: 9px;
+    }
+
+    .departement h3 {
+        font-size: 12px;
+    }
+
+    .styled-table {
+        min-width: 580px;
+    }
+
+}
+
+
+/* =========================================================
+   16. GRANDS ÉCRANS
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    .center-container {
+        width: calc(100% - 80px);
+        max-width: 1700px;
+
+        margin-top: 104px;
+
+        padding: 32px;
+
+        gap: 30px;
+    }
+
+    .content-layout {
+        gap: 30px;
+    }
+
+    .list-department {
+        flex-basis: 290px;
+        width: 290px;
+
+        padding: 20px;
+    }
+
+    .table-content {
+        padding: 22px;
+    }
+
+    .styled-table {
+        min-width: 750px;
+    }
+
+}
+
+
+/* =========================================================
+   17. ACCESSIBILITÉ
+   ========================================================= */
+
+@media (hover: none) {
+
+    .departement:hover .department-arrow {
+        transform: none;
+    }
+
+    .styled-table tbody tr:hover {
+        background: inherit;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+
+}

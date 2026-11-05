@@ -1,0 +1,940 @@
+/* =========================================================
+   1. CONFIGURATION GLOBALE
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+
+    --text: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+
+    --background: #f8fafc;
+    --surface: #ffffff;
+
+    --border: #e2e8f0;
+    --border-light: #f1f5f9;
+
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, .04);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, .06);
+
+    --radius-sm: 6px;
+    --radius: 8px;
+    --radius-lg: 12px;
+
+    --header-height: 68px;
+    --sidebar-width: 250px;
+
+    --transition: .2s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    overflow-x: hidden;
+
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: var(--text);
+    background: var(--background);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+
+/* =========================================================
+   2. HEADER
+   ========================================================= */
+
+#toggle-sidebar {
+    display: none;
+}
+
+.head-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    width: 100%;
+    height: var(--header-height);
+
+    padding: 0 24px;
+
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+
+    box-shadow: var(--shadow-sm);
+}
+
+/* Bouton menu */
+
+.menu-toggle {
+    display: flex;
+    flex-shrink: 0;
+
+    cursor: pointer;
+}
+
+.head-box #menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+
+    transition: var(--transition);
+}
+
+.head-box #menu:hover {
+    background: var(--primary-light);
+    border-color: #dbeafe;
+}
+
+.head-box #menu img {
+    width: 21px;
+    height: 21px;
+
+    object-fit: contain;
+
+    transition: transform var(--transition);
+}
+
+#toggle-sidebar:checked ~ header #menu img {
+    transform: rotate(90deg);
+}
+
+/* Titre */
+
+.head-box h2 {
+    min-width: 0;
+
+    color: var(--text);
+
+    font-size: 18px;
+    font-weight: 650;
+
+    line-height: 1.35;
+    letter-spacing: -.2px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   3. SIDEBAR
+   ========================================================= */
+
+.icons {
+    position: fixed;
+    top: 0;
+    left: calc(-1 * var(--sidebar-width));
+
+    z-index: 90;
+
+    display: flex;
+    flex-direction: column;
+
+    width: var(--sidebar-width);
+
+    height: 100vh;
+    height: 100dvh;
+
+    padding-top: var(--header-height);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background: var(--surface);
+
+    border-right: 1px solid var(--border);
+
+    box-shadow: var(--shadow-md);
+
+    transition: left .25s ease;
+
+    overscroll-behavior: contain;
+}
+
+#toggle-sidebar:checked ~ .icons {
+    left: 0;
+}
+
+/* Titre */
+
+.icons .text-menu {
+    width: 100%;
+
+    padding: 20px;
+
+    background: #fafbfc;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.icons .text-menu h2 {
+    color: var(--text-muted);
+
+    font-size: 12px;
+    font-weight: 650;
+
+    text-transform: uppercase;
+    letter-spacing: .7px;
+}
+
+/* Navigation */
+
+.icons-option {
+    width: 100%;
+
+    margin-top: 10px;
+    padding-bottom: 20px;
+}
+
+.icon-container {
+    width: 100%;
+}
+
+.icon-container a,
+.icon-container label {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    width: calc(100% - 20px);
+    min-height: 46px;
+
+    margin: 3px 10px;
+    padding: 11px 13px;
+
+    color: var(--text-secondary);
+
+    background: transparent;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+
+    font-size: 13.5px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.icon-container a:hover,
+.icon-container label:hover {
+    color: var(--primary);
+
+    background: var(--primary-light);
+    border-color: #e4edff;
+}
+
+.icon-container img {
+    flex-shrink: 0;
+
+    width: 20px;
+    height: 20px;
+
+    object-fit: contain;
+}
+
+.tooltip {
+    min-width: 0;
+
+    font-size: 13.5px;
+
+    overflow-wrap: anywhere;
+}
+
+.icon-container a:focus-visible,
+.icon-container label:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+}
+
+
+/* =========================================================
+   4. CONTENU PRINCIPAL
+   ========================================================= */
+
+.center-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    width: calc(100% - 48px);
+    max-width: 1250px;
+    min-width: 0;
+
+    margin: calc(var(--header-height) + 28px) auto 32px;
+
+    padding: 30px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.dashboard-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   5. TITRES DE SECTION
+   ========================================================= */
+
+.separator {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: 100%;
+    min-width: 0;
+
+    color: var(--text);
+
+    font-size: 16px;
+    font-weight: 650;
+
+    line-height: 1.4;
+}
+
+.separator::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: var(--border);
+}
+
+
+/* =========================================================
+   6. GRILLE DES OPTIONS
+   ========================================================= */
+
+.grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    align-items: stretch;
+    gap: 18px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   CARTES DU DASHBOARD
+   ========================================================= */
+
+.option {
+    --card-color: #2563eb;
+    --card-background: #eff6ff;
+    --card-border: #dbeafe;
+
+    position: relative;
+
+    min-width: 0;
+    min-height: 180px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+
+    overflow: hidden;
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+/* Bande colorée supérieure */
+
+.option::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: var(--card-color);
+}
+
+/* Lien */
+
+.option a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 16px;
+
+    width: 100%;
+    min-height: 180px;
+
+    padding: 24px 16px;
+
+    text-align: center;
+}
+
+/* Icône */
+
+.option-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 66px;
+    height: 66px;
+
+    background: var(--card-background);
+
+    border: 1px solid var(--card-border);
+    border-radius: 17px;
+
+    transition:
+        transform var(--transition),
+        background-color var(--transition);
+}
+
+.option-icon img {
+    width: 38px;
+    height: 38px;
+
+    object-fit: contain;
+}
+
+/* Texte */
+
+.option p {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 650;
+
+    line-height: 1.45;
+}
+
+/* Survol */
+
+.option:hover {
+    transform: translateY(-4px);
+
+    border-color: var(--card-border);
+
+    box-shadow: var(--shadow-md);
+}
+
+.option:hover .option-icon {
+    transform: scale(1.06);
+    background: var(--card-border);
+}
+
+
+/* =========================================================
+   COULEURS INDIVIDUELLES
+   ========================================================= */
+
+/* Emploi du temps : BLEU */
+
+.option:nth-child(1) {
+    --card-color: #2563eb;
+    --card-background: #2563eb;
+    --card-border: #2563eb;
+}
+
+/* Scanner QR : VIOLET */
+
+.option:nth-child(2) {
+    --card-color: #7c3aed;
+    --card-background: #7c3aed;
+    --card-border: #7c3aed;
+}
+
+/* Absences : ORANGE */
+
+.option:nth-child(3) {
+    --card-color: #ea580c;
+    --card-background: #ea580c;
+    --card-border: #ea580c;
+}
+
+
+
+/* =========================================================
+   MENU ADMINISTRATIF
+   ========================================================= */
+
+/* Profil : VERT */
+
+.dashboard-section:nth-child(2) .option:nth-child(1) {
+    --card-color: #059669;
+    --card-background: #059669;
+    --card-border:#059669;
+}
+
+/* Déconnexion : ROUGE */
+
+.dashboard-section:nth-child(2) .option:nth-child(2) {
+    --card-color: #dc2626;
+    --card-background: #dc2626;
+    --card-border: #dc2626;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    width: 100%;
+
+    color: var(--primary);
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.separator::after {
+    content: "";
+
+    flex: 1;
+    height: 1px;
+
+    background: var(--border);
+}
+
+.dashboard-section {
+    padding: 20px;
+
+    background: #fbfdff;
+
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+}
+
+/* =========================================================
+   ACCESSIBILITÉ
+   ========================================================= */
+
+.option a:focus-visible {
+    outline: 3px solid var(--card-border);
+    outline-offset: -4px;
+}
+
+@media (hover: none) {
+    .option:hover {
+        transform: none;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .option:hover .option-icon {
+        transform: none;
+        background: var(--card-background);
+    }
+
+    .option:active {
+        transform: scale(.98);
+    }
+}
+
+
+/* =========================================================
+   8. TABLETTES
+   ========================================================= */
+
+@media (max-width: 1024px) {
+
+    .center-wrapper {
+        width: calc(100% - 32px);
+        padding: 24px;
+        gap: 28px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .option,
+    .option a {
+        min-height: 165px;
+    }
+}
+
+
+/* =========================================================
+   9. MOBILES
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    :root {
+        --header-height: 62px;
+        --sidebar-width: min(280px, 85vw);
+    }
+
+    /* Header */
+
+    .head-box {
+        gap: 10px;
+        padding: 0 14px;
+    }
+
+    .head-box #menu {
+        width: 40px;
+        height: 40px;
+    }
+
+    .head-box h2 {
+        font-size: 16px;
+    }
+
+    /* Sidebar */
+
+    .icons {
+        padding-top: calc(var(--header-height) + env(safe-area-inset-top));
+    }
+
+    .icons .text-menu {
+        padding: 18px;
+    }
+
+    .icon-container a,
+    .icon-container label {
+        min-height: 48px;
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+
+    /* Contenu */
+
+    .center-wrapper {
+        width: calc(100% - 24px);
+
+        margin-top: calc(var(--header-height) + 16px);
+        margin-bottom: 20px;
+
+        padding: 20px;
+
+        gap: 26px;
+    }
+
+    .dashboard-section {
+        gap: 17px;
+    }
+
+    .grid {
+        gap: 14px;
+    }
+
+    .option,
+    .option a {
+        min-height: 155px;
+    }
+
+    .option a {
+        gap: 13px;
+        padding: 18px 12px;
+    }
+
+    .option-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 13px;
+    }
+
+    .option-icon img {
+        width: 34px;
+        height: 34px;
+    }
+
+    .option p {
+        font-size: 13.5px;
+    }
+
+    .separator {
+        font-size: 15px;
+    }
+}
+
+
+/* =========================================================
+   10. PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .head-box {
+        gap: 9px;
+        padding: 0 10px;
+    }
+
+    .head-box h2 {
+        font-size: 14px;
+        letter-spacing: 0;
+    }
+
+    .center-wrapper {
+        width: calc(100% - 20px);
+
+        margin-top: calc(var(--header-height) + 12px);
+
+        padding: 15px;
+
+        gap: 23px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 11px;
+    }
+
+    .option,
+    .option a {
+        min-height: 140px;
+    }
+
+    .option a {
+        gap: 11px;
+        padding: 14px 8px;
+    }
+
+    .option-icon {
+        width: 49px;
+        height: 49px;
+        border-radius: 12px;
+    }
+
+    .option-icon img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .option p {
+        font-size: 12.5px;
+    }
+
+    .separator {
+        gap: 9px;
+        font-size: 14px;
+    }
+
+    .icon-container a,
+    .icon-container label {
+        width: calc(100% - 16px);
+        margin: 3px 8px;
+        padding: 12px;
+    }
+}
+
+
+/* =========================================================
+   11. TRÈS PETITS ÉCRANS
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    :root {
+        --header-height: 58px;
+    }
+
+    .head-box {
+        gap: 7px;
+        padding: 0 9px;
+    }
+
+    .head-box h2 {
+        font-size: 13px;
+    }
+
+    .center-wrapper {
+        width: calc(100% - 16px);
+        margin-top: calc(var(--header-height) + 10px);
+        padding: 12px;
+        gap: 20px;
+    }
+
+    .grid {
+        gap: 9px;
+    }
+
+    .option,
+    .option a {
+        min-height: 125px;
+    }
+
+    .option a {
+        padding: 12px 6px;
+        gap: 9px;
+    }
+
+    .option-icon {
+        width: 43px;
+        height: 43px;
+    }
+
+    .option-icon img {
+        width: 26px;
+        height: 26px;
+    }
+
+    .option p {
+        font-size: 11.5px;
+    }
+}
+
+
+/* =========================================================
+   12. GRANDS ÉCRANS
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    .center-wrapper {
+        max-width: 1450px;
+        padding: 36px;
+        gap: 34px;
+    }
+
+    .grid {
+        gap: 22px;
+    }
+
+    .option,
+    .option a {
+        min-height: 190px;
+    }
+
+    .option-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .option-icon img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .option p {
+        font-size: 15px;
+    }
+
+    .separator {
+        font-size: 17px;
+    }
+}
+
+
+/* =========================================================
+   13. APPAREILS TACTILES
+   ========================================================= */
+
+@media (hover: none) {
+
+    .option:hover {
+        transform: none;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .option:hover .option-icon {
+        background: var(--primary-light);
+    }
+
+    .head-box #menu:hover {
+        background: transparent;
+        border-color: transparent;
+    }
+
+    .icon-container a:hover,
+    .icon-container label:hover {
+        background: transparent;
+        border-color: transparent;
+    }
+
+    .option:active {
+        transform: scale(.98);
+    }
+}
+
+
+/* =========================================================
+   14. ACCESSIBILITÉ
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

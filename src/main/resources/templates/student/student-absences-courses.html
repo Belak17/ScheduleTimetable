@@ -1,65 +1,104 @@
 <!DOCTYPE html>
-<html lang="fr"  xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Absences</title>
-  <link rel="stylesheet" th:href="@{/css/style-student/style-student-dashboard.css}">
-  <link rel="stylesheet" th:href="@{/css/style-admin/style-see-all-professor-timetable.css}">
-  <link rel="stylesheet"
-        href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Détail des absences | ScheduleTimetable</title>
+
+    <link rel="stylesheet" th:href="@{/css/student/student-absences-courses.css}"/>
 </head>
+
 <body>
-<input type="checkbox" id="toggle-sidebar" />
+
+<input id="toggle-sidebar" type="checkbox"/>
+
 <header>
-  <div class="head-box">
-    <!-- Checkbox caché -->
+    <div class="head-box">
 
-    <label for="toggle-sidebar">
-      <div  id="menu">
+        <label for="toggle-sidebar">
+            <div id="menu">
+                <img alt="Menu" th:src="@{/images/menu-burger.png}"/>
+            </div>
+        </label>
 
-        <img th:src="@{/images/menu-burger.png}">
-      </div>
-    </label>
-    <h2>Récapituatif des Absences </h2>
-  </div>
+        <h2>Détail des absences</h2>
+
+    </div>
 </header>
-<section th:replace="student/student-dashboard :: sidebar">
-</section>
-<main class="center-wrapper">
-  <table class="styled-table" border="1" rules="all">
-    <thead>
-    <tr>
-      <th>
-        Date
-      </th>
-      <th>
-        Présence
-      </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="absence : ${absencesList}">
-      <td th:text="${absence.presentDate}"></td>
-      <td th:text="${absence.presence}"></td>
-    </tr>
-    </tbody>
-  </table>
+
+<section th:replace="student/student-dashboard :: sidebar"></section>
+
+<main class="page-content">
+
+    <div class="page-heading">
+        <div>
+            <h1>Historique des séances</h1>
+            <p>
+                Retrouvez les dates de vos séances et votre statut de présence.
+            </p>
+        </div>
+    </div>
+
+    <section class="absence-card">
+
+        <div class="card-header">
+            <div>
+                <h2>Suivi des présences</h2>
+                <p>Historique de vos participations aux séances</p>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+
+            <table class="styled-table">
+
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Présence</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="absence : ${absencesList}">
+
+                    <td class="date-cell"
+                        th:text="${absence.presentDate}">
+                    </td>
+
+                    <td>
+                            <span class="presence-status"
+                                  th:text="${absence.presence}"
+                                  th:classappend="${absence.presence == 'Présent' or absence.presence == 'PRESENT' or absence.presence == 'Present'} ? ' status-present' : ' status-absent'">
+                            </span>
+                    </td>
+
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(absencesList)}">
+                    <td colspan="2" class="empty-state">
+                        Aucune séance enregistrée pour le moment.
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="card-footer">
+            <p>
+                Cet historique présente les séances enregistrées dans votre suivi de présence.
+            </p>
+        </div>
+
+    </section>
+
 </main>
-<script>
 
-  function openModal()
-  {
-      document.getElementById("modal").style.display = "flex";
-  }
-
-  function closeModal()
-  {
-      document.getElementById("modal").style.display = "none";
-  }
-
-</script>
 </body>
-
-
 </html>

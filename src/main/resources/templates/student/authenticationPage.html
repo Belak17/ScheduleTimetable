@@ -2,158 +2,184 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>Identification étudiant</title>
+    <title>Identification étudiant</title>
 
-  <link rel="stylesheet"
-        th:href="@{/css/style-student/style-authentication-page.css}">
+    <link rel="stylesheet"
+          th:href="@{/css/pages/authenticationpage.css}"/>
 
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 
 <body>
 
-<div class="container">
+<main class="container">
 
-  <div class="form-card">
+    <section class="form-card">
 
-    <div class="form-header">
-      <div class="icon-container">
-        <i class="fas fa-user-graduate"></i>
-      </div>
+        <!-- EN-TÊTE -->
+        <header class="form-header">
 
-      <h1>Identification</h1>
+            <div class="icon-container">
+                <i class="fas fa-user-graduate"></i>
+            </div>
 
-      <p>
-        Veuillez saisir votre identifiant étudiant
-        pour valider votre présence.
-      </p>
-    </div>
+            <span class="eyebrow">VALIDATION DE PRÉSENCE</span>
 
-    <form th:action="@{/api/qr/scan/authenticated}"
-          method="post"
-          class="student-form"
-          id="studentForm">
+            <h1>Identification</h1>
 
-      <!-- Code du QR -->
-      <input type="hidden"
-             name="code"
-             th:value="${code}">
+            <p>
+                Veuillez saisir votre identifiant étudiant
+                pour valider votre présence.
+            </p>
 
-      <!-- UUID de l'appareil / navigateur -->
-      <input type="hidden"
-             id="deviceUUID"
-             name="deviceUUID"
-             th:value="${deviceUUID}">
+        </header>
 
-      <div class="form-group">
 
-        <label for="studentId">
-          Identifiant étudiant
-        </label>
+        <!-- FORMULAIRE -->
+        <form class="student-form"
+              id="studentForm"
+              method="post"
+              th:action="@{/api/qr/scan/authenticated}">
 
-        <div class="input-wrapper">
-          <i class="fas fa-id-card"></i>
+            <!-- Code du QR -->
+            <input name="code"
+                   th:value="${code}"
+                   type="hidden"/>
 
-          <input type="text"
-                 id="studentId"
-                 name="userId"
-                 placeholder="Exemple : 12345678"
-                 autocomplete="off"
-                 required>
-        </div>
+            <!-- UUID de l'appareil / navigateur -->
+            <input id="deviceUUID"
+                   name="deviceUUID"
+                   th:value="${deviceUUID}"
+                   type="hidden"/>
 
-      </div>
 
-      <button type="submit" id="submitButton">
+            <!-- IDENTIFIANT ÉTUDIANT -->
+            <div class="form-group">
 
-        <i class="fas fa-check-circle"></i>
+                <label for="studentId">
+                    Identifiant étudiant
+                </label>
 
-        Valider ma présence
+                <div class="input-wrapper">
 
-      </button>
+                    <i class="fas fa-id-card"></i>
 
-    </form>
+                    <input autocomplete="off"
+                           id="studentId"
+                           name="userId"
+                           placeholder="Exemple : 12345678"
+                           required
+                           type="text"/>
 
-    <div class="form-footer">
-      <p>
-        <i class="fas fa-shield-alt"></i>
-        Vos informations sont utilisées uniquement
-        pour la validation de votre présence.
-      </p>
-    </div>
+                </div>
 
-  </div>
+                <span class="input-hint">
+                    Saisissez votre identifiant universitaire.
+                </span>
 
-</div>
+            </div>
 
+
+            <!-- BOUTON DE VALIDATION -->
+            <button id="submitButton" type="submit">
+
+                <i class="fas fa-check-circle"></i>
+
+                <span>Valider ma présence</span>
+
+            </button>
+
+        </form>
+
+
+        <!-- INFORMATIONS DE SÉCURITÉ -->
+        <footer class="form-footer">
+
+            <div class="security-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+
+            <p>
+                Vos informations sont utilisées uniquement
+                pour la validation de votre présence.
+            </p>
+
+        </footer>
+
+    </section>
+
+</main>
+
+
+<!-- GESTION DE L'IDENTIFIANT DE L'APPAREIL -->
 <script>
 
-  document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
 
-      const deviceUUIDInput = document.getElementById("deviceUUID");
-      const studentForm = document.getElementById("studentForm");
-      const submitButton = document.getElementById("submitButton");
+        const deviceUUIDInput = document.getElementById("deviceUUID");
+        const studentForm = document.getElementById("studentForm");
+        const submitButton = document.getElementById("submitButton");
 
-      try {
+        try {
 
-          // On récupère prioritairement l'UUID transmis par Spring
-          let deviceUUID = deviceUUIDInput.value;
+            // On récupère prioritairement l'UUID transmis par Spring
+            let deviceUUID = deviceUUIDInput.value;
 
-          // Si absent, on consulte le localStorage
-          if (!deviceUUID) {
+            // Si absent, on consulte le localStorage
+            if (!deviceUUID) {
 
-              deviceUUID = localStorage.getItem("device_uuid");
-          }
+                deviceUUID = localStorage.getItem("device_uuid");
+            }
 
-          // Si toujours absent, on génère un nouvel UUID
-          if (!deviceUUID) {
+            // Si toujours absent, on génère un nouvel UUID
+            if (!deviceUUID) {
 
-              deviceUUID = crypto.randomUUID();
-          }
+                deviceUUID = crypto.randomUUID();
+            }
 
-          // Conservation de l'UUID
-          localStorage.setItem("device_uuid", deviceUUID);
+            // Conservation de l'UUID
+            localStorage.setItem("device_uuid", deviceUUID);
 
-          // Injection dans le formulaire
-          deviceUUIDInput.value = deviceUUID;
+            // Injection dans le formulaire
+            deviceUUIDInput.value = deviceUUID;
 
-          console.log("Device UUID utilisé :", deviceUUID);
+            console.log("Device UUID utilisé :", deviceUUID);
 
-      } catch (error) {
+        } catch (error) {
 
-          console.error("Erreur UUID :", error);
+            console.error("Erreur UUID :", error);
 
-          submitButton.disabled = true;
+            submitButton.disabled = true;
 
-          alert("Impossible d'identifier votre navigateur.");
+            alert("Impossible d'identifier votre navigateur.");
 
-      }
+        }
 
-      studentForm.addEventListener("submit", function (event) {
+        studentForm.addEventListener("submit", function (event) {
 
-          if (!deviceUUIDInput.value) {
+            if (!deviceUUIDInput.value) {
 
-              event.preventDefault();
+                event.preventDefault();
 
-              alert("Identifiant de l'appareil introuvable.");
+                alert("Identifiant de l'appareil introuvable.");
 
-              return;
-          }
+                return;
+            }
 
-          console.log("UUID transmis :", deviceUUIDInput.value);
+            console.log("UUID transmis :", deviceUUIDInput.value);
 
-          submitButton.disabled = true;
+            submitButton.disabled = true;
 
-          submitButton.innerHTML =
-              '<i class="fas fa-spinner fa-spin"></i> Validation en cours...';
+            submitButton.innerHTML =
+                '<i class="fas fa-spinner fa-spin"></i><span>Validation en cours...</span>';
 
-      });
+        });
 
-  });
+    });
 
 </script>
 
