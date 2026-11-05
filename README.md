@@ -1,266 +1,454 @@
-#  Timetable Management System
+# Timetable Management System
 
-[![Java](https://img.shields.io/badge/Java-17+-ED8B00?style=flat&logo=openjdk&logoColor=white)](https://www.java.com/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-Framework-6DB33F?style=flat&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
-[![Thymeleaf](https://img.shields.io/badge/Thymeleaf-Template%20Engine-005F0F?style=flat&logo=thymeleaf&logoColor=white)](https://www.thymeleaf.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Spring Security](https://img.shields.io/badge/Spring%20Security-Authentication-6DB33F?style=flat&logo=springsecurity&logoColor=white)](https://spring.io/projects/spring-security)
 
-> A web application built with Spring Boot and Thymeleaf for managing academic timetables with secure authentication, timetable importation, and role-based access control.
+
+<h3 align="center">
+  Academic Timetable Management & QR Code Attendance System
+</h3>
+
+<p align="center">
+  A university-oriented web application for managing academic timetables, 
+  organizing student information, and automating classroom attendance 
+  through QR Code validation.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Java-17+-ED8B00?style=flat&logo=openjdk&logoColor=white" alt="Java">
+  <img src="https://img.shields.io/badge/Spring%20Boot-4.0.4-6DB33F?style=flat&logo=springboot&logoColor=white" alt="Spring Boot">
+  <img src="https://img.shields.io/badge/Spring%20Security-Authentication-6DB33F?style=flat&logo=springsecurity&logoColor=white" alt="Spring Security">
+  <img src="https://img.shields.io/badge/PostgreSQL-Database-4169E1?style=flat&logo=postgresql&logoColor=white" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/Thymeleaf-Template%20Engine-005F0F?style=flat&logo=thymeleaf&logoColor=white" alt="Thymeleaf">
+  <img src="https://img.shields.io/badge/Maven-Build%20Tool-C71A36?style=flat&logo=apachemaven&logoColor=white" alt="Maven">
+</p>
+
+<p align="center">
+  <strong>~2,000 Users</strong> ·
+  <strong>Role-Based Access Control</strong> ·
+  <strong>QR Code Attendance</strong> ·
+  <strong>Excel Data Import</strong>
+</p>
 
 ---
 
-#  Table of Contents
+## Table of Contents
 
-- [About](#about)
-- [Purpose](#purpose)
-- [Features](#features)
-- [Security](#security)
+- [Overview](#overview)
+- [Project Objectives](#project-objectives)
+- [Key Features](#key-features)
+    - [Authentication and Access Control](#1-authentication-and-access-control)
+    - [Academic Timetable Management](#2-academic-timetable-management)
+    - [Student and Teacher Management](#3-student-and-teacher-management)
+    - [QR Code Attendance System](#4-qr-code-attendance-system)
+    - [Attendance Management](#5-attendance-management)
+    - [User Interface](#6-user-interface)
+- [Technical Highlights](#technical-highlights)
+- [System Architecture](#system-architecture)
 - [Technologies](#technologies)
-- [Architecture](#architecture)
-- [Class Diagram](#class-diagram)
+- [Database Design](#database-design)
 - [Screenshots](#screenshots)
+- [Deployment](#deployment)
 - [Configuration](#configuration)
 - [Installation](#installation)
-- [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Future Improvements](#future-improvements)
 - [Author](#author)
 
 ---
 
-#  About
+## Overview
 
-Timetable Management System is a web-based platform designed to simplify the management and visualization of academic timetables.
+**Timetable Management System** is a web-based academic management application developed with Java and Spring Boot.
 
-The application allows administrators, teachers, and students to interact with schedules through a secure and intuitive interface.
+The application provides a centralized platform for managing and accessing university timetables, student information, teacher information, and classroom attendance.
 
-It was developed using **Spring Boot**, **Thymeleaf**, and **PostgreSQL**, following a clean layered architecture.
+Initially focused on academic timetable management, the application has evolved to include a QR Code-based attendance management system, allowing students to validate their presence during scheduled classes.
 
----
+The system is designed for an academic environment and currently serves approximately **2,000 users**.
 
-#  Purpose
+It is deployed within a university's internal network and continues to be maintained and improved to meet operational requirements.
 
-The main goal of this application is to provide an efficient solution for:
+### Project Context
 
--  Creating academic timetables
--  Managing schedules dynamically
--  Handling teachers and students access
--  Importing timetable data
--  Viewing timetables in a structured way
+This project is developed for an academic institution and addresses practical challenges related to:
 
-The system improves accessibility and organization for both students and administrators.
+- Academic timetable organization.
+- Student and teacher information management.
+- Timetable data integration from Excel files.
+- Classroom attendance tracking.
+- Secure access to academic information.
 
----
-### Deployment
-
-This application is intended to be deployed within an academic environment.
-
-It can run on a local server connected to the faculty's internal network, allowing students, teachers, and administrators to access timetable management services securely.
-
-The project is currently not publicly hosted on the Internet.
+Unlike a purely academic demonstration, the application is used in a real university environment.
 
 ---
 
-#  Features
+## Project Objectives
 
-##  Authentication & Security
-- Secure login system with Spring Security
-- Role-based access control (**ADMIN / USER**)
-- Password encryption using BCrypt
+The main objectives are to:
 
-##  Timetable Management
-- Full CRUD operations for timetable management
-- Dynamic timetable rendering using Thymeleaf
-- Department-based timetable visualization
-- Timetable sending and importation
-
-##  User Management
-- Import students and teachers data
-- Manage user access to the system
-- Personalized timetable view for students and teachers
-
-##  User Interface
-- Responsive UI using HTML & CSS
-- Structured and clean interface
-- Dashboard for administrators and users
-
-##  Excel Importation
-- Excel file handling using Apache POI
-- Import timetable data efficiently
+- Centralize academic timetable management.
+- Simplify access to schedules for students and teachers.
+- Reduce manual administrative operations.
+- Facilitate the integration of academic data.
+- Automate classroom attendance tracking.
+- Ensure secure access according to user roles.
+- Provide a maintainable and scalable application for university use.
 
 ---
 
-#  Security
+## Key Features
 
-The application integrates **Spring Security** for authentication and authorization.
+### 1. Authentication and Access Control
 
-### Security Features
+The application implements authentication and authorization using Spring Security.
 
-- Authentication system using Spring Security
-- BCrypt password hashing
-- Role-based access control (**ADMIN / USER**)
-- Protected routes and restricted operations
+Features include:
+
+- Secure authentication.
+- Role-Based Access Control (RBAC).
+- Password hashing using BCrypt.
+- Protected application routes.
+- Role-specific interfaces and permissions.
+- Custom authentication failure handling.
+
+Supported roles:
+
+| Role | Description |
+|------|-------------|
+| ADMIN | Manages academic data, users, and timetables. |
+| PROFESSOR | Accesses professor-related academic information and attendance features. |
+| STUDENT | Accesses personal academic information and timetable-related features. |
+| USER | General application user. |
+
+### 2. Academic Timetable Management
+
+The application provides tools for managing and visualizing academic schedules.
+
+Features include:
+
+- Timetable data importation from Excel files.
+- Academic timetable organization.
+- Course and session management.
+- Department-based timetable visualization.
+- Group-based timetable visualization.
+- Dynamic timetable rendering.
+- Academic schedule consultation.
+
+Timetable data is processed and integrated into the application's PostgreSQL database.
+
+### 3. Student and Teacher Management
+
+The system provides administrative features for managing academic users.
+
+Features include:
+
+- Student information management.
+- Teacher information management.
+- Student data importation.
+- User account management.
+- Academic group management.
+- Modification of student information.
+- Association of students with their respective academic groups.
+
+### 4. QR Code Attendance System
+
+One of the major features of the application is its QR Code-based classroom attendance validation system.
+
+The system uses QR Codes to simplify the attendance process during scheduled classes.
+
+#### Attendance Validation Workflow
+
+1. A QR Code associated with a classroom is made available to students.
+2. The student scans the QR Code using a mobile device.
+3. The application identifies the classroom associated with the QR Code.
+4. The student provides their university identifier.
+5. The system checks whether the student is scheduled to attend a class in that classroom.
+6. The student's presence is validated and recorded when all conditions are satisfied.
+
+#### Validation Mechanisms
+
+- Classroom identification through QR Codes.
+- Student identification.
+- Verification of the student's scheduled course.
+- Academic group and timetable consistency checks.
+- Local university network verification.
+- Attendance recording.
+
+The QR Code identifies the classroom rather than directly containing sensitive student information.
+
+This approach allows the attendance process to be linked to the actual academic schedule.
+
+### 5. Attendance Management
+
+The application provides attendance-related management features.
+
+Administrators can access attendance information associated with academic sessions.
+
+Features include:
+
+- Recording student attendance.
+- Tracking student absences.
+- Consulting attendance records.
+- Viewing students associated with academic sessions.
+- Managing attendance-related information.
+
+### 6. User Interface
+
+The application provides a web interface built with Thymeleaf, HTML, CSS, and JavaScript.
+
+Features include:
+
+- Role-specific dashboards.
+- Dynamic timetable visualization.
+- Administrative management interfaces.
+- Student information management pages.
+- Attendance validation interfaces.
+- Responsive page layouts.
 
 ---
 
-#  Technologies
+## Technical Highlights
 
-## Backend
-- **Java 17**
-- **Spring Boot**
-- **Spring Security**
-- **Spring Data JPA**
-- **Hibernate**
+The project involves several backend engineering concepts and practical implementation challenges.
 
-## Frontend
-- **Thymeleaf**
-- **HTML**
-- **CSS**
+| Area | Implementation |
+|------|----------------|
+| Architecture | Layered Architecture |
+| Authentication | Spring Security |
+| Authorization | Role-Based Access Control |
+| Password Security | BCrypt |
+| Persistence | Spring Data JPA |
+| ORM | Hibernate |
+| Database | PostgreSQL |
+| Data Import | Apache POI |
+| Data Transfer | DTO Pattern |
+| API Development | REST Controllers |
+| Validation | Server-side validation |
+| Configuration | Environment Variables |
+| Testing | JUnit |
+| Database Optimization | SQL queries and indexing |
 
-## Database
-- **PostgreSQL**
+### Additional Engineering Considerations
 
-## File Handling
-- **Apache POI** (Excel import/export)
-
-## Development Tools
-- **Maven**
-- **Git & GitHub**
-- **IntelliJ IDEA / Eclipse**
-
----
-
-# Technical Highlights
-
-- Layered Architecture (Controller → Service → Repository)
-- Spring Security Authentication & Authorization
-- BCrypt Password Encryption
-- JPA/Hibernate ORM
-- DTO Pattern
-- Excel Processing with Apache POI
-- Environment Variables Configuration
-- Role-Based Access Control (RBAC)
+- Separation of business logic from controllers.
+- Database relationship management.
+- Transactional data processing.
+- Efficient retrieval of academic information.
+- Validation of imported Excel data.
+- Exception handling and application logging.
+- Maintaining existing academic records during timetable updates.
 
 ---
 
-#  Architecture
+## System Architecture
 
-The project follows a layered architecture.
+The application follows a layered architecture to separate responsibilities and improve maintainability.
 
 ```text
-┌────────────────────┐
-│   Presentation     │ → Thymeleaf + HTML/CSS
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│    Controller      │ → Request handling
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│     Service        │ → Business logic
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│   Repository       │ → Database access
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│    PostgreSQL      │
-└────────────────────┘
+                  CLIENT
+                    |
+                    v
+        +------------------------+
+        |   Presentation Layer   |
+        | Thymeleaf / HTML / CSS |
+        |      JavaScript        |
+        +------------------------+
+                    |
+                    v
+        +------------------------+
+        |    Spring Security     |
+        | Authentication / RBAC  |
+        +------------------------+
+                    |
+                    v
+        +------------------------+
+        |    Controller Layer    |
+        | MVC / REST Controllers |
+        +------------------------+
+                    |
+                    v
+        +------------------------+
+        |     Service Layer      |
+        |    Business Logic      |
+        +------------------------+
+                    |
+                    v
+        +------------------------+
+        |   Repository Layer     |
+        |    Spring Data JPA     |
+        +------------------------+
+                    |
+                    v
+        +------------------------+
+        |      Hibernate         |
+        |       ORM              |
+        +------------------------+
+                    |
+                    v
+        +------------------------+
+        |      PostgreSQL        |
+        +------------------------+
 ```
 
----
+### Main Architectural Principles
 
-
-
-#  Class Diagram
-
-![Screenshot](images/classdiagram.png)
-
----
-
-#  Screenshots
-
-##  Login Page
-![Screenshot](images/loginpage.png)
+- Separation of concerns.
+- Reusable business services.
+- Centralized data access.
+- Secure request processing.
+- DTO-based data transfer.
+- Maintainable application structure.
 
 ---
 
-##  Dashboard
-![Screenshot](images/admindashboard.png)
+## Technologies
+
+### Backend
+
+- Java
+- Spring Boot
+- Spring Security
+- Spring Data JPA
+- Hibernate
+- REST API
+
+### Frontend
+
+- Thymeleaf
+- HTML5
+- CSS3
+- JavaScript
+
+### Database
+
+- PostgreSQL
+
+### Data Processing
+
+- Apache POI (Excel processing)
+
+### Testing
+
+- JUnit
+
+### Development Tools
+
+- Maven
+- Git
+- GitHub
+- IntelliJ IDEA
+
+### Deployment Environment
+
+- Windows Server
+- HTTPS
+- Internal University Network
 
 ---
 
-##  Timetable List
+## Database Design
 
-### Timetable Without Department Selection
-![Screenshot](images/emploidutempssans.png)
+The application uses PostgreSQL as its relational database management system.
 
-### Timetable By Department
-![Screenshot](images/emploidutempsdepartement.png)
+Hibernate and Spring Data JPA are used to map Java entities to relational database tables.
 
----
+The database manages relationships between academic entities, including:
 
-##  Timetable Send
-![Screenshot](images/envoiemploidutemps.png)
+- Students.
+- Teachers.
+- Academic groups.
+- Timetables.
+- Courses.
+- Academic sessions.
+- Attendance records.
+- User accounts.
 
----
+### Class Diagram
 
-##  Field Management
-![Screenshot](images/fieldmng.png)
-
----
-
-##  See Absences
-![Screenshot](images/vueimg.png)
+![Class Diagram](images/classdiagram.png)
 
 ---
 
-##  See All Courses Without Group Selection
-![Screenshot](images/see-all-coursesnew.png)
+## Screenshots
+
+### Authentication
+
+![Login Page](images/loginpage.png)
+
+### Administration Dashboard
+
+![Admin Dashboard](images/admindashboard.png)
+
+### Academic Timetables
+
+#### Timetable Without Department Selection
+
+![Timetable Without Department](images/emploidutempssans.png)
+
+#### Timetable By Department
+
+![Timetable By Department](images/emploidutempsdepartement.png)
+
+### Timetable Management
+
+![Timetable Sending](images/envoiemploidutemps.png)
+
+### Academic Field Management
+
+![Field Management](images/fieldmng.png)
+
+### Attendance Management
+
+![Attendance Management](images/vueimg.png)
+
+### Course Management
+
+#### All Courses
+
+![All Courses](images/see-all-coursesnew.png)
+
+#### Courses By Academic Group
+
+![Group Selection](images/groupselection.png)
+
+### Student Management
+
+![Modify Student Information](images/modifyinfo.png)
 
 ---
 
-##  See All Courses With Group Selection
-![Screenshot](images/groupselection.png)
+## Deployment
+
+The application is designed to operate within a university's internal IT infrastructure.
+
+It is deployed on a Windows Server environment and made accessible through the university's local network.
+
+### Deployment Characteristics
+
+- Windows Server deployment.
+- HTTPS communication.
+- Internal network accessibility.
+- PostgreSQL database integration.
+- Environment-based configuration.
+
+The application is not currently publicly hosted on the Internet.
+
+Its deployment is intended to provide access to authorized university users.
 
 ---
 
-##  Modify info for Student
-![Screenshot](images/modifyinfo.png)
+## Configuration
 
----
+Sensitive application configuration is managed through environment variables.
 
-## Modify email 
-![Screenshot](images/modifyemail.png)
-
----
-
-## Modify Password
-![Screenshot](images/modifypass.png)
-
----
-
-#  Configuration
-
-This project uses environment variables for sensitive configuration.
-
-## Environment Variables
+### Environment Variables
 
 | Variable | Description |
 |----------|-------------|
-| `DB_URL` | PostgreSQL JDBC URL |
+| `DB_URL` | PostgreSQL JDBC connection URL |
 | `DB_USERNAME` | Database username |
 | `DB_PASSWORD` | Database password |
 
----
-
-## Example (PowerShell)
+### PowerShell Configuration Example
 
 ```powershell
 $env:DB_URL="jdbc:postgresql://localhost:5432/schedule_db"
@@ -268,9 +456,7 @@ $env:DB_USERNAME="postgres"
 $env:DB_PASSWORD="your_password"
 ```
 
----
-
-## application.properties
+### application.properties
 
 ```properties
 spring.datasource.url=${DB_URL}
@@ -278,135 +464,192 @@ spring.datasource.username=${DB_USERNAME}
 spring.datasource.password=${DB_PASSWORD}
 ```
 
----
-
-#  Installation
-
-## Prerequisites
-
-Make sure you have installed:
-
-- Java 17+
-- Maven
-- PostgreSQL
-- Git
+Additional application configuration may be required depending on the deployment environment.
 
 ---
 
-## Clone the Repository
+## Installation
+
+### Prerequisites
+
+Make sure the following tools are installed:
+
+- Java 17 or higher.
+- PostgreSQL.
+- Git.
+
+Maven Wrapper is included in the repository.
+
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Belak17/scheduleTimetable.git
-cd scheduleTimetable
+git clone https://github.com/Belak17/ScheduleTimetable.git
+
+cd ScheduleTimetable
 ```
 
----
+### 2. Configure PostgreSQL
 
-## Configure the Database
+Create a PostgreSQL database:
 
-Create a PostgreSQL database and configure environment variables.
-
-Example:
-
-```text
-Database Name: schedule_db
+```sql
+CREATE DATABASE schedule_db;
 ```
 
----
+Configure the database credentials using the environment variables described above.
 
-## Run the Application
+### 3. Configure the Application
+
+Set the required environment variables.
+
+Make sure the database connection settings match your PostgreSQL configuration.
+
+### 4. Run the Application
+
+#### Windows
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+#### Linux / macOS
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-The application will start on:
+### 5. Access the Application
+
+By default, open:
 
 ```text
 http://localhost:8080
 ```
 
+The actual address and port depend on the application configuration.
+
 ---
 
-#  Usage
+## Project Structure
 
-1. Start PostgreSQL
-2. Configure environment variables
-3. Launch the application
-4. Open:
+Main application package:
 
 ```text
-http://localhost:8080
+src/main/java/com/belak/scheduletimetable
+│
+├── configuration/
+│
+├── controller/
+│
+├── restcontroller/
+│
+├── service/
+│
+├── repository/
+│
+├── model/
+│
+├── dto/
+│
+├── request/
+│
+├── response/
+│
+├── enumeration/
+│
+├── exception/
+│
+├── security/
+│
+├── data/
+│
+└── record/
 ```
 
-5. Login as:
-- Admin
-- Teacher
-- Student
+### Package Responsibilities
 
-6. Import or view timetables
+| Package | Responsibility |
+|---------|----------------|
+| `configuration` | Application configuration. |
+| `controller` | MVC request handling. |
+| `restcontroller` | REST API endpoints. |
+| `service` | Business logic. |
+| `repository` | Database access. |
+| `model` | JPA entities. |
+| `dto` | Data Transfer Objects. |
+| `request` | Request models. |
+| `response` | Response models. |
+| `enumeration` | Application enumerations. |
+| `exception` | Custom exception handling. |
+| `security` | Authentication and authorization. |
+| `data` | Data initialization and processing. |
+| `record` | Java records. |
 
----
-
-#  Project Structure
-
-## src/main/java/com/belak/scheduletimetable
+### Resources
 
 ```text
-configuration  → Application configuration
-controller     → MVC controllers
-restcontroller → REST API endpoints
-service        → Business logic layer
-repository     → JPA repositories
-model          → Database entities
-dto            → Data Transfer Objects
-request        → Request payloads
-response       → Response payloads
-enumeration    → Enum definitions
-exception      → Custom exceptions
-security       → Spring Security configuration
-data           → Data initialization
-record         → Java records
+src/main/resources
+│
+├── templates/
+│
+├── static/
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+└── application.properties
 ```
 
 ---
 
-## src/main/resources
+## Future Improvements
 
-```text
-templates              → Thymeleaf views
-static                 → CSS, images, static assets
-application.properties → Main configuration file
-```
+Potential future enhancements include:
 
----
-
-#  Future Improvements
-
-- PDF timetable export
-- Email notifications
-- Mobile responsive optimization
-- Real-time timetable updates
-- Attendance statistics dashboard
-- Docker support
-- Multi-language support
+- Attendance analytics and statistics dashboards.
+- Automated daily academic session generation monitoring.
+- Historical attendance tracking and reporting.
+- PDF and Excel report generation.
+- Email notifications.
+- Advanced timetable update management.
+- Improved mobile experience.
+- Multi-language support.
 
 ---
 
-#  Author
+## Maintenance and Development
 
-## Kaleb AKAKPO
+The application is continuously maintained and improved.
 
-- Backend Developer
-- Java & Spring Boot Enthusiast
+Development activities include:
 
-###  GitHub
-[GitHub Profile](https://github.com/Belak17)
+- Implementing new academic management features.
+- Maintaining existing application functionality.
+- Fixing bugs and improving reliability.
+- Optimizing database operations.
+- Improving application security.
+- Adapting the system to evolving university requirements.
 
 ---
 
-<div align="center">
+## Author
 
-###  If you like this project, consider giving it a star on GitHub!
+### Kaleb AKAKPO
 
-</div>
+**Software Engineering Student | Backend Developer**
+
+Interested in backend engineering, Java development, data science, and machine learning.
+
+#### Technologies
+
+Java · Spring Boot · Spring Security · PostgreSQL · Hibernate · Python
+
+#### GitHub
+
+[github.com/Belak17](https://github.com/Belak17)
+
+---
+
+<p align="center">
+  If you find this project interesting, consider giving it a ⭐!
+</p>

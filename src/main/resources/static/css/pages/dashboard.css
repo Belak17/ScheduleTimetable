@@ -525,6 +525,13 @@ textarea {
     --card-border: #ea580c;
 }
 
+.option:nth-child(n+4)
+{
+        --card-color: #2563eb;
+        --card-background: #2563eb;
+        --card-border: #2563eb;
+}
+
 
 
 /* =========================================================
@@ -546,6 +553,8 @@ textarea {
     --card-background: #dc2626;
     --card-border: #dc2626;
 }
+
+
 
 .separator {
     display: flex;
