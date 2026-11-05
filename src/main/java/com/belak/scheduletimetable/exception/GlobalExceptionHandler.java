@@ -2,9 +2,11 @@ package com.belak.scheduletimetable.exception;
 
 import com.belak.scheduletimetable.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.connector.ClientAbortException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.async.AsyncRequestNotUsableException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.format.DateTimeFormatter;
@@ -208,5 +210,16 @@ public class GlobalExceptionHandler {
         return "student/exceptionError";
     }
 
+    @ExceptionHandler(ClientAbortException.class)
+    public void handleClientAbortException(ClientAbortException ex) {
+
+        log.debug("Connexion client interrompue : {}", ex.getMessage());
+    }
+
+    @ExceptionHandler(AsyncRequestNotUsableException.class)
+    public void handleAsyncRequestNotUsable(AsyncRequestNotUsableException ex) {
+
+        log.debug("Réponse HTTP interrompue par le client : {}", ex.getMessage());
+    }
 
 }
