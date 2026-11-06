@@ -947,3 +947,26 @@ textarea {
         animation-iteration-count: 1 !important;
     }
 }
+
+
+/* Par défaut : affichage desktop */
+.mobile-dashboard-link {
+    display: none;
+}
+
+.desktop-menu-toggle {
+    display: flex;
+}
+
+/* Version mobile */
+@media screen and (max-width: 768px) {
+
+    .desktop-menu-toggle {
+        display: none;
+    }
+
+    .mobile-dashboard-link {
+        display: flex;
+    }
+
+}

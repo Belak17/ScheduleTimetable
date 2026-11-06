@@ -24,14 +24,21 @@
 <header>
     <div class="head-box">
 
-        <label for="toggle-sidebar" class="menu-toggle">
+        <!-- Version desktop : bouton pour ouvrir la sidebar -->
+        <label for="toggle-sidebar" class="menu-toggle desktop-menu-toggle">
             <div id="menu">
                 <img th:src="@{/images/menu-burger.png}" alt="Ouvrir le menu"/>
             </div>
         </label>
 
-        <h2 th:text="'Bienvenue cher Admin ' + ${fullname}">
-        </h2>
+        <!-- Version mobile : redirection vers le dashboard -->
+        <a th:href="@{/admin/dashboard}" class="menu-toggle mobile-dashboard-link">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Retour au dashboard"/>
+            </div>
+        </a>
+
+        <h2 th:text="'Bienvenue cher Admin ' + ${fullname}"></h2>
 
     </div>
 </header>

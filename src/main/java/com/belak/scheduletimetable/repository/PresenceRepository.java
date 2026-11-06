@@ -33,13 +33,16 @@ public interface PresenceRepository extends JpaRepository<Presence,Long> {
     @Query("""
     SELECT new com.belak.scheduletimetable.dto.AbsenceOverviewDto(
         s.date,
-        'Absent'
+        CASE
+            WHEN p.present = true THEN 'Présent'
+            ELSE 'Absent'
+        END
     )
     FROM Presence p
     JOIN p.seance s
     WHERE p.student.id = :studentId
       AND s.coursTP.id = :coursTPId
-      AND p.present = false
+    ORDER BY s.date DESC
 """)
     List<AbsenceOverviewDto> findAbsenceOverview(
             Long studentId,
