@@ -1,6 +1,8 @@
 package com.belak.scheduletimetable.service.courstp;
 
+import com.belak.scheduletimetable.component.SeanceDtoMapper;
 import com.belak.scheduletimetable.dto.coursTP.PlanningSeanceDTO;
+import com.belak.scheduletimetable.dto.coursTP.SeanceDto;
 import com.belak.scheduletimetable.model.CoursTP;
 import com.belak.scheduletimetable.model.Seance;
 import com.belak.scheduletimetable.repository.coursTP.CoursTPRepository;
@@ -22,6 +24,7 @@ public class SeanceUService {
 
     private  final SeanceRepository seanceRepository ;
     private  final CoursTPRepository tpRepository ;
+    private  final SeanceDtoMapper seanceDtoMapper;
 
     @Transactional(readOnly = true)
     public List<PlanningSeanceDTO> getExpectedSeances(LocalDate date) {
@@ -76,13 +79,16 @@ public class SeanceUService {
                 .toList();
     }
 
-    public List<Seance> getGeneratedSeances(int days) {
+    public List<SeanceDto> getGeneratedSeances(int days) {
 
         LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
 
         return seanceRepository.findByDateBetweenOrderByDateDesc(
-                today.minusDays(days),
-                today
-        );
+                        today.minusDays(days),
+                        today
+                )
+                .stream()
+                .map(seanceDtoMapper::toDto)
+                .toList();
     }
 }
