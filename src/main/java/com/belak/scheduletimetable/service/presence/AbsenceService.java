@@ -3,10 +3,9 @@ package com.belak.scheduletimetable.service.presence;
 import com.belak.scheduletimetable.model.Presence;
 import com.belak.scheduletimetable.model.Seance;
 import com.belak.scheduletimetable.model.Student;
-import com.belak.scheduletimetable.repository.PresenceRepository;
-import com.belak.scheduletimetable.repository.StudentRepository;
+import com.belak.scheduletimetable.repository.presence.PresenceRepository;
+import com.belak.scheduletimetable.repository.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;

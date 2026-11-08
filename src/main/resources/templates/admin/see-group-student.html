@@ -8,6 +8,9 @@
     <title>Détails des étudiants | ScheduleTimetable</title>
 
     <link rel="stylesheet" th:href="@{/css/admin/see-group-student.css}"/>
+
+    <link rel="stylesheet"
+          href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css">
 </head>
 
 <body>
@@ -140,6 +143,7 @@
                     <th>Année</th>
                     <th>Email</th>
                     <th>Identifiant</th>
+                    <th class="options-column">Options</th>
                 </tr>
                 </thead>
 
@@ -207,6 +211,19 @@
                               th:text="${student.userId}">
                             123456
                         </span>
+                    </td>
+
+                    <!-- OPTIONS -->
+                    <td class="options-cell">
+
+                        <a class="details-button"
+                           th:href="@{/students/{id}/details(id=${student.id})}">
+
+                            <i class="fi fi-rr-eye"></i>
+                            <span>Détails</span>
+
+                        </a>
+
                     </td>
 
                 </tr>
@@ -327,7 +344,7 @@
 </main>
 
 
-<section th:replace="admin/admin-dashboard :: sidebar"></section>
+<section th:replace="~{admin/admin-dashboard :: sidebar}"></section>
 
 </body>
 </html>

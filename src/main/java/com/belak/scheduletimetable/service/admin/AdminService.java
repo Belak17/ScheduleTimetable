@@ -1,10 +1,9 @@
 package com.belak.scheduletimetable.service.admin;
 
-import com.belak.scheduletimetable.dto.AdminProfileDto;
-import com.belak.scheduletimetable.model.Student;
+import com.belak.scheduletimetable.dto.admin.AdminProfileDto;
 import com.belak.scheduletimetable.model.User;
-import com.belak.scheduletimetable.repository.AdminRepository;
-import com.belak.scheduletimetable.repository.UserRepository;
+import com.belak.scheduletimetable.repository.admin.AdminRepository;
+import com.belak.scheduletimetable.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

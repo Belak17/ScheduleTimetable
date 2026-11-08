@@ -1,10 +1,10 @@
 package com.belak.scheduletimetable.restcontroller;
 
-import com.belak.scheduletimetable.dto.ProfessorImportDto;
-import com.belak.scheduletimetable.dto.StudentDto;
-import com.belak.scheduletimetable.dto.StudentImportDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorDetailsDto;
+import com.belak.scheduletimetable.dto.student.StudentDetailsDto;
+import com.belak.scheduletimetable.dto.student.StudentDto;
+import com.belak.scheduletimetable.dto.student.StudentImportDto;
 import com.belak.scheduletimetable.enumeration.*;
-import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.service.student.StudentExcelService;
 import com.belak.scheduletimetable.service.student.StudentService;
 import com.belak.scheduletimetable.service.timetable.grouptimetable.TimetablePreviewService;
@@ -131,4 +131,34 @@ public class StudentApiController {
         return "";
     }
 
+
+    @GetMapping("/{id}/details")
+    public String getStudentDetails(@PathVariable Long id, Model model) {
+
+        StudentDetailsDto student = studentService.getStudentDetailsDto(id);
+
+        model.addAttribute("student", student);
+        model.addAttribute("nationalites", Nationalite.values());
+        model.addAttribute("departements", Departement.values());
+        model.addAttribute("filieres", Filiere.values());
+
+
+        return "admin/student-details";
+    }
+
+    @PostMapping("/{id}/update")
+    public String updateStudent(
+            @PathVariable Long id,
+            @ModelAttribute("student") StudentDetailsDto studentDto,
+            RedirectAttributes redirectAttributes) {
+
+        studentService.updateStudent(id, studentDto);
+
+        redirectAttributes.addFlashAttribute(
+                "successMessage",
+                "Les informations de l'étudiant ont été mises à jour avec succès."
+        );
+
+        return "redirect:/students/" + id + "/details";
+    }
 }

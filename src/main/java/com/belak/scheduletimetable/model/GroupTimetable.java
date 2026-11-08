@@ -132,4 +132,9 @@ public class GroupTimetable {
         coursTPList.remove(coursTP);
         coursTP.setGroupTimetable(null);
     }
+
+    public String getEntirelyGroupName()
+    {
+        return filiere.getCode()+niveau+group;
+    }
 }

@@ -1,9 +1,8 @@
 package com.belak.scheduletimetable.model;
 
-import com.belak.scheduletimetable.dto.CreateProfessorDto;
-import com.belak.scheduletimetable.dto.ProfessorImportDto;
+import com.belak.scheduletimetable.dto.professor.CreateProfessorDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorImportDto;
 import com.belak.scheduletimetable.enumeration.Grade;
-import com.belak.scheduletimetable.enumeration.Statuts;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

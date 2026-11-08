@@ -1,0 +1,86 @@
+package com.belak.scheduletimetable.controller.login;
+
+import com.belak.scheduletimetable.request.ProfessorRegister;
+import com.belak.scheduletimetable.request.UserRegister;
+import com.belak.scheduletimetable.service.reset.ForgotPasswordService;
+import com.belak.scheduletimetable.service.user.UserRegisterInterfaceService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping
+@RequiredArgsConstructor
+@Slf4j
+public class FirstLoginController {
+    private  final ForgotPasswordService forgotPasswordService ;
+    private  final UserRegisterInterfaceService userRegisterService ;
+    @GetMapping("/firstlogin")
+    public String showLogin( Model model , @RequestParam(required = false) String code)
+    {
+        if(code!=null)
+        {
+            model.addAttribute("code",code);
+        }
+        model.addAttribute("userRegister", new UserRegister());
+
+        return "login/firstlogin" ;
+
+    }
+
+
+    @GetMapping("/firstlogin/professor")
+    public String showFirstLoginProfessor( Model model , @RequestParam(required = false) String code)
+    {
+        if(code!=null)
+        {
+            model.addAttribute("code",code);
+        }
+        model.addAttribute("professorRegister", new ProfessorRegister());
+
+        return "login/firstlogin-professor" ;
+
+    }
+
+
+    @PostMapping("/forgot-password")
+    public String processForgotPassword(@RequestParam String email, Model model) {
+        forgotPasswordService.sendResetLink(email);
+        model.addAttribute("message", "Si cet email existe, un lien a été envoyé.");
+        return "login/firstlogin";
+    }
+
+    @PostMapping("/firstlogin")
+    public  String register( Model model , @ModelAttribute UserRegister userRegister)
+    {
+
+        userRegisterService.register(userRegister);
+        //userRegisterService.registerUserByUserIdAndEmail(userRegister);
+        //model.addAttribute("message", "Un message a été envoyé à votre email pour activer votre compte");
+
+            return "login/otp";
+
+    }
+
+    @PostMapping("/firstlogin/professor")
+    public  String registerProfessor( Model model , @ModelAttribute ProfessorRegister professorRegister)
+    {
+
+        userRegisterService.registerProfessor(professorRegister);
+        //userRegisterService.registerUserByUserIdAndEmail(userRegister);
+        //model.addAttribute("message", "Un message a été envoyé à votre email pour activer votre compte");
+
+        return "login/otp";
+
+    }
+
+
+
+
+
+
+
+
+}

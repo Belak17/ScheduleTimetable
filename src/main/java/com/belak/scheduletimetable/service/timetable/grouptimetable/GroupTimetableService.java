@@ -1,6 +1,6 @@
 package com.belak.scheduletimetable.service.timetable.grouptimetable;
 
-import com.belak.scheduletimetable.dto.GroupTimetableDto;
+import com.belak.scheduletimetable.dto.student.GroupTimetableDto;
 import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.enumeration.Filiere;
 
@@ -12,8 +12,8 @@ import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.GroupTimetable;
 import com.belak.scheduletimetable.model.Student;
 import com.belak.scheduletimetable.record.GroupInfo;
-import com.belak.scheduletimetable.repository.GroupTimetableRepository;
-import com.belak.scheduletimetable.repository.StudentRepository;
+import com.belak.scheduletimetable.repository.student.GroupTimetableRepository;
+import com.belak.scheduletimetable.repository.student.StudentRepository;
 import com.belak.scheduletimetable.service.UtilsService;
 import com.belak.scheduletimetable.service.courstp.CoursTPService;
 import com.belak.scheduletimetable.service.timetable.TimetableService;
@@ -113,27 +113,38 @@ public class GroupTimetableService extends TimetableService {
     }
 
     private GroupInfo extractGroupInfo(Worksheet sheet) {
+
         String department = sheet.getCellRange(1, 3).getValue();
+
         if (department == null || !department.contains(" ")) {
             throw new InvalidExcelFormatException("Department invalide");
         }
+
         department = department.trim();
+
         String[] parts = department.split(" ", 2);
+
         if (parts.length < 2) {
             throw new InvalidExcelFormatException("Format department incorrect");
         }
+
         String depname = parts[1].trim();
-        depname =removeAccents(depname);
+        depname = removeAccents(depname);
         depname = capitalizeFirstLetter(depname);
 
         String fullfield = sheet.getCellRange(6, 7).getValue();
-        if (fullfield == null) {
+
+        if (fullfield == null || fullfield.isBlank()) {
             throw new InvalidExcelFormatException("Fullfield manquant");
         }
+
         fullfield = fullfield.trim();
+
+//        fullfield = fullfield.replaceAll("\\s+", "");
 
         Pattern pattern = Pattern.compile("[123]");
         Matcher matcher = pattern.matcher(fullfield);
+
         if (!matcher.find()) {
             throw new InvalidExcelFormatException("Année introuvable");
         }
@@ -141,38 +152,63 @@ public class GroupTimetableService extends TimetableService {
         int year = Integer.parseInt(matcher.group());
         int index = matcher.start();
 
-        String field = Filiere.fromCode(fullfield.substring(0, index).trim()).getCode();
-        String group = fullfield.substring(index + 1).trim();
+        Filiere filiere = Filiere.fromCode(
+                fullfield.substring(0, index).trim()
+        );
 
-        if (group.endsWith(" .")) group = group.substring(0, group.length() - 2).trim();
-        if (group.startsWith("-")) group = group.substring(1).trim();
-
-        if (group == null)
-        {
-            return new GroupInfo(depname, field,null, year);
+        if (filiere == null) {
+            throw new InvalidExcelFormatException("Filière inconnue");
         }
-        else
-        {
-            if (group.length()==1)
-            {
-                if (fullfield.startsWith("M"))
-                {
-                    return new GroupInfo(depname, field,null, year);
-                }
-                else
-                {
-                    group = Groupe.fromCode(group).getLibelle();
-                }
 
+        String field = filiere.getCode();
+
+        String group = fullfield.substring(index + 1).trim();
+        System.out.println(group);
+
+        if (group.endsWith(" .")) {
+            group = group.substring(0, group.length() - 2).trim();
+        }
+
+        if (group.startsWith("-")) {
+            group = group.substring(1).trim();
+        }
+
+        // Aucun groupe
+        if (group.isEmpty()) {
+            return new GroupInfo(depname, field, null, year);
+        }
+
+        // Groupe composé d'un seul caractère
+        if (group.length() == 1) {
+
+            if (fullfield.startsWith("M")) {
+                return new GroupInfo(depname, field, null, year);
             }
-            else if (group.length()==2)
+
+            group = getGroupLabel(group);
+
+        }
+        // Groupe composé de deux caractères
+        else if (group.length() == 2) {
+
+            group = group.charAt(0) + " "
+                    + getGroupLabel(
+                    String.valueOf(group.charAt(1))
+            );
+
+        }
+        // Groupe composé de plusieurs caractères
+        else {
+
+            if (group.contains("T"))
             {
-                group = group.charAt(0)+" "+Groupe.fromCode(String.valueOf(group.charAt(1))).getLibelle();
+                return  new GroupInfo(depname, field, group, year);
             }
             else {
-                group = Groupe.fromCode(
+
+                group = getGroupLabel(
                         group.substring(group.length() - 1)
-                ).getLibelle();
+                );
             }
         }
 
@@ -300,6 +336,18 @@ public class GroupTimetableService extends TimetableService {
         log.info("Envoi Au FrontEnd des groupes par niveau , filiere et departement ");
         return groupTimetableRepository.findDistinctGroupByDepartementAndFiliereAndNiveau(Departement.valueOf(departement),Filiere.fromCode(field),niveau) ;
 
+    }
+    private String getGroupLabel(String code) {
+
+        Groupe groupe = Groupe.fromCode(code);
+
+        if (groupe == null) {
+            throw new InvalidExcelFormatException(
+                    "Code de groupe inconnu : '" + code + "'"
+            );
+        }
+
+        return groupe.getLibelle();
     }
 
 }

@@ -1,6 +1,6 @@
 package com.belak.scheduletimetable.service.admin;
 
-import com.belak.scheduletimetable.dto.AdminProfileDto;
+import com.belak.scheduletimetable.dto.admin.AdminProfileDto;
 
 public interface AdminInterfaceService {
 

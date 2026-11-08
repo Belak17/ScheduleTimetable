@@ -1,0 +1,23 @@
+package com.belak.scheduletimetable.dto.student;
+
+import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+public class StudentAttendanceDto {
+
+    private  String id ;
+    private String studentName;
+
+    private List<String> statuses = new ArrayList<>();
+
+    public void addStatuses(String status) {
+        if (statuses==null)
+        {
+            statuses = new ArrayList<>();
+        }
+        this.statuses.add(status);
+    }
+}

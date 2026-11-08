@@ -3,7 +3,7 @@ package com.belak.scheduletimetable.service.timetable.grouptimetable;
 import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.Student;
-import com.belak.scheduletimetable.repository.StudentRepository;
+import com.belak.scheduletimetable.repository.student.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -15,8 +15,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 
 @Service
 @RequiredArgsConstructor

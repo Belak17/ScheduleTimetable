@@ -1,11 +1,11 @@
 package com.belak.scheduletimetable.service.professor;
 
-import com.belak.scheduletimetable.dto.CreateProfessorDto;
+import com.belak.scheduletimetable.dto.professor.CreateProfessorDto;
 import com.belak.scheduletimetable.enumeration.Grade;
 import com.belak.scheduletimetable.model.CoursTP;
 import com.belak.scheduletimetable.model.Professor;
-import com.belak.scheduletimetable.repository.CoursTPRepository;
-import com.belak.scheduletimetable.repository.ProfessorRepository;
+import com.belak.scheduletimetable.repository.coursTP.CoursTPRepository;
+import com.belak.scheduletimetable.repository.professor.ProfessorRepository;
 import com.belak.scheduletimetable.service.UtilsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import org.apache.commons.text.WordUtils;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j

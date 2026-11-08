@@ -1,10 +1,9 @@
 package com.belak.scheduletimetable.service.professor;
 
-import com.belak.scheduletimetable.dto.CreateProfessorDto;
-import com.belak.scheduletimetable.dto.ProfessorDto;
-import com.belak.scheduletimetable.dto.ProfessorImportDto;
-import com.belak.scheduletimetable.dto.ProfessorProfileDto;
-import com.belak.scheduletimetable.enumeration.Departement;
+import com.belak.scheduletimetable.dto.professor.ProfessorDetailsDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorImportDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorProfileDto;
 import com.belak.scheduletimetable.request.UpdateRequest;
 import org.springframework.data.domain.Page;
 
@@ -30,4 +29,8 @@ public interface ProfessorInterfaceService {
                                String newPassword,
                                String confPassword,
                                String userId) ;
+
+    void updateProfessor(Long id, ProfessorDetailsDto professorDto);
+
+    public ProfessorDetailsDto getProfessorDetailsDto(Long id );
 }

@@ -2,8 +2,8 @@ package com.belak.scheduletimetable.service.courstp;
 
 import com.belak.scheduletimetable.model.CoursTP;
 import com.belak.scheduletimetable.model.Seance;
-import com.belak.scheduletimetable.repository.CoursTPRepository;
-import com.belak.scheduletimetable.repository.SeanceRepository;
+import com.belak.scheduletimetable.repository.coursTP.CoursTPRepository;
+import com.belak.scheduletimetable.repository.coursTP.SeanceRepository;
 import com.belak.scheduletimetable.service.presence.AbsenceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.TextStyle;

@@ -1,17 +1,20 @@
 package com.belak.scheduletimetable.service.courstp;
 
-import com.belak.scheduletimetable.dto.AttendancePageDto;
-import com.belak.scheduletimetable.dto.CoursTPDto;
-import com.belak.scheduletimetable.dto.AttendanceDto;
-import com.belak.scheduletimetable.dto.StudentAttendanceDto;
+import com.belak.scheduletimetable.dto.presence.AttendancePageDto;
+import com.belak.scheduletimetable.dto.coursTP.CoursTPDto;
+import com.belak.scheduletimetable.dto.presence.AttendanceDto;
+import com.belak.scheduletimetable.dto.student.StudentAttendanceDto;
 import com.belak.scheduletimetable.enumeration.Departement;
 import com.belak.scheduletimetable.enumeration.Filiere;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.*;
-import com.belak.scheduletimetable.repository.*;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
+import com.belak.scheduletimetable.repository.coursTP.CoursTPRepository;
+import com.belak.scheduletimetable.repository.coursTP.SeanceRepository;
+import com.belak.scheduletimetable.repository.presence.PresenceRepository;
+import com.belak.scheduletimetable.repository.presence.SalleRepository;
+import com.belak.scheduletimetable.repository.professor.ProfessorRepository;
+import com.belak.scheduletimetable.repository.student.GroupTimetableRepository;
+import com.belak.scheduletimetable.repository.student.StudentRepository;
 import com.spire.xls.Worksheet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,14 +28,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.function.Function;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 

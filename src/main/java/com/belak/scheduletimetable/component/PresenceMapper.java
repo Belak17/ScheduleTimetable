@@ -1,6 +1,6 @@
 package com.belak.scheduletimetable.component;
 
-import com.belak.scheduletimetable.dto.PresenceDto;
+import com.belak.scheduletimetable.dto.coursTP.PresenceDto;
 import com.belak.scheduletimetable.model.Presence;
 import org.springframework.stereotype.Component;
 

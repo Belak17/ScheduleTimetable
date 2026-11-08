@@ -1,7 +1,7 @@
 package com.belak.scheduletimetable.component;
 
-import com.belak.scheduletimetable.dto.ProfessorDto;
-import com.belak.scheduletimetable.dto.ProfessorTimetableDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorTimetableDto;
 import com.belak.scheduletimetable.model.ProfessorTimetable;
 import com.belak.scheduletimetable.service.professor.ProfessorService;
 import lombok.RequiredArgsConstructor;

@@ -1,14 +1,11 @@
 package com.belak.scheduletimetable.service.student;
 
-import com.belak.scheduletimetable.dto.CreateStudentDto;
+import com.belak.scheduletimetable.dto.student.CreateStudentDto;
 import com.belak.scheduletimetable.enumeration.Filiere;
-import com.belak.scheduletimetable.enumeration.Nationalite;
-import com.belak.scheduletimetable.enumeration.TypeDiplome;
-import com.belak.scheduletimetable.exception.EmptyFileException;
 import com.belak.scheduletimetable.model.GroupTimetable;
 import com.belak.scheduletimetable.model.Student;
-import com.belak.scheduletimetable.repository.GroupTimetableRepository;
-import com.belak.scheduletimetable.repository.StudentRepository;
+import com.belak.scheduletimetable.repository.student.GroupTimetableRepository;
+import com.belak.scheduletimetable.repository.student.StudentRepository;
 import com.belak.scheduletimetable.service.OrthographyService;
 import com.belak.scheduletimetable.service.UtilsService;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.Normalizer;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.text.Normalizer;
 import java.util.Optional;
 
 @Service

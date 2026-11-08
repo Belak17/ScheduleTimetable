@@ -1,7 +1,7 @@
 package com.belak.scheduletimetable.service.student;
 
-import com.belak.scheduletimetable.dto.AbsenceOverviewDto;
-import com.belak.scheduletimetable.dto.OverviewCoursTPDto;
+import com.belak.scheduletimetable.dto.presence.AbsenceOverviewDto;
+import com.belak.scheduletimetable.dto.coursTP.OverviewCoursTPDto;
 import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.model.CoursTP;
 import com.belak.scheduletimetable.model.Seance;

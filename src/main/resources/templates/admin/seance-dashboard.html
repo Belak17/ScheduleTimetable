@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Suivi des séances</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/admin/seance-dashboard.css}"/>
+    <link rel="stylesheet" th:href="@{/css/pages/dashboard.css}">
+</head>
+
+<body>
+
+<input id="toggle-sidebar" type="checkbox"/>
+
+<!-- HEADER -->
+<header>
+    <div class="head-box">
+
+        <label for="toggle-sidebar">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Menu"/>
+            </div>
+        </label>
+
+        <h2 class="text-title">Suivi des séances</h2>
+
+    </div>
+</header>
+
+
+<!-- CONTENU PRINCIPAL -->
+<main class="center-container">
+
+    <!-- TITRE -->
+    <div class="page-heading">
+
+        <div>
+            <h1>Gestion des séances</h1>
+
+            <p>
+                Consultez les séances générées et suivez les séances
+                prévues pour aujourd'hui et demain.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PARTIE 1 : HISTORIQUE DES SÉANCES GÉNÉRÉES
+         ===================================================== -->
+
+    <section class="table-content">
+
+        <div class="table-heading">
+
+            <div>
+                <h3>Séances générées</h3>
+
+                <p>
+                    Historique des séances créées automatiquement
+                    durant les derniers jours.
+                </p>
+            </div>
+
+            <span class="results-count"
+                  th:text="${generatedSeances != null
+                  ? generatedSeances.size() + ' séance(s)'
+                  : '0 séance'}">
+                0 séance
+            </span>
+
+        </div>
+
+
+        <!-- FILTRE PAR DATE -->
+
+        <div class="date-filters">
+
+            <a th:href="@{/admin/dashboard/seances}"
+               th:classappend="${selectedDays == 3} ? ' active' : ''">
+                3 jours
+            </a>
+
+            <a th:href="@{/admin/dashboard/seances(days=7)}"
+               th:classappend="${selectedDays == 7} ? ' active' : ''">
+                7 jours
+            </a>
+
+            <a th:href="@{/admin/dashboard/seances(days=15)}"
+               th:classappend="${selectedDays == 15} ? ' active' : ''">
+                15 jours
+            </a>
+
+        </div>
+
+
+        <!-- AUCUNE SÉANCE -->
+
+        <div class="empty-message"
+             th:if="${generatedSeances == null or generatedSeances.isEmpty()}">
+
+            <h3>Aucune séance générée</h3>
+
+            <p>
+                Aucune séance n'a été enregistrée durant cette période.
+            </p>
+
+        </div>
+
+
+        <!-- TABLEAU -->
+
+        <div class="table-scroll"
+             th:if="${generatedSeances != null and !generatedSeances.isEmpty()}">
+
+            <table class="styled-table">
+
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Cours</th>
+                    <th>Salle</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Traitement des absences</th>
+                </tr>
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="seance : ${generatedSeances}">
+
+                    <td th:text="${#temporals.format(seance.date, 'dd/MM/yyyy')}">
+                        08/11/2026
+                    </td>
+
+                    <td th:text="${seance.coursTP.intitule}">
+                        Java
+                    </td>
+
+                    <td th:text="${seance.coursTP.salle}">
+                        B12
+                    </td>
+
+                    <td th:text="${seance.coursTP.heureDebut}">
+                        08:00
+                    </td>
+
+                    <td th:text="${seance.coursTP.heureFin}">
+                        10:00
+                    </td>
+
+                    <td>
+
+                        <span class="status-badge success"
+                              th:if="${seance.absencesProcessed}">
+                            Traitées
+                        </span>
+
+                        <span class="status-badge pending"
+                              th:unless="${seance.absencesProcessed}">
+                            En attente
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PARTIE 2 : SÉANCES PRÉVUES AUJOURD'HUI
+         ===================================================== -->
+
+    <section class="table-content">
+
+        <div class="table-heading">
+
+            <div>
+                <h3>Séances prévues aujourd'hui</h3>
+
+                <p>
+                    Liste des cours qui doivent avoir lieu aujourd'hui,
+                    selon leur fréquence et leur rotation.
+                </p>
+            </div>
+
+            <span class="results-count"
+                  th:text="${expectedSeancesToday != null
+                  ? expectedSeancesToday.size() + ' séance(s)'
+                  : '0 séance'}">
+                0 séance
+            </span>
+
+        </div>
+
+
+        <!-- AUCUNE SÉANCE PRÉVUE -->
+
+        <div class="empty-message"
+             th:if="${expectedSeancesToday == null or expectedSeancesToday.isEmpty()}">
+
+            <h3>Aucune séance prévue</h3>
+
+            <p>
+                Aucun cours n'est programmé pour aujourd'hui.
+            </p>
+
+        </div>
+
+
+        <!-- TABLEAU -->
+
+        <div class="table-scroll"
+             th:if="${expectedSeancesToday != null and !expectedSeancesToday.isEmpty()}">
+
+            <table class="styled-table">
+
+                <thead>
+                <tr>
+                    <th>Cours</th>
+                    <th>Groupe</th>
+                    <th>Salle</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Génération</th>
+                </tr>
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="seance : ${expectedSeancesToday}">
+
+                    <td th:text="${seance.intitule}">
+                        Java
+                    </td>
+
+                    <td th:text="${seance.groupe}">
+                    </td>
+
+                    <td th:text="${seance.salle}">
+                        B12
+                    </td>
+
+                    <td th:text="${seance.heureDebut}">
+                        08:00
+                    </td>
+
+                    <td th:text="${seance.heureFin}">
+                        10:00
+                    </td>
+
+                    <td>
+
+                        <span class="status-badge success"
+                              th:if="${seance.generated}">
+                            Générée
+                        </span>
+
+                        <span class="status-badge pending"
+                              th:unless="${seance.generated}">
+                            À générer
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PARTIE 3 : SÉANCES PRÉVUES DEMAIN
+         ===================================================== -->
+
+    <section class="table-content">
+
+        <div class="table-heading">
+
+            <div>
+                <h3>Séances prévues demain</h3>
+
+                <p>
+                    Liste des cours qui doivent avoir lieu demain,
+                    selon leur fréquence et leur rotation.
+                </p>
+            </div>
+
+            <span class="results-count"
+                  th:text="${expectedSeancesTomorrow != null
+                  ? expectedSeancesTomorrow.size() + ' séance(s)'
+                  : '0 séance'}">
+                0 séance
+            </span>
+
+        </div>
+
+
+        <!-- AUCUNE SÉANCE PRÉVUE -->
+
+        <div class="empty-message"
+             th:if="${expectedSeancesTomorrow == null or expectedSeancesTomorrow.isEmpty()}">
+
+            <h3>Aucune séance prévue</h3>
+
+            <p>
+                Aucun cours n'est programmé pour demain.
+            </p>
+
+        </div>
+
+
+        <!-- TABLEAU -->
+
+        <div class="table-scroll"
+             th:if="${expectedSeancesTomorrow != null and !expectedSeancesTomorrow.isEmpty()}">
+
+            <table class="styled-table">
+
+                <thead>
+                <tr>
+                    <th>Cours</th>
+                    <th>Groupe</th>
+                    <th>Salle</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Génération</th>
+                </tr>
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="seance : ${expectedSeancesTomorrow}">
+
+                    <td th:text="${seance.intitule}">
+                        Java
+                    </td>
+                    <td th:text="${seance.groupe}">
+                    </td>
+
+                    <td th:text="${seance.salle}">
+                        B12
+                    </td>
+
+                    <td th:text="${seance.heureDebut}">
+                        08:00
+                    </td>
+
+                    <td th:text="${seance.heureFin}">
+                        10:00
+                    </td>
+
+                    <td>
+
+                        <span class="status-badge success"
+                              th:if="${seance.generated}">
+                            Générée
+                        </span>
+
+                        <span class="status-badge pending"
+                              th:unless="${seance.generated}">
+                            À générer
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- SIDEBAR -->
+
+<section th:replace="admin/admin-dashboard :: sidebar"></section>
+
+</body>
+</html>

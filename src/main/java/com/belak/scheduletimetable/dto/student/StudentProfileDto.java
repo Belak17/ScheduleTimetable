@@ -1,0 +1,28 @@
+package com.belak.scheduletimetable.dto.student;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class StudentProfileDto {
+    private  String userId ;
+
+
+    private String nom; //nom
+    private String prenom;//prenom
+
+
+    private  String password ;
+    private String email ;
+    private String telephone;
+    private String sexe;
+
+    private String nationalite;
+
+    private String department ;
+
+    private String field;
+    private String niveau;
+    private String group ;
+}

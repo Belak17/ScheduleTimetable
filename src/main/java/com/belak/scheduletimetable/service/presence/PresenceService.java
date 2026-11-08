@@ -1,12 +1,16 @@
 package com.belak.scheduletimetable.service.presence;
 
 import com.belak.scheduletimetable.component.PresenceMapper;
-import com.belak.scheduletimetable.dto.PresenceDto;
-import com.belak.scheduletimetable.dto.PresenceValidationDto;
+import com.belak.scheduletimetable.dto.coursTP.PresenceDto;
+import com.belak.scheduletimetable.dto.coursTP.PresenceValidationDto;
 import com.belak.scheduletimetable.enumeration.Semester;
 import com.belak.scheduletimetable.exception.*;
 import com.belak.scheduletimetable.model.*;
-import com.belak.scheduletimetable.repository.*;
+import com.belak.scheduletimetable.repository.coursTP.CoursTPRepository;
+import com.belak.scheduletimetable.repository.coursTP.SeanceRepository;
+import com.belak.scheduletimetable.repository.presence.DeviceAttendanceRepository;
+import com.belak.scheduletimetable.repository.presence.PresenceRepository;
+import com.belak.scheduletimetable.repository.student.StudentRepository;
 import com.belak.scheduletimetable.service.student.StudentService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

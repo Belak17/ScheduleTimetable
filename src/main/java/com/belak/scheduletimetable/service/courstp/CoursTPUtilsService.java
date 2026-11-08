@@ -1,17 +1,8 @@
 package com.belak.scheduletimetable.service.courstp;
 
-import com.belak.scheduletimetable.model.CoursTP;
-import com.belak.scheduletimetable.model.Salle;
-import com.belak.scheduletimetable.repository.SalleRepository;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;

@@ -1,0 +1,901 @@
+/* =========================================================
+   1. RESET & VARIABLES
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
+
+    --text: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+
+    --background: #f4f6f9;
+    --surface: #ffffff;
+    --surface-hover: #f8fafc;
+
+    --border: #e5e7eb;
+    --border-light: #f1f3f5;
+
+    --success: #059669;
+    --success-bg: #ecfdf5;
+
+    --danger: #dc2626;
+    --danger-bg: #fef2f2;
+
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+    --shadow-lg: 0 8px 24px rgba(15, 23, 42, 0.09);
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+
+    --header-height: 70px;
+    --sidebar-width: 250px;
+
+    --transition: 0.2s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    overflow-x: hidden;
+
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: var(--text);
+    background: var(--background);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   2. HEADER
+   ========================================================= */
+
+.head-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    width: 100%;
+    height: var(--header-height);
+
+    padding: 0 24px;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border);
+
+    box-shadow: var(--shadow-sm);
+}
+
+#toggle-sidebar {
+    display: none;
+}
+
+.head-box #menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+
+    background: transparent;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.head-box #menu:hover {
+    background: var(--primary-light);
+    border-color: #dbeafe;
+}
+
+.head-box #menu img {
+    width: 21px;
+    height: 21px;
+
+    object-fit: contain;
+}
+
+#toggle-sidebar:checked ~ header #menu img {
+    transform: rotate(90deg);
+}
+
+.text-title {
+    min-width: 0;
+
+    color: var(--text);
+
+    font-size: 19px;
+    font-weight: 650;
+
+    line-height: 1.3;
+    letter-spacing: -0.25px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   3. MAIN CONTAINER
+   ========================================================= */
+
+.center-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    width: min(1200px, calc(100% - 40px));
+
+    margin: 92px auto 30px;
+    padding: 28px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    box-shadow: var(--shadow-md);
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   4. PAGE HEADING
+   ========================================================= */
+
+.page-heading {
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 14px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+    font-weight: 500;
+
+    transition: var(--transition);
+}
+
+.back-link:hover {
+    color: var(--primary);
+}
+
+.page-heading h1 {
+    color: var(--text);
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.page-heading p {
+    margin-top: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   5. PROFILE CARD
+   ========================================================= */
+
+.profile-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 22px 24px;
+
+    background: #fafbfc;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.profile-main {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    min-width: 0;
+}
+
+.profile-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 66px;
+    height: 66px;
+
+    color: var(--primary);
+    background: var(--primary-light);
+
+    border: 1px solid #dbeafe;
+    border-radius: 12px;
+
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.profile-identity {
+    min-width: 0;
+}
+
+.profile-identity h2 {
+    margin-bottom: 5px;
+
+    color: var(--text);
+
+    font-size: 18px;
+    font-weight: 700;
+
+    overflow-wrap: anywhere;
+}
+
+.profile-identity p {
+    margin-bottom: 5px;
+
+    color: var(--primary);
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.profile-email {
+    color: var(--text-secondary);
+    font-size: 12px;
+
+    overflow-wrap: anywhere;
+}
+
+.profile-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 9px;
+
+    flex-shrink: 0;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 6px 11px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status-badge.active {
+    color: var(--success);
+    background: var(--success-bg);
+}
+
+.status-badge.inactive {
+    color: var(--danger);
+    background: var(--danger-bg);
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+.user-reference {
+    color: var(--text-secondary);
+    font-size: 11px;
+}
+
+.user-reference strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   6. DETAILS CARDS
+   ========================================================= */
+
+.details-card {
+    padding: 23px 24px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    box-shadow: var(--shadow-sm);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+
+    border-bottom: 1px solid var(--border-light);
+}
+
+.section-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 9px;
+
+    font-size: 16px;
+}
+
+.section-icon.blue {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.section-icon.purple {
+    color: #7c3aed;
+    background: #f5f3ff;
+}
+
+.section-icon.orange {
+    color: #ea580c;
+    background: #fff7ed;
+}
+
+.section-header h3 {
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.section-header p {
+    margin-top: 3px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   7. FORM GRID
+   ========================================================= */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 21px 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    min-width: 0;
+}
+
+.form-group label {
+    color: #374151;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 12px;
+
+    color: var(--text);
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    outline: none;
+
+    transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 3px rgb(37 99 235 / 9%);
+}
+
+.form-group input::placeholder {
+    color: var(--text-muted);
+}
+
+.form-group input:hover,
+.form-group select:hover {
+    border-color: #cbd5e1;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--primary);
+}
+
+
+/* =========================================================
+   8. ACCOUNT SETTINGS
+   ========================================================= */
+
+.account-setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.account-setting h4 {
+    margin-bottom: 5px;
+
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.account-setting p {
+    color: var(--text-secondary);
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   9. TOGGLE SWITCH
+   ========================================================= */
+
+.switch {
+    position: relative;
+
+    display: inline-block;
+
+    flex-shrink: 0;
+
+    width: 46px;
+    height: 25px;
+}
+
+.switch input {
+    position: absolute;
+
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+
+    background: #cbd5e1;
+
+    border-radius: 30px;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.slider::before {
+    content: "";
+
+    position: absolute;
+
+    width: 19px;
+    height: 19px;
+
+    left: 3px;
+    top: 3px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    transition: var(--transition);
+}
+
+.switch input:checked + .slider {
+    background: var(--primary);
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(21px);
+}
+
+.switch input:focus-visible + .slider {
+    outline: 3px solid rgb(37 99 235 / 25%);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   10. FORM ACTIONS
+   ========================================================= */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 10px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid var(--border-light);
+}
+
+.btn-cancel,
+.btn-save {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 41px;
+
+    padding: 9px 16px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.btn-cancel {
+    color: var(--text-secondary);
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+}
+
+.btn-cancel:hover {
+    color: var(--text);
+    background: var(--surface-hover);
+    border-color: #cbd5e1;
+}
+
+.btn-save {
+    color: white;
+    background: var(--primary);
+
+    border: 1px solid var(--primary);
+}
+
+.btn-save:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-cancel:focus-visible,
+.btn-save:focus-visible {
+    outline: 3px solid rgb(37 99 235 / 25%);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   11. RESPONSIVE — TABLETTES
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .center-container {
+        width: calc(100% - 24px);
+
+        margin: 84px auto 24px;
+
+        padding: 20px;
+        gap: 20px;
+    }
+
+}
+
+
+/* =========================================================
+   12. RESPONSIVE — MOBILES
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    :root {
+        --header-height: 62px;
+        --sidebar-width: min(280px, 85vw);
+    }
+
+    .head-box {
+        gap: 10px;
+        padding: 0 12px;
+    }
+
+    .text-title {
+        font-size: 16px;
+    }
+
+    .center-container {
+        width: calc(100% - 20px);
+
+        margin: 80px auto 20px;
+
+        padding: 15px;
+        gap: 17px;
+    }
+
+    .profile-card {
+        align-items: flex-start;
+        flex-direction: column;
+
+        padding: 18px;
+    }
+
+    .profile-status {
+        align-items: flex-start;
+    }
+
+    .details-card {
+        padding: 19px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 17px;
+    }
+
+}
+
+
+/* =========================================================
+   13. PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .head-box {
+        gap: 9px;
+        padding: 0 10px;
+    }
+
+    .text-title {
+        font-size: 15px;
+    }
+
+    .center-container {
+        width: calc(100% - 16px);
+
+        margin: 76px auto 16px;
+
+        padding: 11px;
+        gap: 13px;
+    }
+
+    .page-heading h1 {
+        font-size: 17px;
+    }
+
+    .page-heading p {
+        font-size: 12px;
+    }
+
+    .profile-main {
+        gap: 12px;
+    }
+
+    .profile-avatar {
+        width: 54px;
+        height: 54px;
+
+        font-size: 18px;
+    }
+
+    .profile-identity h2 {
+        font-size: 15px;
+    }
+
+    .profile-card {
+        padding: 15px;
+    }
+
+    .details-card {
+        padding: 15px;
+    }
+
+    .section-header {
+        gap: 10px;
+        margin-bottom: 18px;
+        padding-bottom: 15px;
+    }
+
+    .section-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .account-setting {
+        align-items: flex-start;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .btn-cancel,
+    .btn-save {
+        width: 100%;
+        min-height: 43px;
+    }
+
+}
+
+
+/* =========================================================
+   14. TRÈS PETITS MOBILES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    :root {
+        --header-height: 58px;
+    }
+
+    .text-title {
+        font-size: 14px;
+    }
+
+    .center-container {
+        width: calc(100% - 12px);
+
+        margin: 72px auto 12px;
+
+        padding: 9px;
+        gap: 11px;
+    }
+
+    .profile-identity h2 {
+        font-size: 14px;
+    }
+
+    .profile-email {
+        font-size: 11px;
+    }
+
+    .details-card {
+        padding: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   15. GRANDS ÉCRANS
+   ========================================================= */
+
+@media (min-width: 1600px) {
+
+    .center-container {
+        width: calc(100% - 80px);
+        max-width: 1400px;
+
+        margin-top: 104px;
+
+        padding: 32px;
+        gap: 28px;
+    }
+
+    .details-card {
+        padding: 27px 30px;
+    }
+
+}
+
+
+/* =========================================================
+   16. ACCESSIBILITÉ
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+
+}

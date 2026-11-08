@@ -1,7 +1,7 @@
 package com.belak.scheduletimetable.model;
 
-import com.belak.scheduletimetable.dto.CreateStudentDto;
-import com.belak.scheduletimetable.dto.StudentImportDto;
+import com.belak.scheduletimetable.dto.student.CreateStudentDto;
+import com.belak.scheduletimetable.dto.student.StudentImportDto;
 import com.belak.scheduletimetable.enumeration.Filiere;
 import com.belak.scheduletimetable.enumeration.TypeDiplome;
 import jakarta.persistence.*;

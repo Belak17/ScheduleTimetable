@@ -1,0 +1,40 @@
+package com.belak.scheduletimetable.controller.login;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+@RequestMapping("/login")
+@RequiredArgsConstructor
+public class LoginController {
+
+    // Connexion étudiant
+    @GetMapping
+    public String loginPage(
+            @RequestParam(required = false) String error,
+            Model model
+    ) {
+        if (error != null) {
+            model.addAttribute("error", error);
+        }
+
+        return "login/login";
+    }
+
+    // Connexion professeur
+    @GetMapping("/professor")
+    public String loginPageProfessor(
+            @RequestParam(required = false) String error,
+            Model model
+    ) {
+        if (error != null) {
+            model.addAttribute("error", error);
+        }
+
+        return "login/login-professor";
+    }
+}

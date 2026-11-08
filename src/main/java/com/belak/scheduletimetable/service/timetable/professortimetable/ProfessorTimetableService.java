@@ -1,15 +1,14 @@
 package com.belak.scheduletimetable.service.timetable.professortimetable;
 
 import com.belak.scheduletimetable.component.ProfessorTimetableMapper;
-import com.belak.scheduletimetable.dto.ProfessorTimetableDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorTimetableDto;
 import com.belak.scheduletimetable.enumeration.Grade;
 import com.belak.scheduletimetable.enumeration.Statuts;
-import com.belak.scheduletimetable.exception.InvalidExcelFormatException;
 import com.belak.scheduletimetable.model.Professor;
 import com.belak.scheduletimetable.model.ProfessorTimetable;
 import com.belak.scheduletimetable.record.ProfessorData;
-import com.belak.scheduletimetable.repository.ProfessorRepository;
-import com.belak.scheduletimetable.repository.ProfessorTimetableRepository;
+import com.belak.scheduletimetable.repository.professor.ProfessorRepository;
+import com.belak.scheduletimetable.repository.professor.ProfessorTimetableRepository;
 import com.belak.scheduletimetable.service.UtilsService;
 import com.belak.scheduletimetable.service.timetable.TimetableService;
 import com.spire.xls.ExcelVersion;
@@ -24,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

@@ -120,4 +120,7 @@ public class CoursTP {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professor_id")
     private Professor professor;
+
+    @Column(nullable = false)
+    private boolean active = true;
 }

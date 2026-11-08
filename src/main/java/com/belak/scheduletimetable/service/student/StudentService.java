@@ -1,31 +1,29 @@
 package com.belak.scheduletimetable.service.student;
 
-import com.belak.scheduletimetable.component.PresenceMapper;
+import com.belak.scheduletimetable.component.StudentDetailsMapper;
 import com.belak.scheduletimetable.component.StudentMapper;
 import com.belak.scheduletimetable.component.StudentProfileMapper;
-import com.belak.scheduletimetable.dto.*;
+import com.belak.scheduletimetable.dto.student.StudentDetailsDto;
+import com.belak.scheduletimetable.dto.student.StudentDto;
+import com.belak.scheduletimetable.dto.student.StudentImportDto;
+import com.belak.scheduletimetable.dto.student.StudentProfileDto;
 import com.belak.scheduletimetable.enumeration.Filiere;
 
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 
-import com.belak.scheduletimetable.model.CoursTP;
-import com.belak.scheduletimetable.model.Seance;
 import com.belak.scheduletimetable.model.Student;
-import com.belak.scheduletimetable.repository.PresenceRepository;
-import com.belak.scheduletimetable.repository.StudentRepository;
+import com.belak.scheduletimetable.repository.presence.PresenceRepository;
+import com.belak.scheduletimetable.repository.student.StudentRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-
-import org.apache.commons.math3.linear.DefaultIterativeLinearSolverEvent;
-import org.apache.poi.ss.usermodel.*;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Array;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -37,7 +35,8 @@ public class StudentService implements  StudentInterfaceService {
     private  final PresenceRepository presenceRepository ;
     private  final StudentProfileMapper profileMapper ;
     private  final PasswordEncoder passwordEncoder ;
-    public Page<StudentDto> getStudentByFieldAndYearAndGroup(String field,String year,String groupe,int page,int size)
+    private  final StudentDetailsMapper studentDetailsMapper ;
+    public Page<StudentDto> getStudentByFieldAndYearAndGroup(String field, String year, String groupe, int page, int size)
     {
         Pageable pageable = PageRequest.of(page, size);
         String group = Filiere.fromCode(field).toString()+year;
@@ -135,6 +134,43 @@ public class StudentService implements  StudentInterfaceService {
 
     public Optional<Student> findStudentByUserId(String userId) {
         return studentRepository.findByUserId(userId);
+    }
+
+    public StudentDetailsDto getStudentDetailsDto(Long id)
+    {
+        return studentDetailsMapper.convertToStudentDetailsDto(studentRepository.findByIdUser(id));
+    }
+
+    @Override
+    @Transactional
+    public void updateStudent(Long id, StudentDetailsDto studentDto) {
+
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Étudiant introuvable avec l'identifiant : " + id
+                ));
+
+        // Vérification du niveau
+        student.setNiveau(studentDto.getNiveau());
+
+        // Informations personnelles
+        student.setNom(studentDto.getNom());
+        student.setPrenom(studentDto.getPrenom());
+        student.setEmail(studentDto.getEmail());
+        student.setTelephone(studentDto.getTelephone());
+        student.setSexe(studentDto.getSexe());
+        student.setNationalite(studentDto.getNationalite());
+
+        // Informations académiques
+        student.setDepartment(studentDto.getDepartment());
+        student.setFiliere(studentDto.getFiliere());
+        student.setNiveau(studentDto.getNiveau());
+        student.setGroup(studentDto.getGroup());
+
+        // Gestion du compte
+        student.setEnabled(studentDto.isEnabled());
+
+        studentRepository.save(student);
     }
 }
 

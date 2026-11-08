@@ -2,7 +2,7 @@ package com.belak.scheduletimetable.service;
 
 
 
-import com.belak.scheduletimetable.repository.UserRepository;
+import com.belak.scheduletimetable.repository.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

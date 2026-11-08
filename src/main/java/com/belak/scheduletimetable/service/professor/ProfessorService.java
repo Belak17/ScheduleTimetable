@@ -1,41 +1,26 @@
 package com.belak.scheduletimetable.service.professor;
 
+import com.belak.scheduletimetable.component.ProfessorDetailsMapper;
 import com.belak.scheduletimetable.component.ProfessorMapper;
 import com.belak.scheduletimetable.component.ProfessorProfileMapper;
-import com.belak.scheduletimetable.dto.*;
-import com.belak.scheduletimetable.enumeration.Departement;
-import com.belak.scheduletimetable.enumeration.Nationalite;
-import com.belak.scheduletimetable.exception.EmptyFileException;
+import com.belak.scheduletimetable.dto.professor.ProfessorDetailsDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorImportDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorProfileDto;
 import com.belak.scheduletimetable.exception.ResourceNotFoundException;
 import com.belak.scheduletimetable.model.Professor;
-import com.belak.scheduletimetable.model.User;
-import com.belak.scheduletimetable.repository.ProfessorRepository;
+import com.belak.scheduletimetable.repository.professor.ProfessorRepository;
 import com.belak.scheduletimetable.request.UpdateRequest;
 import com.belak.scheduletimetable.service.UtilsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.rendering.PDFRenderer;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 @Slf4j
@@ -47,6 +32,7 @@ public class ProfessorService implements  ProfessorInterfaceService  {
     private  final UtilsService utilsService ;
     private  final ProfessorMapper professorMapper ;
     private  final ProfessorProfileMapper profileMapper ;
+    private  final ProfessorDetailsMapper detailsMapper  ;
 
     public Page<ProfessorDto> getAllProfessor(int page , int size)
     {
@@ -128,9 +114,44 @@ public class ProfessorService implements  ProfessorInterfaceService  {
         professorRepository.save(professor);
     }
 
+    @Override
+    @Transactional
+    public void updateProfessor(Long id, ProfessorDetailsDto professorDto) {
+
+        Professor professor = professorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(
+                        "Professeur introuvable avec l'identifiant : " + id
+                ));
+
+        // Informations personnelles
+        professor.setNom(professorDto.getNom());
+        professor.setPrenom(professorDto.getPrenom());
+        professor.setEmail(professorDto.getEmail());
+        professor.setTelephone(professorDto.getTelephone());
+        professor.setSexe(professorDto.getSexe());
+        professor.setDateNaissance(professorDto.getDateNaissance());
+        professor.setNationalite(professorDto.getNationalite());
+
+        // Informations professionnelles
+        professor.setGrade(professorDto.getGrade());
+        professor.setDepartment(professorDto.getDepartement());
+
+        // État du compte
+        professor.setEnabled(professorDto.isEnabled());
+
+        professorRepository.save(professor);
+    }
+
     public List<String> getAllNameDepartement()
     {
         return  professorRepository.findDistinctNomDepartements();
+    }
+
+    public ProfessorDetailsDto getProfessorDetailsDto(Long id )
+    {
+        return detailsMapper.convertToProfessorDetailsDto(
+                professorRepository.findByIdUser(id)
+        );
     }
 
 }

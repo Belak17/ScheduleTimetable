@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Informations de l'étudiant | Administration</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin/student-details.css}">
+    <link rel="stylesheet" th:href="@{/css/pages/dashboard.css}">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+</head>
+
+<body>
+
+<input type="checkbox" id="toggle-sidebar">
+
+<header>
+    <div class="head-box">
+
+        <label for="toggle-sidebar">
+            <div id="menu">
+                <img th:src="@{/images/menu-burger.png}" alt="Menu">
+            </div>
+        </label>
+
+        <h2 class="text-title">Informations de l'étudiant</h2>
+
+    </div>
+</header>
+
+
+<main class="center-container">
+
+    <!-- En-tête -->
+    <div class="page-heading">
+
+        <a th:href="@{/admin/students}" class="back-link">
+            <i class="fi fi-rr-arrow-left"></i>
+            Retour aux étudiants
+        </a>
+
+        <h1>Profil de l'étudiant</h1>
+
+        <p>
+            Consultez et modifiez les informations personnelles et académiques
+            de cet étudiant.
+        </p>
+
+    </div>
+
+
+    <!-- Profil -->
+    <section class="profile-card">
+
+        <div class="profile-main">
+
+            <div class="profile-avatar">
+                <span th:text="${(student.prenom != null and !#strings.isEmpty(student.prenom)
+                    ? #strings.substring(student.prenom,0,1) : '')
+                    + (student.nom != null and !#strings.isEmpty(student.nom)
+                    ? #strings.substring(student.nom,0,1) : '')}">
+                    AB
+                </span>
+            </div>
+
+            <div class="profile-identity">
+
+                <h2 th:text="${student.prenom + ' ' + student.nom}">
+                    Nom de l'étudiant
+                </h2>
+
+                <p th:text="${student.filiere != null ? student.filiere : 'Filière non renseignée'}">
+                    Filière
+                </p>
+
+                <span class="profile-email"
+                      th:text="${student.email != null ? student.email : 'Email non renseigné'}">
+                    email@example.com
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-status">
+
+            <span class="status-badge"
+                  th:classappend="${student.enabled} ? 'active' : 'inactive'">
+
+                <span class="status-dot"></span>
+
+                <span th:text="${student.enabled ? 'Compte actif' : 'Compte désactivé'}">
+                    Compte actif
+                </span>
+
+            </span>
+
+            <div class="user-reference">
+                <span>Identifiant</span>
+                <strong th:text="${student.userId}">ETU001</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Formulaire -->
+    <form th:action="@{'/students/' + ${student.id} + '/update'}"
+          th:object="${student}"
+          method="post">
+
+
+        <!-- Informations personnelles -->
+        <section class="details-card">
+
+            <div class="section-header">
+
+                <div class="section-icon">
+                    <i class="fi fi-rr-user"></i>
+                </div>
+
+                <div>
+                    <h3>Informations personnelles</h3>
+                    <p>Informations générales de l'étudiant.</p>
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Nom</label>
+                    <input type="text" th:field="*{nom}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Prénom</label>
+                    <input type="text" th:field="*{prenom}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Adresse email</label>
+                    <input type="email" th:field="*{email}">
+                </div>
+
+                <div class="form-group">
+                    <label>Téléphone</label>
+                    <input type="text" th:field="*{telephone}">
+                </div>
+
+                <div class="form-group">
+                    <label>Sexe</label>
+
+                    <select th:field="*{sexe}">
+                        <option value="">Sélectionner</option>
+                        <option value="M">Masculin</option>
+                        <option value="F">Féminin</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Nationalité</label>
+
+                    <select th:field="*{nationalite}">
+                        <option value="">Sélectionner</option>
+
+                        <option th:each="nationalite : ${nationalites}"
+                                th:value="${nationalite}"
+                                th:text="${nationalite}">
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Informations académiques -->
+        <section class="details-card">
+
+            <div class="section-header">
+
+                <div class="section-icon">
+                    <i class="fi fi-rr-graduation-cap"></i>
+                </div>
+
+                <div>
+                    <h3>Informations académiques</h3>
+                    <p>Informations relatives au parcours universitaire.</p>
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Département</label>
+
+                    <select th:field="*{department}">
+                        <option value="">Sélectionner</option>
+
+                        <option th:each="departement : ${departements}"
+                                th:value="${departement}"
+                                th:text="${departement}">
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Filière</label>
+
+                    <select th:field="*{filiere}">
+                        <option value="">Sélectionner</option>
+
+                        <option th:each="filiere : ${filieres}"
+                                th:value="${filiere}"
+                                th:text="${filiere}">
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Niveau</label>
+                    <input type="text"
+                           th:field="*{niveau}"
+                           placeholder="Ex : L1, L2, L3, Master 1...">
+                </div>
+
+
+                <div class="form-group">
+                    <label>Groupe</label>
+
+                    <input type="text"
+                           th:field="*{group}"
+                           placeholder="Ex : A TD1 TP1">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Gestion du compte -->
+        <section class="details-card">
+
+            <div class="section-header">
+
+                <div class="section-icon">
+                    <i class="fi fi-rr-shield-check"></i>
+                </div>
+
+                <div>
+                    <h3>Gestion du compte</h3>
+                    <p>Gestion de l'accès de l'étudiant à la plateforme.</p>
+                </div>
+
+            </div>
+
+
+            <div class="account-setting">
+
+                <div>
+                    <h4>État du compte</h4>
+                    <p>Autoriser ou désactiver l'accès de cet étudiant.</p>
+                </div>
+
+                <label class="switch">
+                    <input type="checkbox" th:field="*{enabled}">
+                    <span class="slider"></span>
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- Actions -->
+        <div class="form-actions">
+
+            <a th:href="@{/admin/students}" class="btn-cancel">
+                Annuler
+            </a>
+
+            <button type="submit" class="btn-save">
+                <i class="fi fi-rr-check"></i>
+                Enregistrer les modifications
+            </button>
+
+        </div>
+
+    </form>
+
+</main>
+
+
+<section th:replace="~{admin/admin-dashboard :: sidebar}"></section>
+
+</body>
+</html>

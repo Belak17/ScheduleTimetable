@@ -5,7 +5,7 @@ import com.belak.scheduletimetable.exception.AccountNotFound;
 import com.belak.scheduletimetable.exception.InformationNotFoundException;
 import com.belak.scheduletimetable.model.ConfirmationToken;
 import com.belak.scheduletimetable.model.User;
-import com.belak.scheduletimetable.repository.UserRepository;
+import com.belak.scheduletimetable.repository.user.UserRepository;
 import com.belak.scheduletimetable.request.ProfessorRegister;
 import com.belak.scheduletimetable.request.UserRegister;
 import com.belak.scheduletimetable.service.ConfirmationTokenService;

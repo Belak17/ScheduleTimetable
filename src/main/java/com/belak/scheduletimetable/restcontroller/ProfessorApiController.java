@@ -1,22 +1,19 @@
 package com.belak.scheduletimetable.restcontroller;
 
-import com.belak.scheduletimetable.dto.ProfessorDto;
-import com.belak.scheduletimetable.dto.ProfessorImportDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorDetailsDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorDto;
+import com.belak.scheduletimetable.dto.professor.ProfessorImportDto;
 import com.belak.scheduletimetable.enumeration.Grade;
 import com.belak.scheduletimetable.enumeration.Nationalite;
 import com.belak.scheduletimetable.enumeration.Statuts;
 import com.belak.scheduletimetable.request.UpdateRequest;
 import com.belak.scheduletimetable.service.professor.ProfessorExcelService;
 import com.belak.scheduletimetable.service.professor.ProfessorService;
-import com.belak.scheduletimetable.service.timetable.grouptimetable.TimetablePreviewService;
 import com.belak.scheduletimetable.service.timetable.professortimetable.ProfessorPreviewService;
-import com.belak.scheduletimetable.service.timetable.professortimetable.ProfessorTimetableService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.dialect.function.PostgreSQLTruncRoundFunction;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -97,5 +94,34 @@ public class ProfessorApiController {
         model.addAttribute("message","Professeur ajouté avec succès");
 
         return "";
+    }
+
+    @GetMapping("/{id}/details")
+    public String getProfessorDetails(@PathVariable Long id, Model model) {
+
+        model.addAttribute("professor",
+                professorService.getProfessorDetailsDto(id));
+
+        model.addAttribute("grades", Grade.values());
+        model.addAttribute("nationalites", Nationalite.values());
+        model.addAttribute("departements", Departement.values());
+
+        return "admin/professor-details";
+    }
+
+    @PostMapping("/{id}/update")
+    public String updateProfessor(
+            @PathVariable Long id,
+            @ModelAttribute("professor") ProfessorDetailsDto professorDto,
+            RedirectAttributes redirectAttributes) {
+
+        professorService.updateProfessor(id, professorDto);
+
+        redirectAttributes.addFlashAttribute(
+                "successMessage",
+                "Les informations du professeur ont été mises à jour avec succès."
+        );
+
+        return "redirect:/professors/" + id + "/details";
     }
 }

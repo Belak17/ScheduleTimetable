@@ -1,8 +1,6 @@
 package com.belak.scheduletimetable.component;
 
-import com.belak.scheduletimetable.dto.StudentProfileDto;
-import com.belak.scheduletimetable.enumeration.Filiere;
-import com.belak.scheduletimetable.enumeration.Nationalite;
+import com.belak.scheduletimetable.dto.student.StudentProfileDto;
 import com.belak.scheduletimetable.model.Student;
 import org.springframework.stereotype.Component;
 

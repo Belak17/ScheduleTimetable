@@ -1,13 +1,13 @@
 package com.belak.scheduletimetable.service.student;
 
-import com.belak.scheduletimetable.dto.CreateStudentDto;
-import com.belak.scheduletimetable.dto.StudentDto;
-import com.belak.scheduletimetable.dto.StudentImportDto;
-import com.belak.scheduletimetable.dto.StudentProfileDto;
+import com.belak.scheduletimetable.dto.student.StudentDetailsDto;
+import com.belak.scheduletimetable.dto.student.StudentDto;
+import com.belak.scheduletimetable.dto.student.StudentImportDto;
+import com.belak.scheduletimetable.dto.student.StudentProfileDto;
 import com.belak.scheduletimetable.model.Student;
+import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Page;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 public interface StudentInterfaceService {
@@ -29,4 +29,8 @@ public interface StudentInterfaceService {
                                String confPassword,
                                String userId) ;
     public Optional<Student> findStudentByUserId(String userId) ;
+
+    @Nullable Object getStudentDetailsDto(Long id);
+
+    void updateStudent(Long id, StudentDetailsDto studentDto);
 }

@@ -1,8 +1,12 @@
 package com.belak.scheduletimetable.data;
 
-import com.belak.scheduletimetable.enumeration.*;
 import com.belak.scheduletimetable.model.*;
-import com.belak.scheduletimetable.repository.*;
+import com.belak.scheduletimetable.repository.presence.SalleRepository;
+import com.belak.scheduletimetable.repository.professor.ProfessorRepository;
+import com.belak.scheduletimetable.repository.student.GroupTimetableRepository;
+import com.belak.scheduletimetable.repository.student.StudentRepository;
+import com.belak.scheduletimetable.repository.user.ConfirmationTokenRepository;
+import com.belak.scheduletimetable.repository.user.UserRepository;
 import com.belak.scheduletimetable.service.courstp.SalleService;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
@@ -13,9 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Component
