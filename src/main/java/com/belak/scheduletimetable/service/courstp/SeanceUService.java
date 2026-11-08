@@ -79,6 +79,7 @@ public class SeanceUService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public List<SeanceDto> getGeneratedSeances(int days) {
 
         LocalDate today = LocalDate.now(ZoneId.of("Africa/Tunis"));
