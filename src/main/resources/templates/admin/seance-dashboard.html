@@ -131,40 +131,54 @@
                 </tr>
                 </thead>
 
-
                 <tbody>
 
                 <tr th:each="seance : ${generatedSeances}">
 
-                    <td th:text="${#temporals.format(seance.date, 'dd/MM/yyyy')}">
-                        08/11/2026
+                    <td th:text="${seance.date != null
+                        ? #temporals.format(seance.date, 'dd/MM/yyyy')
+                        : 'NA'}">
+                        NA
                     </td>
 
-                    <td th:text="${seance.coursTP.intitule}">
-                        Java
+                    <td th:text="${seance.coursTP != null
+                        and seance.coursTP.intitule != null
+                        ? seance.coursTP.intitule
+                        : 'NA'}">
+                        NA
                     </td>
 
-                    <td th:text="${seance.coursTP.salle.code}">
-                        B12
+                    <td th:text="${seance.coursTP != null
+                        and seance.coursTP.salle != null
+                        and seance.coursTP.salle.code != null
+                        ? seance.coursTP.salle.code
+                        : 'NA'}">
+                        NA
                     </td>
 
-                    <td th:text="${seance.coursTP.debut}">
-                        08:00
+                    <td th:text="${seance.coursTP != null
+                        and seance.coursTP.debut != null
+                        ? seance.coursTP.debut
+                        : 'NA'}">
+                        NA
                     </td>
 
-                    <td th:text="${seance.coursTP.fin}">
-                        10:00
+                    <td th:text="${seance.coursTP != null
+                        and seance.coursTP.fin != null
+                        ? seance.coursTP.fin
+                        : 'NA'}">
+                        NA
                     </td>
 
                     <td>
 
                         <span class="status-badge success"
-                              th:if="${seance.absencesProcessed}">
+                              th:if="${seance.absencesProcessed == true}">
                             Traitées
                         </span>
 
                         <span class="status-badge pending"
-                              th:unless="${seance.absencesProcessed}">
+                              th:unless="${seance.absencesProcessed == true}">
                             En attente
                         </span>
 
@@ -240,39 +254,50 @@
                 </tr>
                 </thead>
 
-
                 <tbody>
 
                 <tr th:each="seance : ${expectedSeancesToday}">
 
-                    <td th:text="${seance.intitule}">
-                        Java
+                    <td th:text="${seance.intitule != null
+                        ? seance.intitule
+                        : 'NA'}">
+                        NA
                     </td>
 
-                    <td th:text="${seance.groupe}">
+                    <td th:text="${seance.groupe != null
+                        ? seance.groupe
+                        : 'NA'}">
+                        NA
                     </td>
 
-                    <td th:text="${seance.salle}">
-                        B12
+                    <td th:text="${seance.salle != null
+                        and seance.salle.code != null
+                        ? seance.salle.code
+                        : 'NA'}">
+                        NA
                     </td>
 
-                    <td th:text="${seance.heureDebut}">
-                        08:00
+                    <td th:text="${seance.heureDebut != null
+                        ? seance.heureDebut
+                        : 'NA'}">
+                        NA
                     </td>
 
-                    <td th:text="${seance.heureFin}">
-                        10:00
+                    <td th:text="${seance.heureFin != null
+                        ? seance.heureFin
+                        : 'NA'}">
+                        NA
                     </td>
 
                     <td>
 
                         <span class="status-badge success"
-                              th:if="${seance.generated}">
+                              th:if="${seance.generated == true}">
                             Générée
                         </span>
 
                         <span class="status-badge pending"
-                              th:unless="${seance.generated}">
+                              th:unless="${seance.generated == true}">
                             À générer
                         </span>
 
@@ -348,38 +373,50 @@
                 </tr>
                 </thead>
 
-
                 <tbody>
 
                 <tr th:each="seance : ${expectedSeancesTomorrow}">
 
-                    <td th:text="${seance.intitule}">
-                        Java
-                    </td>
-                    <td th:text="${seance.groupe}">
-                    </td>
-
-                    <td th:text="${seance.salle}">
-                        B12
+                    <td th:text="${seance.intitule != null
+                        ? seance.intitule
+                        : 'NA'}">
+                        NA
                     </td>
 
-                    <td th:text="${seance.heureDebut}">
-                        08:00
+                    <td th:text="${seance.groupe != null
+                        ? seance.groupe
+                        : 'NA'}">
+                        NA
                     </td>
 
-                    <td th:text="${seance.heureFin}">
-                        10:00
+                    <td th:text="${seance.salle != null
+                        and seance.salle.code != null
+                        ? seance.salle.code
+                        : 'NA'}">
+                        NA
+                    </td>
+
+                    <td th:text="${seance.heureDebut != null
+                        ? seance.heureDebut
+                        : 'NA'}">
+                        NA
+                    </td>
+
+                    <td th:text="${seance.heureFin != null
+                        ? seance.heureFin
+                        : 'NA'}">
+                        NA
                     </td>
 
                     <td>
 
                         <span class="status-badge success"
-                              th:if="${seance.generated}">
+                              th:if="${seance.generated == true}">
                             Générée
                         </span>
 
                         <span class="status-badge pending"
-                              th:unless="${seance.generated}">
+                              th:unless="${seance.generated == true}">
                             À générer
                         </span>
 
